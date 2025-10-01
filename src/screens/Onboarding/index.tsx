@@ -25,7 +25,7 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
     const haveSeenLastSlide = activeSlide === slides.length - 1;
 
     if (haveSeenLastSlide) {
-      props.navigation.replace(AppRoutes.SignIn);
+      props.navigation.replace(AppRoutes.SignUp);
     } else {
       swiperRef.current?.swipe(+1);
     }
