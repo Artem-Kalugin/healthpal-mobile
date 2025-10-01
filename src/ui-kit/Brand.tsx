@@ -14,9 +14,19 @@ export const Brand = (props: IBrand) => {
   return (
     <View style={[styles.brand, StyleSheet.flatten(props.style)]}>
       <Icon name="logo" />
-      <TextXL>
-        <TextXL color={colors.grayscale['500']}>Health</TextXL>
-        <TextXL color={colors.grayscale['900']}>Pal</TextXL>
+      <TextXL fontType="secondary">
+        <TextXL
+          color={colors.grayscale['500']}
+          fontType="secondary"
+        >
+          Health
+        </TextXL>
+        <TextXL
+          color={colors.grayscale['900']}
+          fontType="secondary"
+        >
+          Pal
+        </TextXL>
       </TextXL>
     </View>
   );
@@ -25,7 +35,7 @@ export const Brand = (props: IBrand) => {
 const styles = StyleSheet.create({
   brand: {
     alignItems: 'center',
-    paddingVertical: 32,
+    paddingBottom: 32,
     gap: 16,
   },
 });

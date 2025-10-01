@@ -78,7 +78,6 @@ const getStyles = ({
 }) =>
   StyleSheet.create({
     wrapper: {
- 
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',

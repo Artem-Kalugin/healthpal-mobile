@@ -41,7 +41,7 @@ export const PasswordRecoveryEmailInput: React.FC<
               >
                 Забыли пароль?
               </TextXL>
-              <TextSmall>
+              <TextSmall textAlign="center">
                 Введите вашу почту — мы отправим код подтверждения.
               </TextSmall>
             </View>
@@ -53,7 +53,18 @@ export const PasswordRecoveryEmailInput: React.FC<
                   label="Ваша почта"
                 />
               </View>
-              <Button>Отправить код</Button>
+              <Button
+                onPress={() =>
+                  props.navigation.navigate(
+                    PasswordRecoveryRoutes.PasswordRecoveryCodeInput,
+                    {
+                      phone: '',
+                    },
+                  )
+                }
+              >
+                Отправить код
+              </Button>
             </View>
           </View>
         </View>
