@@ -9,9 +9,12 @@ module.exports = (() => {
 
   config.transformer = {
     ...transformer,
+    babelTransformerPath: require.resolve('react-native-svg-transformer/expo'),
   };
   config.resolver = {
     ...resolver,
+    assetExts: resolver.assetExts.filter(ext => ext !== 'svg'),
+    sourceExts: [...resolver.sourceExts, 'svg'],
     alias: {
       '#generated': path.resolve(projectRoot, 'generated'),
       '#ui-kit': path.resolve(projectRoot, 'src/ui-kit'),
