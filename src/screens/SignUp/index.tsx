@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,6 +21,7 @@ export const SignUp: React.FC<RootScreenProps<AppRoutes>> = props => {
       <KeyboardAwareScrollView
         bottomOffset={300}
         contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
+        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.body}>
@@ -62,7 +63,10 @@ export const SignUp: React.FC<RootScreenProps<AppRoutes>> = props => {
             Уже есть аккаунт?{' '}
             <TextSmall
               color={colors.primary.normal}
-              onPress={() => props.navigation.replace(AppRoutes.SignIn)}
+              onPress={() => {
+                Keyboard.dismiss();
+                props.navigation.replace(AppRoutes.SignIn);
+              }}
             >
               Войти
             </TextSmall>
