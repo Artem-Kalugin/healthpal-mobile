@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 
+import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
 import {
@@ -18,12 +18,12 @@ export const PasswordRecoveryEmailInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryEmailInput>
 > = props => {
   return (
-    <SafeAreaView
-      edges={['top']}
-      style={styles.container}
-    >
+    <View style={styles.container}>
+      <HeaderWithThreeSections
+        containerStyle={[styles.header]}
+        title=""
+      />
       <KeyboardAwareScrollView
-        bottomOffset={300}
         contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -58,11 +58,17 @@ export const PasswordRecoveryEmailInput: React.FC<
           </View>
         </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    zIndex: 2,
+    right: 0,
+    left: 0,
+  },
   keyboardAvoidingViewContentContainer: {
     flexGrow: 1,
   },
