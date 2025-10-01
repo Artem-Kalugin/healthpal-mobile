@@ -11,6 +11,7 @@
     "postinstall": "patch-package && husky"
   },
   "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "expo": "~54.0.10",
     "expo-status-bar": "~3.0.8",
     "patch-package": "^8.0.1",
