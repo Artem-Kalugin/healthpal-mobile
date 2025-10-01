@@ -1,0 +1,64 @@
+diff --git a/node_modules/eslint-plugin-react/lib/rules/jsx-sort-props.js b/node_modules/eslint-plugin-react/lib/rules/jsx-sort-props.js
+index ec9d869..1b5a00f 100644
+--- a/node_modules/eslint-plugin-react/lib/rules/jsx-sort-props.js
++++ b/node_modules/eslint-plugin-react/lib/rules/jsx-sort-props.js
+@@ -45,10 +45,16 @@ const RESERVED_PROPS_LIST = [
+   'ref',
+ ];
+ 
++let ArrowCallbacksInsideBlockStatementNames = [];
++
+ function isReservedPropName(name, list) {
+   return list.indexOf(name) >= 0;
+ }
+ 
++function isCallbackPropName(name) {
++  return /((^(on|set)[A-Z])|([a-z]Extractor$))/.test(name) || ArrowCallbacksInsideBlockStatementNames.indexOf(name) !== -1;
++}
++
+ let attributeMap;
+ // attributeMap = { end: endrange, hasComment: true||false if comment in between nodes exists, it needs to be sorted to end }
+ 
+@@ -82,8 +88,8 @@ function contextCompare(a, b, options) {
+   }
+ 
+   if (options.callbacksLast) {
+-    const aIsCallback = propTypesSortUtil.isCallbackPropName(aProp);
+-    const bIsCallback = propTypesSortUtil.isCallbackPropName(bProp);
++    const aIsCallback = isCallbackPropName(aProp);
++    const bIsCallback = isCallbackPropName(bProp);
+     if (aIsCallback && !bIsCallback) {
+       return 1;
+     }
+@@ -392,6 +398,7 @@ module.exports = {
+   },
+ 
+   create(context) {
++    ArrowCallbacksInsideBlockStatementNames = [];
+     const configuration = context.options[0] || {};
+     const ignoreCase = configuration.ignoreCase || false;
+     const callbacksLast = configuration.callbacksLast || false;
+@@ -405,6 +412,12 @@ module.exports = {
+     const locale = configuration.locale || 'auto';
+ 
+     return {
++      "VariableDeclaration[parent.type='BlockStatement']": function(s) {
++        if (s.declarations[0]?.init?.type === 'ArrowFunctionExpression') {
++          ArrowCallbacksInsideBlockStatementNames.push(s.declarations[0]?.id?.name);
++        }
++      },
++   
+       Program() {
+         attributeMap = new WeakMap();
+       },
+@@ -422,8 +435,8 @@ module.exports = {
+           let currentPropName = propName(decl);
+           const previousValue = memo.value;
+           const currentValue = decl.value;
+-          const previousIsCallback = propTypesSortUtil.isCallbackPropName(previousPropName);
+-          const currentIsCallback = propTypesSortUtil.isCallbackPropName(currentPropName);
++          const previousIsCallback = isCallbackPropName(previousPropName);
++          const currentIsCallback = isCallbackPropName(currentPropName);
+ 
+           if (ignoreCase) {
+             previousPropName = previousPropName.toLowerCase();
