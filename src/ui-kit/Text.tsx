@@ -1,5 +1,11 @@
 import React, { ReactNode } from 'react';
-import { Text as RNText, StyleProp, StyleSheet, TextStyle } from 'react-native';
+import {
+  Text as RNText,
+  StyleProp,
+  StyleSheet,
+  TextProps,
+  TextStyle,
+} from 'react-native';
 
 import { colors } from '#config';
 
@@ -14,6 +20,7 @@ export interface IText {
   textDecorationLine: TextStyle['textDecorationLine'];
   textAlign: TextStyle['textAlign'];
   onPress: () => void;
+  onLayout: TextProps['onLayout'];
   children: text | ReactNode;
   style: StyleProp<TextStyle>;
 }
@@ -30,6 +37,7 @@ const _Text: React.FC<Partial<IText>> = ({
   selectable = false,
   textDecorationLine = 'none',
   onPress = undefined,
+  onLayout = undefined,
   style = {},
 }) => {
   const styles = getStyles({
@@ -47,6 +55,7 @@ const _Text: React.FC<Partial<IText>> = ({
       numberOfLines={numberOfLines}
       selectable={selectable}
       style={[styles.text, StyleSheet.flatten(style)]}
+      onLayout={onLayout}
       onPress={onPress}
     >
       {children}
