@@ -1,0 +1,69 @@
+import React from 'react';
+import { StyleSheet } from 'react-native';
+
+import Animated, {
+  Extrapolation,
+  interpolate,
+  interpolateColor,
+  SharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+
+import { colors } from '#config';
+
+import { reduceAnimationValue } from './utils';
+
+interface IPaginationDot {
+  index?: number;
+  translation: SharedValue<number>;
+  slideSize: SharedValue<number>;
+  slideSequenceSize: SharedValue<number>;
+}
+
+const PaginationDot: React.FC<IPaginationDot> = ({
+  index = 0,
+  translation,
+  slideSize,
+  slideSequenceSize,
+}) => {
+  const animatedStyle = useAnimatedStyle(() => {
+    const containerOffset = translation.value + slideSize.value * index;
+    const reducedValue = reduceAnimationValue(
+      containerOffset,
+      slideSequenceSize.value,
+    );
+
+    const shouldAnimateBackwards = reducedValue > slideSequenceSize.value / 2;
+
+    const translateX = shouldAnimateBackwards
+      ? slideSequenceSize.value - reducedValue
+      : reducedValue;
+
+    return {
+      backgroundColor: interpolateColor(
+        translateX,
+        [slideSize.value, 0],
+        [colors.grayscale['400'], colors.main.midnightBlue],
+      ),
+      width: interpolate(
+        translateX,
+        [slideSize.value, 0],
+        [8, 16],
+        Extrapolation.CLAMP,
+      ),
+    };
+  });
+
+  return <Animated.View style={[animatedStyle, styles.paginationDot]} />;
+};
+
+const styles = StyleSheet.create({
+  paginationDot: {
+    height: 6,
+    width: 8,
+    marginHorizontal: 2,
+    borderRadius: 6,
+  },
+});
+
+export default PaginationDot;

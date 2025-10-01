@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider as KeyboardController } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
@@ -16,19 +17,21 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SafeAreaProvider>
-          <GestureHandlerRootView style={StyleSheet.absoluteFill}>
-            <NavigationContainer
-              theme={{
-                ...DefaultTheme,
-                colors: {
-                  ...DefaultTheme.colors,
-                  background: 'transparent',
-                },
-              }}
-            >
-              <AppMiddleware />
-            </NavigationContainer>
-          </GestureHandlerRootView>
+          <KeyboardController statusBarTranslucent={true}>
+            <GestureHandlerRootView style={StyleSheet.absoluteFill}>
+              <NavigationContainer
+                theme={{
+                  ...DefaultTheme,
+                  colors: {
+                    ...DefaultTheme.colors,
+                    background: 'transparent',
+                  },
+                }}
+              >
+                <AppMiddleware />
+              </NavigationContainer>
+            </GestureHandlerRootView>
+          </KeyboardController>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

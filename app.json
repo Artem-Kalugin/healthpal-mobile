@@ -22,7 +22,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.healthpal"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -51,7 +52,6 @@
             "./src/assets/fonts/Inter_18pt-SemiBoldItalic.ttf",
             "./src/assets/fonts/Inter_18pt-Thin.ttf",
             "./src/assets/fonts/Inter_18pt-ThinItalic.ttf",
-
             "./src/assets/fonts/Poppins-Black.ttf",
             "./src/assets/fonts/Poppins-BlackItalic.ttf",
             "./src/assets/fonts/Poppins-Bold.ttf",
