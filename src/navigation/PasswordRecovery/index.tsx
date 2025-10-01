@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import {
   PasswordRecoveryCodeInput,
-  PasswordRecoveryPhoneInput,
+  PasswordRecoveryEmailInput,
   PasswordRecoverySetPassword,
 } from '#screens';
 
@@ -17,12 +17,12 @@ const Stack = createStackNavigator<PasswordRecoveryParamList>();
 export const PasswordRecoveryStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={PasswordRecoveryRoutes.PasswordRecoveryPhoneInput}
+      initialRouteName={PasswordRecoveryRoutes.PasswordRecoveryEmailInput}
       screenOptions={DEFAULT_STACK_OPTIONS}
     >
       <Stack.Screen
-        component={PasswordRecoveryPhoneInput}
-        name={PasswordRecoveryRoutes.PasswordRecoveryPhoneInput}
+        component={PasswordRecoveryEmailInput}
+        name={PasswordRecoveryRoutes.PasswordRecoveryEmailInput}
       />
       <Stack.Screen
         component={PasswordRecoveryCodeInput}

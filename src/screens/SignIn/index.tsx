@@ -72,7 +72,7 @@ export const SignIn: React.FC<
               onPress={() => {
                 Keyboard.dismiss();
                 props.navigation.push(AppRoutes.StackPasswordRecovery, {
-                  screen: PasswordRecoveryRoutes.PasswordRecoveryPhoneInput,
+                  screen: PasswordRecoveryRoutes.PasswordRecoveryEmailInput,
                 });
               }}
             >

@@ -1,13 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack';
 
 export enum PasswordRecoveryRoutes {
-  PasswordRecoveryPhoneInput = 'PasswordRecoveryPhoneInput',
+  PasswordRecoveryEmailInput = 'PasswordRecoveryEmailInput',
   PasswordRecoveryCodeInput = 'PasswordRecoveryCodeInput',
   PasswordRecoverySetPassword = 'PasswordRecoverySetPassword',
 }
 
 export type PasswordRecoveryParamList = {
-  [PasswordRecoveryRoutes.PasswordRecoveryPhoneInput]: undefined;
+  [PasswordRecoveryRoutes.PasswordRecoveryEmailInput]: undefined;
   [PasswordRecoveryRoutes.PasswordRecoveryCodeInput]: { phone: string };
   [PasswordRecoveryRoutes.PasswordRecoverySetPassword]: {
     phone: string;
