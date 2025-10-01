@@ -101,6 +101,7 @@ const getStyles = ({
       color,
       fontSize: size,
       textAlign,
+      fontWeight: weight,
       fontFamily:
         fontType && weight ? fontTypeMaps[fontType][weight] : undefined,
       lineHeight,
