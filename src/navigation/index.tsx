@@ -2,10 +2,12 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { Onboarding, SignIn, SignUp } from '#screens';
+import { Onboarding } from '#screens';
 
+import { AuthStack } from './Auth';
 import { DEFAULT_STACK_OPTIONS } from './config';
 import StackModals from './Modals';
+import { PasswordRecoveryStack } from './PasswordRecovery';
 import { AppParamList, AppRoutes } from './types';
 
 const App = createStackNavigator<AppParamList>();
@@ -21,13 +23,14 @@ const AppStack = () => {
         name={AppRoutes.Onboarding}
       />
       <App.Screen
-        component={SignUp}
-        name={AppRoutes.SignUp}
+        component={AuthStack}
+        name={AppRoutes.StackAuth}
       />
       <App.Screen
-        component={SignIn}
-        name={AppRoutes.SignIn}
+        component={PasswordRecoveryStack}
+        name={AppRoutes.StackPasswordRecovery}
       />
+
       <App.Screen
         component={StackModals}
         name={AppRoutes.StackModals}

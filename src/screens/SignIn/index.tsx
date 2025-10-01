@@ -4,16 +4,24 @@ import { Keyboard, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { CompositeScreenProps } from '@react-navigation/native';
 import { Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 import { Brand } from '#ui-kit/Brand';
 
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
+import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
+import { PasswordRecoveryRoutes } from '#navigation/PasswordRecovery/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
-export const SignIn: React.FC<RootScreenProps<AppRoutes>> = props => {
+export const SignIn: React.FC<
+  CompositeScreenProps<
+    AuthScreenProps<AuthRoutes.SignIn>,
+    RootScreenProps<AppRoutes>
+  >
+> = props => {
   return (
     <SafeAreaView
       edges={['top']}
@@ -61,6 +69,12 @@ export const SignIn: React.FC<RootScreenProps<AppRoutes>> = props => {
             <TextSmall
               color={colors.primary.normal}
               textAlign="center"
+              onPress={() => {
+                Keyboard.dismiss();
+                props.navigation.push(AppRoutes.StackPasswordRecovery, {
+                  screen: PasswordRecoveryRoutes.PasswordRecoveryPhoneInput,
+                });
+              }}
             >
               Забыли пароль?
             </TextSmall>
@@ -70,7 +84,7 @@ export const SignIn: React.FC<RootScreenProps<AppRoutes>> = props => {
                 color={colors.primary.normal}
                 onPress={() => {
                   Keyboard.dismiss();
-                  props.navigation.replace(AppRoutes.SignUp);
+                  props.navigation.replace(AuthRoutes.SignUp);
                 }}
               >
                 Зарегистрироваться

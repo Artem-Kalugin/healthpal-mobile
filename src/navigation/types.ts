@@ -1,19 +1,21 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { AuthParamList } from './Auth/types';
 import { ModalsParamList } from './Modals/types';
+import { PasswordRecoveryParamList } from './PasswordRecovery/types';
 
 export enum AppRoutes {
-  SignIn = 'SignIn',
-  SignUp = 'SignUp',
   Onboarding = 'Onboarding',
+  StackPasswordRecovery = 'PasswordRecovery',
+  StackAuth = 'StackAuth',
   StackModals = 'StackModals',
 }
 
 export type AppParamList = {
-  [AppRoutes.SignIn]: undefined;
-  [AppRoutes.SignUp]: undefined;
   [AppRoutes.Onboarding]: undefined;
+  [AppRoutes.StackPasswordRecovery]: NavigatorScreenParams<PasswordRecoveryParamList>;
+  [AppRoutes.StackAuth]: NavigatorScreenParams<AuthParamList>;
   [AppRoutes.StackModals]: NavigatorScreenParams<ModalsParamList>;
 };
 

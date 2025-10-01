@@ -8,11 +8,11 @@ import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
-import { AppRoutes, RootScreenProps } from '#navigation/types';
+import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
-export const SignUp: React.FC<RootScreenProps<AppRoutes>> = props => {
+export const SignUp: React.FC<AuthScreenProps<AuthRoutes.SignUp>> = props => {
   return (
     <SafeAreaView
       edges={['top']}
@@ -65,7 +65,7 @@ export const SignUp: React.FC<RootScreenProps<AppRoutes>> = props => {
               color={colors.primary.normal}
               onPress={() => {
                 Keyboard.dismiss();
-                props.navigation.replace(AppRoutes.SignIn);
+                props.navigation.replace(AuthRoutes.SignIn);
               }}
             >
               Войти
