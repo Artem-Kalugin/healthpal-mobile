@@ -2,18 +2,12 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import {
-  Brand,
-  Button,
-  CodeInput,
-  Icon,
-  TextInput,
-  TextSmall,
-  TextXL,
-} from '#ui-kit';
+import { Brand, Button, CodeInput, TextSmall, TextXL } from '#ui-kit';
 
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
+import { useTimer } from '#components/OTPTimerProvider/use-timer';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
 import {
@@ -23,15 +17,26 @@ import {
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
+import { animateLayout } from '#utils';
+
 export const PasswordRecoveryCodeInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryCodeInput>
 > = props => {
+  const OTPTimerCtx = useTimer();
   const [verificationCode, setVerificationCode] = useState('');
   const [verficationCodeError, setVerificationCodeError] = useState(false);
 
   useEffect(() => {
     setVerificationCodeError(verificationCode.length === 5);
   }, [verificationCode]);
+
+  const resend = () => {
+    animateLayout();
+    OTPTimerCtx.start(6);
+  };
+
+  const resendAvailable = !OTPTimerCtx.valueRaw;
+
   return (
     <View style={styles.container}>
       <HeaderWithThreeSections
@@ -74,15 +79,36 @@ export const PasswordRecoveryCodeInput: React.FC<
             </View>
 
             <View>
-              <TextSmall textAlign="center">
-                Не получили код?{' '}
-                <TextSmall
-                  color={colors.primary.normal}
-                  onPress={() => {}}
+              {!resendAvailable ? (
+                <Animated.View
+                  key="timer"
+                  entering={FadeIn}
+                  exiting={FadeOut}
                 >
-                  Отправить снова
-                </TextSmall>
-              </TextSmall>
+                  <TextSmall
+                    color={colors.grayscale[400]}
+                    textAlign="center"
+                  >
+                    Отправить снова можно будет через {OTPTimerCtx.value}
+                  </TextSmall>
+                </Animated.View>
+              ) : (
+                <Animated.View
+                  key="resend"
+                  entering={FadeIn}
+                  exiting={FadeOut}
+                >
+                  <TextSmall textAlign="center">
+                    Не получили код?{' '}
+                    <TextSmall
+                      color={colors.primary.normal}
+                      onPress={resend}
+                    >
+                      Отправить снова
+                    </TextSmall>
+                  </TextSmall>
+                </Animated.View>
+              )}
             </View>
           </View>
         </View>
