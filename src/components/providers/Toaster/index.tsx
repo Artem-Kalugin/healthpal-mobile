@@ -7,8 +7,9 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { Text } from '#ui-kit';
 import { Toast, useToaster } from 'react-hot-toast/headless';
+
+import { Text } from '#ui-kit';
 
 import { colors, withCustomAnimation } from '#config';
 

@@ -21,7 +21,7 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <SafeAreaProvider>
           <OTPTimerProvider>
-            <KeyboardController statusBarTranslucent={true}>
+            <KeyboardController>
               <GestureHandlerRootView style={StyleSheet.absoluteFill}>
                 <NavigationContainer
                   theme={{

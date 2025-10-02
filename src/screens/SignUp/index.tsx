@@ -4,15 +4,23 @@ import { Keyboard, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { CompositeScreenProps } from '@react-navigation/native';
+
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 
 import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
+import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
-export const SignUp: React.FC<AuthScreenProps<AuthRoutes.SignUp>> = props => {
+export const SignUp: React.FC<
+  CompositeScreenProps<
+    AuthScreenProps<AuthRoutes.SignUp>,
+    RootScreenProps<AppRoutes>
+  >
+> = props => {
   return (
     <SafeAreaView
       edges={['top']}
@@ -56,7 +64,13 @@ export const SignUp: React.FC<AuthScreenProps<AuthRoutes.SignUp>> = props => {
                   label="Пароль"
                 />
               </View>
-              <Button>Создать аккаунт</Button>
+              <Button
+                onPress={() => {
+                  props.navigation.push(AppRoutes.ProfileEditing);
+                }}
+              >
+                Создать аккаунт
+              </Button>
             </View>
           </View>
           <TextSmall textAlign="center">

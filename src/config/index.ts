@@ -7,6 +7,7 @@ import { initialWindowMetrics } from 'react-native-safe-area-context';
 import onboarding1 from '#assets/images/onboarding-1.png';
 import onboarding2 from '#assets/images/onboarding-2.png';
 import onboarding3 from '#assets/images/onboarding-3.png';
+import profileCircle from '#assets/images/profile-circle.png';
 
 import { colors } from './colors';
 
@@ -65,6 +66,7 @@ export const Images = {
   onboarding3: onboarding3,
   onboarding2: onboarding2,
   onboarding1: onboarding1,
+  profileCircle,
 };
 
 export * from './colors';

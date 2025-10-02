@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { Onboarding } from '#screens';
+import { Onboarding, ProfileEditing } from '#screens';
 
 import { AuthStack } from './Auth';
 import { DEFAULT_STACK_OPTIONS } from './config';
@@ -15,12 +15,16 @@ const App = createStackNavigator<AppParamList>();
 const AppStack = () => {
   return (
     <App.Navigator
-      initialRouteName={AppRoutes.StackPasswordRecovery}
+      initialRouteName={AppRoutes.Onboarding}
       screenOptions={DEFAULT_STACK_OPTIONS}
     >
       <App.Screen
         component={Onboarding}
         name={AppRoutes.Onboarding}
+      />
+      <App.Screen
+        component={ProfileEditing}
+        name={AppRoutes.ProfileEditing}
       />
       <App.Screen
         component={AuthStack}
