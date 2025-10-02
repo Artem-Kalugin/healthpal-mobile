@@ -4,9 +4,9 @@ import { Keyboard, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
-
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+
+import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 
 import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   formInputs: {
-    marginBottom: 24,
+    marginBottom: 32,
     gap: 20,
   },
   main: {

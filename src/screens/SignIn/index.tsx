@@ -5,10 +5,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompositeScreenProps } from '@react-navigation/native';
-import { Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
-import { Brand } from '#ui-kit/Brand';
 
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+
+import { Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
+import { Brand } from '#ui-kit/Brand';
 
 import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 import { PasswordRecoveryRoutes } from '#navigation/PasswordRecovery/types';
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   formInputs: {
-    marginBottom: 24,
+    marginBottom: 32,
     gap: 20,
   },
   main: {

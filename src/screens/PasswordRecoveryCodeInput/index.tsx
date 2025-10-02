@@ -97,7 +97,19 @@ export const PasswordRecoveryCodeInput: React.FC<
                   setValue={setVerificationCode}
                 />
               </View>
-              <Button>Подтвердить</Button>
+              <Button
+                onPress={() => {
+                  props.navigation.navigate(
+                    PasswordRecoveryRoutes.PasswordRecoverySetPassword,
+                    {
+                      phone: '',
+                      code: '',
+                    },
+                  );
+                }}
+              >
+                Подтвердить
+              </Button>
             </View>
 
             <View>
@@ -175,7 +187,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   formInputs: {
-    marginBottom: 24,
+    marginBottom: 32,
     gap: 20,
   },
   resendContainer: {
