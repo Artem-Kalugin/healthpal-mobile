@@ -30,7 +30,7 @@ const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
 
   paddingHorizontal = 16,
   paddingBottom = 16,
-  paddingTop = 8,
+  paddingTop = 32,
   containerStyle,
 }) => {
   const insets = useSafeAreaInsets();

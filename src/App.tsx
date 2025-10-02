@@ -8,7 +8,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { OTPTimerProvider } from '#components/OTPTimerProvider';
+import { OTPTimerProvider } from '#components/providers/OTPTimer';
+import ToastProvider from '#components/providers/Toaster';
 
 import { persistor, store } from '#store';
 
@@ -32,6 +33,7 @@ export default function App() {
                   }}
                 >
                   <AppMiddleware />
+                  <ToastProvider />
                 </NavigationContainer>
               </GestureHandlerRootView>
             </KeyboardController>

@@ -17,7 +17,7 @@ const Stack = createStackNavigator<PasswordRecoveryParamList>();
 export const PasswordRecoveryStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={PasswordRecoveryRoutes.PasswordRecoveryEmailInput}
+      initialRouteName={PasswordRecoveryRoutes.PasswordRecoveryCodeInput}
       screenOptions={DEFAULT_STACK_OPTIONS}
     >
       <Stack.Screen
