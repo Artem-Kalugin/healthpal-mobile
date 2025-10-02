@@ -68,5 +68,6 @@ export const Images = {
   onboarding1: onboarding1,
   profileCircle,
 };
+export const BORDER_RADIUS_ROUNDED = 9999;
 
 export * from './colors';

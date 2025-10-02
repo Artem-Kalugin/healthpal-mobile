@@ -7,6 +7,7 @@ import check from '#assets/icons/check.svg';
 import chevronLeft from '#assets/icons/chevron-left.svg';
 import lock from '#assets/icons/lock.svg';
 import logo from '#assets/icons/logo.svg';
+import messageEdit from '#assets/icons/message-edit.svg';
 import sms from '#assets/icons/sms.svg';
 /* PLOP_INJECT_IMPORT */
 import user from '#assets/icons/user.svg';
@@ -17,6 +18,7 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  messageEdit: { component: messageEdit },
   arrowLeft: { component: arrowLeft },
   user: { component: user },
   lock: { component: lock },

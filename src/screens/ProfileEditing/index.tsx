@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
@@ -12,7 +12,12 @@ import { Button, Icon, TextInput } from '#ui-kit';
 
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
-import { Images, SAFE_ZONE_BOTTOM } from '#config';
+import {
+  ActiveOpacities,
+  BORDER_RADIUS_ROUNDED,
+  Images,
+  SAFE_ZONE_BOTTOM,
+} from '#config';
 
 export const ProfileEditing: React.FC<
   RootScreenProps<AppRoutes.ProfileEditing>
@@ -31,13 +36,21 @@ export const ProfileEditing: React.FC<
         />
         <View style={styles.body}>
           <TapKeyboardDissmissArea />
-          <View style={styles.profileImageContainer}>
-            <Image
-              key={1}
-              contentFit="contain"
-              source={Images.profileCircle}
-              style={styles.profileCircleImage}
-            />
+          <View style={styles.avatarWrapper}>
+            <TouchableOpacity
+              activeOpacity={ActiveOpacities.HEAVY}
+              style={styles.avatarImageContainer}
+            >
+              <Image
+                contentFit="contain"
+                source={Images.profileCircle}
+                style={styles.avatarImage}
+              />
+              <Icon
+                name="messageEdit"
+                style={styles.profileImageEditIcon}
+              />
+            </TouchableOpacity>
           </View>
 
           <View>
@@ -48,10 +61,6 @@ export const ProfileEditing: React.FC<
                 <TextInput label="Электронная почта" />
                 <TextInput label="Дата рождения" />
                 <TextInput label="Пол" />
-                <TextInput
-                  IconLeft={<Icon name="lock" />}
-                  label="Пароль"
-                />
               </View>
               <Button>Войти</Button>
             </View>
@@ -68,23 +77,32 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    justifyContent: 'space-between',
     paddingBottom: SAFE_ZONE_BOTTOM,
   },
   container: {
     flex: 1,
     paddingHorizontal: 20,
   },
-  profileImageContainer: {
+  avatarWrapper: {
     flex: 1,
+    maxHeight: 202,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 8,
+    padding: 16,
   },
-  profileCircleImage: {
+  avatarImageContainer: {
     flex: 1,
-    height: 202,
-    maxHeight: 202,
     aspectRatio: 1,
+  },
+  avatarImage: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: BORDER_RADIUS_ROUNDED,
+  },
+  profileImageEditIcon: {
+    position: 'absolute',
+    right: 10,
+    bottom: 10,
   },
   formInputs: {
     marginBottom: 32,
