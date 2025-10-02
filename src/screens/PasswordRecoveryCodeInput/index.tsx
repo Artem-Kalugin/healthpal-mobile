@@ -9,12 +9,13 @@ import Animated, {
   LinearTransition,
 } from 'react-native-reanimated';
 
-import { Brand, Button, CodeInput, Loader, TextSmall, TextXL } from '#ui-kit';
-import toast from 'react-hot-toast/headless';
+import { toast } from 'react-hot-toast/headless';
 
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import { useTimer } from '#components/providers/OTPTimer/use-timer';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+
+import { Brand, Button, CodeInput, Loader, TextSmall, TextXL } from '#ui-kit';
 
 import {
   PasswordRecoveryRoutes,
