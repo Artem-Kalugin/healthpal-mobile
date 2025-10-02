@@ -3,6 +3,9 @@ export const colors = {
     white: '#FFFFFF',
     midnightBlue: '#1C2A3A',
   },
+  error: {
+    normal: '#EF0000',
+  },
   primary: {
     normal: '#1c64f2',
     pale: '#b185e0',

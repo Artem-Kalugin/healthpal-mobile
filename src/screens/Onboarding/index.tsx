@@ -9,6 +9,7 @@ import { Image } from 'expo-image';
 import Swiper from '#components/Swiper';
 import { ISwiperRef } from '#components/Swiper/Swiper';
 
+import { AuthRoutes } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
@@ -25,7 +26,9 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
     const haveSeenLastSlide = activeSlide === slides.length - 1;
 
     if (haveSeenLastSlide) {
-      props.navigation.replace(AppRoutes.SignUp);
+      props.navigation.replace(AppRoutes.StackAuth, {
+        screen: AuthRoutes.SignUp,
+      });
     } else {
       swiperRef.current?.swipe(+1);
     }

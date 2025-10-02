@@ -25,7 +25,7 @@ export const ButtonTextComponents: {
 
 export const ButtonSizeStyles: { [key in ButtonSize]: ViewStyle } = {
   regular: {
-    minHeight: 54,
+    minHeight: 48,
     paddingHorizontal: 16,
   },
   small: {

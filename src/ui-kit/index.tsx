@@ -6,3 +6,5 @@ export * from './Checkbox';
 export * from './Loader';
 export * from './TextInput';
 export * from './Brand';
+export * from './ButtonGoBack';
+export * from './CodeInput';

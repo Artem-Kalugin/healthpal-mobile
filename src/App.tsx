@@ -8,6 +8,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { OTPTimerProvider } from '#components/providers/OTPTimer';
+import ToastProvider from '#components/providers/Toaster';
+
 import { persistor, store } from '#store';
 
 import AppMiddleware from './AppMiddleware';
@@ -17,21 +20,24 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SafeAreaProvider>
-          <KeyboardController statusBarTranslucent={true}>
-            <GestureHandlerRootView style={StyleSheet.absoluteFill}>
-              <NavigationContainer
-                theme={{
-                  ...DefaultTheme,
-                  colors: {
-                    ...DefaultTheme.colors,
-                    background: 'transparent',
-                  },
-                }}
-              >
-                <AppMiddleware />
-              </NavigationContainer>
-            </GestureHandlerRootView>
-          </KeyboardController>
+          <OTPTimerProvider>
+            <KeyboardController statusBarTranslucent={true}>
+              <GestureHandlerRootView style={StyleSheet.absoluteFill}>
+                <NavigationContainer
+                  theme={{
+                    ...DefaultTheme,
+                    colors: {
+                      ...DefaultTheme.colors,
+                      background: 'transparent',
+                    },
+                  }}
+                >
+                  <AppMiddleware />
+                  <ToastProvider />
+                </NavigationContainer>
+              </GestureHandlerRootView>
+            </KeyboardController>
+          </OTPTimerProvider>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

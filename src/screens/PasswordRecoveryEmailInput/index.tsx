@@ -1,25 +1,29 @@
-import React from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 
-import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
+import {
+  PasswordRecoveryRoutes,
+  PasswordRecoveryScreenProps,
+} from '#navigation/PasswordRecovery/types';
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
-export const SignUp: React.FC<AuthScreenProps<AuthRoutes.SignUp>> = props => {
+export const PasswordRecoveryEmailInput: React.FC<
+  PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryEmailInput>
+> = props => {
   return (
-    <SafeAreaView
-      edges={['top']}
-      style={styles.container}
-    >
+    <View style={styles.container}>
+      <HeaderWithThreeSections
+        containerStyle={[styles.header]}
+        title=""
+      />
       <KeyboardAwareScrollView
-        bottomOffset={300}
         contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -35,55 +39,53 @@ export const SignUp: React.FC<AuthScreenProps<AuthRoutes.SignUp>> = props => {
                 color={colors.main.midnightBlue}
                 weight="600"
               >
-                Создать аккаунт
+                Забыли пароль?
               </TextXL>
-              <TextSmall>Мы здесь, чтобы помочь вам!</TextSmall>
+              <TextSmall textAlign="center">
+                Введите вашу почту — мы отправим код подтверждения.
+              </TextSmall>
             </View>
 
             <View style={styles.main}>
               <View style={styles.formInputs}>
                 <TextInput
-                  autoFocus
-                  IconLeft={<Icon name="user" />}
-                  label="Ваше имя"
-                />
-                <TextInput
                   IconLeft={<Icon name="sms" />}
                   label="Ваша почта"
                 />
-                <TextInput
-                  IconLeft={<Icon name="lock" />}
-                  label="Пароль"
-                />
               </View>
-              <Button>Создать аккаунт</Button>
+              <Button
+                onPress={() =>
+                  props.navigation.navigate(
+                    PasswordRecoveryRoutes.PasswordRecoveryCodeInput,
+                    {
+                      phone: '',
+                    },
+                  )
+                }
+              >
+                Отправить код
+              </Button>
             </View>
           </View>
-          <TextSmall textAlign="center">
-            Уже есть аккаунт?{' '}
-            <TextSmall
-              color={colors.primary.normal}
-              onPress={() => {
-                Keyboard.dismiss();
-                props.navigation.replace(AuthRoutes.SignIn);
-              }}
-            >
-              Войти
-            </TextSmall>
-          </TextSmall>
         </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    zIndex: 2,
+    right: 0,
+    left: 0,
+  },
   keyboardAvoidingViewContentContainer: {
     flexGrow: 1,
   },
   body: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingBottom: SAFE_ZONE_BOTTOM,
   },
   container: {

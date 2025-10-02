@@ -2,6 +2,7 @@ import React from 'react';
 
 import { SvgProps } from 'react-native-svg';
 
+import arrowLeft from '#assets/icons/arrow-left.svg';
 import check from '#assets/icons/check.svg';
 import chevronLeft from '#assets/icons/chevron-left.svg';
 import lock from '#assets/icons/lock.svg';
@@ -16,6 +17,7 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  arrowLeft: { component: arrowLeft },
   user: { component: user },
   lock: { component: lock },
   sms: { component: sms },
