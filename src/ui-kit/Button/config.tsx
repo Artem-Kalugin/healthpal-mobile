@@ -31,7 +31,8 @@ export const ButtonSizeStyles: { [key in ButtonSize]: ViewStyle } = {
   small: {
     minHeight: 38,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 10,
+    borderRadius: 16,
   },
   'extra-small': {
     minHeight: 20,
@@ -72,6 +73,17 @@ const FilledButtonStyles: ButtonAppearanceScheme = {
   },
 };
 
+const OutlinedButtonStyles: ButtonAppearanceScheme = {
+  primary: {
+    default: getButtonStyle(
+      colors.main.white,
+      colors.grayscale['50'],
+      '600',
+      colors.main.midnightBlue,
+    ),
+  },
+};
+
 const TextOnlyButtonStyles: ButtonAppearanceScheme = {
   primary: {
     default: getButtonStyle(colors.primary.light),
@@ -82,5 +94,6 @@ export const MapButtonStyles: {
   [key in ButtonAppearance]: ButtonAppearanceScheme;
 } = {
   filled: FilledButtonStyles,
+  outlined: OutlinedButtonStyles,
   'text-only': TextOnlyButtonStyles,
 };

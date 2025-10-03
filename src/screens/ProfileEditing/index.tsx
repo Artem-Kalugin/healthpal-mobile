@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -16,13 +16,14 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
-  Images,
   SAFE_ZONE_BOTTOM,
 } from '#config';
 
 export const ProfileEditing: React.FC<
   RootScreenProps<AppRoutes.ProfileEditing>
 > = props => {
+  const [avatar, setAvatar] = useState<null | string>('');
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -43,12 +44,10 @@ export const ProfileEditing: React.FC<
               style={styles.avatarImageContainer}
               onPress={() =>
                 props.navigation.navigate(AppRoutes.StackModals, {
-                  screen: ModalsRoutes.Dialog,
+                  screen: ModalsRoutes.ImagePicker,
                   params: {
-                    text: 'do',
-                    title: 'no',
-                    confirmButtonProps: {
-                      onPress: (_, modal) => modal.close(),
+                    onEnd(image) {
+                      setAvatar(image.uri);
                     },
                   },
                 })
@@ -56,7 +55,7 @@ export const ProfileEditing: React.FC<
             >
               <Image
                 contentFit="contain"
-                source={Images.profileCircle}
+                source={avatar}
                 style={styles.avatarImage}
               />
               <Icon

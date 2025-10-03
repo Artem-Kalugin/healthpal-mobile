@@ -3,14 +3,16 @@ import React from 'react';
 import { SvgProps } from 'react-native-svg';
 
 import arrowLeft from '#assets/icons/arrow-left.svg';
+import camera from '#assets/icons/camera.svg';
 import check from '#assets/icons/check.svg';
 import chevronLeft from '#assets/icons/chevron-left.svg';
 import cross from '#assets/icons/cross.svg';
+/* PLOP_INJECT_IMPORT */
+import gallery from '#assets/icons/gallery.svg';
 import lock from '#assets/icons/lock.svg';
 import logo from '#assets/icons/logo.svg';
 import messageEdit from '#assets/icons/message-edit.svg';
 import sms from '#assets/icons/sms.svg';
-/* PLOP_INJECT_IMPORT */
 import user from '#assets/icons/user.svg';
 
 import { colors } from '#config';
@@ -19,6 +21,8 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  gallery: { component: gallery },
+  camera: { component: camera },
   cross: { component: cross },
   messageEdit: { component: messageEdit },
   arrowLeft: { component: arrowLeft },

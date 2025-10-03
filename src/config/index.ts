@@ -33,7 +33,7 @@ export const hitSlopBig = {
 
 export enum ActiveOpacities {
   LIGHT = 0.1,
-  MEDIUM = 0.2,
+  MEDIUM = 0.4,
   HEAVY = 0.6,
 }
 
@@ -50,14 +50,7 @@ export const withCustomAnimation = (toValue: number, cb?: () => void) => {
 
 export const shadow = StyleSheet.create({
   style: {
-    elevation: 3,
-    shadowColor: colors.black,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    shadowRadius: 2.22,
-    shadowOpacity: 0.42,
+    boxShadow: '0px 6px 8px -6px #00000066',
   },
 }).style;
 

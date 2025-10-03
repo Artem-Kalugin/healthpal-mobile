@@ -2,6 +2,8 @@ import { ReactElement, ReactNode } from 'react';
 import { FlatListProps, ViewStyle } from 'react-native';
 
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { ImagePickerAsset } from 'expo-image-picker';
+
 import { IButton } from '#ui-kit/Button';
 
 import { AppParamList } from '#navigation/types';
@@ -21,6 +23,7 @@ export enum ModalsRoutes {
   /* utils */
   Select = 'Select',
   Dialog = 'Dialog',
+  ImagePicker = 'ImagePicker',
 }
 
 export enum EnumSelectModalLayout {
@@ -55,6 +58,9 @@ export type ModalsParamList = {
     declineButtonProps?: UIActionModalButton;
   };
   [ModalsRoutes.Select]: SelectModalParams<any, any>;
+  [ModalsRoutes.ImagePicker]: {
+    onEnd: (image: ImagePickerAsset) => void;
+  };
 };
 
 export type ModalsScreenProps<RouteName extends ModalsRoutes> =

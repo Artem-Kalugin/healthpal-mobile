@@ -15,7 +15,7 @@ const App = createStackNavigator<AppParamList>();
 const AppStack = () => {
   return (
     <App.Navigator
-      initialRouteName={AppRoutes.Onboarding}
+      initialRouteName={AppRoutes.ProfileEditing}
       screenOptions={DEFAULT_STACK_OPTIONS}
     >
       <App.Screen

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { Dialog } from '#modals';
+import { ImagePicker } from '#modals/ImagePicker';
 
 import { ModalsParamList, ModalsRoutes } from './types';
 
@@ -18,6 +19,10 @@ const StackModals = () => {
       <Modals.Screen
         component={Dialog}
         name={ModalsRoutes.Dialog}
+      />
+      <Modals.Screen
+        component={ImagePicker}
+        name={ModalsRoutes.ImagePicker}
       />
     </Modals.Navigator>
   );

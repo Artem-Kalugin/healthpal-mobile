@@ -31,6 +31,13 @@
     "plugins": [
       "expo-build-properties",
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "Приложению $(PRODUCT_NAME) нужен доступ к фотографиям для изменения фотографии профиля",
+          "cameraPermission": "Приложению $(PRODUCT_NAME) нужен доступ к камере для изменения фотографии профиля"
+        }
+      ],
+      [
         "expo-font",
         {
           "fonts": [

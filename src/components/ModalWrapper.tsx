@@ -222,8 +222,8 @@ const getStyles = (insetsBottom: number) =>
     cross: {
       position: 'absolute',
       zIndex: 100,
-      top: 24,
-      right: 24,
+      top: 30,
+      right: 16,
     },
   });
 
