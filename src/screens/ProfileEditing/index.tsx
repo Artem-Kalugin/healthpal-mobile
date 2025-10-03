@@ -10,6 +10,7 @@ import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
 import { Button, Icon, TextInput } from '#ui-kit';
 
+import { ModalsRoutes } from '#navigation/Modals/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import {
@@ -40,6 +41,18 @@ export const ProfileEditing: React.FC<
             <TouchableOpacity
               activeOpacity={ActiveOpacities.HEAVY}
               style={styles.avatarImageContainer}
+              onPress={() =>
+                props.navigation.navigate(AppRoutes.StackModals, {
+                  screen: ModalsRoutes.Dialog,
+                  params: {
+                    text: 'do',
+                    title: 'no',
+                    confirmButtonProps: {
+                      onPress: (_, modal) => modal.close(),
+                    },
+                  },
+                })
+              }
             >
               <Image
                 contentFit="contain"
@@ -86,6 +99,7 @@ const styles = StyleSheet.create({
   avatarWrapper: {
     flex: 1,
     maxHeight: 202,
+    minHeight: 150,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { Dialog } from '#modals';
 
 import { ModalsParamList, ModalsRoutes } from './types';
 
@@ -16,7 +16,7 @@ const StackModals = () => {
       }}
     >
       <Modals.Screen
-        component={View}
+        component={Dialog}
         name={ModalsRoutes.Dialog}
       />
     </Modals.Navigator>
