@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
@@ -22,6 +22,7 @@ import { slides } from './config';
 export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
   const swiperRef = useRef<ISwiperRef>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const isRenderedRef = useRef<boolean>(false);
 
   const onPressNext = () => {
     const haveSeenLastSlide = activeSlide === slides.length - 1;
@@ -35,6 +36,10 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
     }
   };
 
+  useEffect(() => {
+    isRenderedRef.current = true;
+  }, []);
+
   return (
     <View style={styles.container}>
       <Swiper
@@ -45,7 +50,9 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
           <View style={styles.slideContent}>
             <Animated.View
               key={activeSlide}
-              entering={FadeInUp.delay(500)}
+              entering={
+                !isRenderedRef.current ? undefined : FadeInUp.delay(500)
+              }
               exiting={FadeOutDown}
               style={styles.slideText}
             >
