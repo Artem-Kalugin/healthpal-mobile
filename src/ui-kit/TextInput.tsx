@@ -19,6 +19,7 @@ import Animated, {
 
 import { colors, IS_IOS, withCustomAnimation } from '#config';
 
+import { Icon } from './Icon';
 import { primaryFontNameMap } from './Text';
 
 const LABEL_TRANSLATE_Y = -12;
@@ -54,6 +55,7 @@ export interface ITextInput
   pointerEvents: TextInputProps['pointerEvents'];
   outlineType: ITextInputOutline;
   disabled: boolean;
+  showDeleteIfFocusedOnly: boolean;
   androidFixScrollMultiline: boolean;
   label: string;
   onChange: TextInputProps['onChangeText'];
@@ -69,6 +71,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
   inputRef,
   outlineType,
   label = '',
+  showDeleteIfFocusedOnly = true,
   androidFixScrollMultiline = false,
   secureTextEntry = false,
   enablesReturnKeyAutomatically = false,
@@ -188,7 +191,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
       ) : (
         !!value &&
         !disabled &&
-        isFocused && (
+        (showDeleteIfFocusedOnly ? isFocused : true) && (
           <Animated.View
             entering={FadeIn}
             exiting={FadeOut}
@@ -199,7 +202,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
                 onChange('');
               }}
             >
-              {/* <Icon name="close" /> */}
+              <Icon name="cross" />
             </TouchableOpacity>
           </Animated.View>
         )

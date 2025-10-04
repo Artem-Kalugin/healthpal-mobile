@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 import { Image } from 'expo-image';
+import { DateTime } from 'luxon';
 
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
@@ -16,13 +17,18 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
+  Images,
   SAFE_ZONE_BOTTOM,
 } from '#config';
+
+const MINIMAL_BIRTHDAY_YEAR = new Date();
+MINIMAL_BIRTHDAY_YEAR.setFullYear(new Date().getFullYear() - 18);
 
 export const ProfileEditing: React.FC<
   RootScreenProps<AppRoutes.ProfileEditing>
 > = props => {
   const [avatar, setAvatar] = useState<null | string>('');
+  const [date, setDate] = useState<Date | null>();
 
   return (
     <View style={styles.container}>
@@ -55,7 +61,7 @@ export const ProfileEditing: React.FC<
             >
               <Image
                 contentFit="contain"
-                source={avatar}
+                source={avatar || Images.profileCircle}
                 style={styles.avatarImage}
               />
               <Icon
@@ -71,7 +77,38 @@ export const ProfileEditing: React.FC<
                 <TextInput label="ФИО" />
                 <TextInput label="Имя Пользователя" />
                 <TextInput label="Электронная почта" />
-                <TextInput label="Дата рождения" />
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate(AppRoutes.StackModals, {
+                      screen: ModalsRoutes.DateTimePicker,
+                      params: {
+                        pickerProps: {
+                          maximumDate: MINIMAL_BIRTHDAY_YEAR,
+                          date: date || MINIMAL_BIRTHDAY_YEAR,
+                          mode: 'date',
+                        },
+                        onEnd: _date => {
+                          setDate(_date);
+                        },
+                      },
+                    })
+                  }
+                >
+                  <TextInput
+                    IconLeft={<Icon name="calendar" />}
+                    label="Дата рождения"
+                    pointerEvents="none"
+                    showDeleteIfFocusedOnly={false}
+                    value={
+                      date
+                        ? DateTime.fromJSDate(date)
+                            .setLocale('ru')
+                            .toFormat('dd LLLL yyyy')
+                        : ''
+                    }
+                    onChange={value => value === '' && setDate(null)}
+                  />
+                </TouchableOpacity>
                 <TextInput label="Пол" />
               </View>
               <Button>Войти</Button>

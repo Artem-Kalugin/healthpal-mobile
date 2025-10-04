@@ -1,6 +1,8 @@
 import { ReactElement, ReactNode } from 'react';
 import { FlatListProps, ViewStyle } from 'react-native';
 
+import DatePicker from 'react-native-date-picker';
+
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { ImagePickerAsset } from 'expo-image-picker';
 
@@ -23,6 +25,7 @@ export enum ModalsRoutes {
   /* utils */
   Select = 'Select',
   Dialog = 'Dialog',
+  DateTimePicker = 'DateTimePicker',
   ImagePicker = 'ImagePicker',
 }
 
@@ -58,6 +61,11 @@ export type ModalsParamList = {
     declineButtonProps?: UIActionModalButton;
   };
   [ModalsRoutes.Select]: SelectModalParams<any, any>;
+  [ModalsRoutes.DateTimePicker]: {
+    pickerProps: DatePicker['props'];
+    onEnd: (date: Date) => void;
+    title?: string;
+  };
   [ModalsRoutes.ImagePicker]: {
     onEnd: (image: ImagePickerAsset) => void;
   };

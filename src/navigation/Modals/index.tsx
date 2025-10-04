@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import { Dialog } from '#modals';
-import { ImagePicker } from '#modals/ImagePicker';
+import { DateTimePicker, Dialog, ImagePicker } from '#modals';
 
 import { ModalsParamList, ModalsRoutes } from './types';
 
@@ -16,6 +15,10 @@ const StackModals = () => {
         animation: 'none',
       }}
     >
+      <Modals.Screen
+        component={DateTimePicker}
+        name={ModalsRoutes.DateTimePicker}
+      />
       <Modals.Screen
         component={Dialog}
         name={ModalsRoutes.Dialog}
