@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import FocusAwareStatusBar from '#components/FocusAwareStatusBar';
 import { OTPTimerProvider } from '#components/providers/OTPTimer';
 import ToastProvider from '#components/providers/Toaster';
 
@@ -32,6 +33,7 @@ export default function App() {
                     },
                   }}
                 >
+                  <FocusAwareStatusBar barStyle="dark-content" />
                   <AppMiddleware />
                   <ToastProvider />
                 </NavigationContainer>

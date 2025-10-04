@@ -29,7 +29,7 @@ module.exports = plop => {
           type: 'append',
           path: 'src/ui-kit/Icon.tsx',
           pattern: '/* PLOP_INJECT_KEY */',
-          template: `  {{camelCase name}}: { component: {{camelCase name}}, ${data.color && data.color.trim() ? `fill: ${data.color.startsWith('colors') ? data.color : `'${data.color}'`}` : ''} }`,
+          template: `  {{camelCase name}}: { component: {{camelCase name}}${data.color && data.color.trim() ? `, fill: ${data.color.startsWith('colors') ? data.color : `'${data.color}'`}` : ''} },`,
         },
       ];
     },

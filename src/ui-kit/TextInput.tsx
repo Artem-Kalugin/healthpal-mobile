@@ -70,6 +70,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
   pointerEvents = undefined,
   inputRef,
   outlineType,
+  size = 'default',
   label = '',
   showDeleteIfFocusedOnly = true,
   androidFixScrollMultiline = false,
@@ -102,6 +103,19 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
     disabled,
     multiline: _multiline,
   });
+
+  const renderNoPointerEventsWrapperAndroid = (children: ReactNode) =>
+    //https://github.com/facebook/react-native/issues/25644
+    !IS_IOS && pointerEvents === 'none' ? (
+      <View
+        pointerEvents="none"
+        style={styles.wrapper}
+      >
+        {children}
+      </View>
+    ) : (
+      <>{children}</>
+    );
 
   const hasDisplayableValue = value || placeholder;
 
@@ -144,41 +158,47 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
           {label}
         </Animated.Text>
       </Animated.View>
-
-      <_TextInput
-        ref={inputRef}
-        autoCapitalize={autoCapitalize}
-        autoFocus={autoFocus}
-        editable={!disabled}
-        enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
-        keyboardType={keyboardType}
-        maxLength={maxLength}
-        multiline={multiline || (!IS_IOS && androidFixScrollMultiline)}
-        placeholder={placeholder}
-        placeholderTextColor={colors.grayscale['300']}
-        pointerEvents={pointerEvents}
-        returnKeyType={returnKeyType}
-        secureTextEntry={secureTextEntry}
-        selectionColor={colors.grayscale['700']}
-        showSoftInputOnFocus={showSoftInputOnFocus}
-        style={[styles.input, StyleSheet.flatten(style)]}
-        submitBehavior={submitBehavior}
-        value={value}
-        onBlur={e => {
-          onBlur(e);
-          setIsFocused(false);
-          animateLabel(false);
-        }}
-        onChangeText={onChange}
-        onContentSizeChange={onContentSizeChange}
-        onEndEditing={onEndEditing}
-        onFocus={e => {
-          onFocus(e);
-          setIsFocused(true);
-          animateLabel(true);
-        }}
-        onSubmitEditing={onSubmitEditing}
-      />
+      {renderNoPointerEventsWrapperAndroid(
+        <_TextInput
+          ref={inputRef}
+          autoCapitalize={autoCapitalize}
+          autoFocus={autoFocus}
+          editable={!disabled}
+          enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
+          keyboardType={keyboardType}
+          maxLength={maxLength}
+          multiline={multiline || (!IS_IOS && androidFixScrollMultiline)}
+          placeholder={placeholder}
+          placeholderTextColor={colors.grayscale['400']}
+          pointerEvents={pointerEvents}
+          returnKeyType={returnKeyType}
+          secureTextEntry={secureTextEntry}
+          selectionColor={colors.grayscale['700']}
+          showSoftInputOnFocus={showSoftInputOnFocus}
+          style={[
+            styles.inputShared,
+            size === 'small' && styles.inputSmall,
+            size === 'default' && styles.inputDefault,
+            StyleSheet.flatten(style),
+          ]}
+          submitBehavior={submitBehavior}
+          value={value}
+          onBlur={e => {
+            onBlur(e);
+            setIsFocused(false);
+            animateLabel(false);
+          }}
+          onChangeText={onChange}
+          onContentSizeChange={onContentSizeChange}
+          onEndEditing={onEndEditing}
+          onFocus={e => {
+            onFocus(e);
+            setIsFocused(true);
+            animateLabel(true);
+          }}
+          onSubmitEditing={onSubmitEditing}
+        />,
+      )}
 
       {IconRight ? (
         <Animated.View
@@ -240,7 +260,6 @@ const getStyles = ({
       borderRadius: 12,
       backgroundColor: colors.grayscale['50'],
     },
-
     label: {
       position: 'absolute',
       top: 12,
@@ -249,21 +268,32 @@ const getStyles = ({
       fontSize: 16,
       fontFamily: primaryFontNameMap[400],
     },
-    input: {
-      flex: 1,
-      height: multiline ? 'auto' : 46,
+    inputShared: {
+      flex: IS_IOS ? 1 : undefined,
       maxHeight: 300,
-      minHeight: multiline ? 46 : 'auto',
-      paddingTop: 20,
       paddingHorizontal: 8,
       color: disabled ? colors.grayscale['200'] : colors.black,
-      fontSize: 16,
-      lineHeight: 18,
+      fontSize: 18,
       fontFamily: primaryFontNameMap[400],
+    },
+    inputDefault: {
+      height: multiline ? 'auto' : 46,
+      minHeight: multiline ? 46 : 'auto',
+      paddingTop: label ? 18 : 8,
+      paddingBottom: 0,
+    },
+    inputSmall: {
+      height: multiline ? 'auto' : 40,
+      minHeight: multiline ? 40 : 'auto',
+      paddingTop: label ? 12 : 2,
+      paddingBottom: 0,
     },
     iconContainer: {
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    wrapper: {
+      flex: 1,
     },
     iconLeft: {
       paddingLeft: 8,
