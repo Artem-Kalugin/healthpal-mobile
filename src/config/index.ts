@@ -4,6 +4,7 @@ import { withSpring } from 'react-native-reanimated';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 
 /* PLOP_INJECT_IMPORT */
+import clinic from '#assets/images/clinic.png';
 import home1 from '#assets/images/home-1.png';
 import onboarding1 from '#assets/images/onboarding-1.png';
 import onboarding2 from '#assets/images/onboarding-2.png';
@@ -49,7 +50,7 @@ export const withCustomAnimation = (toValue: number, cb?: () => void) => {
 
 export const shadow = StyleSheet.create({
   style: {
-    boxShadow: '0px 6px 8px -5px #000000AA',
+    boxShadow: '0px 6px 10px -8px #00000099',
   },
 }).style;
 export const tabbarShadow = StyleSheet.create({
@@ -60,6 +61,7 @@ export const tabbarShadow = StyleSheet.create({
 
 export const Images = {
   /* PLOP_INJECT_KEY */
+  clinic: clinic,
   home1: home1,
   onboarding3: onboarding3,
   onboarding2: onboarding2,

@@ -1,16 +1,16 @@
-import React, { useRef, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useRef } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SearchBar } from 'react-native-screens';
 
 import { Image } from 'expo-image';
 
+import { DoctorsCategoryThumbnail } from '#components/entities/DoctorsCategory/Thumbnail';
+import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
 import Swiper from '#components/Swiper';
 import { ISwiperRef } from '#components/Swiper/Swiper';
 
-import { Button, Icon, TextInput, TextLarge, TextSmall } from '#ui-kit';
+import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 
 import { TabRoutes, TabScreenProps } from '#navigation/Tab/types';
 
@@ -18,24 +18,20 @@ import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
   colors,
-  SAFE_ZONE_BOTTOM,
   shadow,
 } from '#config';
-
-import { animateLayout } from '#utils';
 
 import { slides } from './config';
 
 export const Home: React.FC<TabScreenProps<TabRoutes.Home>> = props => {
   const swiperRef = useRef<ISwiperRef>(null);
-  const [activeSlide, setActiveSlide] = useState(0);
 
   return (
-    <SafeAreaView
-      edges={['top']}
-      style={styles.container}
-    >
-      <View style={styles.header}>
+    <ScrollView style={styles.container}>
+      <SafeAreaView
+        edges={['top']}
+        style={styles.header}
+      >
         <View style={styles.locationAndNotificationsWrapper}>
           <View style={styles.locationContainer}>
             <TextSmall color={colors.grayscale['500']}>Город</TextSmall>
@@ -60,7 +56,7 @@ export const Home: React.FC<TabScreenProps<TabRoutes.Home>> = props => {
             size="small"
           />
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
 
       <Swiper
         autoplayInterval={10000}
@@ -86,12 +82,48 @@ export const Home: React.FC<TabScreenProps<TabRoutes.Home>> = props => {
         style={styles.swiper}
         swiperRef={swiperRef}
         keyExtractor={(item, index) => index}
-        onSlideChange={newSlideIndex => {
-          animateLayout();
-          setActiveSlide(newSlideIndex);
-        }}
       />
-    </SafeAreaView>
+
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <TextBase weight="700">Специализации</TextBase>
+          <TextSmall
+            color={colors.grayscale['500']}
+            weight="500"
+          >
+            Все
+          </TextSmall>
+        </View>
+        <View style={styles.categoriesContent}>
+          <View style={styles.categoryRow}>
+            {Array(4).fill(<DoctorsCategoryThumbnail />)}
+          </View>
+          <View style={styles.categoryRow}>
+            {Array(4).fill(<DoctorsCategoryThumbnail />)}
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <TextBase weight="700">Ближайшие медицинские центры</TextBase>
+          <TextSmall
+            color={colors.grayscale['500']}
+            weight="500"
+          >
+            Все
+          </TextSmall>
+        </View>
+        <ScrollView
+          horizontal
+          contentContainerStyle={styles.clinicsContentContainer}
+          showsHorizontalScrollIndicator={false}
+          style={styles.clinicsContent}
+        >
+          {Array(4).fill(<MedicalCenterCard />)}
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -126,12 +158,15 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   searchBar: {
+    height: 40,
+    marginBottom: 16,
     borderWidth: 0,
     backgroundColor: colors.grayscale['100'],
   },
   swiper: {
     width: '100%',
     aspectRatio: (342 + 24 + 24) / 162,
+    marginBottom: 20,
   },
   slideWrapper: {
     paddingHorizontal: 12,
@@ -142,5 +177,31 @@ const styles = StyleSheet.create({
   slideImage: {
     width: '100%',
     aspectRatio: 342 / 162,
+  },
+  section: {
+    gap: 10,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+  },
+
+  categoriesContent: {
+    marginBottom: 20,
+    gap: 20,
+  },
+  categoryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+  },
+  clinicsContent: {
+    marginBottom: 24,
+    paddingBottom: 12,
+  },
+  clinicsContentContainer: {
+    paddingHorizontal: 24,
+    gap: 16,
   },
 });

@@ -269,7 +269,7 @@ const getStyles = ({
       fontFamily: primaryFontNameMap[400],
     },
     inputShared: {
-      flex: IS_IOS ? 1 : undefined,
+      flex: 1,
       maxHeight: 300,
       paddingHorizontal: 8,
       color: disabled ? colors.grayscale['200'] : colors.black,

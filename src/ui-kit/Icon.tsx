@@ -14,17 +14,20 @@ import cross from '#assets/icons/cross.svg';
 import gallery from '#assets/icons/gallery.svg';
 import homeActive from '#assets/icons/home-active.svg';
 import home from '#assets/icons/home.svg';
+/* PLOP_INJECT_IMPORT */
+import hospital from '#assets/icons/hospital.svg';
 import lock from '#assets/icons/lock.svg';
 import logo from '#assets/icons/logo.svg';
 import mapActive from '#assets/icons/map-active.svg';
 import map from '#assets/icons/map.svg';
 import messageEdit from '#assets/icons/message-edit.svg';
 import notification from '#assets/icons/notification.svg';
+import pathTime from '#assets/icons/path-time.svg';
 import profileActive from '#assets/icons/profile-active.svg';
 import profile from '#assets/icons/profile.svg';
-/* PLOP_INJECT_IMPORT */
 import search from '#assets/icons/search.svg';
 import sms from '#assets/icons/sms.svg';
+import star from '#assets/icons/star.svg';
 import user from '#assets/icons/user.svg';
 
 import { colors } from '#config';
@@ -33,6 +36,9 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  hospital: { component: hospital },
+  pathTime: { component: pathTime },
+  star: { component: star },
   search: { component: search },
   notification: { component: notification },
   profileActive: { component: profileActive },
