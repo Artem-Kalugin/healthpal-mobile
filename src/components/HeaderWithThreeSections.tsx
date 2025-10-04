@@ -54,6 +54,8 @@ const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
           <TextXL
             numberOfLines={1}
             style={styles.title}
+            textAlign="left"
+            weight="600"
           >
             {title}
           </TextXL>
@@ -79,14 +81,14 @@ const getStyles = ({
   StyleSheet.create({
     wrapper: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
       paddingTop,
       paddingBottom,
       paddingHorizontal: paddingHorizontal,
+      gap: 14,
     },
     iconContainer: {
-      flex: 1,
+      minWidth: 24,
       alignItems: 'center',
     },
     leftSide: {
@@ -99,9 +101,7 @@ const getStyles = ({
       marginLeft: 'auto',
     },
     centerSide: {
-      flexGrow: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      flex: 1,
     },
     title: {
       flexWrap: 'nowrap',

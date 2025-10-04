@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+
 import { Icon } from '#ui-kit/Icon';
 
 import { hitSlopBig } from '#config';

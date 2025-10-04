@@ -17,7 +17,7 @@ import {
 } from './config';
 
 export type ButtonSize = 'regular' | 'small' | 'extra-small';
-export type ButtonAppearance = 'filled' | 'text-only';
+export type ButtonAppearance = 'filled' | 'outlined' | 'text-only';
 export type ButtonType = 'primary';
 
 export interface IButton {

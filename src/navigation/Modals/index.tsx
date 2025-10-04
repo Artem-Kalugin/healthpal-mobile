@@ -1,7 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { DateTimePicker, Dialog, ImagePicker } from '#modals';
+import Select from '#modals/Select';
 
 import { ModalsParamList, ModalsRoutes } from './types';
 
@@ -16,8 +17,20 @@ const StackModals = () => {
       }}
     >
       <Modals.Screen
-        component={View}
+        component={Select}
+        name={ModalsRoutes.Select}
+      />
+      <Modals.Screen
+        component={DateTimePicker}
+        name={ModalsRoutes.DateTimePicker}
+      />
+      <Modals.Screen
+        component={Dialog}
         name={ModalsRoutes.Dialog}
+      />
+      <Modals.Screen
+        component={ImagePicker}
+        name={ModalsRoutes.ImagePicker}
       />
     </Modals.Navigator>
   );

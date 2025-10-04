@@ -7,8 +7,7 @@ import { initialWindowMetrics } from 'react-native-safe-area-context';
 import onboarding1 from '#assets/images/onboarding-1.png';
 import onboarding2 from '#assets/images/onboarding-2.png';
 import onboarding3 from '#assets/images/onboarding-3.png';
-
-import { colors } from './colors';
+import profileCircle from '#assets/images/profile-circle.png';
 
 export const IS_IOS = Platform.OS === 'ios';
 
@@ -32,7 +31,7 @@ export const hitSlopBig = {
 
 export enum ActiveOpacities {
   LIGHT = 0.1,
-  MEDIUM = 0.2,
+  MEDIUM = 0.4,
   HEAVY = 0.6,
 }
 
@@ -49,14 +48,7 @@ export const withCustomAnimation = (toValue: number, cb?: () => void) => {
 
 export const shadow = StyleSheet.create({
   style: {
-    elevation: 3,
-    shadowColor: colors.black,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    shadowRadius: 2.22,
-    shadowOpacity: 0.42,
+    boxShadow: '0px 6px 8px -6px #00000066',
   },
 }).style;
 
@@ -65,6 +57,8 @@ export const Images = {
   onboarding3: onboarding3,
   onboarding2: onboarding2,
   onboarding1: onboarding1,
+  profileCircle,
 };
+export const BORDER_RADIUS_ROUNDED = 9999;
 
 export * from './colors';

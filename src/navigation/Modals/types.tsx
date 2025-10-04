@@ -1,7 +1,11 @@
 import { ReactElement, ReactNode } from 'react';
 import { FlatListProps, ViewStyle } from 'react-native';
 
+import DatePicker from 'react-native-date-picker';
+
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { ImagePickerAsset } from 'expo-image-picker';
+
 import { IButton } from '#ui-kit/Button';
 
 import { AppParamList } from '#navigation/types';
@@ -21,6 +25,8 @@ export enum ModalsRoutes {
   /* utils */
   Select = 'Select',
   Dialog = 'Dialog',
+  DateTimePicker = 'DateTimePicker',
+  ImagePicker = 'ImagePicker',
 }
 
 export enum EnumSelectModalLayout {
@@ -28,18 +34,18 @@ export enum EnumSelectModalLayout {
   'MULTIPLE' = 'MULTIPLE',
 }
 
-export type SelectModalParams<T, isMultiple> = {
+export type SelectModalParams<T> = {
   title: string;
   defaultValue?: any;
   checkedExtractor: (
     item: T,
-    currentItem: isMultiple extends true ? T[] : T | undefined,
+    currentItem: T | undefined,
     index: number,
   ) => boolean;
   isMultiple?: boolean;
   layout?: EnumSelectModalLayout;
   renderItem: (item: T, index: number) => ReactElement;
-  onSelectionEnd: (item?: isMultiple extends true ? T[] : T) => void;
+  onSelectionEnd: (item?: T) => void;
   itemContainerStyle?: ViewStyle;
 } & Pick<
   FlatListProps<T>,
@@ -54,7 +60,15 @@ export type ModalsParamList = {
     confirmButtonProps: UIActionModalButton;
     declineButtonProps?: UIActionModalButton;
   };
-  [ModalsRoutes.Select]: SelectModalParams<any, any>;
+  [ModalsRoutes.Select]: SelectModalParams<any>;
+  [ModalsRoutes.DateTimePicker]: {
+    pickerProps: DatePicker['props'];
+    onEnd: (date: Date) => void;
+    title?: string;
+  };
+  [ModalsRoutes.ImagePicker]: {
+    onEnd: (image: ImagePickerAsset) => void;
+  };
 };
 
 export type ModalsScreenProps<RouteName extends ModalsRoutes> =

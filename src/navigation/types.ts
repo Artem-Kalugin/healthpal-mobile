@@ -7,6 +7,7 @@ import { PasswordRecoveryParamList } from './PasswordRecovery/types';
 
 export enum AppRoutes {
   Onboarding = 'Onboarding',
+  ProfileEditing = 'ProfileEditing',
   StackPasswordRecovery = 'PasswordRecovery',
   StackAuth = 'StackAuth',
   StackModals = 'StackModals',
@@ -14,6 +15,7 @@ export enum AppRoutes {
 
 export type AppParamList = {
   [AppRoutes.Onboarding]: undefined;
+  [AppRoutes.ProfileEditing]: undefined;
   [AppRoutes.StackPasswordRecovery]: NavigatorScreenParams<PasswordRecoveryParamList>;
   [AppRoutes.StackAuth]: NavigatorScreenParams<AuthParamList>;
   [AppRoutes.StackModals]: NavigatorScreenParams<ModalsParamList>;

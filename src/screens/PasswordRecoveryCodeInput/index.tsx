@@ -131,7 +131,6 @@ export const PasswordRecoveryCodeInput: React.FC<
                   key="resend"
                   entering={FadeIn}
                   exiting={FadeOut}
-                  layout={LinearTransition.easing(Easing.ease)}
                   style={styles.resendContainer}
                 >
                   <Animated.View layout={LinearTransition.easing(Easing.ease)}>

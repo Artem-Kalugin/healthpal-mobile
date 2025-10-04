@@ -42,7 +42,7 @@ export const Checkbox = ({
         {active && (
           <Icon
             name="check"
-            size={20}
+            size={22}
             style={styles.check}
           />
         )}
@@ -59,11 +59,10 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   checkWrapper: {
-    height: 20,
-    width: 20,
+    height: 24,
+    width: 24,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 3,
     borderColor: colors.black,
     borderWidth: 1,
     borderRadius: 3,

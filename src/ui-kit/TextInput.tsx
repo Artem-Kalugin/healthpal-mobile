@@ -19,6 +19,7 @@ import Animated, {
 
 import { colors, IS_IOS, withCustomAnimation } from '#config';
 
+import { Icon } from './Icon';
 import { primaryFontNameMap } from './Text';
 
 const LABEL_TRANSLATE_Y = -12;
@@ -54,6 +55,7 @@ export interface ITextInput
   pointerEvents: TextInputProps['pointerEvents'];
   outlineType: ITextInputOutline;
   disabled: boolean;
+  showDeleteIfFocusedOnly: boolean;
   androidFixScrollMultiline: boolean;
   label: string;
   onChange: TextInputProps['onChangeText'];
@@ -66,10 +68,10 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
   maxLength,
   multiline = false,
   pointerEvents = undefined,
-  size = 'small',
   inputRef,
   outlineType,
   label = '',
+  showDeleteIfFocusedOnly = true,
   androidFixScrollMultiline = false,
   secureTextEntry = false,
   enablesReturnKeyAutomatically = false,
@@ -98,7 +100,6 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
     outlineType: outlineType ? outlineType : isFocused ? 'focused' : 'default',
     label,
     disabled,
-    size,
     multiline: _multiline,
   });
 
@@ -190,7 +191,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
       ) : (
         !!value &&
         !disabled &&
-        isFocused && (
+        (showDeleteIfFocusedOnly ? isFocused : true) && (
           <Animated.View
             entering={FadeIn}
             exiting={FadeOut}
@@ -201,7 +202,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
                 onChange('');
               }}
             >
-              {/* <Icon name="close" /> */}
+              <Icon name="cross" />
             </TouchableOpacity>
           </Animated.View>
         )
@@ -221,13 +222,11 @@ const getStyles = ({
   outlineType,
   label,
   disabled,
-  size,
   multiline,
 }: {
   outlineType: ITextInputOutline;
   label: string;
   disabled: boolean;
-  size: ITextInput['size'];
   multiline: ITextInput['multiline'];
 }) =>
   StyleSheet.create({
@@ -235,7 +234,7 @@ const getStyles = ({
       width: '100%',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingHorizontal: 4,
+      paddingHorizontal: 8,
       borderColor: borderColors[outlineType],
       borderWidth: 1,
       borderRadius: 12,
@@ -244,20 +243,19 @@ const getStyles = ({
 
     label: {
       position: 'absolute',
-      top: size === 'small' ? 12 : 18,
-      left: size === 'small' ? 9 : 13,
+      top: 12,
+      left: 8,
       color: colors.grayscale['400'],
       fontSize: 16,
       fontFamily: primaryFontNameMap[400],
     },
     input: {
       flex: 1,
-      height: multiline ? 'auto' : size === 'small' ? 44 : 56,
+      height: multiline ? 'auto' : 46,
       maxHeight: 300,
-      minHeight: multiline ? (size === 'small' ? 44 : 56) : 'auto',
-      paddingTop: size === 'small' ? (label ? 20 : 8) : label ? 28 : 20,
-      paddingBottom: size === 'small' ? (label ? 4 : 14) : label ? 8 : 18,
-      paddingHorizontal: size === 'small' ? 8 : 12,
+      minHeight: multiline ? 46 : 'auto',
+      paddingTop: 20,
+      paddingHorizontal: 8,
       color: disabled ? colors.grayscale['200'] : colors.black,
       fontSize: 16,
       lineHeight: 18,
@@ -268,9 +266,9 @@ const getStyles = ({
       alignItems: 'center',
     },
     iconLeft: {
-      paddingLeft: size === 'small' ? 8 : 12,
+      paddingLeft: 8,
     },
     iconRight: {
-      paddingRight: size === 'small' ? 8 : 12,
+      paddingRight: 8,
     },
   });
