@@ -8,6 +8,7 @@ import { AuthStack } from './Auth';
 import { DEFAULT_STACK_OPTIONS } from './config';
 import StackModals from './Modals';
 import { PasswordRecoveryStack } from './PasswordRecovery';
+import { TabStack } from './Tab';
 import { AppParamList, AppRoutes } from './types';
 
 const App = createStackNavigator<AppParamList>();
@@ -15,7 +16,7 @@ const App = createStackNavigator<AppParamList>();
 const AppStack = () => {
   return (
     <App.Navigator
-      initialRouteName={AppRoutes.ProfileEditing}
+      initialRouteName={AppRoutes.Onboarding}
       screenOptions={DEFAULT_STACK_OPTIONS}
     >
       <App.Screen
@@ -33,6 +34,10 @@ const AppStack = () => {
       <App.Screen
         component={PasswordRecoveryStack}
         name={AppRoutes.StackPasswordRecovery}
+      />
+      <App.Screen
+        component={TabStack}
+        name={AppRoutes.Tab}
       />
 
       <App.Screen
