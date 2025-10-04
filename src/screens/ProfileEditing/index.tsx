@@ -9,7 +9,7 @@ import { DateTime } from 'luxon';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
-import { Button, Icon, TextBase, TextInput, TextXL } from '#ui-kit';
+import { Button, Icon, TextBase, TextInput } from '#ui-kit';
 
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
 import { TabRoutes } from '#navigation/Tab/types';

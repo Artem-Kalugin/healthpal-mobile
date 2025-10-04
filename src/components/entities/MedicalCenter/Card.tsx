@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   container: {
     width: 252,
     borderRadius: 8,
+    backgroundColor: colors.main.white,
   },
   image: {
     width: '100%',
