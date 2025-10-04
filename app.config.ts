@@ -10,5 +10,8 @@ module.exports = ({ config }: { config: ExpoConfig }) => ({
       yandexMapKit: process.env.YANDEX_MAPKIT_KEY,
     },
   },
-  plugins: [['./expo-config-plugins/withYandexMap.js']],
+  plugins: [
+    ...(config.plugins || []),
+    ['./expo-config-plugins/withYandexMap.js'],
+  ],
 });

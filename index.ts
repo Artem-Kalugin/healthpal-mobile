@@ -3,6 +3,7 @@ import { Platform, UIManager } from 'react-native';
 import { enableFreeze } from 'react-native-screens';
 
 import { registerRootComponent } from 'expo';
+import Constants from 'expo-constants';
 import { Settings } from 'luxon';
 
 import '@formatjs/intl-locale/polyfill';
@@ -13,7 +14,7 @@ import YaMap from 'react-native-yamap';
 
 import App from './src/App';
 
-YaMap.setLocale('ru_RU');
+YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);
 
 Settings.defaultLocale = 'ru';
 

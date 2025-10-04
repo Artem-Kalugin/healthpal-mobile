@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTab, { BottomTabData } from '#components/BottomTab';
 
 import { Home } from '#screens/Home';
+import { Map } from '#screens/Map';
 
 import { colors, tabbarShadow } from '#config';
 
@@ -37,7 +38,7 @@ export const TabStack = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={TabRoutes.Home}
+      initialRouteName={TabRoutes.Map}
       screenOptions={{
         headerShown: false,
       }}
@@ -83,19 +84,16 @@ export const TabStack = () => {
         component={Home}
         name={TabRoutes.Home}
       />
-      {/* <Tab.Screen
-        component={Home}
-        //@ts-expect-error
+      <Tab.Screen
+        component={Map}
         name={TabRoutes.Map}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         component={Home}
-        //@ts-expect-error
         name={TabRoutes.Appointments}
       />
       <Tab.Screen
         component={Home}
-        //@ts-expect-error
         name={TabRoutes.Profile}
       /> */}
     </Tab.Navigator>
