@@ -17,7 +17,11 @@ const AppStack = () => {
   return (
     <App.Navigator
       initialRouteName={AppRoutes.Onboarding}
-      screenOptions={DEFAULT_STACK_OPTIONS}
+      screenOptions={{
+        ...DEFAULT_STACK_OPTIONS,
+        //https://github.com/react-navigation/react-navigation/issues/12531 delete after fixed
+        detachPreviousScreen: false,
+      }}
     >
       <App.Screen
         component={Onboarding}
@@ -45,7 +49,8 @@ const AppStack = () => {
         name={AppRoutes.StackModals}
         options={{
           headerShown: false,
-          detachPreviousScreen: false,
+          //https://github.com/react-navigation/react-navigation/issues/12531 uncomment after fixed
+          //detachPreviousScreen: false,
           presentation: 'transparentModal',
           cardStyle: {
             backgroundColor: 'transparent',
