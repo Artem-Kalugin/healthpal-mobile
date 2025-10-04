@@ -9,7 +9,11 @@ import '@formatjs/intl-locale/polyfill';
 import '@formatjs/intl-datetimeformat/polyfill';
 import '@formatjs/intl-datetimeformat/locale-data/ru';
 
+import YaMap from 'react-native-yamap';
+
 import App from './src/App';
+
+YaMap.setLocale('ru_RU');
 
 Settings.defaultLocale = 'ru';
 

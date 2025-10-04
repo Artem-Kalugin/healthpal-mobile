@@ -33,7 +33,7 @@ interface ICodeCell {
 }
 
 const CELL_COUNT = 5;
-let autoFocusTimerId: NodeJS.Timeout;
+let autoFocusTimerId: number;
 export const CodeInput: React.FC<ICodeInput> = ({
   value,
   setValue,
