@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,7 +15,7 @@ import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 import { PasswordRecoveryRoutes } from '#navigation/PasswordRecovery/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
-import { colors, SAFE_ZONE_BOTTOM } from '#config';
+import { colors, hitSlop, SAFE_ZONE_BOTTOM } from '#config';
 
 export const SignIn: React.FC<
   CompositeScreenProps<
@@ -67,9 +67,8 @@ export const SignIn: React.FC<
           </View>
 
           <View style={styles.footer}>
-            <TextSmall
-              color={colors.primary.normal}
-              textAlign="center"
+            <TouchableOpacity
+              hitSlop={hitSlop}
               onPress={() => {
                 Keyboard.dismiss();
                 props.navigation.push(AppRoutes.StackPasswordRecovery, {
@@ -77,20 +76,27 @@ export const SignIn: React.FC<
                 });
               }}
             >
-              Забыли пароль?
-            </TextSmall>
-            <TextSmall textAlign="center">
-              Ещё нет аккаунта?{' '}
               <TextSmall
                 color={colors.primary.normal}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  props.navigation.replace(AuthRoutes.SignUp);
-                }}
+                textAlign="center"
               >
-                Зарегистрироваться
+                Забыли пароль?
               </TextSmall>
-            </TextSmall>
+            </TouchableOpacity>
+            <TouchableOpacity
+              hitSlop={hitSlop}
+              onPress={() => {
+                Keyboard.dismiss();
+                props.navigation.replace(AuthRoutes.SignUp);
+              }}
+            >
+              <TextSmall textAlign="center">
+                Ещё нет аккаунта?{' '}
+                <TextSmall color={colors.primary.normal}>
+                  Зарегистрироваться
+                </TextSmall>
+              </TextSmall>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAwareScrollView>

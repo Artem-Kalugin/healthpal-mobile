@@ -18,6 +18,8 @@ interface IPaginationDot {
   translation: SharedValue<number>;
   slideSize: SharedValue<number>;
   slideSequenceSize: SharedValue<number>;
+  colorInterpolation?: [string, string];
+  widthInterpolation?: [number, number];
 }
 
 const PaginationDot: React.FC<IPaginationDot> = ({
@@ -25,6 +27,8 @@ const PaginationDot: React.FC<IPaginationDot> = ({
   translation,
   slideSize,
   slideSequenceSize,
+  colorInterpolation = [colors.grayscale['400'], colors.main.midnightBlue],
+  widthInterpolation = [8, 16],
 }) => {
   const animatedStyle = useAnimatedStyle(() => {
     const containerOffset = translation.value + slideSize.value * index;
@@ -43,12 +47,12 @@ const PaginationDot: React.FC<IPaginationDot> = ({
       backgroundColor: interpolateColor(
         translateX,
         [slideSize.value, 0],
-        [colors.grayscale['400'], colors.main.midnightBlue],
+        colorInterpolation,
       ),
       width: interpolate(
         translateX,
         [slideSize.value, 0],
-        [8, 16],
+        widthInterpolation,
         Extrapolation.CLAMP,
       ),
     };

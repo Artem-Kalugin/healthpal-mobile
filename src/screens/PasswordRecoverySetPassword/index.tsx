@@ -2,20 +2,27 @@ import { StyleSheet, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
+import { CompositeScreenProps } from '@react-navigation/native';
+
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 
+import { AuthRoutes } from '#navigation/Auth/types';
 import {
   PasswordRecoveryRoutes,
   PasswordRecoveryScreenProps,
 } from '#navigation/PasswordRecovery/types';
+import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
 export const PasswordRecoverySetPassword: React.FC<
-  PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoverySetPassword>
+  CompositeScreenProps<
+    PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoverySetPassword>,
+    RootScreenProps<AppRoutes>
+  >
 > = props => {
   return (
     <View style={styles.container}>
@@ -60,12 +67,9 @@ export const PasswordRecoverySetPassword: React.FC<
               </View>
               <Button
                 onPress={() =>
-                  props.navigation.navigate(
-                    PasswordRecoveryRoutes.PasswordRecoveryCodeInput,
-                    {
-                      phone: '',
-                    },
-                  )
+                  props.navigation.replace(AppRoutes.StackAuth, {
+                    screen: AuthRoutes.SignIn,
+                  })
                 }
               >
                 Сменить пароль

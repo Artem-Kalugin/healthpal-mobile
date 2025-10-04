@@ -26,31 +26,39 @@ export interface ISwiperRef {
 
 export interface ISwiper<ItemT> {
   swiperRef?: RefObject<ISwiperRef | null>;
-  defaultWidth?: number;
   data: ItemT[];
   autoplayInterval?: number;
   ListBeforePaginationComponent?: React.ReactElement;
   renderItem?: (payload: { item: ItemT; index: number }) => ReactNode | null;
   keyExtractor?: (item: ItemT, index: number) => string | number;
   onSlideChange?: (value: number) => void;
+
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
+
+  paginationColorInterpolation?: [string, string];
+  paginationWidthInterpolation?: [number, number];
+  paginationShouldOverlay?: boolean;
+  paginationContainerStyle?: StyleProp<ViewStyle>;
 }
 
 const Swiper = <T extends unknown>({
   swiperRef,
+  paginationShouldOverlay = false,
   contentContainerStyle = {},
-  defaultWidth = 400,
   keyExtractor,
   renderItem = () => null,
   autoplayInterval = 5000,
   ListBeforePaginationComponent,
   data = [],
   style = {},
+  paginationContainerStyle = {},
+  paginationColorInterpolation,
+  paginationWidthInterpolation,
   onSlideChange = () => {},
 }: ISwiper<T>) => {
   const translation = useSharedValue(0);
-  const slideSize = useSharedValue(defaultWidth);
+  const slideSize = useSharedValue(0);
   const startXGesture = useSharedValue(0);
   const activeSlide = useSharedValue(0);
   const slideSequenceSize = useDerivedValue(() => {
@@ -158,16 +166,20 @@ const Swiper = <T extends unknown>({
         </Animated.View>
       </GestureDetector>
       {ListBeforePaginationComponent}
-      <View style={styles.paginationContainer}>
-        {data.map((el, index) => (
-          <PaginationDot
-            key={keyExtractor && `PAGINATION_${keyExtractor(el, index)}`}
-            index={index}
-            slideSequenceSize={slideSequenceSize}
-            slideSize={slideSize}
-            translation={translation}
-          />
-        ))}
+      <View style={paginationShouldOverlay && styles.anchorBottom}>
+        <View style={[styles.paginationContainer, paginationContainerStyle]}>
+          {data.map((el, index) => (
+            <PaginationDot
+              key={keyExtractor && `PAGINATION_${keyExtractor(el, index)}`}
+              colorInterpolation={paginationColorInterpolation}
+              index={index}
+              slideSequenceSize={slideSequenceSize}
+              slideSize={slideSize}
+              translation={translation}
+              widthInterpolation={paginationWidthInterpolation}
+            />
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -190,6 +202,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 12,
+  },
+  anchorBottom: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    left: 0,
+    paddingBottom: 6,
   },
 });
 

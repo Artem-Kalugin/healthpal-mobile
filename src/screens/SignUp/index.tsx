@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,7 +13,7 @@ import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
-import { colors, SAFE_ZONE_BOTTOM } from '#config';
+import { colors, hitSlop, SAFE_ZONE_BOTTOM } from '#config';
 
 export const SignUp: React.FC<
   CompositeScreenProps<
@@ -73,18 +73,18 @@ export const SignUp: React.FC<
               </Button>
             </View>
           </View>
-          <TextSmall textAlign="center">
-            Уже есть аккаунт?{' '}
-            <TextSmall
-              color={colors.primary.normal}
-              onPress={() => {
-                Keyboard.dismiss();
-                props.navigation.replace(AuthRoutes.SignIn);
-              }}
-            >
-              Войти
+          <TouchableOpacity
+            hitSlop={hitSlop}
+            onPress={() => {
+              Keyboard.dismiss();
+              props.navigation.replace(AuthRoutes.SignIn);
+            }}
+          >
+            <TextSmall textAlign="center">
+              Уже есть аккаунт?{' '}
+              <TextSmall color={colors.primary.normal}>Войти</TextSmall>
             </TextSmall>
-          </TextSmall>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

@@ -4,6 +4,7 @@ import { enableFreeze } from 'react-native-screens';
 
 import { registerRootComponent } from 'expo';
 import { Settings } from 'luxon';
+
 import '@formatjs/intl-locale/polyfill';
 import '@formatjs/intl-datetimeformat/polyfill';
 import '@formatjs/intl-datetimeformat/locale-data/ru';

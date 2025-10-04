@@ -8,6 +8,7 @@ import { AuthStack } from './Auth';
 import { DEFAULT_STACK_OPTIONS } from './config';
 import StackModals from './Modals';
 import { PasswordRecoveryStack } from './PasswordRecovery';
+import { TabStack } from './Tab';
 import { AppParamList, AppRoutes } from './types';
 
 const App = createStackNavigator<AppParamList>();
@@ -15,8 +16,12 @@ const App = createStackNavigator<AppParamList>();
 const AppStack = () => {
   return (
     <App.Navigator
-      initialRouteName={AppRoutes.ProfileEditing}
-      screenOptions={DEFAULT_STACK_OPTIONS}
+      initialRouteName={AppRoutes.Onboarding}
+      screenOptions={{
+        ...DEFAULT_STACK_OPTIONS,
+        //https://github.com/react-navigation/react-navigation/issues/12531 delete after fixed
+        detachPreviousScreen: false,
+      }}
     >
       <App.Screen
         component={Onboarding}
@@ -34,13 +39,18 @@ const AppStack = () => {
         component={PasswordRecoveryStack}
         name={AppRoutes.StackPasswordRecovery}
       />
+      <App.Screen
+        component={TabStack}
+        name={AppRoutes.Tab}
+      />
 
       <App.Screen
         component={StackModals}
         name={AppRoutes.StackModals}
         options={{
           headerShown: false,
-          detachPreviousScreen: false,
+          //https://github.com/react-navigation/react-navigation/issues/12531 uncomment after fixed
+          //detachPreviousScreen: false,
           presentation: 'transparentModal',
           cardStyle: {
             backgroundColor: 'transparent',

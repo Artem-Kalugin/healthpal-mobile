@@ -9,9 +9,10 @@ import { DateTime } from 'luxon';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
-import { Button, Icon, TextBase, TextInput } from '#ui-kit';
+import { Button, Icon, TextBase, TextInput, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
+import { TabRoutes } from '#navigation/Tab/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import {
@@ -32,6 +33,7 @@ export const ProfileEditing: React.FC<
   const [date, setDate] = useState<Date | null>();
   const [sex, setSex] = useState<string>();
 
+  const [test, setTest] = useState<string>();
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -44,6 +46,7 @@ export const ProfileEditing: React.FC<
           paddingHorizontal={0}
           title="Заполните ваш профиль"
         />
+
         <View style={styles.body}>
           <TapKeyboardDissmissArea />
           <View style={styles.avatarWrapper}>
@@ -77,7 +80,11 @@ export const ProfileEditing: React.FC<
             <View>
               <View style={styles.formInputs}>
                 <TextInput label="ФИО" />
-                <TextInput label="Имя Пользователя" />
+                <TextInput
+                  label="Имя Пользователя"
+                  value={test}
+                  onChange={setTest}
+                />
                 <TextInput label="Электронная почта" />
                 <TouchableOpacity
                   onPress={() =>
@@ -143,7 +150,15 @@ export const ProfileEditing: React.FC<
                   />
                 </TouchableOpacity>
               </View>
-              <Button>Войти</Button>
+              <Button
+                onPress={() =>
+                  props.navigation.navigate(AppRoutes.Tab, {
+                    screen: TabRoutes.Home,
+                  })
+                }
+              >
+                Войти
+              </Button>
             </View>
           </View>
         </View>
