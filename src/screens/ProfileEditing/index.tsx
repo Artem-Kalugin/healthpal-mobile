@@ -9,14 +9,15 @@ import { DateTime } from 'luxon';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
-import { Button, Icon, TextInput } from '#ui-kit';
+import { Button, Icon, TextBase, TextInput } from '#ui-kit';
 
-import { ModalsRoutes } from '#navigation/Modals/types';
+import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
+  colors,
   Images,
   SAFE_ZONE_BOTTOM,
 } from '#config';
@@ -29,6 +30,7 @@ export const ProfileEditing: React.FC<
 > = props => {
   const [avatar, setAvatar] = useState<null | string>('');
   const [date, setDate] = useState<Date | null>();
+  const [sex, setSex] = useState<string>();
 
   return (
     <View style={styles.container}>
@@ -109,7 +111,37 @@ export const ProfileEditing: React.FC<
                     onChange={value => value === '' && setDate(null)}
                   />
                 </TouchableOpacity>
-                <TextInput label="Пол" />
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate(AppRoutes.StackModals, {
+                      screen: ModalsRoutes.Select,
+                      params: {
+                        title: 'Выберите пол',
+                        data: ['Мужской', 'Женский'],
+                        keyExtractor: item => item,
+                        checkedExtractor: (item, currentItem) =>
+                          item === currentItem,
+                        renderItem: item => (
+                          <TextBase weight="400">{item}</TextBase>
+                        ),
+                        defaultValue: sex,
+                        onSelectionEnd: item => setSex(item),
+                      } as SelectModalParams<string>,
+                    })
+                  }
+                >
+                  <TextInput
+                    IconRight={
+                      <Icon
+                        fill={colors.grayscale['500']}
+                        name="chevronDown"
+                      />
+                    }
+                    label="Пол"
+                    pointerEvents="none"
+                    value={sex}
+                  />
+                </TouchableOpacity>
               </View>
               <Button>Войти</Button>
             </View>

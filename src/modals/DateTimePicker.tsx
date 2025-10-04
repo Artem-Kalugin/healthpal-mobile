@@ -53,8 +53,8 @@ export const DateTimePicker: React.FC<
 
 const styles = StyleSheet.create({
   title: {
-    marginBottom: 20,
     alignSelf: 'flex-start',
+    marginBottom: 20,
   },
   dateTimePicker: {
     marginBottom: 20,

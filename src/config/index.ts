@@ -9,8 +9,6 @@ import onboarding2 from '#assets/images/onboarding-2.png';
 import onboarding3 from '#assets/images/onboarding-3.png';
 import profileCircle from '#assets/images/profile-circle.png';
 
-import { colors } from './colors';
-
 export const IS_IOS = Platform.OS === 'ios';
 
 export const SCREEN_WIDTH = Dimensions.get('screen').width;

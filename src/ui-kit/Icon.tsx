@@ -3,10 +3,11 @@ import React from 'react';
 import { SvgProps } from 'react-native-svg';
 
 import arrowLeft from '#assets/icons/arrow-left.svg';
-/* PLOP_INJECT_IMPORT */
 import calendar from '#assets/icons/calendar.svg';
 import camera from '#assets/icons/camera.svg';
 import check from '#assets/icons/check.svg';
+/* PLOP_INJECT_IMPORT */
+import chevronDown from '#assets/icons/chevron-down.svg';
 import chevronLeft from '#assets/icons/chevron-left.svg';
 import cross from '#assets/icons/cross.svg';
 import gallery from '#assets/icons/gallery.svg';
@@ -22,6 +23,7 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  chevronDown: { component: chevronDown },
   calendar: { component: calendar },
   gallery: { component: gallery },
   camera: { component: camera },
