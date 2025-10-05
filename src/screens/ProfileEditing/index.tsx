@@ -11,8 +11,9 @@ import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
 import { Button, Icon, TextBase, TextInput } from '#ui-kit';
 
+import { TabRoutes } from '#navigation/Main/Tab/types';
+import { MainRoutes } from '#navigation/Main/types';
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
-import { TabRoutes } from '#navigation/Tab/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import {
@@ -152,8 +153,11 @@ export const ProfileEditing: React.FC<
               </View>
               <Button
                 onPress={() =>
-                  props.navigation.navigate(AppRoutes.Tab, {
-                    screen: TabRoutes.Home,
+                  props.navigation.navigate(AppRoutes.StackMain, {
+                    screen: MainRoutes.Tab,
+                    params: {
+                      screen: TabRoutes.Home,
+                    },
                   })
                 }
               >

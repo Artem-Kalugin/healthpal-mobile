@@ -14,7 +14,7 @@ import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
 
 import { Icon, TextInput } from '#ui-kit';
 
-import { TabRoutes, TabScreenProps } from '#navigation/Tab/types';
+import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 
 import { colors } from '#config';
 

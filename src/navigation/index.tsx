@@ -6,9 +6,9 @@ import { Onboarding, ProfileEditing } from '#screens';
 
 import { AuthStack } from './Auth';
 import { DEFAULT_STACK_OPTIONS } from './config';
+import { MainStack } from './Main';
 import StackModals from './Modals';
 import { PasswordRecoveryStack } from './PasswordRecovery';
-import { TabStack } from './Tab';
 import { AppParamList, AppRoutes } from './types';
 
 const App = createStackNavigator<AppParamList>();
@@ -16,7 +16,7 @@ const App = createStackNavigator<AppParamList>();
 const AppStack = () => {
   return (
     <App.Navigator
-      initialRouteName={AppRoutes.Tab}
+      initialRouteName={AppRoutes.StackMain}
       screenOptions={{
         ...DEFAULT_STACK_OPTIONS,
         //https://github.com/react-navigation/react-navigation/issues/12531 delete after fixed
@@ -40,8 +40,8 @@ const AppStack = () => {
         name={AppRoutes.StackPasswordRecovery}
       />
       <App.Screen
-        component={TabStack}
-        name={AppRoutes.Tab}
+        component={MainStack}
+        name={AppRoutes.StackMain}
       />
 
       <App.Screen
