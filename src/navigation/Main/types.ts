@@ -4,8 +4,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { TabParamList } from './Tab/types';
 
 export enum MainRoutes {
-  Tab = 'Tab',
-  Search = 'Search',
+  Tab = 'MainTab',
+  Search = 'MainSearch',
 }
 
 export type MainParamList = {

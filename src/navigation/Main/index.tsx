@@ -2,6 +2,8 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { Search } from '#screens/Search';
+
 import { DEFAULT_STACK_OPTIONS } from '#navigation/config';
 
 import { TabStack } from './Tab';
@@ -12,7 +14,7 @@ const Stack = createStackNavigator<MainParamList>();
 export const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={MainRoutes.Tab}
+      initialRouteName={MainRoutes.Search}
       screenOptions={DEFAULT_STACK_OPTIONS}
     >
       <Stack.Screen
@@ -20,7 +22,7 @@ export const MainStack = () => {
         name={MainRoutes.Tab}
       />
       <Stack.Screen
-        component={TabStack}
+        component={Search}
         name={MainRoutes.Search}
       />
     </Stack.Navigator>
