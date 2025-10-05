@@ -25,7 +25,8 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-enableFreeze(true);
+//https://github.com/software-mansion/react-native-reanimated/issues/8307 uncomment after fixed
+// enableFreeze(true);
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
