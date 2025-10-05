@@ -19,7 +19,7 @@ import { Icon, TextInput } from '#ui-kit';
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
-import { colors } from '#config';
+import { colors, shadow } from '#config';
 
 export const Map: React.FC<
   CompositeScreenProps<
@@ -52,7 +52,7 @@ export const Map: React.FC<
       <View style={styles.searchBarAnchor}>
         <TouchableOpacity>
           <TextInput
-            containerStyle={styles.searchBar}
+            containerStyle={[styles.searchBar, shadow]}
             IconLeft={<Icon name="search" />}
             placeholder="Поиск"
             pointerEvents="none"
