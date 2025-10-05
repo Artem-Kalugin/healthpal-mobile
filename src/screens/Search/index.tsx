@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { DoctorCard } from '#components/entities/Doctor/Card';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
+import ListExtender from '#components/ListExtender';
 
-import { Icon, TextInput } from '#ui-kit';
+import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 import { Tag } from '#ui-kit/Tag';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
@@ -16,57 +18,78 @@ export const Search: React.FC<MainScreenProps<MainRoutes.Search>> = props => {
   const [activeCategory, setActiveCategory] = useState('all');
 
   return (
-    <FlatList
-      data={[]}
-      ListHeaderComponent={
-        <>
-          <HeaderWithThreeSections
-            containerStyle={styles.searchBarContainer}
-            title="Все специалисты"
-            titleTextAlign="center"
-          />
+    <>
+      <View>
+        <HeaderWithThreeSections
+          containerStyle={styles.searchBarContainer}
+          title="Все специалисты"
+          titleTextAlign="center"
+        />
 
-          <View style={styles.searchBarContainer}>
-            <TextInput
-              autoFocus
-              containerStyle={styles.searchBar}
-              IconLeft={<Icon name="search" />}
-              placeholder="Поиск врача…"
-              size="small"
+        <View style={styles.searchBarContainer}>
+          <TextInput
+            autoFocus
+            containerStyle={styles.searchBar}
+            IconLeft={<Icon name="search" />}
+            placeholder="Поиск врача…"
+            size="small"
+          />
+        </View>
+
+        <FlatList
+          ref={categoriesScrollRef}
+          horizontal
+          contentContainerStyle={styles.tagsContainer}
+          data={[
+            'All',
+            'Cardiologists',
+            'Dentists',
+            'Pulmonology',
+            'Another category',
+          ]}
+          renderItem={({ item: el, index }) => (
+            <Tag
+              key={el}
+              active={el === activeCategory}
+              value={el}
+              onPress={() => {
+                setActiveCategory(el);
+                categoriesScrollRef.current?.scrollToIndex({
+                  index,
+                  viewPosition: 0.5,
+                });
+              }}
             />
-          </View>
+          )}
+          showsHorizontalScrollIndicator={false}
+          style={styles.tagsList}
+        />
 
-          <FlatList
-            ref={categoriesScrollRef}
-            horizontal
-            contentContainerStyle={styles.tagsContainer}
-            data={[
-              'All',
-              'Cardiologists',
-              'Dentists',
-              'Pulmonology',
-              'Another category',
-            ]}
-            renderItem={({ item: el, index }) => (
-              <Tag
-                key={el}
-                active={el === activeCategory}
-                value={el}
-                onPress={() => {
-                  setActiveCategory(el);
-                  categoriesScrollRef.current?.scrollToIndex({
-                    index,
-                    viewPosition: 0.5,
-                  });
-                }}
-              />
-            )}
-          />
-        </>
-      }
-      renderItem={() => <View />}
-      style={styles.container}
-    />
+        <View style={styles.sectionHeader}>
+          <TextBase weight="700">532 founds</TextBase>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate(MainRoutes.Search)}
+          >
+            <TextSmall
+              color={colors.grayscale['500']}
+              weight="500"
+            >
+              Все
+            </TextSmall>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <FlatList
+        data={[1, 2, 3, 4, 5, 6]}
+        ListFooterComponent={<ListExtender height={36} />}
+        renderItem={() => (
+          <View style={styles.cardWrapper}>
+            <DoctorCard />
+          </View>
+        )}
+        style={styles.container}
+      />
+    </>
   );
 };
 
@@ -87,5 +110,18 @@ const styles = StyleSheet.create({
   tagsContainer: {
     paddingHorizontal: 24,
     gap: 8,
+  },
+  tagsList: {
+    marginBottom: 26,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+    paddingHorizontal: 24,
+  },
+  cardWrapper: {
+    marginBottom: 8,
+    paddingHorizontal: 24,
   },
 });

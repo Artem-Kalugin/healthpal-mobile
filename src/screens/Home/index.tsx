@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 24,
   },
-
   categoriesContent: {
     marginBottom: 20,
     gap: 20,
@@ -208,10 +207,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   clinicsContent: {
-    marginBottom: 24,
-    paddingBottom: 12,
+    overflow: 'visible',
+    marginBottom: 36,
   },
   clinicsContentContainer: {
+    overflow: 'visible',
     paddingHorizontal: 24,
     gap: 16,
   },

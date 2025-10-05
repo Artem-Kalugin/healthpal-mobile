@@ -50,7 +50,21 @@ export const withCustomAnimation = (toValue: number, cb?: () => void) => {
 
 export const shadow = StyleSheet.create({
   style: {
-    boxShadow: '0px 6px 10px -8px #00000099',
+    boxShadow: [
+      {
+        offsetX: 0,
+        offsetY: 4,
+        blurRadius: 6,
+        color: 'rgba(0, 0, 0, 0.05)',
+      },
+      {
+        offsetX: 0,
+        offsetY: 10,
+        blurRadius: 15,
+        spreadDistance: -3,
+        color: 'rgba(0, 0, 0, 0.1)',
+      },
+    ],
   },
 }).style;
 export const tabbarShadow = StyleSheet.create({

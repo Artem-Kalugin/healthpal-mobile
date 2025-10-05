@@ -14,7 +14,7 @@ const Stack = createStackNavigator<MainParamList>();
 export const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={MainRoutes.Search}
+      initialRouteName={MainRoutes.Tab}
       screenOptions={DEFAULT_STACK_OPTIONS}
     >
       <Stack.Screen
