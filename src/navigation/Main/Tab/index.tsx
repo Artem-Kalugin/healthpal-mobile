@@ -38,7 +38,7 @@ export const TabStack = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={TabRoutes.Map}
+      initialRouteName={TabRoutes.Home}
       screenOptions={{
         headerShown: false,
       }}

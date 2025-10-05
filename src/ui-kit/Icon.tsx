@@ -11,10 +11,12 @@ import check from '#assets/icons/check.svg';
 import chevronDown from '#assets/icons/chevron-down.svg';
 import chevronLeft from '#assets/icons/chevron-left.svg';
 import cross from '#assets/icons/cross.svg';
+/* PLOP_INJECT_IMPORT */
+import favoriteActive from '#assets/icons/favorite-active.svg';
+import favorite from '#assets/icons/favorite.svg';
 import gallery from '#assets/icons/gallery.svg';
 import homeActive from '#assets/icons/home-active.svg';
 import home from '#assets/icons/home.svg';
-/* PLOP_INJECT_IMPORT */
 import hospital from '#assets/icons/hospital.svg';
 import lock from '#assets/icons/lock.svg';
 import logo from '#assets/icons/logo.svg';
@@ -36,6 +38,8 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  favoriteActive: { component: favoriteActive },
+  favorite: { component: favorite },
   hospital: { component: hospital },
   pathTime: { component: pathTime },
   star: { component: star },

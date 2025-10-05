@@ -10,15 +10,23 @@ import Animated, {
 } from 'react-native-reanimated';
 import YaMap from 'react-native-yamap';
 
+import { CompositeScreenProps } from '@react-navigation/native';
+
 import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
 
 import { Icon, TextInput } from '#ui-kit';
 
-import { TabRoutes, TabScreenProps } from '#navigation/Tab/types';
+import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
+import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
 import { colors } from '#config';
 
-export const Map: React.FC<TabScreenProps<TabRoutes.Map>> = props => {
+export const Map: React.FC<
+  CompositeScreenProps<
+    TabScreenProps<TabRoutes.Map>,
+    MainScreenProps<MainRoutes>
+  >
+> = props => {
   const showMedicalCentersProgress = useSharedValue(1);
 
   const rMedicalCentersContainer = useAnimatedStyle(() => ({

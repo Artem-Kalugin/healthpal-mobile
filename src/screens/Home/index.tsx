@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { CompositeScreenProps } from '@react-navigation/native';
 import { Image } from 'expo-image';
 
 import { DoctorsCategoryThumbnail } from '#components/entities/DoctorsCategory/Thumbnail';
@@ -12,7 +13,8 @@ import { ISwiperRef } from '#components/Swiper/Swiper';
 
 import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 
-import { TabRoutes, TabScreenProps } from '#navigation/Tab/types';
+import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
+import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
 import {
   ActiveOpacities,
@@ -23,7 +25,12 @@ import {
 
 import { slides } from './config';
 
-export const Home: React.FC<TabScreenProps<TabRoutes.Home>> = props => {
+export const Home: React.FC<
+  CompositeScreenProps<
+    TabScreenProps<TabRoutes.Home>,
+    MainScreenProps<MainRoutes>
+  >
+> = props => {
   const swiperRef = useRef<ISwiperRef>(null);
 
   return (
@@ -87,12 +94,16 @@ export const Home: React.FC<TabScreenProps<TabRoutes.Home>> = props => {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <TextBase weight="700">Специализации</TextBase>
-          <TextSmall
-            color={colors.grayscale['500']}
-            weight="500"
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate(MainRoutes.Search)}
           >
-            Все
-          </TextSmall>
+            <TextSmall
+              color={colors.grayscale['500']}
+              weight="500"
+            >
+              Все
+            </TextSmall>
+          </TouchableOpacity>
         </View>
         <View style={styles.categoriesContent}>
           <View style={styles.categoryRow}>
@@ -186,7 +197,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 24,
   },
-
   categoriesContent: {
     marginBottom: 20,
     gap: 20,
@@ -197,10 +207,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   clinicsContent: {
-    marginBottom: 24,
-    paddingBottom: 12,
+    overflow: 'visible',
+    marginBottom: 36,
   },
   clinicsContentContainer: {
+    overflow: 'visible',
     paddingHorizontal: 24,
     gap: 16,
   },

@@ -1,5 +1,11 @@
 import React, { ReactNode } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -8,6 +14,7 @@ import ButtonGoBack from '#ui-kit/ButtonGoBack';
 
 export interface IHeaderSegmented {
   title: text;
+  titleTextAlign: TextStyle['textAlign'];
   titleSize: number;
   haveTitleFade: boolean;
 
@@ -23,7 +30,7 @@ export interface IHeaderSegmented {
 
 const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
   title = 'Header',
-
+  titleTextAlign = 'left',
   leftElement = <ButtonGoBack />,
   rightElement = null,
   centerElement = null,
@@ -54,7 +61,7 @@ const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
           <TextXL
             numberOfLines={1}
             style={styles.title}
-            textAlign="left"
+            textAlign={titleTextAlign}
             weight="600"
           >
             {title}

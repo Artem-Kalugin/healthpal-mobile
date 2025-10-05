@@ -2,17 +2,18 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { AuthParamList } from './Auth/types';
+import { MainParamList } from './Main/types';
 import { ModalsParamList } from './Modals/types';
 import { PasswordRecoveryParamList } from './PasswordRecovery/types';
-import { TabParamList } from './Tab/types';
 
 export enum AppRoutes {
   Onboarding = 'Onboarding',
   ProfileEditing = 'ProfileEditing',
-  Tab = 'Tab',
+
   StackPasswordRecovery = 'PasswordRecovery',
   StackAuth = 'StackAuth',
   StackModals = 'StackModals',
+  StackMain = 'StackMain',
 }
 
 export type AppParamList = {
@@ -20,8 +21,8 @@ export type AppParamList = {
   [AppRoutes.ProfileEditing]: undefined;
   [AppRoutes.StackPasswordRecovery]: NavigatorScreenParams<PasswordRecoveryParamList>;
   [AppRoutes.StackAuth]: NavigatorScreenParams<AuthParamList>;
+  [AppRoutes.StackMain]: NavigatorScreenParams<MainParamList>;
   [AppRoutes.StackModals]: NavigatorScreenParams<ModalsParamList>;
-  [AppRoutes.Tab]: NavigatorScreenParams<TabParamList>;
 };
 
 export type RootScreenProps<RouteName extends AppRoutes> = StackScreenProps<
