@@ -19,7 +19,7 @@ const AppStack = () => {
       initialRouteName={AppRoutes.StackMain}
       screenOptions={{
         ...DEFAULT_STACK_OPTIONS,
-        //https://github.com/react-navigation/react-navigation/issues/12531 delete after fixed
+        //https://github.com/react-navigation/react-navigation/issues/12531 TODO: delete after fixed
         detachPreviousScreen: false,
       }}
     >
@@ -49,7 +49,7 @@ const AppStack = () => {
         name={AppRoutes.StackModals}
         options={{
           headerShown: false,
-          //https://github.com/react-navigation/react-navigation/issues/12531 uncomment after fixed
+          //https://github.com/react-navigation/react-navigation/issues/12531 TODO: uncomment after fixed
           //detachPreviousScreen: false,
           presentation: 'transparentModal',
           cardStyle: {
