@@ -38,6 +38,7 @@ export enum ActiveOpacities {
 }
 
 export const withCustomAnimation = (toValue: number, cb?: () => void) => {
+  'worklet';
   return withSpring(
     toValue,
     {

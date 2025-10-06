@@ -18,13 +18,6 @@ YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);
 
 Settings.defaultLocale = 'ru';
 
-if (
-  Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
-
 //https://github.com/software-mansion/react-native-reanimated/issues/8307 uncomment after fixed
 // enableFreeze(true);
 

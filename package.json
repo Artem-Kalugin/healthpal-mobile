@@ -5,7 +5,7 @@
   "scripts": {
     "start": "expo start",
     "prebuild": "npx expo prebuild --clean --no-install",
-    "android": "yarn prebuild && expo run:android",
+    "android": "expo run:android",
     "ios": "yarn prebuild && expo run:ios",
     "lint": "expo lint --no-cache",
     "postinstall": "patch-package && husky"
@@ -75,6 +75,12 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "reanimated": {
+    "staticFeatureFlags": {
+      "DISABLE_COMMIT_PAUSING_MECHANISM": true,
+      "ANDROID_SYNCHRONOUSLY_UPDATE_UI_PROPS": true
     }
   }
 }

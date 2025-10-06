@@ -3,7 +3,6 @@ import { Keyboard, StyleSheet, View } from 'react-native';
 
 import Animated from 'react-native-reanimated';
 
-import { AppointmentCard } from '#components/entities/Appointment/Card';
 import { DoctorCard } from '#components/entities/Doctor/Card';
 import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
 import { HeaderTabs } from '#components/HeaderTabs';
@@ -12,7 +11,7 @@ import ListExtender from '#components/ListExtender';
 
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 
-import { BORDER_RADIUS_ROUNDED, colors, shadow } from '#config';
+import { colors, shadow } from '#config';
 
 export const Favorites: React.FC<TabScreenProps<TabRoutes.Profile>> = props => {
   const [activeTab, setActiveTab] = useState('Врачи');

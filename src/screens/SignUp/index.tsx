@@ -13,7 +13,7 @@ import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
 import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
-import { colors, hitSlop, SAFE_ZONE_BOTTOM } from '#config';
+import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
 
 export const SignUp: React.FC<
   CompositeScreenProps<
@@ -27,7 +27,7 @@ export const SignUp: React.FC<
       style={styles.container}
     >
       <KeyboardAwareScrollView
-        bottomOffset={300}
+        bottomOffset={SCREEN_HEIGHT * 0.8}
         contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
