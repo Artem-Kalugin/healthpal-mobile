@@ -67,7 +67,7 @@ export const Search: React.FC<MainScreenProps<MainRoutes.Search>> = props => {
           titleTextAlign="center"
         />
 
-        <View style={styles.foldableContainerPlaceholder}>
+        <View>
           <Animated.View
             style={[styles.foldableContainer, rFoldable, shadow]}
             onLayout={el =>
@@ -157,11 +157,12 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 12,
   },
-  foldableContainerPlaceholder: {},
   foldableContainer: {
     position: 'absolute',
     zIndex: 1,
     backgroundColor: colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.grayscale['200'],
   },
   headerContainer: {
     zIndex: 2,
