@@ -19,7 +19,12 @@ export const ButtonTextComponents: {
       {...props}
     />
   ),
-  small: TextSmall,
+  small: (props: Partial<IText>) => (
+    <TextSmall
+      {...props}
+      weight="700"
+    />
+  ),
   'extra-small': TextXS,
 };
 
@@ -71,10 +76,21 @@ const FilledButtonStyles: ButtonAppearanceScheme = {
   primary: {
     default: getButtonStyle(colors.main.white, colors.main.midnightBlue),
   },
+  secondary: {
+    default: getButtonStyle(colors.main.midnightBlue, colors.grayscale['200']),
+  },
 };
 
 const OutlinedButtonStyles: ButtonAppearanceScheme = {
   primary: {
+    default: getButtonStyle(
+      colors.main.white,
+      colors.grayscale['50'],
+      '600',
+      colors.main.midnightBlue,
+    ),
+  },
+  secondary: {
     default: getButtonStyle(
       colors.main.white,
       colors.grayscale['50'],
@@ -87,6 +103,14 @@ const OutlinedButtonStyles: ButtonAppearanceScheme = {
 const TextOnlyButtonStyles: ButtonAppearanceScheme = {
   primary: {
     default: getButtonStyle(colors.primary.light),
+  },
+  secondary: {
+    default: getButtonStyle(
+      colors.main.white,
+      colors.grayscale['50'],
+      '600',
+      colors.main.midnightBlue,
+    ),
   },
 };
 

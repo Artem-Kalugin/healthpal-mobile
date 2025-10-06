@@ -18,7 +18,7 @@ import {
 
 export type ButtonSize = 'regular' | 'small' | 'extra-small';
 export type ButtonAppearance = 'filled' | 'outlined' | 'text-only';
-export type ButtonType = 'primary';
+export type ButtonType = 'primary' | 'secondary';
 
 export interface IButton {
   type: ButtonType;
@@ -99,7 +99,7 @@ const getStyles = ({ fullwidth }: Pick<IButton, 'fullwidth' | 'disabled'>) =>
       alignItems: 'center',
     },
     container: {
-      width: fullwidth ? '100%' : 'auto',
+      flex: fullwidth ? 1 : undefined,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',

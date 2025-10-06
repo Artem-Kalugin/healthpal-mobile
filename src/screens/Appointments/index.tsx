@@ -1,60 +1,22 @@
-import React, { useRef, useState } from 'react';
-import {
-  FlatList,
-  Keyboard,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import { Keyboard, StyleSheet, View } from 'react-native';
 
-import Animated, {
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
-import { DoctorCard } from '#components/entities/Doctor/Card';
+import { AppointmentCard } from '#components/entities/Appointment/Card';
 import { HeaderTabs } from '#components/HeaderTabs';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import ListExtender from '#components/ListExtender';
 
+import { Button } from '#ui-kit';
+
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 
-import { colors, shadow } from '#config';
+import { BORDER_RADIUS_ROUNDED, colors, shadow } from '#config';
 
 export const Appointments: React.FC<
   TabScreenProps<TabRoutes.Appointments>
 > = props => {
-  const [foldableContainerHeight, setFoldableContainerHeight] = useState(0);
-  const foldProgress = useSharedValue(1);
-  const previousScrollPositionRef = useRef(0);
-
-  const listPaddingToPreventOverlaying = foldableContainerHeight;
-
-  const handler = useAnimatedScrollHandler({
-    onScroll: event => {
-      const nextProgressValueByOffset = +(
-        event.contentOffset.y < foldableContainerHeight
-      );
-
-      const nextProgressValueByVelocity =
-        event.contentOffset.y - previousScrollPositionRef.current < 0 ? 1 : 0;
-
-      foldProgress.value = withTiming(
-        nextProgressValueByVelocity || nextProgressValueByOffset,
-      );
-
-      previousScrollPositionRef.current = event.contentOffset.y;
-    },
-  });
-
-  const rFoldable = useAnimatedStyle(() => ({
-    transform: [
-      { translateY: (foldProgress.value - 1) * foldableContainerHeight },
-    ],
-  }));
-
   return (
     <View style={styles.container}>
       <HeaderWithThreeSections
@@ -75,11 +37,28 @@ export const Appointments: React.FC<
         ListFooterComponent={<ListExtender height={36} />}
         renderItem={() => (
           <View style={styles.cardWrapper}>
-            <DoctorCard />
+            <AppointmentCard
+              Footer={
+                <View style={styles.cardFooter}>
+                  <Button
+                    size="small"
+                    style={styles.cardFooterButton}
+                    type="secondary"
+                  >
+                    Отмена
+                  </Button>
+                  <Button
+                    size="small"
+                    style={styles.cardFooterButton}
+                  >
+                    Перенести
+                  </Button>
+                </View>
+              }
+            />
           </View>
         )}
         style={styles.container}
-        onScroll={handler}
         onScrollBeginDrag={() => Keyboard.dismiss()}
       />
     </View>
@@ -104,5 +83,12 @@ const styles = StyleSheet.create({
   cardWrapper: {
     paddingTop: 10,
     paddingHorizontal: 24,
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  cardFooterButton: {
+    borderRadius: BORDER_RADIUS_ROUNDED,
   },
 });
