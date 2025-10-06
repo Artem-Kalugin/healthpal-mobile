@@ -137,7 +137,11 @@ export const Search: React.FC<MainScreenProps<MainRoutes.Search>> = props => {
         ListFooterComponent={<ListExtender height={36} />}
         renderItem={() => (
           <View style={styles.cardWrapper}>
-            <DoctorCard />
+            <DoctorCard
+              onPress={() =>
+                props.navigation.navigate(MainRoutes.DoctorDetails)
+              }
+            />
           </View>
         )}
         style={styles.container}

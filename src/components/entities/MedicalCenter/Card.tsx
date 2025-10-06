@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Image } from 'expo-image';
 
-import { Divider, Icon, TextSmall, TextXS } from '#ui-kit';
+import { Divider, Icon, Rating, TextSmall, TextXS } from '#ui-kit';
 
 import { colors, Images, shadow } from '#config';
 
@@ -37,34 +37,7 @@ export const MedicalCenterCard: React.FC<
           </TextXS>
         </View>
         <View style={styles.ratingContainer}>
-          <TextXS
-            color={colors.grayscale['500']}
-            weight="600"
-          >
-            5.0
-          </TextXS>
-          <View style={styles.ratingIcons}>
-            <Icon
-              name="star"
-              size={10}
-            />
-            <Icon
-              name="star"
-              size={10}
-            />
-            <Icon
-              name="star"
-              size={10}
-            />
-            <Icon
-              name="star"
-              size={10}
-            />
-            <Icon
-              name="star"
-              size={10}
-            />
-          </View>
+          <Rating />
           <TextXS color={colors.grayscale['500']}>(58 reviews)</TextXS>
         </View>
         <Divider style={styles.divider} />
@@ -106,16 +79,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     gap: 4,
   },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-    gap: 4,
-  },
-  ratingIcons: {
-    flexDirection: 'row',
-    gap: 2,
-  },
   divider: {
     marginBottom: 12,
   },
@@ -131,6 +94,12 @@ const styles = StyleSheet.create({
   type: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 4,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
     gap: 4,
   },
 });

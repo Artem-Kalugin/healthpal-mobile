@@ -2,6 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { DoctorDetails } from '#screens/DoctorDetails';
 import { Search } from '#screens/Search';
 
 import { DEFAULT_STACK_OPTIONS } from '#navigation/config';
@@ -24,6 +25,10 @@ export const MainStack = () => {
       <Stack.Screen
         component={Search}
         name={MainRoutes.Search}
+      />
+      <Stack.Screen
+        component={DoctorDetails}
+        name={MainRoutes.DoctorDetails}
       />
     </Stack.Navigator>
   );

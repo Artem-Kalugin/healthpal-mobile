@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { Image } from 'expo-image';
 
@@ -7,11 +7,19 @@ import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
 
 import { colors, Images, shadow } from '#config';
 
-type IDoctorCard = object;
+type IDoctorCard = {
+  onPress?: () => void;
+};
 
-export const DoctorCard: React.FC<Partial<IDoctorCard>> = props => {
+export const DoctorCard: React.FC<Partial<IDoctorCard>> = ({
+  onPress = undefined,
+}) => {
   return (
-    <View style={[styles.container, shadow]}>
+    <TouchableOpacity
+      disabled={!onPress}
+      style={[styles.container, shadow]}
+      onPress={onPress}
+    >
       <Image
         source={Images.clinic}
         style={styles.image}
@@ -59,7 +67,7 @@ export const DoctorCard: React.FC<Partial<IDoctorCard>> = props => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
