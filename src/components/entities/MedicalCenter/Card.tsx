@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import { Image } from 'expo-image';
 
@@ -7,13 +7,15 @@ import { Divider, Icon, Rating, TextSmall, TextXS } from '#ui-kit';
 
 import { colors, Images, shadow } from '#config';
 
-type IMedicalCenterCard = object;
+type IMedicalCenterCard = {
+  style: StyleProp<ViewStyle>;
+};
 
-export const MedicalCenterCard: React.FC<
-  Partial<IMedicalCenterCard>
-> = props => {
+export const MedicalCenterCard: React.FC<Partial<IMedicalCenterCard>> = ({
+  style,
+}) => {
   return (
-    <View style={[styles.container, shadow]}>
+    <View style={[styles.container, StyleSheet.flatten(style), shadow]}>
       <Image
         source={Images.clinic}
         style={styles.image}
