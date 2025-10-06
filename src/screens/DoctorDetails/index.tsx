@@ -177,8 +177,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   headerContainer: {
     paddingHorizontal: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.grayscale['200'],
   },
   main: {
     flex: 1,
@@ -222,6 +225,8 @@ const styles = StyleSheet.create({
   footer: {
     padding: 24,
     paddingBottom: SAFE_ZONE_BOTTOM,
+    borderTopWidth: 1,
+    borderTopColor: colors.grayscale['200'],
     backgroundColor: colors.main.white,
   },
   sectionHeader: {

@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import BottomTab, { BottomTabData } from '#components/BottomTab';
 
+import { Appointments } from '#screens/Appointments';
 import { Home } from '#screens/Home';
 import { Map } from '#screens/Map';
 
@@ -88,14 +89,14 @@ export const TabStack = () => {
         component={Map}
         name={TabRoutes.Map}
       />
-      {/* <Tab.Screen
-        component={Home}
+      <Tab.Screen
+        component={Appointments}
         name={TabRoutes.Appointments}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         component={Home}
         name={TabRoutes.Profile}
-      /> */}
+      />  */}
     </Tab.Navigator>
   );
 };
