@@ -6,10 +6,12 @@ import { TabParamList } from './Tab/types';
 export enum MainRoutes {
   Tab = 'MainTab',
   Search = 'MainSearch',
+  DoctorDetails = 'DoctorDetails',
 }
 
 export type MainParamList = {
   [MainRoutes.Search]: undefined;
+  [MainRoutes.DoctorDetails]: undefined;
   [MainRoutes.Tab]: NavigatorScreenParams<TabParamList>;
 };
 

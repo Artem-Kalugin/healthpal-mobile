@@ -19,7 +19,6 @@ export const ImagePicker: React.FC<
   const modal = useModal(true);
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePickerExpo.launchImageLibraryAsync({
       mediaTypes: ['images', 'videos'],
       allowsEditing: true,

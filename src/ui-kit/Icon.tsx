@@ -10,8 +10,9 @@ import camera from '#assets/icons/camera.svg';
 import check from '#assets/icons/check.svg';
 import chevronDown from '#assets/icons/chevron-down.svg';
 import chevronLeft from '#assets/icons/chevron-left.svg';
-import cross from '#assets/icons/cross.svg';
 /* PLOP_INJECT_IMPORT */
+import comment from '#assets/icons/comment.svg';
+import cross from '#assets/icons/cross.svg';
 import favoriteActive from '#assets/icons/favorite-active.svg';
 import favorite from '#assets/icons/favorite.svg';
 import gallery from '#assets/icons/gallery.svg';
@@ -22,9 +23,11 @@ import lock from '#assets/icons/lock.svg';
 import logo from '#assets/icons/logo.svg';
 import mapActive from '#assets/icons/map-active.svg';
 import map from '#assets/icons/map.svg';
+import medal from '#assets/icons/medal.svg';
 import messageEdit from '#assets/icons/message-edit.svg';
 import notification from '#assets/icons/notification.svg';
 import pathTime from '#assets/icons/path-time.svg';
+import patients from '#assets/icons/patients.svg';
 import profileActive from '#assets/icons/profile-active.svg';
 import profile from '#assets/icons/profile.svg';
 import search from '#assets/icons/search.svg';
@@ -38,6 +41,9 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  comment: { component: comment },
+  medal: { component: medal },
+  patients: { component: patients },
   favoriteActive: { component: favoriteActive },
   favorite: { component: favorite },
   hospital: { component: hospital },

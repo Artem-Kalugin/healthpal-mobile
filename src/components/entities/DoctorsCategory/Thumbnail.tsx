@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
+  // TODO: add random color generation
   // eslint-disable-next-line react-native/no-color-literals
   icon: {
     height: 62,

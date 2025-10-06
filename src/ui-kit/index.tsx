@@ -8,3 +8,5 @@ export * from './TextInput';
 export * from './Brand';
 export * from './ButtonGoBack';
 export * from './CodeInput';
+export * from './StatisticsFact';
+export * from './Rating';
