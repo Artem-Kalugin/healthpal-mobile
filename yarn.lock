@@ -1904,6 +1904,24 @@
     use-latest-callback "^0.2.4"
     use-sync-external-store "^1.5.0"
 
+"@react-navigation/elements@^2.6.5":
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-2.6.5.tgz#e9038e96044e47f43f7f432edc798d6b0185fc01"
+  integrity sha512-HOaekvFeoqKyaSKP2hakL7OUnw0jIhk/1wMjcovUKblT76LMTumZpriqsc30m/Vnyy1a8zgp4VsuA1xftcalgQ==
+  dependencies:
+    color "^4.2.3"
+    use-latest-callback "^0.2.4"
+    use-sync-external-store "^1.5.0"
+
+"@react-navigation/material-top-tabs@^7.3.8":
+  version "7.3.8"
+  resolved "https://registry.yarnpkg.com/@react-navigation/material-top-tabs/-/material-top-tabs-7.3.8.tgz#06d07c268631c0f0f45841bdcbbb317cb97290a9"
+  integrity sha512-7fZSx5I5RX6eBhk8RAcQMkSi7xZKQnrofEiodtKlO+3PflBeu5e0eNlu9FXCvKx3u58E0Ki4HOO1bXBygmafXA==
+  dependencies:
+    "@react-navigation/elements" "^2.6.5"
+    color "^4.2.3"
+    react-native-tab-view "^4.1.3"
+
 "@react-navigation/native-stack@^7.3.26":
   version "7.3.26"
   resolved "https://registry.yarnpkg.com/@react-navigation/native-stack/-/native-stack-7.3.26.tgz#a08ee0626e49428a808da9d810f24db5b08deae9"
@@ -7514,6 +7532,11 @@ react-native-mmkv@^3.3.3:
   resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-3.3.3.tgz#1f0326f6314e23725af8145964343224d074e6cd"
   integrity sha512-GMsfOmNzx0p5+CtrCFRVtpOOMYNJXuksBVARSQrCFaZwjUyHJdQzcN900GGaFFNTxw2fs8s5Xje//RDKj9+PZA==
 
+react-native-pager-view@6.9.1:
+  version "6.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.9.1.tgz#a9e6d9323935cc2ae1d46d7816b66f76dc3eff8e"
+  integrity sha512-uUT0MMMbNtoSbxe9pRvdJJKEi9snjuJ3fXlZhG8F2vVMOBJVt/AFtqMPUHu9yMflmqOr08PewKzj9EPl/Yj+Gw==
+
 react-native-reanimated@~4.1.1:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-4.1.2.tgz#d2ab20c575740b29002d115617d6621c83e81c89"
@@ -7554,6 +7577,13 @@ react-native-svg@15.12.1:
     css-select "^5.1.0"
     css-tree "^1.1.3"
     warn-once "0.1.1"
+
+react-native-tab-view@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-4.1.3.tgz#d7b67a5ce09af2b7268395c978fc565561f8cf9f"
+  integrity sha512-COj2HBeM4IqKCAadUdZAUWrFyO8++wlgObsgOt6xrwqdEnu9HX/74uesC0MGlgwIalFffXqTh5F3CC3pUjFPug==
+  dependencies:
+    use-latest-callback "^0.2.4"
 
 react-native-worklets@0.5.1:
   version "0.5.1"

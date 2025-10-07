@@ -20,18 +20,19 @@ import { TextBase } from '#ui-kit';
 
 import { BORDER_RADIUS_ROUNDED, colors, hitSlop } from '#config';
 
-interface ITabs<T extends unknown> {
-  style?: StyleProp<ViewStyle>;
+export interface IHeaderTabs<T extends unknown> {
   data: T[];
-  tabRef?: RefObject<RefTab<T>>;
+  style?: StyleProp<ViewStyle>;
+  tabRef?: RefObject<RefHeaderTab<T>>;
   valueExtractor?: (item: T) => string;
-  onPress?: (item: T) => void;
+  onPress?: (item: T, index: number) => void;
+  onLongPress?: (item: T, index: number) => void;
   activeItem?: T;
 }
 
-export type RefTab<T> = {
+export type RefHeaderTab<T> = {
   setTab: (value: T) => void;
-};
+} | null;
 
 const TRACK_ADDITIONAL_WIDTH = 16;
 const CONTAINER_GAP = 40;
@@ -42,10 +43,11 @@ export const HeaderTabs = <T extends unknown>({
   tabRef,
   activeItem,
   onPress = () => {},
+  onLongPress = () => {},
   valueExtractor = (item: any) =>
     typeof item === 'string' ? item : JSON.stringify(item),
   style,
-}: ITabs<T>) => {
+}: IHeaderTabs<T>) => {
   const translateX = useSharedValue(0);
   const width = useSharedValue(0);
 
@@ -100,12 +102,16 @@ export const HeaderTabs = <T extends unknown>({
             anchorOffsetPoints.current[index] =
               event.nativeEvent.layout.x + event.nativeEvent.layout.width / 2;
           }}
+          onLongPress={() => {
+            animateTo(index);
+            onLongPress(el, index);
+          }}
           onPress={() => {
             animateTo(index);
-            onPress(el);
+            onPress(el, index);
           }}
         >
-          <TabText
+          <HeaderTab
             activeItemIndex={activeItemIndex}
             index={index}
             onLayout={event => {
@@ -118,7 +124,7 @@ export const HeaderTabs = <T extends unknown>({
             }}
           >
             {valueExtractor(el)}
-          </TabText>
+          </HeaderTab>
         </TouchableOpacity>
       ))}
       <Animated.View style={[styles.trackAnchor, rTrackAnchorStyle]}>
@@ -128,7 +134,7 @@ export const HeaderTabs = <T extends unknown>({
   );
 };
 
-const TabText = ({
+const HeaderTab = ({
   children,
   index,
   activeItemIndex,
