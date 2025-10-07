@@ -23,7 +23,6 @@ export const FavoritesStack = () => {
           <View>
             <HeaderWithThreeSections
               containerStyle={styles.headerContainer}
-              leftElement={null}
               title="Избранное"
               titleTextAlign="center"
             />

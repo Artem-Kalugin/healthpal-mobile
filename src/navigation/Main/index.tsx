@@ -8,6 +8,7 @@ import { Search } from '#screens/Search';
 
 import { DEFAULT_STACK_OPTIONS } from '#navigation/config';
 
+import { FavoritesStack } from './Favorites';
 import { TabStack } from './Tab';
 import { MainParamList, MainRoutes } from './types';
 
@@ -26,6 +27,10 @@ export const MainStack = () => {
       <Stack.Screen
         component={Search}
         name={MainRoutes.Search}
+      />
+      <Stack.Screen
+        component={FavoritesStack}
+        name={MainRoutes.Favorites}
       />
       <Stack.Screen
         component={DoctorDetails}
