@@ -6,12 +6,12 @@ import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 
-import { Button, Calendar, TextSmall } from '#ui-kit';
+import { Button, Calendar, TextSmall, TextXL } from '#ui-kit';
 import { timestampToCalendarDate } from '#ui-kit/Calendar/utils';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
-import { colors, SAFE_ZONE_BOTTOM, shadow, tabbarShadow } from '#config';
+import { colors, headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
 
 export const ScheduleAppointment: React.FC<
   MainScreenProps<MainRoutes.ScheduleAppointment>
@@ -23,7 +23,7 @@ export const ScheduleAppointment: React.FC<
   return (
     <View style={styles.container}>
       <HeaderWithThreeSections
-        containerStyle={[styles.headerContainer, shadow]}
+        containerStyle={[styles.headerContainer, headerShadow]}
         title="Запланировать прием"
         titleTextAlign="center"
       />
@@ -32,13 +32,29 @@ export const ScheduleAppointment: React.FC<
         contentContainerStyle={styles.mainContainer}
         style={styles.main}
       >
+        <TextXL
+          color={colors.main.midnightBlue}
+          style={styles.calendarTitle}
+          weight="600"
+        >
+          Выберите дату
+        </TextXL>
         <Calendar
           activeDays={[1, 2, 3, 4, 5]}
           maxDate="2025-12-02"
           minDate="2025-10-08"
           selectedDate={selectedDate}
+          style={styles.calendar}
           setSelectedDate={setSelectedDate}
         />
+
+        <TextXL
+          color={colors.main.midnightBlue}
+          style={styles.timeSlotsTitle}
+          weight="600"
+        >
+          Выберите время
+        </TextXL>
         <Animated.FlatList
           columnWrapperStyle={styles.timeSlotColumn}
           contentContainerStyle={styles.timeSlotColumnContainer}
@@ -47,7 +63,10 @@ export const ScheduleAppointment: React.FC<
           numColumns={3}
           renderItem={({ item }) => (
             <Button
-              style={styles.timeSlot}
+              style={[
+                styles.timeSlot,
+                item !== 1 ? styles.timeSlotInactive : {},
+              ]}
               type={item === 1 ? 'primary' : 'secondary'}
             >
               <TextSmall
@@ -85,10 +104,22 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingTop: 16,
     paddingHorizontal: 24,
-    gap: 16,
+  },
+  calendar: {
+    marginBottom: 32,
+  },
+  calendarTitle: {
+    marginBottom: 8,
+  },
+  timeSlotsTitle: {
+    marginBottom: 16,
   },
   timeSlot: {
+    flex: 1,
     borderRadius: 8,
+  },
+  timeSlotInactive: {
+    backgroundColor: colors.grayscale['50'],
   },
   timeSlotColumn: {
     gap: 13.5,
@@ -96,10 +127,9 @@ const styles = StyleSheet.create({
   timeSlotColumnContainer: {
     gap: 13.5,
   },
-
   footer: {
     padding: 24,
-    paddingBottom: SAFE_ZONE_BOTTOM + 24,
+    paddingBottom: SAFE_ZONE_BOTTOM,
     borderTopWidth: 1,
     borderTopColor: colors.grayscale['200'],
     backgroundColor: colors.main.white,

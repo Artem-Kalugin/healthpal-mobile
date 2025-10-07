@@ -23,7 +23,7 @@ import { Tag } from '#ui-kit/Tag';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
-import { colors, shadow } from '#config';
+import { colors, headerShadow, shadow } from '#config';
 
 export const Search: React.FC<MainScreenProps<MainRoutes.Search>> = props => {
   const categoriesScrollRef = useRef<FlatList>(null);
@@ -69,7 +69,7 @@ export const Search: React.FC<MainScreenProps<MainRoutes.Search>> = props => {
 
         <View>
           <Animated.View
-            style={[styles.foldableContainer, rFoldable, shadow]}
+            style={[styles.foldableContainer, rFoldable, headerShadow]}
             onLayout={el =>
               setFoldableContainerHeight(el.nativeEvent.layout.height)
             }

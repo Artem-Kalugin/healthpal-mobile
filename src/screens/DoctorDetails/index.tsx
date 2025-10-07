@@ -10,7 +10,7 @@ import { Button, StatisticsFact, Text, TextSmall, TextXL } from '#ui-kit';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
-import { colors, SAFE_ZONE_BOTTOM, shadow, tabbarShadow } from '#config';
+import { colors, headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
 
 const MapDayIdToName = {
   1: 'Пн',
@@ -42,15 +42,12 @@ export const DoctorDetails: React.FC<
   return (
     <View style={styles.container}>
       <HeaderWithThreeSections
-        containerStyle={[styles.headerContainer, shadow]}
+        containerStyle={[styles.headerContainer, headerShadow]}
         title="Информация о враче"
         titleTextAlign="center"
       />
 
-      <ScrollView
-        contentContainerStyle={styles.mainContainer}
-        style={styles.main}
-      >
+      <ScrollView contentContainerStyle={styles.mainContainer}>
         <DoctorDetailsCard style={styles.doctorCard} />
 
         <View style={styles.statisicsContainer}>
@@ -167,7 +164,13 @@ export const DoctorDetails: React.FC<
         <ListExtender />
       </ScrollView>
       <View style={[styles.footer, tabbarShadow]}>
-        <Button>Записаться на приём</Button>
+        <Button
+          onPress={() =>
+            props.navigation.navigate(MainRoutes.ScheduleAppointment)
+          }
+        >
+          Записаться на приём
+        </Button>
       </View>
     </View>
   );
@@ -177,17 +180,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
   headerContainer: {
     paddingHorizontal: 24,
     borderBottomWidth: 1,
     borderBottomColor: colors.grayscale['200'],
   },
-  main: {
-    flex: 1,
-  },
   mainContainer: {
-    flexGrow: 1,
     paddingTop: 16,
     paddingHorizontal: 24,
     gap: 16,
@@ -223,6 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   footer: {
+    flexShrink: 0,
     padding: 24,
     paddingBottom: SAFE_ZONE_BOTTOM,
     borderTopWidth: 1,

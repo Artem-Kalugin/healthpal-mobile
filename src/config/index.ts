@@ -15,7 +15,11 @@ export const IS_IOS = Platform.OS === 'ios';
 
 export const SCREEN_WIDTH = Dimensions.get('screen').width;
 export const SCREEN_HEIGHT = Dimensions.get('screen').height;
-export const SAFE_ZONE_BOTTOM = initialWindowMetrics?.insets?.bottom || 14;
+const insetsAndroid = initialWindowMetrics?.insets?.bottom
+  ? initialWindowMetrics?.insets?.bottom + 14
+  : 0;
+const insetsIOS = initialWindowMetrics?.insets?.bottom;
+export const SAFE_ZONE_BOTTOM = (IS_IOS ? insetsIOS : insetsAndroid) || 14;
 
 export const hitSlop = {
   bottom: 16,
@@ -66,6 +70,11 @@ export const shadow = StyleSheet.create({
         color: 'rgba(0, 0, 0, 0.1)',
       },
     ],
+  },
+}).style;
+export const headerShadow = StyleSheet.create({
+  style: {
+    boxShadow: '0px 6px 10px -8px #00000033',
   },
 }).style;
 export const tabbarShadow = StyleSheet.create({
