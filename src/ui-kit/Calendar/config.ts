@@ -1,0 +1,50 @@
+import { DayProps as _DayProps } from 'react-native-calendars/src/calendar/day';
+import { DateData, DayState } from 'react-native-calendars/src/types';
+
+import { colors } from '#config';
+
+export type DayProps = _DayProps & {
+  date?: DateData;
+};
+
+export const normalizeDefaultStyles = {
+  'stylesheet.calendar.main': {
+    container: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      backgroundColor: colors.grayscale['50'],
+    },
+    dayContainer: {},
+    emptyDayContainer: {
+      flex: 1,
+    },
+    monthView: {
+      backgroundColor: colors.grayscale['50'],
+    },
+    week: {
+      marginVertical: 0,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+    },
+  },
+};
+
+export const DayTextColors: Partial<{ [x in DayState]: string }> = {
+  selected: colors.white,
+  disabled: colors.grayscale['300'],
+};
+
+export const CalendarMonthNames = [
+  'Январь',
+  'Февраль',
+  'Март',
+  'Апрель',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Август',
+  'Сентябрь',
+  'Октябрь',
+  'Ноябрь',
+  'Декабрь',
+];

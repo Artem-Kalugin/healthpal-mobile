@@ -5,12 +5,13 @@ import { SvgProps } from 'react-native-svg';
 import appointmentsActive from '#assets/icons/appointments-active.svg';
 import appointments from '#assets/icons/appointments.svg';
 import arrowLeft from '#assets/icons/arrow-left.svg';
+/* PLOP_INJECT_IMPORT */
+import arrowRight from '#assets/icons/arrow-right.svg';
 import calendar from '#assets/icons/calendar.svg';
 import camera from '#assets/icons/camera.svg';
 import check from '#assets/icons/check.svg';
 import chevronDown from '#assets/icons/chevron-down.svg';
 import chevronLeft from '#assets/icons/chevron-left.svg';
-/* PLOP_INJECT_IMPORT */
 import comment from '#assets/icons/comment.svg';
 import cross from '#assets/icons/cross.svg';
 import favoriteActive from '#assets/icons/favorite-active.svg';
@@ -41,6 +42,7 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  arrowRight: { component: arrowRight },
   comment: { component: comment },
   medal: { component: medal },
   patients: { component: patients },
