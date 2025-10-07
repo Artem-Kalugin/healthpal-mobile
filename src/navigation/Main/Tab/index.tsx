@@ -4,10 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { NavigatorBottomTabs } from '#components/NavigatorBottomTabs';
 
+import { Profile } from '#screens';
 import { Home } from '#screens/Home';
 import { Map } from '#screens/Map';
 
-import { FavoritesStack } from '../Favorites';
 import { AppointmentsStack } from './Appointments';
 import { TabParamList, TabRoutes, TabsConfig } from './types';
 
@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export const TabStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName={TabRoutes.Map}
+      initialRouteName={TabRoutes.Profile}
       screenOptions={{
         headerShown: false,
       }}
@@ -41,7 +41,7 @@ export const TabStack = () => {
         name={TabRoutes.Appointments}
       />
       <Tab.Screen
-        component={FavoritesStack}
+        component={Profile}
         name={TabRoutes.Profile}
       />
     </Tab.Navigator>

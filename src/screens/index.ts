@@ -5,3 +5,4 @@ export * from './PasswordRecoveryCodeInput';
 export * from './PasswordRecoveryEmailInput';
 export * from './PasswordRecoverySetPassword';
 export * from './ProfileEditing';
+export * from './Profile';

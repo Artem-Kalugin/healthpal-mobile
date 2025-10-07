@@ -1,10 +1,12 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { FavoritesParamList } from './Favorites/types';
 import { TabParamList } from './Tab/types';
 
 export enum MainRoutes {
   Tab = 'MainTab',
+  Favorites = 'MainFavorites',
   Search = 'MainSearch',
   DoctorDetails = 'DoctorDetails',
   ScheduleAppointment = 'ScheduleAppointment',
@@ -14,6 +16,7 @@ export type MainParamList = {
   [MainRoutes.Search]: undefined;
   [MainRoutes.DoctorDetails]: undefined;
   [MainRoutes.ScheduleAppointment]: undefined;
+  [MainRoutes.Favorites]: NavigatorScreenParams<FavoritesParamList>;
   [MainRoutes.Tab]: NavigatorScreenParams<TabParamList>;
 };
 
