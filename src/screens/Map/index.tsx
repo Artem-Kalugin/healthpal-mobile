@@ -21,6 +21,11 @@ import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
 import { colors, shadow } from '#config';
 
+const initRegion = {
+  lat: 55.7558,
+  lon: 37.6173,
+  zoom: 10,
+};
 export const Map: React.FC<
   CompositeScreenProps<
     TabScreenProps<TabRoutes.Map>,
@@ -61,15 +66,8 @@ export const Map: React.FC<
         </TouchableOpacity>
       </View>
       <YaMap
-        initialRegion={{
-          lat: 55.7558,
-          lon: 37.6173,
-          zoom: 10,
-        }}
+        initialRegion={initRegion}
         style={styles.map}
-        userLocationIcon={{
-          uri: 'https://www.clipartmax.com/png/middle/180-1801760_pin-png.png',
-        }}
         onCameraPositionChange={hideMedicalCenters}
         onCameraPositionChangeEnd={showMedicalCenters}
       />

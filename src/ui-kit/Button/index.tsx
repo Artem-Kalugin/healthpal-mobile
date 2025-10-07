@@ -99,7 +99,7 @@ const getStyles = ({ fullwidth }: Pick<IButton, 'fullwidth' | 'disabled'>) =>
       alignItems: 'center',
     },
     container: {
-      flex: fullwidth ? 1 : undefined,
+      width: fullwidth ? '100%' : 'auto',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',

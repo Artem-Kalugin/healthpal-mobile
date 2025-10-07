@@ -7,11 +7,13 @@ export enum MainRoutes {
   Tab = 'MainTab',
   Search = 'MainSearch',
   DoctorDetails = 'DoctorDetails',
+  ScheduleAppointment = 'ScheduleAppointment',
 }
 
 export type MainParamList = {
   [MainRoutes.Search]: undefined;
   [MainRoutes.DoctorDetails]: undefined;
+  [MainRoutes.ScheduleAppointment]: undefined;
   [MainRoutes.Tab]: NavigatorScreenParams<TabParamList>;
 };
 
