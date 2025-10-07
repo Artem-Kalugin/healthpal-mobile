@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   cardFooterButton: {
+    flex: 1,
     borderRadius: BORDER_RADIUS_ROUNDED,
   },
 });

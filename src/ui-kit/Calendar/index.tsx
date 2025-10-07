@@ -31,6 +31,7 @@ export const Calendar = ({
   minDate,
   maxDate,
   setSelectedDate,
+  style,
 }: ICalendar) => {
   const [anchorDate, setAnchorDate] = useState(selectedDate);
 
@@ -52,7 +53,7 @@ export const Calendar = ({
   return (
     <Animated.View
       layout={LinearTransition.easing(Easing.ease)}
-      style={[styles.container, shadow]}
+      style={[styles.container, StyleSheet.flatten(style), shadow]}
     >
       <_Calendar
         customHeader={CalendarHeader}
