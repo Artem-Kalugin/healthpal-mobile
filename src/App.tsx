@@ -6,6 +6,7 @@ import { KeyboardProvider as KeyboardController } from 'react-native-keyboard-co
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import FocusAwareStatusBar from '#components/FocusAwareStatusBar';
@@ -32,6 +33,7 @@ export default function App() {
                       background: 'transparent',
                     },
                   }}
+                  onReady={SplashScreen.hide}
                 >
                   <FocusAwareStatusBar barStyle="dark-content" />
                   <AppMiddleware />
