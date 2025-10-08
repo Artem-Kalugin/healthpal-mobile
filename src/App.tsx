@@ -1,17 +1,19 @@
 import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
+import BootSplash from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider as KeyboardController } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import * as SplashScreen from 'expo-splash-screen';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import FocusAwareStatusBar from '#components/FocusAwareStatusBar';
 import { OTPTimerProvider } from '#components/providers/OTPTimer';
 import ToastProvider from '#components/providers/Toaster';
+
+import { delay } from '#utils';
 
 import { persistor, store } from '#store';
 
@@ -33,7 +35,10 @@ export default function App() {
                       background: 'transparent',
                     },
                   }}
-                  onReady={SplashScreen.hide}
+                  onReady={async () => {
+                    await delay(200);
+                    await BootSplash.hide({ fade: true });
+                  }}
                 >
                   <FocusAwareStatusBar barStyle="dark-content" />
                   <AppMiddleware />

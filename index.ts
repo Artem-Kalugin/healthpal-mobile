@@ -8,7 +8,6 @@ import '@formatjs/intl-datetimeformat/locale-data/ru';
 
 import YaMap from 'react-native-yamap';
 
-import * as SplashScreen from 'expo-splash-screen';
 import { setStatusBarHidden } from 'expo-status-bar';
 
 import { IS_IOS } from '#config';
@@ -19,13 +18,6 @@ YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);
 
 Settings.defaultLocale = 'ru';
 setStatusBarHidden(true);
-SplashScreen.preventAutoHideAsync();
-if (IS_IOS) {
-  SplashScreen.setOptions({
-    duration: 500,
-    fade: true,
-  });
-}
 
 //https://github.com/software-mansion/react-native-reanimated/issues/8307 uncomment after fixed
 // enableFreeze(true);

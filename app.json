@@ -24,13 +24,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      [
-        "expo-splash-screen",
-        {
-          "backgroundColor":  "#352261",
-          "image": "./assets/required_splash_workaround_android.png"
-        }
-      ],
+      ["react-native-bootsplash", { "assetsDir": "assets/bootsplash" }],
       [
         "expo-build-properties",
         {

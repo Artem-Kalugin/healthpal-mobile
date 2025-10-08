@@ -3,7 +3,7 @@ import { ExpoConfig } from 'expo/config';
 
 dotenv.config();
 
-module.exports = ({ config }: { config: ExpoConfig }) => ({
+module.exports = ({ config }: { config: ExpoConfig }): ExpoConfig => ({
   ...config,
   extra: {
     apiKeys: {
@@ -12,6 +12,7 @@ module.exports = ({ config }: { config: ExpoConfig }) => ({
   },
   plugins: [
     ...(config.plugins || []),
-    ['./expo-config-plugins/withYandexMap.js'],
+    './expo-config-plugins/withYandexMap.js',
+    './expo-config-plugins/withIOSInitiallyHiddenStatusBar.js',
   ],
 });
