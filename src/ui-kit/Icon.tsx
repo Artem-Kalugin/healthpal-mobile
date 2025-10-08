@@ -6,6 +6,9 @@ import appointmentsActive from '#assets/icons/appointments-active.svg';
 import appointments from '#assets/icons/appointments.svg';
 import arrowLeft from '#assets/icons/arrow-left.svg';
 import arrowRight from '#assets/icons/arrow-right.svg';
+import calendarEdit from '#assets/icons/calendar-edit.svg';
+import calendarRemove from '#assets/icons/calendar-remove.svg';
+import calendarTick from '#assets/icons/calendar-tick.svg';
 import calendar from '#assets/icons/calendar.svg';
 import camera from '#assets/icons/camera.svg';
 import check from '#assets/icons/check.svg';
@@ -21,8 +24,9 @@ import heart from '#assets/icons/heart.svg';
 import homeActive from '#assets/icons/home-active.svg';
 import home from '#assets/icons/home.svg';
 import hospital from '#assets/icons/hospital.svg';
-import lock from '#assets/icons/lock.svg';
 /* PLOP_INJECT_IMPORT */
+import lockSlash from '#assets/icons/lock-slash.svg';
+import lock from '#assets/icons/lock.svg';
 import logOut from '#assets/icons/log-out.svg';
 import logo from '#assets/icons/logo.svg';
 import mapActive from '#assets/icons/map-active.svg';
@@ -50,6 +54,10 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  lockSlash: { component: lockSlash },
+  calendarRemove: { component: calendarRemove },
+  calendarEdit: { component: calendarEdit },
+  calendarTick: { component: calendarTick },
   logOut: { component: logOut },
   sequritySafe: { component: sequritySafe },
   messageQuestion: { component: messageQuestion },

@@ -23,7 +23,7 @@ import { Tag } from '#ui-kit/Tag';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
-import { colors, headerShadow, shadow } from '#config';
+import { colors, headerShadow } from '#config';
 
 export const Search: React.FC<MainScreenProps<MainRoutes.Search>> = props => {
   const categoriesScrollRef = useRef<FlatList>(null);
