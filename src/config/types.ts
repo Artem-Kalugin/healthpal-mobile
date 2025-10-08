@@ -1,0 +1,7 @@
+export enum NotificationTypes {
+  'BOOKING_ACCEPTED',
+  'BOOKING_CANCELED',
+  'BOOKING_RESCHEDULED',
+  'PASSWORD_CHANGED',
+  'NEW_LOG_IN',
+}

@@ -9,7 +9,7 @@ import {
 
 import { CompositeScreenProps } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import toast from 'react-hot-toast/headless';
+import { toast } from 'react-hot-toast/headless';
 
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 
@@ -67,7 +67,7 @@ export const Profile: React.FC<
     {
       label: 'Уведомления',
       icon: 'notificationOutlined',
-      onPress: () => {},
+      onPress: () => props.navigation.navigate(MainRoutes.Notifications),
     },
     {
       label: 'Настройки',

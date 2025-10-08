@@ -3,6 +3,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { DoctorDetails } from '#screens/DoctorDetails';
+import { Notifications } from '#screens/Notifications';
 import { ScheduleAppointment } from '#screens/ScheduleAppointment';
 import { Search } from '#screens/Search';
 
@@ -27,6 +28,10 @@ export const MainStack = () => {
       <Stack.Screen
         component={Search}
         name={MainRoutes.Search}
+      />
+      <Stack.Screen
+        component={Notifications}
+        name={MainRoutes.Notifications}
       />
       <Stack.Screen
         component={FavoritesStack}

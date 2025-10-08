@@ -74,7 +74,7 @@ export const shadow = StyleSheet.create({
 }).style;
 export const headerShadow = StyleSheet.create({
   style: {
-    boxShadow: '0px 6px 10px -8px #00000033',
+    boxShadow: '0px 6px 10px -8px #00000022',
   },
 }).style;
 export const tabbarShadow = StyleSheet.create({
