@@ -34,8 +34,6 @@ export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
   };
 
   useEffect(() => {
-    setStatusBarHidden(true);
-
     onInit();
 
     return () => setStatusBarHidden(false);
