@@ -7,22 +7,28 @@ import { Icon } from './Icon';
 import { TextXL } from './Text';
 
 interface IBrand extends PropsWithChildren {
+  theme?: 'dark' | 'light';
   style?: StyleProp<ViewStyle>;
 }
 
-export const Brand = (props: IBrand) => {
+export const Brand = ({ style, theme = 'dark' }: IBrand) => {
   return (
-    <View style={[styles.brand, StyleSheet.flatten(props.style)]}>
-      <Icon name="logo" />
+    <View style={[styles.brand, StyleSheet.flatten(style)]}>
+      <Icon
+        fill={theme === 'dark' ? undefined : '#FFFFFF'}
+        name="logo"
+      />
       <TextXL fontType="secondary">
         <TextXL
-          color={colors.grayscale['500']}
+          color={
+            theme === 'dark' ? colors.grayscale['500'] : colors.grayscale['300']
+          }
           fontType="secondary"
         >
           Health
         </TextXL>
         <TextXL
-          color={colors.grayscale['900']}
+          color={theme === 'dark' ? colors.grayscale['900'] : colors.main.white}
           fontType="secondary"
         >
           Pal

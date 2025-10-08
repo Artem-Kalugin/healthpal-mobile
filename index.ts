@@ -1,7 +1,3 @@
-import { Platform, UIManager } from 'react-native';
-
-import { enableFreeze } from 'react-native-screens';
-
 import { registerRootComponent } from 'expo';
 import Constants from 'expo-constants';
 import { Settings } from 'luxon';
@@ -12,12 +8,15 @@ import '@formatjs/intl-datetimeformat/locale-data/ru';
 
 import YaMap from 'react-native-yamap';
 
+import * as SplashScreen from 'expo-splash-screen';
+
 import App from './src/App';
 
 YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);
 
 Settings.defaultLocale = 'ru';
 
+SplashScreen.hide();
 //https://github.com/software-mansion/react-native-reanimated/issues/8307 uncomment after fixed
 // enableFreeze(true);
 

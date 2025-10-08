@@ -5,7 +5,7 @@
   "scripts": {
     "start": "expo start",
     "prebuild": "npx expo prebuild --clean --no-install",
-    "android": "expo run:android",
+    "android": "yarn prebuild && expo run:android",
     "ios": "yarn prebuild && expo run:ios",
     "lint": "expo lint --no-cache",
     "postinstall": "patch-package && husky"
@@ -28,6 +28,7 @@
     "expo-image": "~3.0.8",
     "expo-image-picker": "~17.0.8",
     "expo-linear-gradient": "~15.0.7",
+    "expo-splash-screen": "~31.0.10",
     "expo-status-bar": "~3.0.8",
     "expo-system-ui": "~6.0.7",
     "luxon": "^3.7.2",
