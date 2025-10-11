@@ -11,3 +11,4 @@ export * from './CodeInput';
 export * from './StatisticsFact';
 export * from './Rating';
 export * from './Calendar';
+export * from './image';

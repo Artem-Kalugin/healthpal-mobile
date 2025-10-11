@@ -3,29 +3,29 @@ import { StyleSheet, View } from 'react-native';
 
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 
-import { Image } from 'expo-image';
-
 import Swiper from '#components/Swiper';
 import { ISwiperRef } from '#components/Swiper/Swiper';
 
-import { Button, TextLarge, TextSmall } from '#ui-kit';
+import { Button, Image, TextLarge, TextSmall } from '#ui-kit';
 
 import { AuthRoutes } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
+import { useOnboardingQuery } from '#api/Onboarding';
+
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
-import { animateLayout } from '#utils';
-
-import { slides } from './config';
-
 export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
+  const onboardingQuery = useOnboardingQuery(null);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+
   const swiperRef = useRef<ISwiperRef>(null);
-  const [activeSlide, setActiveSlide] = useState(0);
   const isRenderedRef = useRef<boolean>(false);
 
+  const lastSlideIndex = (onboardingQuery.data?.length || 0) - 1;
+
   const onPressNext = () => {
-    const haveSeenLastSlide = activeSlide === slides.length - 1;
+    const haveSeenLastSlide = activeSlideIndex === lastSlideIndex;
 
     if (haveSeenLastSlide) {
       props.navigation.replace(AppRoutes.StackAuth, {
@@ -45,13 +45,13 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
       <Swiper
         autoplayInterval={0}
         contentContainerStyle={styles.slideWrapper}
-        data={slides}
+        data={onboardingQuery.data || []}
         ListBeforePaginationComponent={
           <View style={styles.slideContent}>
             <Animated.View
-              key={activeSlide}
+              key={activeSlideIndex}
               entering={
-                !isRenderedRef.current ? undefined : FadeInUp.delay(500)
+                !isRenderedRef.current ? undefined : FadeInUp.delay(200)
               }
               exiting={FadeOutDown}
               style={styles.slideText}
@@ -61,34 +61,30 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
                 textAlign="center"
                 weight="600"
               >
-                {slides[activeSlide].title}
+                {onboardingQuery.data?.[activeSlideIndex].title}
               </TextLarge>
               <TextSmall
                 textAlign="center"
                 weight="400"
               >
-                {slides[activeSlide].description}
+                {onboardingQuery.data?.[activeSlideIndex].text}
               </TextSmall>
             </Animated.View>
             <Button onPress={onPressNext}>
-              {activeSlide === slides.length - 1 ? 'Продолжить' : 'Далее'}
+              {lastSlideIndex === activeSlideIndex ? 'Продолжить' : 'Далее'}
             </Button>
           </View>
         }
         renderItem={({ item }) => (
           <Image
-            key={item.image}
             source={item.image}
             style={styles.slideImage}
           />
         )}
         style={styles.swiper}
         swiperRef={swiperRef}
-        keyExtractor={item => item.image}
-        onSlideChange={newSlideIndex => {
-          animateLayout();
-          setActiveSlide(newSlideIndex);
-        }}
+        keyExtractor={item => item.text}
+        onSlideChange={setActiveSlideIndex}
       />
     </View>
   );
@@ -102,7 +98,6 @@ const styles = StyleSheet.create({
   slideImage: {
     height: '100%',
     width: '100%',
-    flexShrink: 1,
   },
   slideWrapper: {
     flex: 1,
