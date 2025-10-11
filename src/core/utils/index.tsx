@@ -1,4 +1,4 @@
-import { Alert, LayoutAnimation } from 'react-native';
+import { Alert } from 'react-native';
 
 import Haptics from '#services/Haptics';
 
@@ -6,29 +6,6 @@ export const showUnexpectedAPIError = (error: any) => {
   Alert.alert(
     'При выполнении сетевого запроса произошла неожиданная ошибка',
     JSON.stringify(error),
-  );
-};
-
-export const animateLayout = (onAnimationEnd = () => {}) => {
-  LayoutAnimation.configureNext(
-    {
-      duration: 250,
-      create: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      delete: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      update: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-    },
-    () => {
-      onAnimationEnd();
-    },
   );
 };
 

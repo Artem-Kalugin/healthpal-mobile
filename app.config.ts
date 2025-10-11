@@ -1,13 +1,10 @@
-import dotenv from 'dotenv';
 import { ExpoConfig } from 'expo/config';
-
-dotenv.config();
 
 module.exports = ({ config }: { config: ExpoConfig }): ExpoConfig => ({
   ...config,
   extra: {
     apiKeys: {
-      yandexMapKit: process.env.YANDEX_MAPKIT_KEY,
+      yandexMapKit: process.env.EXPO_PUBLIC_YANDEX_MAPKIT_KEY,
     },
   },
   plugins: [

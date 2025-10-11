@@ -24,7 +24,7 @@ import {
 
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
-import { animateLayout, delay } from '#utils';
+import { delay } from '#utils';
 
 export const PasswordRecoveryCodeInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryCodeInput>
@@ -46,12 +46,10 @@ export const PasswordRecoveryCodeInput: React.FC<
       return;
     }
 
-    animateLayout();
     setIsRequestPendingMock(true);
 
     await delay(400);
 
-    animateLayout();
     setIsRequestPendingMock(false);
 
     toast('Код был отправлен на электронный адрес example@mail.ru');
