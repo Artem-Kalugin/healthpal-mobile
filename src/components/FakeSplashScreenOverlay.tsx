@@ -22,14 +22,10 @@ import { Brand, Loader } from '#ui-kit';
 
 import { colors, Images, IS_IOS, SCREEN_HEIGHT, SCREEN_WIDTH } from '#config';
 
-import { delay } from '#utils';
-
 export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
   const animationProgress = useSharedValue(0);
 
   const onInit = async () => {
-    await delay(500);
-
     startAnimation();
   };
 

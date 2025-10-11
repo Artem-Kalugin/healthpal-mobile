@@ -9,25 +9,16 @@ import useAppLifecycle from '#hooks/useAppLifecycle';
 import { delay } from '#utils';
 
 const AppMiddleware = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
-  useAppLifecycle();
+  const { isReadyToRender } = useAppLifecycle();
 
-  const mockLoad = async () => {
-    setIsLoading(true);
-    await delay(2000);
-    setIsLoading(false);
-    setShowSplash(false);
-  };
-
-  useEffect(() => {
-    mockLoad();
-  }, []);
+  useEffect(() => {}, [isReadyToRender]);
 
   return (
     <>
-      {showSplash && <FakeSplashScreenOverlay isLoading={isLoading} />}
-      <RootStack />
+      {!isReadyToRender && (
+        <FakeSplashScreenOverlay isLoading={isReadyToRender} />
+      )}
+      {isReadyToRender && <RootStack />}
     </>
   );
 };

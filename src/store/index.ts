@@ -8,6 +8,8 @@ import { MMKV } from 'react-native-mmkv';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
+import { Query } from '#api';
+
 import reducers from './slices';
 
 const storage = new MMKV();
@@ -41,7 +43,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }),
+    }).concat(Query.middleware),
 });
 
 export const persistor = persistStore(store);
