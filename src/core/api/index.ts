@@ -1,7 +1,7 @@
 import * as Keychain from 'react-native-keychain';
 
 import NetInfo from '@react-native-community/netinfo';
-import type { BaseQueryFn } from '@reduxjs/toolkit/query';
+import type { BaseQueryApi, BaseQueryFn } from '@reduxjs/toolkit/query';
 import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import debounce from 'lodash/debounce';
 import { toast } from 'react-hot-toast/headless';
@@ -9,7 +9,7 @@ import { REHYDRATE } from 'redux-persist';
 
 import Debug from '#utils/debug';
 
-import { store } from '#store';
+import { RootState } from '#store';
 import { AppActions } from '#store/slices/app';
 
 import { BEError, FetchArgs } from './types';
@@ -42,10 +42,10 @@ const getUrlWithPathParams = (
     url,
   );
 
-const handleSessionError = () => {
+const handleSessionError = (api: BaseQueryApi) => {
   Keychain.resetGenericPassword();
-  store.dispatch(AppActions.setSignedIn(false));
-  store.dispatch(Query.util.resetApiState());
+  api.dispatch(AppActions.setSignedIn(false));
+  api.dispatch(Query.util.resetApiState());
   toast.error('Сессия истекла, пожалуйста, войдите заново');
 };
 
@@ -62,13 +62,10 @@ const fetchWithTimeout = (
   ]);
 };
 
-const fetchBaseQuery = async ({
-  url,
-  method = 'GET',
-  data,
-  params,
-  path,
-}: FetchArgs) => {
+const fetchBaseQuery = async (
+  { url, method = 'GET', data, params, path }: FetchArgs,
+  api: BaseQueryApi,
+) => {
   try {
     !process.env.EXPO_PUBLIC_API_URL &&
       Debug.error('no API_URL available, make sure .env file inited');
@@ -109,8 +106,11 @@ const fetchBaseQuery = async ({
     const json = await result.json().catch(() => ({}));
 
     if (!result.ok) {
-      if (result.status === 401 && store.getState().app.isSignedIn) {
-        handleSessionError();
+      if (
+        result.status === 401 &&
+        (api.getState() as RootState).app.isSignedIn
+      ) {
+        handleSessionError(api);
       }
 
       return {
@@ -143,7 +143,7 @@ const fetchBaseQuery = async ({
 
 const baseQuery = retry(
   async (args: FetchArgs, _api) => {
-    const result = await fetchBaseQuery(args);
+    const result = await fetchBaseQuery(args, _api);
 
     if (
       'error' in result &&
