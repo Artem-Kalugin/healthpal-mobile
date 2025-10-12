@@ -1,8 +1,17 @@
-import { IsNotEmpty, Matches, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
-import { LoginDto } from './LoginDto';
+export enum Gender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+}
 
-export class CreateUserDto extends LoginDto {
+export class UpdateUserDto {
   @MaxLength(16, {
     message: 'Имя не может быть длинее 16 символов',
   })
@@ -27,4 +36,16 @@ export class CreateUserDto extends LoginDto {
   })
   @IsNotEmpty({ message: 'Пожалуйста, введите фамилию' })
   surname: string;
+
+  @IsNotEmpty({ message: 'Пожалуйста, выберите день рождения' })
+  birthday: string;
+
+  @IsNotEmpty({ message: 'Пожалуйста, выберите пол' })
+  gender: Gender;
+
+  @IsOptional()
+  @Matches(/^[^\s]*$/, {
+    message: 'Имя пользователя не может содержать пробелов',
+  })
+  nickname?: string;
 }

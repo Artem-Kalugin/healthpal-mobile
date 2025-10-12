@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -58,10 +59,18 @@ const ToastItem = ({
   );
 };
 
+const TOASTS_OFFSET = 100;
+
+const offset = {
+  closed: 0,
+  opened: TOASTS_OFFSET,
+};
+
 const ToastProvider = () => {
   const { toasts, handlers } = useToaster();
   return (
-    <View
+    <KeyboardStickyView
+      offset={offset}
       pointerEvents="none"
       style={styles.provider}
     >
@@ -75,7 +84,7 @@ const ToastProvider = () => {
           updateHeight={(height: number) => handlers.updateHeight(t.id, height)}
         />
       ))}
-    </View>
+    </KeyboardStickyView>
   );
 };
 
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
   provider: {
     position: 'absolute',
     right: 0,
-    bottom: 100,
+    bottom: TOASTS_OFFSET,
     left: 0,
   },
   toastWrapper: {

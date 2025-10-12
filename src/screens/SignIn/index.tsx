@@ -37,12 +37,20 @@ import {
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
+import { delay } from '#utils';
+
+import { useDispatch } from '#store';
+import { AppActions } from '#store/slices/app';
+import { RuntimeActions } from '#store/slices/runtime';
+
 export const SignIn: React.FC<
   CompositeScreenProps<
     AuthScreenProps<AuthRoutes.SignIn>,
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const dispatch = useDispatch();
+
   const passwordInputRef = useRef<TextInput>(null);
 
   const { form, getFormInputProps } = useAppForm(LoginDto);
@@ -56,12 +64,26 @@ export const SignIn: React.FC<
 
     const formValues = form.getValues();
 
-    await login({
+    const response = await login({
       data: {
         ...formValues,
         phone: `+7${formValues.phone}`,
       },
     }).unwrap();
+
+    dispatch(AppActions.setShouldShowOnboarding(false));
+
+    dispatch(RuntimeActions.setToken(response.accessToken));
+
+    await delay(0);
+
+    props.navigation.navigate(
+      //@ts-expect-error
+      response.user.registrationComplete
+        ? AppRoutes.StackMain
+        : AppRoutes.ProfileEditing,
+    );
+    form.reset();
   };
 
   const submitForm = form.handleSubmit(onSubmit, () => {
@@ -111,7 +133,7 @@ export const SignIn: React.FC<
                   keyboardType="decimal-pad"
                   label="Номер телефона"
                   mask={PHONE_MASK}
-                  maxLength={18}
+                  maxLength={15}
                   placeholder="Любой, смс в демо не придет"
                   type="phone"
                   onSubmitEditing={() => passwordInputRef.current?.focus()}
@@ -152,7 +174,7 @@ export const SignIn: React.FC<
               onPress={() => {
                 Keyboard.dismiss();
                 props.navigation.push(AppRoutes.StackPasswordRecovery, {
-                  screen: PasswordRecoveryRoutes.PasswordRecoveryEmailInput,
+                  screen: PasswordRecoveryRoutes.PasswordRecoveryPhoneInput,
                 });
               }}
             >

@@ -10,16 +10,25 @@ import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import { useTimer } from '#components/providers/OTPTimer/use-timer';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
-import { Brand, Button, CodeInput, Loader, TextSmall, TextXL } from '#ui-kit';
+import {
+  Brand,
+  CodeInput,
+  Loader,
+  OTP_CELL_COUNT,
+  TextSmall,
+  TextXL,
+} from '#ui-kit';
 
 import {
   PasswordRecoveryRoutes,
   PasswordRecoveryScreenProps,
 } from '#navigation/PasswordRecovery/types';
 
+import { useVerifyCodeMutation, useVerifyPhoneMutation } from '#api/Auth';
+
 import { colors, layoutAnimation, SAFE_ZONE_BOTTOM } from '#config';
 
-import { delay } from '#utils';
+import useBEErrorHandler from '#hooks/useErrorHandler';
 
 export const PasswordRecoveryCodeInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryCodeInput>
@@ -28,29 +37,61 @@ export const PasswordRecoveryCodeInput: React.FC<
 
   const resendAvailable = !OTPTimerCtx.valueRaw;
 
+  const [verifyPhone, verifyPhoneMetadata] = useVerifyPhoneMutation();
+  const [verifyCode] = useVerifyCodeMutation();
+
   const [verificationCode, setVerificationCode] = useState('');
-  const [verficationCodeError, setVerificationCodeError] = useState(false);
-  const [isRequestPendingMock, setIsRequestPendingMock] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    setVerificationCodeError(verificationCode.length === 5);
+    setHasError(false);
+    verificationCode.length === OTP_CELL_COUNT && onDoneEditing();
   }, [verificationCode]);
 
+  const onDoneEditing = async () => {
+    try {
+      const res = await verifyCode({
+        data: {
+          otp: verificationCode,
+          phone: props.route.params.phone,
+        },
+      }).unwrap();
+
+      props.navigation.replace(
+        PasswordRecoveryRoutes.PasswordRecoverySetPassword,
+        {
+          phone: props.route.params.phone,
+          code: verificationCode,
+          recoveryToken: res.recoveryToken,
+        },
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      setHasError(true);
+    }
+  };
+
   const onResend = async () => {
-    if (isRequestPendingMock || !resendAvailable) {
+    if (verifyPhoneMetadata.isLoading || !resendAvailable) {
       return;
     }
 
-    setIsRequestPendingMock(true);
+    toast(`Код был отправлен на телефон ${props.route.params.phone}`);
 
-    await delay(400);
+    OTPTimerCtx.start(10);
 
-    setIsRequestPendingMock(false);
+    const res = await verifyPhone({
+      data: {
+        phone: props.route.params.phone,
+      },
+    }).unwrap();
 
-    toast('Код был отправлен на электронный адрес example@mail.ru');
-
-    OTPTimerCtx.start(5);
+    toast(
+      `${res.smsDemoOnly} - код в демо, т.к. интеграция смс-провайдера платная`,
+    );
   };
+
+  useBEErrorHandler(verifyPhoneMetadata);
 
   return (
     <View style={styles.container}>
@@ -77,32 +118,17 @@ export const PasswordRecoveryCodeInput: React.FC<
                 Подтверждение кода
               </TextXL>
               <TextSmall textAlign="center">
-                Введите код, который мы отправили на вашу почту.
+                Введите код, который мы отправили на ваш номер телефона.
               </TextSmall>
             </View>
 
             <View style={styles.main}>
-              <View style={styles.formInputs}>
-                <CodeInput
-                  autoFocus
-                  isError={verficationCodeError}
-                  value={verificationCode}
-                  setValue={setVerificationCode}
-                />
-              </View>
-              <Button
-                onPress={() => {
-                  props.navigation.navigate(
-                    PasswordRecoveryRoutes.PasswordRecoverySetPassword,
-                    {
-                      phone: '',
-                      code: '',
-                    },
-                  );
-                }}
-              >
-                Подтвердить
-              </Button>
+              <CodeInput
+                autoFocus
+                isError={hasError}
+                value={verificationCode}
+                setValue={setVerificationCode}
+              />
             </View>
 
             <View>
@@ -131,7 +157,7 @@ export const PasswordRecoveryCodeInput: React.FC<
                       Не получили код?{' '}
                       <TextSmall
                         color={
-                          isRequestPendingMock
+                          verifyPhoneMetadata.isLoading
                             ? colors.grayscale['400']
                             : colors.primary.normal
                         }
@@ -142,7 +168,9 @@ export const PasswordRecoveryCodeInput: React.FC<
                     </TextSmall>
                   </Animated.View>
                   <Animated.View layout={layoutAnimation}>
-                    {isRequestPendingMock ? <Loader cover={false} /> : null}
+                    {verifyPhoneMetadata.isLoading ? (
+                      <Loader cover={false} />
+                    ) : null}
                   </Animated.View>
                 </Animated.View>
               )}
@@ -177,10 +205,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 32,
     gap: 8,
-  },
-  formInputs: {
-    marginBottom: 32,
-    gap: 20,
   },
   resendContainer: {
     flexDirection: 'row',

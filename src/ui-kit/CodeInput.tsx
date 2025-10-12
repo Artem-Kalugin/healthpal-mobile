@@ -8,9 +8,13 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import Animated, {
+  interpolate,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
 } from 'react-native-reanimated';
 
 import { colors, withCustomAnimation } from '#config';
@@ -32,7 +36,7 @@ interface ICodeCell {
   getCellOnLayoutHandler: ReturnType<typeof useClearByFocusCell>['1'];
 }
 
-const CELL_COUNT = 5;
+export const OTP_CELL_COUNT = 5;
 let autoFocusTimerId: NodeJS.Timeout;
 export const CodeInput: React.FC<ICodeInput> = ({
   value,
@@ -41,7 +45,7 @@ export const CodeInput: React.FC<ICodeInput> = ({
   style,
   autoFocus,
 }) => {
-  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+  const ref = useBlurOnFulfill({ value, cellCount: OTP_CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -59,7 +63,7 @@ export const CodeInput: React.FC<ICodeInput> = ({
     <CodeField
       ref={ref}
       {...props}
-      cellCount={CELL_COUNT}
+      cellCount={OTP_CELL_COUNT}
       keyboardType="number-pad"
       renderCell={({ index, symbol, isFocused }) => (
         <CodeInputCell
@@ -93,12 +97,31 @@ const CodeInputCell: React.FC<ICodeCell> = ({
 
   const focusAnimationProgress = useSharedValue(0);
   const errorAnimationProgress = useSharedValue(0);
+  const shakeAnimationProgress = useSharedValue(0.5);
 
   useEffect(() => {
     focusAnimationProgress.value = withCustomAnimation(+!!isFocused);
   }, [isFocused]);
 
   useEffect(() => {
+    if (isError) {
+      shakeAnimationProgress.value = withSequence(
+        withRepeat(
+          withSequence(
+            withTiming(1, {
+              duration: 50,
+            }),
+            withTiming(0, {
+              duration: 50,
+            }),
+          ),
+          2,
+          true,
+        ),
+        withCustomAnimation(0.5),
+      );
+    }
+
     errorAnimationProgress.value = withCustomAnimation(+!!isError);
   }, [isError]);
 
@@ -115,6 +138,15 @@ const CodeInputCell: React.FC<ICodeCell> = ({
     );
 
     return {
+      transform: [
+        {
+          translateX: interpolate(
+            shakeAnimationProgress.value,
+            [0, 1],
+            [-5, 5],
+          ),
+        },
+      ],
       backgroundColor:
         errorAnimationProgress.value !== 0
           ? interpolateColor(

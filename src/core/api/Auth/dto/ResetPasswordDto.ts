@@ -1,19 +1,27 @@
 import {
-  IsNotEmpty,
   IsString,
   Matches,
   MaxLength,
   MinLength,
+  Validate,
+  ValidationArguments,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
 } from 'class-validator';
 
-export class LoginDto {
-  @Matches(/^\d{10}$/, {
-    message:
-      'Телефон должен быть в формате +7 (XXX) XXX-XX-XX (11 цифр после плюса)',
-  })
-  @IsNotEmpty({ message: 'Пожалуйста, введите номер телефона' })
-  phone: string;
+@ValidatorConstraint({ name: 'PasswordsMatch', async: false })
+class PasswordsMatchConstraint implements ValidatorConstraintInterface {
+  validate(confirmPassword: string, args: ValidationArguments): boolean {
+    const { object } = args;
+    return confirmPassword === (object as any).password;
+  }
 
+  defaultMessage(): string {
+    return 'Пароли не совпадают';
+  }
+}
+
+export class ResetPasswordDto {
   @IsString({ message: 'Пароль должен быть строкой' })
   @MinLength(8, { message: 'Пароль должен содержать минимум 8 символов' })
   @MaxLength(50, { message: 'Пароль не должен превышать 50 символов' })
@@ -24,6 +32,8 @@ export class LoginDto {
         'Пароль должен содержать как минимум два типа символов: строчные, прописные или цифры',
     },
   )
-  @IsNotEmpty({ message: 'Пожалуйста, введите пароль' })
   password: string;
+
+  @Validate(PasswordsMatchConstraint)
+  confirmPassword: string;
 }

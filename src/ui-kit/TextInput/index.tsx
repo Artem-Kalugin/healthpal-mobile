@@ -51,6 +51,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
   pointerEvents = undefined,
   inputRef,
   outlineType,
+  autoComplete = 'off',
   size = 'default',
   label = '',
   showEraseOnlyIfFocused = true,
@@ -133,6 +134,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
           <_TextInput
             ref={inputRef}
             autoCapitalize={autoCapitalize}
+            autoComplete={autoComplete}
             autoFocus={autoFocus}
             editable={!disabled}
             enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
@@ -149,6 +151,8 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
               StyleSheet.flatten(style),
             ]}
             submitBehavior={submitBehavior}
+            /*https://github.com/facebook/react-native/issues/47106 */
+            textContentType="oneTimeCode"
             value={value}
             onBlur={_onBlur}
             onChangeText={onChange}

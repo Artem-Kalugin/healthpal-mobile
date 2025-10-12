@@ -11,6 +11,8 @@ import onboarding2 from '#assets/images/onboarding-2.png';
 import onboarding3 from '#assets/images/onboarding-3.png';
 import profileCircle from '#assets/images/profile-circle.png';
 
+import { Gender } from '#api/User/dto/UpdateUserDto';
+
 export const IS_IOS = Platform.OS === 'ios';
 
 export const SCREEN_WIDTH = Dimensions.get('screen').width;
@@ -19,6 +21,11 @@ const insets = initialWindowMetrics?.insets;
 export const SAFE_ZONE_BOTTOM =
   (IS_IOS ? insets?.bottom : (insets?.bottom || 0) + 14) || 14;
 export const STATUS_BAR_HEIGHT = insets?.top;
+
+export const MapGenderToLabel: { [x in Gender]: string } = {
+  [Gender.FEMALE]: 'Женский',
+  [Gender.MALE]: 'Мужской',
+};
 
 export const hitSlop = {
   bottom: 16,
@@ -94,9 +101,6 @@ export const Images = {
 export const BORDER_RADIUS_ROUNDED = 9999;
 
 export const PHONE_MASK = [
-  '+',
-  '7',
-  ' ',
   '(',
   /\d/,
   /\d/,

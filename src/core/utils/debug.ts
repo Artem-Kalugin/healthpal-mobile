@@ -15,8 +15,8 @@ class Debug {
     if (__DEV__) {
       // eslint-disable-next-line no-console
       return console.log(
-        '%c%s',
-        color,
+        // '%c%s',
+        // color,
         stylePrefixedText,
         data ? '=> ' : '',
         data || '',
@@ -40,8 +40,12 @@ class Debug {
     this.__log(consoleStyles.success, `✅[SUCCESS] ${text}`, data);
   }
 
+  static requestStart(text = 'Hello world', data?: any) {
+    this.__log(consoleStyles['api-success'], ` ℹ️[API START] ${text}`, data);
+  }
+
   static requestSuccess(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles['api-success'], `[API SUCCESS] ${text}`, data);
+    this.__log(consoleStyles['api-success'], `✅[API SUCCESS] ${text}`, data);
   }
 
   static requestError(text = 'Hello world', data?: any) {

@@ -45,6 +45,7 @@ interface FormTextInputProps<T extends FieldValues>
   formState: FormState<T>;
   trigger: UseFormTrigger<T>;
   setValue: UseFormSetValue<T>;
+  transformValue?: (value: string) => string;
   clearErrors: UseFormClearErrors<T>;
   control: Control<T>;
   type?: 'phone' | 'default';
@@ -58,6 +59,7 @@ export function FormTextInput<T extends FieldValues>({
   mask,
   clearErrors,
   setValue,
+  transformValue = val => val,
   type = 'default',
   trigger,
   ...externalProps
@@ -78,7 +80,7 @@ export function FormTextInput<T extends FieldValues>({
               : (Object.values(fieldState.error?.types) as string[])
             : undefined,
           outlineType: fieldState.invalid ? ('error' as const) : undefined,
-          value: value ?? '',
+          value: transformValue(value) ?? '',
           onBlur: () => {
             animateLayout();
             onBlur();

@@ -25,6 +25,7 @@ export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
 type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   errors?: string[];
+  prefix: string;
   mask: (RegExp | string)[];
   onChange: (masked: string, unmasked: string) => void;
   size: 'default' | 'small';
@@ -45,6 +46,7 @@ type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
 export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
   mask,
   value = '',
+  prefix = '+7',
   multiline = false,
   pointerEvents = undefined,
   inputRef,
@@ -118,7 +120,9 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
         )}
 
         <TextInputLabel
-          hasVisibleValue={!!(props.placeholder === '' ? value : value || mask)}
+          hasVisibleValue={
+            !!(props.placeholder === '' ? value : value || mask || prefix)
+          }
           isFocused={isFocused}
           value={label}
         />
@@ -128,8 +132,23 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
           pointerEvents={pointerEvents}
           style={styles.wrapper}
         >
+          {prefix && (isFocused || value) && (
+            <MaskInput
+              editable={false}
+              pointerEvents="none"
+              style={[
+                styles.inputShared,
+                size === 'small' && styles.inputSmall,
+                size === 'default' && styles.inputDefault,
+                StyleSheet.flatten(style),
+                styles.prefix,
+              ]}
+              value={prefix}
+            />
+          )}
           <MaskInput
             ref={inputRef}
+            maskAutoComplete
             autoCapitalize={autoCapitalize}
             autoFocus={autoFocus}
             editable={!disabled}
@@ -142,16 +161,19 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
             selectionColor={colors.grayscale['700']}
             style={[
               styles.inputShared,
+              styles.flex,
               size === 'small' && styles.inputSmall,
               size === 'default' && styles.inputDefault,
               StyleSheet.flatten(style),
             ]}
             submitBehavior={submitBehavior}
+            textContentType="oneTimeCode"
             value={value}
             onBlur={_onBlur}
             onChangeText={onChange}
             onFocus={_onFocus}
             {...props}
+            placeholder={!isFocused || !prefix ? props.placeholder : ''}
           />
         </View>
 
@@ -198,10 +220,12 @@ const getStyles = ({
       borderRadius: 12,
       backgroundColor: colors.grayscale['50'],
     },
-    inputShared: {
+    flex: {
       flex: 1,
+    },
+    inputShared: {
       maxHeight: 300,
-      paddingHorizontal: 8,
+
       color: disabled ? colors.grayscale['200'] : colors.black,
       fontSize: 15,
       fontFamily: primaryFontNameMap[400],
@@ -222,8 +246,14 @@ const getStyles = ({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    prefix: {
+      paddingRight: 4,
+      paddingHorizontal: 0,
+    },
     wrapper: {
       flex: 1,
+      flexDirection: 'row',
+      paddingHorizontal: 8,
     },
     iconLeft: {
       paddingLeft: 8,
