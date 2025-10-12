@@ -71,7 +71,7 @@ export const SignUp: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
-  useErrorHandler<CreateUserDto>(registerMetadata, form);
+  useErrorHandler(registerMetadata, form);
 
   return (
     <KeyboardAwareScrollView
