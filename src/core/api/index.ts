@@ -150,7 +150,7 @@ const baseQuery = retry(
       result.error &&
       typeof result.error === 'object' &&
       'status' in result.error &&
-      [422, 403, 401].includes(result.error?.status as number)
+      [422, 403, 401, 409].includes(result.error?.status as number)
     ) {
       retry.fail(result.error);
     }
@@ -162,7 +162,6 @@ const baseQuery = retry(
 
 const Query = createApi({
   reducerPath: 'api',
-  //@ts-expect-error
   baseQuery: baseQuery as BaseQueryFn<FetchArgs, unknown, BEError>,
   endpoints: () => ({}),
   extractRehydrationInfo(action, { reducerPath }) {

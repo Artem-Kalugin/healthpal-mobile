@@ -10,6 +10,7 @@ import calendarEdit from '#assets/icons/calendar-edit.svg';
 import calendarRemove from '#assets/icons/calendar-remove.svg';
 import calendarTick from '#assets/icons/calendar-tick.svg';
 import calendar from '#assets/icons/calendar.svg';
+import call from '#assets/icons/call.svg';
 import camera from '#assets/icons/camera.svg';
 import check from '#assets/icons/check.svg';
 import chevronDown from '#assets/icons/chevron-down.svg';
@@ -17,6 +18,9 @@ import chevronLeft from '#assets/icons/chevron-left.svg';
 import chevronRight from '#assets/icons/chevron-right.svg';
 import comment from '#assets/icons/comment.svg';
 import cross from '#assets/icons/cross.svg';
+import eyeSlash from '#assets/icons/eye-slash.svg';
+/* PLOP_INJECT_IMPORT */
+import eye from '#assets/icons/eye.svg';
 import favoriteActive from '#assets/icons/favorite-active.svg';
 import favorite from '#assets/icons/favorite.svg';
 import gallery from '#assets/icons/gallery.svg';
@@ -24,7 +28,6 @@ import heart from '#assets/icons/heart.svg';
 import homeActive from '#assets/icons/home-active.svg';
 import home from '#assets/icons/home.svg';
 import hospital from '#assets/icons/hospital.svg';
-/* PLOP_INJECT_IMPORT */
 import lockSlash from '#assets/icons/lock-slash.svg';
 import lock from '#assets/icons/lock.svg';
 import logOut from '#assets/icons/log-out.svg';
@@ -54,6 +57,9 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  eye: { component: eye, color: colors.grayscale['400'] },
+  eyeSlash: { component: eyeSlash, color: colors.grayscale['400'] },
+  call: { component: call },
   lockSlash: { component: lockSlash },
   calendarRemove: { component: calendarRemove },
   calendarEdit: { component: calendarEdit },

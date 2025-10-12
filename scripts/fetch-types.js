@@ -9,7 +9,7 @@ import ts from 'typescript';
 
 import { prettify } from './utils.js';
 
-const BE_API_DOCS_JSON_PATH = 'http://localhost:3000/api';
+const BE_API_DOCS_JSON_PATH = 'http://localhost:3000/api-json';
 
 const PARSED_SCHEMA_LOCAL_PATH = './generated/schema.ts';
 const __ENTITIES_LOCAL_PATH = './generated/__entities.ts';
@@ -96,8 +96,8 @@ async function updateSchema() {
 
     docsJson = await res.json();
     console.log('Using schema from api', BE_API_DOCS_JSON_PATH);
-    // eslint-disable-next-line no-unused-vars
   } catch (e) {
+    console.log(e);
     usingBackup = true;
     docsJson = backupDocs;
     console.log('Using backup schema');

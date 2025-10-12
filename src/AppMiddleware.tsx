@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { FakeSplashScreenOverlay } from '#components/FakeSplashScreenOverlay';
 
 import RootStack from '#navigation';
 
 import useAppLifecycle from '#hooks/useAppLifecycle';
-
-import { delay } from '#utils';
 
 const AppMiddleware = () => {
   const { isReadyToRender } = useAppLifecycle();
