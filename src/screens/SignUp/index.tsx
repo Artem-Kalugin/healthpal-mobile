@@ -22,6 +22,7 @@ import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useRegisterMutation } from '#api/Auth';
+import { CreateUserDto } from '#api/Auth/dto/CreateUserDto';
 
 import {
   colors,
@@ -34,10 +35,6 @@ import {
 
 import useAppForm from '#hooks/useAppForm';
 import useErrorHandler from '#hooks/useErrorHandler';
-
-import { handleBEValidationError, isBEValidationError } from '#utils';
-
-import { CreateUserDto } from './validator';
 
 export const SignUp: React.FC<
   CompositeScreenProps<
@@ -60,20 +57,12 @@ export const SignUp: React.FC<
 
     const formValues = form.getValues();
 
-    try {
-      await register({
-        data: {
-          ...formValues,
-          phone: `+72${formValues.phone}`,
-        },
-      }).unwrap();
-    } catch (e) {
-      if (isBEValidationError<CreateUserDto>(e)) {
-        handleBEValidationError(e.data.validation, form);
-      } else {
-        toast('Произошла неизвестная ошибка');
-      }
-    }
+    await register({
+      data: {
+        ...formValues,
+        phone: `+7${formValues.phone}`,
+      },
+    }).unwrap();
   };
 
   const submitForm = form.handleSubmit(onSubmit, () => {
@@ -82,7 +71,7 @@ export const SignUp: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
-  useErrorHandler(registerMetadata);
+  useErrorHandler<CreateUserDto>(registerMetadata, form);
 
   return (
     <KeyboardAwareScrollView
@@ -142,7 +131,7 @@ export const SignUp: React.FC<
                 label="Номер телефона"
                 mask={PHONE_MASK}
                 maxLength={18}
-                placeholder=""
+                placeholder="Любой, смс в демо не придет"
                 type="phone"
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
                 {...getFormInputProps('phone')}
@@ -169,10 +158,7 @@ export const SignUp: React.FC<
             </View>
             <Button
               isLoading={registerMetadata.isLoading}
-              onPress={() => {
-                submitForm();
-                // props.navigation.push(AppRoutes.ProfileEditing);
-              }}
+              onPress={submitForm}
             >
               Создать аккаунт
             </Button>
