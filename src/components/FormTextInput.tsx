@@ -110,7 +110,7 @@ export function FormTextInput<T extends FieldValues>({
               mask={mask}
               onChange={(val, unmasked) => {
                 animateLayout();
-                onChange(unmasked);
+                onChange(val);
               }}
               {...baseInputProps}
               {...externalProps}

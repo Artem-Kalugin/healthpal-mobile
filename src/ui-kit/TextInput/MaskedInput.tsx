@@ -11,7 +11,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import MaskInput from 'react-native-mask-input';
+import { MaskedTextInput } from 'react-native-advanced-input-mask';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { colors, IS_IOS } from '#config';
@@ -25,7 +25,6 @@ export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
 type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   errors?: string[];
-  prefix: string;
   mask: (RegExp | string)[];
   onChange: (masked: string, unmasked: string) => void;
   size: 'default' | 'small';
@@ -46,7 +45,6 @@ type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
 export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
   mask,
   value = '',
-  prefix = '+7',
   multiline = false,
   pointerEvents = undefined,
   inputRef,
@@ -120,9 +118,7 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
         )}
 
         <TextInputLabel
-          hasVisibleValue={
-            !!(props.placeholder === '' ? value : value || mask || prefix)
-          }
+          hasVisibleValue={!!(props.placeholder === '' ? value : value || mask)}
           isFocused={isFocused}
           value={label}
         />
@@ -132,28 +128,13 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
           pointerEvents={pointerEvents}
           style={styles.wrapper}
         >
-          {prefix && (isFocused || value) && (
-            <MaskInput
-              editable={false}
-              pointerEvents="none"
-              style={[
-                styles.inputShared,
-                size === 'small' && styles.inputSmall,
-                size === 'default' && styles.inputDefault,
-                StyleSheet.flatten(style),
-                styles.prefix,
-              ]}
-              value={prefix}
-            />
-          )}
-          <MaskInput
-            ref={inputRef}
-            maskAutoComplete
+          <MaskedTextInput
             autoCapitalize={autoCapitalize}
+            autocomplete={false}
             autoFocus={autoFocus}
             editable={!disabled}
             enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
-            mask={mask}
+            mask="+7 ([000]) [000]-[00]-[00]"
             multiline={_multiline}
             placeholderTextColor={colors.grayscale['400']}
             pointerEvents={pointerEvents}
@@ -173,7 +154,7 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
             onChangeText={onChange}
             onFocus={_onFocus}
             {...props}
-            placeholder={!isFocused || !prefix ? props.placeholder : ''}
+            placeholder={!isFocused ? props.placeholder : ''}
           />
         </View>
 
@@ -245,10 +226,6 @@ const getStyles = ({
     iconContainer: {
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    prefix: {
-      paddingRight: 4,
-      paddingHorizontal: 0,
     },
     wrapper: {
       flex: 1,

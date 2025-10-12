@@ -73,7 +73,6 @@ const AuthAPI = Query.injectEndpoints({
         return {
           url: '/auth/complete-registration',
           method: 'post',
-          'Content-Type': 'multipart/form-data',
           data: formData,
         };
       },

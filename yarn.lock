@@ -8897,6 +8897,11 @@ react-is@^19.1.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-19.1.1.tgz#038ebe313cf18e1fd1235d51c87360eb87f7c36a"
   integrity sha512-tr41fA15Vn8p4X9ntI+yCyeGSf1TlYaY5vlTZfQmeLBrFo3psOPX6HhTDnFNL9uj3EhP0KAQ80cugCl4b4BERA==
 
+react-native-advanced-input-mask@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/react-native-advanced-input-mask/-/react-native-advanced-input-mask-1.4.6.tgz#70f35805ad85d29f67987235309dd7eba60178e8"
+  integrity sha512-70qm6wQ2YJVWq4iHqzOJg6d4Ej3duid16G9dGZh6PxMweyfq4TeMbAi5DcmHRe71tDf436IgjWmGENAFPtnPWg==
+
 react-native-background-timer@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.4.1.tgz#a3bc1cafa8c1e3aeefd0611de120298b67978a0f"

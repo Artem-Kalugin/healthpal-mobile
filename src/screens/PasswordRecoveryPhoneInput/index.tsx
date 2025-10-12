@@ -38,7 +38,7 @@ export const PasswordRecoveryPhoneInput: React.FC<
 
     const formValues = form.getValues();
 
-    const phone = `+7${formValues.phone}`;
+    const phone = '+' + formValues.phone.replace(/\D/g, '');
 
     const res = await verifyPhone({
       data: {

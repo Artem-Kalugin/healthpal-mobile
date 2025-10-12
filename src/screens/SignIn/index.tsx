@@ -67,7 +67,7 @@ export const SignIn: React.FC<
     const response = await login({
       data: {
         ...formValues,
-        phone: `+7${formValues.phone}`,
+        phone: '+' + formValues.phone.replace(/\D/g, ''),
       },
     }).unwrap();
 
@@ -133,7 +133,7 @@ export const SignIn: React.FC<
                   keyboardType="decimal-pad"
                   label="Номер телефона"
                   mask={PHONE_MASK}
-                  maxLength={15}
+                  maxLength={18}
                   placeholder="Любой, смс в демо не придет"
                   type="phone"
                   onSubmitEditing={() => passwordInputRef.current?.focus()}
