@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import Animated, {
-  Easing,
-  FadeIn,
-  FadeOut,
-  LinearTransition,
-} from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { toast } from 'react-hot-toast/headless';
 
@@ -22,7 +17,7 @@ import {
   PasswordRecoveryScreenProps,
 } from '#navigation/PasswordRecovery/types';
 
-import { colors, SAFE_ZONE_BOTTOM } from '#config';
+import { colors, layoutAnimation, SAFE_ZONE_BOTTOM } from '#config';
 
 import { delay } from '#utils';
 
@@ -131,7 +126,7 @@ export const PasswordRecoveryCodeInput: React.FC<
                   exiting={FadeOut}
                   style={styles.resendContainer}
                 >
-                  <Animated.View layout={LinearTransition.easing(Easing.ease)}>
+                  <Animated.View layout={layoutAnimation}>
                     <TextSmall textAlign="center">
                       Не получили код?{' '}
                       <TextSmall
@@ -146,7 +141,7 @@ export const PasswordRecoveryCodeInput: React.FC<
                       </TextSmall>
                     </TextSmall>
                   </Animated.View>
-                  <Animated.View layout={LinearTransition.easing(Easing.ease)}>
+                  <Animated.View layout={layoutAnimation}>
                     {isRequestPendingMock ? <Loader cover={false} /> : null}
                   </Animated.View>
                 </Animated.View>

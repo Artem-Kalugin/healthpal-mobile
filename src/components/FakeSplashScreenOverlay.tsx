@@ -7,7 +7,6 @@ import Animated, {
   FadeInDown,
   FadeOut,
   interpolate,
-  LinearTransition,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -20,7 +19,14 @@ import { setStatusBarHidden } from 'expo-status-bar';
 
 import { Brand, Loader } from '#ui-kit';
 
-import { colors, Images, IS_IOS, SCREEN_HEIGHT, SCREEN_WIDTH } from '#config';
+import {
+  colors,
+  Images,
+  IS_IOS,
+  layoutAnimation,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '#config';
 
 export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
   const animationProgress = useSharedValue(0);
@@ -87,7 +93,7 @@ export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
         <View style={styles.loaderOverlay}>
           <Animated.View
             entering={FadeIn}
-            layout={LinearTransition.easing(Easing.ease)}
+            layout={layoutAnimation}
           >
             <Brand
               style={styles.brand}

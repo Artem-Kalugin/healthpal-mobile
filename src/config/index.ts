@@ -1,6 +1,6 @@
 import { Dimensions, Platform, StyleSheet } from 'react-native';
 
-import { withSpring } from 'react-native-reanimated';
+import { Easing, LinearTransition, withSpring } from 'react-native-reanimated';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 
 /* PLOP_INJECT_IMPORT */
@@ -15,11 +15,10 @@ export const IS_IOS = Platform.OS === 'ios';
 
 export const SCREEN_WIDTH = Dimensions.get('screen').width;
 export const SCREEN_HEIGHT = Dimensions.get('screen').height;
-const insetsAndroid = initialWindowMetrics?.insets?.bottom
-  ? initialWindowMetrics?.insets?.bottom + 14
-  : 0;
-const insetsIOS = initialWindowMetrics?.insets?.bottom;
-export const SAFE_ZONE_BOTTOM = (IS_IOS ? insetsIOS : insetsAndroid) || 14;
+const insets = initialWindowMetrics?.insets;
+export const SAFE_ZONE_BOTTOM =
+  (IS_IOS ? insets?.bottom : (insets?.bottom || 0) + 14) || 14;
+export const STATUS_BAR_HEIGHT = insets?.top;
 
 export const hitSlop = {
   bottom: 16,
@@ -93,5 +92,28 @@ export const Images = {
   profileCircle,
 };
 export const BORDER_RADIUS_ROUNDED = 9999;
+
+export const PHONE_MASK = [
+  '+',
+  '7',
+  ' ',
+  '(',
+  /\d/,
+  /\d/,
+  /\d/,
+  ')',
+  ' ',
+  /\d/,
+  /\d/,
+  /\d/,
+  '-',
+  /\d/,
+  /\d/,
+  '-',
+  /\d/,
+  /\d/,
+];
+
+export const layoutAnimation = LinearTransition.easing(Easing.ease);
 
 export * from './colors';

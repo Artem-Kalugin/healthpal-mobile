@@ -162,7 +162,6 @@ const baseQuery = retry(
 
 const Query = createApi({
   reducerPath: 'api',
-  //@ts-expect-error
   baseQuery: baseQuery as BaseQueryFn<FetchArgs, unknown, BEError>,
   endpoints: () => ({}),
   extractRehydrationInfo(action, { reducerPath }) {

@@ -2,11 +2,11 @@ import React, { PropsWithChildren, useCallback, useState } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import { Calendar as _Calendar, DateData } from 'react-native-calendars';
-import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import { DateTime } from 'luxon';
 
-import { colors, shadow } from '#config';
+import { colors, layoutAnimation, shadow } from '#config';
 
 import { normalizeDefaultStyles } from './config';
 import { CalendarDay } from './day';
@@ -52,7 +52,7 @@ export const Calendar = ({
 
   return (
     <Animated.View
-      layout={LinearTransition.easing(Easing.ease)}
+      layout={layoutAnimation}
       style={[styles.container, StyleSheet.flatten(style), shadow]}
     >
       <_Calendar
