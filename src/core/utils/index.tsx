@@ -1,5 +1,9 @@
 import { Alert } from 'react-native';
 
+import { UseFormReturn } from 'react-hook-form';
+
+import { BEValidationError, BEValidationScheme } from '#api/types';
+
 import Haptics from '#services/Haptics';
 
 export const showUnexpectedAPIError = (error: any) => {
@@ -69,3 +73,52 @@ export const delay = (time = 100) => {
 
   return _delay;
 };
+
+export function __checkBEValidationError(error: unknown) {
+  if (
+    !(
+      error &&
+      typeof error === 'object' &&
+      'data' in error &&
+      typeof (error as any).data === 'object' &&
+      (error as any).data !== null
+    )
+  ) {
+    return false;
+  }
+
+  const errorData = (error as { data: unknown }).data;
+
+  if (
+    !(
+      typeof errorData === 'object' &&
+      errorData !== null &&
+      'validation' in errorData
+    )
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+export function isBEValidationError<T extends object>(
+  error: unknown,
+): error is { data: BEValidationError<T> } {
+  return __checkBEValidationError(error);
+}
+
+export function handleBEValidationError<T extends object>(
+  validationErrors: BEValidationScheme<T>,
+  form: UseFormReturn<T, any, T>,
+): boolean {
+  for (const field in validationErrors) {
+    form.setError(
+      // @ts-expect-error — динамические ключи формы
+      field,
+      { message: validationErrors[field][0] },
+    );
+  }
+
+  return true;
+}

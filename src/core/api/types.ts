@@ -1,9 +1,17 @@
 export type BEError = {
-  error: {
-    data: unknown;
-    status?: number;
-  };
+  data: unknown;
+  status?: number;
 };
+
+export type BEValidationError<T extends object> = {
+  validation: BEValidationScheme<T>;
+  status?: number;
+};
+
+export type BEValidationScheme<T extends object> = Record<
+  keyof Partial<T>,
+  string[]
+>;
 
 export type FetchArgs = {
   url: string;

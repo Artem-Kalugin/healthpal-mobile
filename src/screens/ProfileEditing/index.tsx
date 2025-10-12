@@ -108,7 +108,7 @@ export const ProfileEditing: React.FC<
                     IconLeft={<Icon name="calendar" />}
                     label="Дата рождения"
                     pointerEvents="none"
-                    showDeleteIfFocusedOnly={false}
+                    showEraseOnlyIfFocused={false}
                     value={
                       date
                         ? DateTime.fromJSDate(date)
