@@ -4,7 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Onboarding, ProfileEditing } from '#screens';
 
+import { useSelector } from '#store';
+
 import { AuthStack } from './Auth';
+import { AuthRoutes } from './Auth/types';
 import { DEFAULT_STACK_OPTIONS } from './config';
 import { MainStack } from './Main';
 import StackModals from './Modals';
@@ -14,34 +17,57 @@ import { AppParamList, AppRoutes } from './types';
 const App = createStackNavigator<AppParamList>();
 
 const AppStack = () => {
+  const appState = useSelector(store => store.app);
+  const runtimeState = useSelector(store => store.runtime);
+
   return (
     <App.Navigator
-      initialRouteName={AppRoutes.Onboarding}
+      initialRouteName={
+        runtimeState.token
+          ? runtimeState.token.registrationComplete
+            ? AppRoutes.StackMain
+            : AppRoutes.ProfileEditing
+          : AppRoutes.StackAuth
+      }
       screenOptions={{
         ...DEFAULT_STACK_OPTIONS,
         //https://github.com/react-navigation/react-navigation/issues/12531 TODO: delete after fixed
         detachPreviousScreen: false,
       }}
     >
+      {appState.shouldShowOnboarding && (
+        <App.Screen
+          component={Onboarding}
+          name={AppRoutes.Onboarding}
+        />
+      )}
+
       <App.Screen
-        component={Onboarding}
-        name={AppRoutes.Onboarding}
+        key={AppRoutes.StackAuth}
+        component={AuthStack}
+        initialParams={{
+          screen: appState.shouldShowOnboarding
+            ? AuthRoutes.SignUp
+            : AuthRoutes.SignIn,
+        }}
+        name={AppRoutes.StackAuth}
       />
+
       <App.Screen
         component={ProfileEditing}
         name={AppRoutes.ProfileEditing}
       />
-      <App.Screen
-        component={AuthStack}
-        name={AppRoutes.StackAuth}
-      />
+
+      {runtimeState.token?.registrationComplete && (
+        <App.Screen
+          component={MainStack}
+          name={AppRoutes.StackMain}
+        />
+      )}
+
       <App.Screen
         component={PasswordRecoveryStack}
         name={AppRoutes.StackPasswordRecovery}
-      />
-      <App.Screen
-        component={MainStack}
-        name={AppRoutes.StackMain}
       />
 
       <App.Screen

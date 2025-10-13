@@ -4,6 +4,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "#generated": ["./generated/index"],
       "#ui-kit": ["./src/ui-kit/index"],

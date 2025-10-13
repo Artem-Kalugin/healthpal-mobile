@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  isSignedIn: false,
+  shouldShowOnboarding: true,
 };
 
 const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setSignedIn(state, action: PayloadAction<boolean>) {
-      state.isSignedIn = action.payload;
+    setShouldShowOnboarding(state, action: PayloadAction<boolean>) {
+      state.shouldShowOnboarding = action.payload;
     },
   },
 });

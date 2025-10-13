@@ -1,8 +1,10 @@
 import { Query } from '#api';
+import { TagsUserAPI } from '#api/User/types';
 
 import { RequestsAuth as Requests } from './types';
 
 const AuthAPI = Query.injectEndpoints({
+  overrideExisting: true,
   endpoints: build => ({
     verifyPhone: build.mutation<
       Requests['verifyPhone']['response'],
@@ -48,11 +50,32 @@ const AuthAPI = Query.injectEndpoints({
       Requests['completeRegistation']['response'],
       Requests['completeRegistation']['args']
     >({
-      query: args => ({
-        url: '/auth/complete-registration',
-        method: 'post',
-        ...args,
-      }),
+      invalidatesTags: [TagsUserAPI.User],
+      query: args => {
+        const formData = new FormData();
+
+        const { ...rest } = args.data;
+
+        Object.entries(rest).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            formData.append(key, String(value));
+          }
+        });
+
+        if (args.data?.avatar) {
+          formData.append('avatar', {
+            uri: args.data?.avatar,
+            type: 'image/jpeg',
+            name: 'avatar.jpg',
+          } as any);
+        }
+
+        return {
+          url: '/auth/complete-registration',
+          method: 'post',
+          data: formData,
+        };
+      },
     }),
     resetPassword: build.mutation<
       Requests['resetPassword']['response'],

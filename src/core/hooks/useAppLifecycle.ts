@@ -1,15 +1,26 @@
 import { useEffect, useState } from 'react';
 
-import { delay } from '#utils';
+import Keychain from 'react-native-keychain';
+
+import { useDispatch } from '#store';
+import { RuntimeActions } from '#store/slices/runtime';
 
 import { usePrefetchApp } from './usePrefetchApp';
 
 const useAppLifecycle = () => {
   const [inited, setInited] = useState(false);
+  const dispatch = useDispatch();
   const prefetchApp = usePrefetchApp();
 
   const onAppStart = async () => {
-    await delay(250);
+    const credentials = await Keychain.getGenericPassword();
+
+    if (credentials) {
+      const { username: accessToken } = credentials;
+
+      dispatch(RuntimeActions.setToken(accessToken));
+    }
+
     await prefetchApp();
 
     setInited(true);

@@ -1,5 +1,3 @@
-import * as Keychain from 'react-native-keychain';
-
 import NetInfo from '@react-native-community/netinfo';
 import type { BaseQueryApi, BaseQueryFn } from '@reduxjs/toolkit/query';
 import { createApi, retry } from '@reduxjs/toolkit/query/react';
@@ -10,28 +8,14 @@ import { REHYDRATE } from 'redux-persist';
 import Debug from '#utils/debug';
 
 import { RootState } from '#store';
-import { AppActions } from '#store/slices/app';
+import { RuntimeActions } from '#store/slices/runtime';
 
 import { BEError, FetchArgs } from './types';
+import { TagsUserAPI } from './User/types';
 
 const handleNoInternet = debounce(() => {
   toast.error('Отсутствует соединение с интернетом');
 }, 2500);
-
-const getTokens = async () => {
-  const credentials = await Keychain.getGenericPassword();
-
-  if (credentials) {
-    const { username: access_token, password: refresh_token } = credentials;
-
-    return {
-      access_token,
-      refresh_token,
-    };
-  }
-
-  return;
-};
 
 const getUrlWithPathParams = (
   url: string,
@@ -42,11 +26,9 @@ const getUrlWithPathParams = (
     url,
   );
 
-const handleSessionError = (api: BaseQueryApi) => {
-  Keychain.resetGenericPassword();
-  api.dispatch(AppActions.setSignedIn(false));
+const logOut = (api: BaseQueryApi) => {
+  api.dispatch(RuntimeActions.setToken(undefined));
   api.dispatch(Query.util.resetApiState());
-  toast.error('Сессия истекла, пожалуйста, войдите заново');
 };
 
 const fetchWithTimeout = (
@@ -71,6 +53,7 @@ const fetchBaseQuery = async (
       Debug.error('no API_URL available, make sure .env file inited');
 
     const { isConnected } = await NetInfo.fetch();
+
     if (!isConnected) {
       if (['PUT', 'POST', 'PATCH'].includes(method.toUpperCase())) {
         handleNoInternet();
@@ -89,18 +72,22 @@ const fetchBaseQuery = async (
       });
     }
 
+    const isFormData = data instanceof FormData;
+
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
     };
 
-    const tokens = await getTokens();
-    if (tokens?.access_token)
-      headers.Authorization = `Bearer ${tokens.access_token}`;
+    const runtimeToken = (api.getState() as RootState).runtime.token;
+
+    if (runtimeToken) headers.Authorization = `Bearer ${runtimeToken.plain}`;
+
+    const body = isFormData ? data : data ? JSON.stringify(data) : undefined;
 
     const result = await fetchWithTimeout(urlObj.toString(), {
       method,
       headers,
-      body: data ? JSON.stringify(data) : undefined,
+      body,
     });
 
     const json = await result.json().catch(() => ({}));
@@ -108,9 +95,9 @@ const fetchBaseQuery = async (
     if (!result.ok) {
       if (
         result.status === 401 &&
-        (api.getState() as RootState).app.isSignedIn
+        (api.getState() as RootState).runtime.token
       ) {
-        handleSessionError(api);
+        logOut(api);
       }
 
       return {
@@ -120,6 +107,8 @@ const fetchBaseQuery = async (
         },
       };
     }
+
+    Debug.requestSuccess(`${method.toUpperCase()} ${urlWithPath}`);
 
     return {
       data: json?.data ?? json ?? {},
@@ -150,7 +139,7 @@ const baseQuery = retry(
       result.error &&
       typeof result.error === 'object' &&
       'status' in result.error &&
-      [422, 403, 401, 409].includes(result.error?.status as number)
+      [422, 403, 401, 409, 404].includes(result.error?.status as number)
     ) {
       retry.fail(result.error);
     }
@@ -170,6 +159,7 @@ const Query = createApi({
       return action?.payload?.[reducerPath];
     }
   },
+  tagTypes: [...Object.values(TagsUserAPI)],
   keepUnusedDataFor: 600,
 });
 

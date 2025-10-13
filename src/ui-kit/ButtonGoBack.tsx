@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Icon } from '#ui-kit/Icon';
 
-import { hitSlopBig } from '#config';
+import { colors, hitSlopBig } from '#config';
 
 export interface IButtonGoBack {
   onPress: () => void;
@@ -24,7 +24,10 @@ const ButtonGoBack: React.FC<Partial<IButtonGoBack>> = ({
       style={style}
       onPress={onPress || navigation.goBack}
     >
-      <Icon name="arrowLeft" />
+      <Icon
+        color={colors.grayscale['900']}
+        name="arrowLeft"
+      />
     </TouchableOpacity>
   );
 };

@@ -1,22 +1,44 @@
-import { StyleSheet, View } from 'react-native';
+import { useRef, useState } from 'react';
+import {
+  Keyboard,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 import { CompositeScreenProps } from '@react-navigation/native';
+import { toast } from 'react-hot-toast/headless';
 
+import { FormTextInput } from '#components/FormTextInput';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
-import { Brand, Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
+import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
-import { AuthRoutes } from '#navigation/Auth/types';
+import { TabRoutes } from '#navigation/Main/Tab/types';
+import { MainRoutes } from '#navigation/Main/types';
 import {
   PasswordRecoveryRoutes,
   PasswordRecoveryScreenProps,
 } from '#navigation/PasswordRecovery/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
+import { useResetPasswordMutation } from '#api/Auth';
+import { ResetPasswordDto } from '#api/Auth/dto/ResetPasswordDto';
+
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
+
+import useAppForm from '#hooks/useAppForm';
+import useBEErrorHandler from '#hooks/useErrorHandler';
+
+import { delay } from '#utils';
+
+import { useDispatch } from '#store';
+import { AppActions } from '#store/slices/app';
+import { RuntimeActions } from '#store/slices/runtime';
 
 export const PasswordRecoverySetPassword: React.FC<
   CompositeScreenProps<
@@ -24,6 +46,58 @@ export const PasswordRecoverySetPassword: React.FC<
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const confirmPasswordInputRef = useRef<TextInput>(null);
+
+  const dispatch = useDispatch();
+
+  const [enableSecurePassword, setEnableSecurePassword] = useState(true);
+  const [enableSecureConfirmPassword, setEnableSecureConfirmPassword] =
+    useState(true);
+
+  const [resetPassowrd, resetPasswordMetadata] = useResetPasswordMutation();
+
+  const { form, getFormInputProps } = useAppForm(ResetPasswordDto);
+
+  const onSubmit = async () => {
+    Keyboard.dismiss();
+
+    const formValues = form.getValues();
+
+    const res = await resetPassowrd({
+      data: {
+        ...formValues,
+        token: props.route.params.recoveryToken,
+      },
+    }).unwrap();
+
+    dispatch(AppActions.setShouldShowOnboarding(false));
+
+    dispatch(RuntimeActions.setToken(res.accessToken));
+
+    toast('Пароль был успешно изменен');
+
+    await delay(0);
+
+    if (res.user.registrationComplete) {
+      props.navigation.replace(AppRoutes.StackMain, {
+        screen: MainRoutes.Tab,
+        params: {
+          screen: TabRoutes.Profile,
+        },
+      });
+    } else {
+      props.navigation.replace(AppRoutes.ProfileEditing);
+    }
+  };
+
+  const submitForm = form.handleSubmit(onSubmit, () => {
+    Keyboard.dismiss();
+
+    toast('Некоторые поля содержат ошибки');
+  });
+
+  useBEErrorHandler(resetPasswordMetadata, form);
+
   return (
     <View style={styles.container}>
       <HeaderWithThreeSections
@@ -55,25 +129,50 @@ export const PasswordRecoverySetPassword: React.FC<
 
             <View style={styles.main}>
               <View style={styles.formInputs}>
-                <TextInput
+                <FormTextInput
                   IconLeft={<Icon name="lock" />}
+                  IconRight={
+                    <TouchableOpacity
+                      onPress={() => setEnableSecurePassword(old => !old)}
+                    >
+                      <Icon
+                        name={enableSecurePassword ? 'eye' : 'eyeSlash'}
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  }
                   label="Пароль"
+                  returnKeyType="done"
+                  secureTextEntry={enableSecurePassword}
+                  onSubmitEditing={() =>
+                    confirmPasswordInputRef.current?.focus()
+                  }
+                  {...getFormInputProps('password')}
                 />
 
-                <TextInput
+                <FormTextInput
                   IconLeft={<Icon name="lock" />}
-                  label="Повторите пароль"
+                  IconRight={
+                    <TouchableOpacity
+                      onPress={() =>
+                        setEnableSecureConfirmPassword(old => !old)
+                      }
+                    >
+                      <Icon
+                        name={enableSecureConfirmPassword ? 'eye' : 'eyeSlash'}
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  }
+                  inputRef={confirmPasswordInputRef}
+                  label="Подтвердите пароль"
+                  returnKeyType="done"
+                  secureTextEntry={enableSecureConfirmPassword}
+                  onSubmitEditing={submitForm}
+                  {...getFormInputProps('confirmPassword')}
                 />
               </View>
-              <Button
-                onPress={() =>
-                  props.navigation.replace(AppRoutes.StackAuth, {
-                    screen: AuthRoutes.SignIn,
-                  })
-                }
-              >
-                Сменить пароль
-              </Button>
+              <Button onPress={submitForm}>Сменить пароль</Button>
             </View>
           </View>
         </View>

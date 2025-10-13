@@ -5,7 +5,7 @@ import {
 
 import { MMKV } from 'react-native-mmkv';
 
-import { configureStore } from '@reduxjs/toolkit';
+import { Action, configureStore, Middleware } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
 import { Query } from '#api';
@@ -33,9 +33,35 @@ export const reduxStorage: Storage = {
 const persistConfig = {
   key: 'redux-persisted',
   storage: reduxStorage,
+  blacklist: ['runtime'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
+
+export const loggerMiddleware: Middleware = store => next => _action => {
+  const action = _action as unknown as Action<any>;
+  if (
+    !action.type.startsWith('api') &&
+    !action.type.startsWith('persist/REHYDRATE')
+  ) {
+    // eslint-disable-next-line no-console
+    console.log('⚡️Action:', action.type);
+
+    //@ts-expect-error
+    if (action.payload !== undefined) {
+      // eslint-disable-next-line no-console
+      console.log(
+        '📦Payload:',
+        //@ts-expect-error
+        action.payload,
+      );
+    }
+  }
+
+  const result = next(action);
+
+  return result;
+};
 
 export const store = configureStore({
   reducer: persistedReducer,
@@ -43,7 +69,9 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(Query.middleware),
+    })
+      .concat(Query.middleware)
+      .concat(loggerMiddleware),
 });
 
 export const persistor = persistStore(store);

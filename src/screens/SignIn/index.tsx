@@ -1,21 +1,47 @@
-import React from 'react';
-import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import {
+  Keyboard,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompositeScreenProps } from '@react-navigation/native';
+import { toast } from 'react-hot-toast/headless';
 
+import { FormTextInput } from '#components/FormTextInput';
 import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
 
-import { Button, Icon, TextInput, TextSmall, TextXL } from '#ui-kit';
+import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 import { Brand } from '#ui-kit/Brand';
 
 import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 import { PasswordRecoveryRoutes } from '#navigation/PasswordRecovery/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
-import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
+import { useLoginMutation } from '#api/Auth';
+import { LoginDto } from '#api/Auth/dto/LoginDto';
+
+import {
+  colors,
+  hitSlop,
+  PHONE_MASK,
+  SAFE_ZONE_BOTTOM,
+  SCREEN_HEIGHT,
+} from '#config';
+
+import useAppForm from '#hooks/useAppForm';
+import useBEErrorHandler from '#hooks/useErrorHandler';
+
+import { delay } from '#utils';
+
+import { useDispatch } from '#store';
+import { AppActions } from '#store/slices/app';
+import { RuntimeActions } from '#store/slices/runtime';
 
 export const SignIn: React.FC<
   CompositeScreenProps<
@@ -23,6 +49,51 @@ export const SignIn: React.FC<
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const dispatch = useDispatch();
+
+  const passwordInputRef = useRef<TextInput>(null);
+
+  const { form, getFormInputProps } = useAppForm(LoginDto);
+
+  const [login, loginMetadata] = useLoginMutation();
+
+  const [enableSecurePassword, setEnableSecurePassword] = useState(true);
+
+  const onSubmit = async () => {
+    Keyboard.dismiss();
+
+    const formValues = form.getValues();
+
+    const response = await login({
+      data: {
+        ...formValues,
+        phone: '+' + formValues.phone.replace(/\D/g, ''),
+      },
+    }).unwrap();
+
+    dispatch(AppActions.setShouldShowOnboarding(false));
+
+    dispatch(RuntimeActions.setToken(response.accessToken));
+
+    await delay(0);
+
+    props.navigation.navigate(
+      //@ts-expect-error
+      response.user.registrationComplete
+        ? AppRoutes.StackMain
+        : AppRoutes.ProfileEditing,
+    );
+    form.reset();
+  };
+
+  const submitForm = form.handleSubmit(onSubmit, () => {
+    Keyboard.dismiss();
+
+    toast('Некоторые поля содержат ошибки');
+  });
+
+  useBEErrorHandler(loginMetadata, form);
+
   return (
     <SafeAreaView
       edges={['top']}
@@ -52,17 +123,48 @@ export const SignIn: React.FC<
 
             <View>
               <View style={styles.formInputs}>
-                <TextInput
-                  autoFocus
-                  IconLeft={<Icon name="sms" />}
-                  label="Ваша почта"
+                <FormTextInput
+                  IconLeft={
+                    <Icon
+                      name="call"
+                      size={20}
+                    />
+                  }
+                  keyboardType="decimal-pad"
+                  label="Номер телефона"
+                  mask={PHONE_MASK}
+                  maxLength={18}
+                  placeholder="Любой, смс в демо не придет"
+                  type="phone"
+                  onSubmitEditing={() => passwordInputRef.current?.focus()}
+                  {...getFormInputProps('phone')}
                 />
-                <TextInput
+                <FormTextInput
                   IconLeft={<Icon name="lock" />}
+                  IconRight={
+                    <TouchableOpacity
+                      onPress={() => setEnableSecurePassword(old => !old)}
+                    >
+                      <Icon
+                        name={enableSecurePassword ? 'eye' : 'eyeSlash'}
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  }
+                  inputRef={passwordInputRef}
                   label="Пароль"
+                  returnKeyType="done"
+                  secureTextEntry={enableSecurePassword}
+                  onSubmitEditing={submitForm}
+                  {...getFormInputProps('password')}
                 />
               </View>
-              <Button>Войти</Button>
+              <Button
+                isLoading={loginMetadata.isLoading}
+                onPress={submitForm}
+              >
+                Войти
+              </Button>
             </View>
           </View>
 
@@ -72,7 +174,7 @@ export const SignIn: React.FC<
               onPress={() => {
                 Keyboard.dismiss();
                 props.navigation.push(AppRoutes.StackPasswordRecovery, {
-                  screen: PasswordRecoveryRoutes.PasswordRecoveryEmailInput,
+                  screen: PasswordRecoveryRoutes.PasswordRecoveryPhoneInput,
                 });
               }}
             >

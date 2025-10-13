@@ -11,7 +11,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import MaskInput from 'react-native-mask-input';
+import { MaskedTextInput } from 'react-native-advanced-input-mask';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { colors, IS_IOS } from '#config';
@@ -128,13 +128,13 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
           pointerEvents={pointerEvents}
           style={styles.wrapper}
         >
-          <MaskInput
-            ref={inputRef}
+          <MaskedTextInput
             autoCapitalize={autoCapitalize}
+            autocomplete={false}
             autoFocus={autoFocus}
             editable={!disabled}
             enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
-            mask={mask}
+            mask="+7 ([000]) [000]-[00]-[00]"
             multiline={_multiline}
             placeholderTextColor={colors.grayscale['400']}
             pointerEvents={pointerEvents}
@@ -142,16 +142,19 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
             selectionColor={colors.grayscale['700']}
             style={[
               styles.inputShared,
+              styles.flex,
               size === 'small' && styles.inputSmall,
               size === 'default' && styles.inputDefault,
               StyleSheet.flatten(style),
             ]}
             submitBehavior={submitBehavior}
+            textContentType="oneTimeCode"
             value={value}
             onBlur={_onBlur}
             onChangeText={onChange}
             onFocus={_onFocus}
             {...props}
+            placeholder={!isFocused ? props.placeholder : ''}
           />
         </View>
 
@@ -198,10 +201,12 @@ const getStyles = ({
       borderRadius: 12,
       backgroundColor: colors.grayscale['50'],
     },
-    inputShared: {
+    flex: {
       flex: 1,
+    },
+    inputShared: {
       maxHeight: 300,
-      paddingHorizontal: 8,
+
       color: disabled ? colors.grayscale['200'] : colors.black,
       fontSize: 15,
       fontFamily: primaryFontNameMap[400],
@@ -224,6 +229,8 @@ const getStyles = ({
     },
     wrapper: {
       flex: 1,
+      flexDirection: 'row',
+      paddingHorizontal: 8,
     },
     iconLeft: {
       paddingLeft: 8,

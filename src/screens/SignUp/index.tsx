@@ -36,12 +36,20 @@ import {
 import useAppForm from '#hooks/useAppForm';
 import useErrorHandler from '#hooks/useErrorHandler';
 
+import { delay } from '#utils';
+
+import { useDispatch } from '#store';
+import { AppActions } from '#store/slices/app';
+import { RuntimeActions } from '#store/slices/runtime';
+
 export const SignUp: React.FC<
   CompositeScreenProps<
     AuthScreenProps<AuthRoutes.SignUp>,
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const dispatch = useDispatch();
+
   const surnameInputRef = useRef<TextInput>(null);
   const phoneInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -57,12 +65,26 @@ export const SignUp: React.FC<
 
     const formValues = form.getValues();
 
-    await register({
+    const response = await register({
       data: {
         ...formValues,
-        phone: `+7${formValues.phone}`,
+        phone: '+' + formValues.phone.replace(/\D/g, ''),
       },
     }).unwrap();
+
+    dispatch(AppActions.setShouldShowOnboarding(false));
+
+    dispatch(RuntimeActions.setToken(response.accessToken));
+
+    await delay(0);
+
+    props.navigation.navigate(
+      //@ts-expect-error
+      response.user.registrationComplete
+        ? AppRoutes.StackMain
+        : AppRoutes.ProfileEditing,
+    );
+    form.reset();
   };
 
   const submitForm = form.handleSubmit(onSubmit, () => {
@@ -71,7 +93,7 @@ export const SignUp: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
-  useErrorHandler<CreateUserDto>(registerMetadata, form);
+  useErrorHandler(registerMetadata, form);
 
   return (
     <KeyboardAwareScrollView

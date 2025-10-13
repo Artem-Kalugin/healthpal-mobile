@@ -4,11 +4,13 @@ import { useForm } from 'react-hook-form';
 
 const useAppForm = <T extends Record<string, any>>(
   validator: ClassConstructor<T>,
+  defaultValues?: any,
 ) => {
   const form = useForm({
-    mode: 'onTouched',
+    mode: 'onBlur',
     criteriaMode: 'all',
     resolver: classValidatorResolver(validator),
+    defaultValues,
   });
 
   const getFormInputProps = (name: keyof T) => {

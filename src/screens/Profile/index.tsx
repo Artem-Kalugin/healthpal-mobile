@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FlatList,
   ScrollView,
@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import { CompositeScreenProps } from '@react-navigation/native';
-import { Image } from 'expo-image';
 import { toast } from 'react-hot-toast/headless';
 
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
@@ -17,6 +16,7 @@ import {
   Divider,
   Icon,
   IconNames,
+  Image,
   TextBase,
   TextLarge,
   TextSmall,
@@ -27,6 +27,9 @@ import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
+import { Query } from '#api';
+import { useGetCurrentUserQuery } from '#api/User';
+
 import {
   BORDER_RADIUS_ROUNDED,
   colors,
@@ -34,6 +37,9 @@ import {
   Images,
   SAFE_ZONE_BOTTOM,
 } from '#config';
+
+import { useDispatch } from '#store';
+import { RuntimeActions } from '#store/slices/runtime';
 
 export const Profile: React.FC<
   CompositeScreenProps<
@@ -44,7 +50,9 @@ export const Profile: React.FC<
     >
   >
 > = props => {
-  const [avatar] = useState<null | string>('');
+  const dispatch = useDispatch();
+
+  const userQuery = useGetCurrentUserQuery(null);
 
   const settingsItems: {
     label: string;
@@ -96,7 +104,10 @@ export const Profile: React.FC<
     {
       label: 'Выйти',
       icon: 'logOut',
-      onPress: () => {},
+      onPress: () => {
+        dispatch(RuntimeActions.setToken(undefined));
+        dispatch(Query.util.resetApiState());
+      },
     },
   ];
   return (
@@ -113,11 +124,11 @@ export const Profile: React.FC<
       />
 
       <View style={styles.body}>
-        <View style={styles.avatarWrapper}>
+        <View style={styles.avatarCenterer}>
           <Image
             contentFit="contain"
-            source={avatar || Images.profileCircle}
-            style={styles.avatarImage}
+            source={userQuery.data?.avatar || Images.profileCircle}
+            style={styles.avatar}
           />
         </View>
 
@@ -126,7 +137,7 @@ export const Profile: React.FC<
             color={colors.grayscale['800']}
             weight="700"
           >
-            Daniel Martinez
+            {userQuery.data?.name} {userQuery.data?.surname}
           </TextBase>
           <TextSmall
             color={colors.grayscale['500']}
@@ -162,6 +173,7 @@ export const Profile: React.FC<
             </TouchableOpacity>
           )}
           scrollEnabled={false}
+          style={styles.list}
         />
       </View>
     </ScrollView>
@@ -178,20 +190,18 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
+    width: '100%',
     paddingBottom: SAFE_ZONE_BOTTOM,
   },
-
-  avatarWrapper: {
+  avatarCenterer: {
+    alignItems: 'center',
+  },
+  avatar: {
     flex: 1,
     maxHeight: 202,
     minHeight: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-    padding: 16,
-  },
-  avatarImage: {
-    ...StyleSheet.absoluteFillObject,
+    aspectRatio: 1,
+    marginBottom: 16,
     borderRadius: BORDER_RADIUS_ROUNDED,
   },
   userInfo: {
@@ -209,6 +219,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
     gap: 16,
+  },
+  list: {
+    flex: 1,
   },
   settingsItemChevron: {
     marginLeft: 'auto',
