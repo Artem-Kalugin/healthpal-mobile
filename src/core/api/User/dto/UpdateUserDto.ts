@@ -6,10 +6,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export enum Gender {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-}
+import { Gender } from '#generated/schema';
 
 export class UpdateUserDto {
   @MaxLength(16, {

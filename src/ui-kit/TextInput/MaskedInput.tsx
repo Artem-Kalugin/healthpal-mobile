@@ -1,6 +1,5 @@
 import React, { ReactNode, RefObject, useState } from 'react';
 import {
-  TextInput as _TextInput,
   BlurEvent,
   FocusEvent,
   StyleProp,
@@ -11,10 +10,13 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { MaskedTextInput } from 'react-native-advanced-input-mask';
+import {
+  MaskedTextInput,
+  MaskedTextInputRef,
+} from 'react-native-advanced-input-mask';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { colors, IS_IOS } from '#config';
+import { colors, IS_IOS, PHONE_MASK } from '#config';
 
 import { Icon } from '../Icon';
 import { primaryFontNameMap } from '../Text';
@@ -25,10 +27,10 @@ export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
 type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   errors?: string[];
-  mask: (RegExp | string)[];
+  mask: string;
   onChange: (masked: string, unmasked: string) => void;
   size: 'default' | 'small';
-  inputRef: RefObject<_TextInput | null>;
+  inputRef: RefObject<MaskedTextInputRef | null>;
   IconRight: ReactNode;
   IconLeft: ReactNode;
   outlineType: ITextInputOutline;
@@ -43,7 +45,7 @@ type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
 };
 
 export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
-  mask,
+  mask = PHONE_MASK,
   value = '',
   multiline = false,
   pointerEvents = undefined,
@@ -129,12 +131,13 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
           style={styles.wrapper}
         >
           <MaskedTextInput
+            ref={inputRef}
             autoCapitalize={autoCapitalize}
             autocomplete={false}
             autoFocus={autoFocus}
             editable={!disabled}
             enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
-            mask="+7 ([000]) [000]-[00]-[00]"
+            mask={mask}
             multiline={_multiline}
             placeholderTextColor={colors.grayscale['400']}
             pointerEvents={pointerEvents}

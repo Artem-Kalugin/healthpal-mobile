@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Image as ExpoImage } from 'expo-image';
 
+import { useSelector } from '#store';
+
 type ExpoImageProps = ExpoImage['props'];
 
 type ApiImage = {
@@ -31,6 +33,7 @@ export const Image: React.FC<ImageWithPossibleApiSource> = ({
   forceSourceFromApi,
   ...props
 }) => {
+  const token = useSelector(store => store.runtime.token?.plain);
   const isApiImage =
     forceSourceFromApi !== undefined
       ? forceSourceFromApi
@@ -44,7 +47,12 @@ export const Image: React.FC<ImageWithPossibleApiSource> = ({
       {...props}
       source={
         isApiImage
-          ? `${process.env.EXPO_PUBLIC_API_URL + (source as ApiImage).image}`
+          ? {
+              uri: `${process.env.EXPO_PUBLIC_API_URL + (source as ApiImage).image}`,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           : source
       }
       transition={isApiImage ? 100 : props.transition}

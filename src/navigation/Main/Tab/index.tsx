@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export const TabStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName={TabRoutes.Profile}
+      initialRouteName={TabRoutes.Home}
       screenOptions={{
         headerShown: false,
       }}

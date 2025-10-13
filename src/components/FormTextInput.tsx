@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { LayoutAnimation } from 'react-native';
 
-import { MaskInputProps } from 'react-native-mask-input';
-
 import {
   Control,
   Controller,
@@ -49,7 +47,7 @@ interface FormTextInputProps<T extends FieldValues>
   clearErrors: UseFormClearErrors<T>;
   control: Control<T>;
   type?: 'phone' | 'default';
-  mask?: MaskInputProps['mask'];
+  mask?: string;
 }
 
 export function FormTextInput<T extends FieldValues>({
@@ -105,8 +103,8 @@ export function FormTextInput<T extends FieldValues>({
 
         if (type === 'phone') {
           return (
+            //@ts-expect-error
             <MaskedInput
-              //@ts-expect-error
               mask={mask}
               onChange={(val, unmasked) => {
                 animateLayout();

@@ -53,17 +53,17 @@ const AppStack = () => {
         name={AppRoutes.StackAuth}
       />
 
-      <App.Screen
-        component={ProfileEditing}
-        name={AppRoutes.ProfileEditing}
-      />
-
       {runtimeState.token?.registrationComplete && (
         <App.Screen
           component={MainStack}
           name={AppRoutes.StackMain}
         />
       )}
+
+      <App.Screen
+        component={ProfileEditing}
+        name={AppRoutes.ProfileEditing}
+      />
 
       <App.Screen
         component={PasswordRecoveryStack}

@@ -26,13 +26,7 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 import { useLoginMutation } from '#api/Auth';
 import { LoginDto } from '#api/Auth/dto/LoginDto';
 
-import {
-  colors,
-  hitSlop,
-  PHONE_MASK,
-  SAFE_ZONE_BOTTOM,
-  SCREEN_HEIGHT,
-} from '#config';
+import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
 
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
@@ -132,7 +126,6 @@ export const SignIn: React.FC<
                   }
                   keyboardType="decimal-pad"
                   label="Номер телефона"
-                  mask={PHONE_MASK}
                   maxLength={18}
                   placeholder="Любой, смс в демо не придет"
                   type="phone"

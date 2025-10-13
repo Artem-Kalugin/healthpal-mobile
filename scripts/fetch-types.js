@@ -103,7 +103,9 @@ async function updateSchema() {
     console.log('Using backup schema');
   }
 
-  const ast = await openapiTS(docsJson);
+  const ast = await openapiTS(docsJson, {
+    enum: true,
+  });
 
   const astTransformed = excludeNotExposedData(
     excludeNotExposedData(ast, 'paths'),

@@ -27,7 +27,6 @@ import { CreateUserDto } from '#api/Auth/dto/CreateUserDto';
 import {
   colors,
   hitSlop,
-  PHONE_MASK,
   SAFE_ZONE_BOTTOM,
   SCREEN_HEIGHT,
   STATUS_BAR_HEIGHT,
@@ -151,7 +150,6 @@ export const SignUp: React.FC<
                 inputRef={phoneInputRef}
                 keyboardType="decimal-pad"
                 label="Номер телефона"
-                mask={PHONE_MASK}
                 maxLength={18}
                 placeholder="Любой, смс в демо не придет"
                 type="phone"
