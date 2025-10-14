@@ -1,9 +1,6 @@
-// index.ts
 import { Query } from '#api';
 
 import { RequestsDoctorCategories as Requests } from './types';
-
-// types.ts
 
 const DoctorAPI = Query.injectEndpoints({
   endpoints: build => ({

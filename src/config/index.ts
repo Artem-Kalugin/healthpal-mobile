@@ -93,7 +93,7 @@ export const Images = {
 };
 export const BORDER_RADIUS_ROUNDED = 9999;
 
-export const PHONE_MASK = `7 ([000]) [000]-[00]-[00]`;
+export const PHONE_MASK = `+7 ([000]) [000]-[00]-[00]`;
 
 export const layoutAnimation = LinearTransition.easing(Easing.ease);
 

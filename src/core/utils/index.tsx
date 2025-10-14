@@ -113,11 +113,8 @@ export function handleBEValidationError<T extends object>(
   form: UseFormReturn<T, any, T>,
 ): boolean {
   for (const field in validationErrors) {
-    form.setError(
-      // @ts-expect-error — динамические ключи формы
-      field,
-      { message: validationErrors[field][0] },
-    );
+    //@ts-expect-error
+    form.setError(field, { message: validationErrors[field][0] });
   }
 
   return true;

@@ -76,8 +76,6 @@ declare type PickApiData<
   > | null;
 };
 
-type td = PickParam<'/medical-centers', 'get'>;
-type tp = paths['/medical-centers']['get']['parameters']['query'];
 declare namespace NodeJS {
   interface ProcessEnv {
     readonly EXPO_PUBLIC_YANDEX_MAPKIT_KEY: string;

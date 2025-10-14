@@ -71,15 +71,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
-  // TODO: add random color generation
-  // eslint-disable-next-line react-native/no-color-literals
   icon: {
     height: 68,
     width: 68,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
-    backgroundColor: '#22775544',
   },
   iconTopLeftAnchor: {
     position: 'absolute',

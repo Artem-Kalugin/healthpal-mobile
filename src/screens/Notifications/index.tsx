@@ -60,14 +60,14 @@ const notifications = [
         type: NotificationTypes.PASSWORD_CHANGED,
         title: 'Password Changed',
         text: 'Your account password was changed successfully.',
-        timestamp: new Date(now.getTime() - 30 * 60 * 1000).toISOString(), // 30 минут назад
+        timestamp: new Date(now.getTime() - 30 * 60 * 1000).toISOString(),
       },
       {
         id: '6',
         type: NotificationTypes.NEW_LOG_IN,
         title: 'New Log In',
         text: 'A new login was detected from Chrome on macOS.',
-        timestamp: new Date(now.getTime() - 45 * 60 * 1000).toISOString(), // 45 минут назад
+        timestamp: new Date(now.getTime() - 45 * 60 * 1000).toISOString(),
       },
     ],
   },
