@@ -48,7 +48,7 @@ const AuthAPI = Query.injectEndpoints({
     }),
     completeRegistation: build.mutation<
       Requests['completeRegistation']['response'],
-      Requests['completeRegistation']['args']
+      NonNullable<Requests['completeRegistation']['args']>
     >({
       invalidatesTags: [TagsUserAPI.User],
       query: args => {

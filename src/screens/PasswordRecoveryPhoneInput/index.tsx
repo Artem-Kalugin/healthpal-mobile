@@ -19,7 +19,7 @@ import {
 import { useVerifyPhoneMutation } from '#api/Auth';
 import { RequestOtpDto } from '#api/Auth/dto/RequestOtpDto';
 
-import { colors, PHONE_MASK, SAFE_ZONE_BOTTOM } from '#config';
+import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
@@ -93,7 +93,7 @@ export const PasswordRecoveryPhoneInput: React.FC<
                 Забыли пароль?
               </TextXL>
               <TextSmall textAlign="center">
-                Введите вашу номер телефона — мы отправим код подтверждения.
+                Введите ваш номер телефона — мы отправим код подтверждения.
               </TextSmall>
             </View>
 
@@ -108,7 +108,6 @@ export const PasswordRecoveryPhoneInput: React.FC<
                   }
                   keyboardType="decimal-pad"
                   label="Номер телефона"
-                  mask={PHONE_MASK}
                   maxLength={18}
                   placeholder="Любой, смс в демо не придет"
                   type="phone"

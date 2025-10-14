@@ -10,6 +10,22 @@ declare module '*.svg' {
   export = value;
 }
 
+type ExcludeUnknown<T> = {
+  [K in keyof T as T[K] extends unknown
+    ? unknown extends T[K]
+      ? never
+      : K
+    : K]: T[K];
+};
+
+type ExcludeUndefined<T> = {
+  [K in keyof T as T[K] extends undefined
+    ? undefined extends T[K]
+      ? never
+      : K
+    : K]: T[K];
+};
+
 type text = string | number;
 
 declare type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
@@ -51,22 +67,13 @@ declare type PickApiData<
   U extends keyof Omit<paths[T], 'parameters'>,
 > = {
   response: paths[T][U]['responses']['200']['content']['application/json'];
-  args: paths[T][U]['parameters']['path'] extends object
-    ? {
-        path: paths[T][U]['parameters']['path'];
-        params?: paths[T][U]['parameters']['query'];
-        data?: PickApiBody<T, U>;
-      }
-    : paths[T][U]['parameters']['query'] extends object
-      ? {
-          params?: paths[T][U]['parameters']['query'];
-          data?: PickApiBody<T, U>;
-        }
-      : PickApiBody<T, U> extends object
-        ? {
-            data?: PickApiBody<T, U>;
-          }
-        : null;
+  args: ExcludeUndefined<
+    ExcludeUnknown<{
+      path: paths[T][U]['parameters']['path'];
+      params?: paths[T][U]['parameters']['query'];
+      data?: PickApiBody<T, U>;
+    }>
+  > | null;
 };
 
 declare namespace NodeJS {

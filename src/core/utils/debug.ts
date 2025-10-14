@@ -25,35 +25,35 @@ class Debug {
   }
 
   static error(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles.error, `🆘[ERROR] ${text}`, data);
+    this.__log(consoleStyles.error, `🆘[ERROR]\t ${text}`, data);
   }
 
   static warn(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles.warn, `[WARN] ${text}`, data);
+    this.__log(consoleStyles.warn, `[WARN]\t ${text}`, data);
   }
 
   static info(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles.info, `[INFO] ${text}`, data);
+    this.__log(consoleStyles.info, `[INFO]\t ${text}`, data);
   }
 
   static success(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles.success, `✅[SUCCESS] ${text}`, data);
+    this.__log(consoleStyles.success, `✅[SUCCESS]\t ${text}`, data);
   }
 
   static requestStart(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles['api-success'], ` ℹ️[API START] ${text}`, data);
+    this.__log(consoleStyles['api-success'], `➡️ [API START]\t ${text}`, data);
   }
 
   static requestSuccess(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles['api-success'], `✅[API SUCCESS] ${text}`, data);
+    this.__log(consoleStyles['api-success'], `✅[API SUCCESS]\t ${text}`, data);
   }
 
   static requestError(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles['api-error'], `🆘[API ERROR] ${text}`, data);
+    this.__log(consoleStyles['api-error'], `🆘[API ERROR]\t ${text}`, data);
   }
 
   static complited(text = 'Hello world', data?: any) {
-    this.__log(consoleStyles.complited, `✅[COMPLITED] ${text}`, data);
+    this.__log(consoleStyles.complited, `✅[COMPLITED]\t ${text}`, data);
   }
 
   static log(text = 'Hello world', data?: any) {

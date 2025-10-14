@@ -1,51 +1,86 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { Icon, TextXS } from '#ui-kit';
+import { SvgXml } from 'react-native-svg';
 
-import { colors } from '#config';
+import { TextXS } from '#ui-kit';
 
-type IDoctorsCategoryThumbnail = object;
+import { ActiveOpacities, MapDoctorCategoryToColor, shadow } from '#config';
+import { MapDoctorCategoryToLabel } from '#config/locale';
 
-export const DoctorsCategoryThumbnail: React.FC<
-  Partial<IDoctorsCategoryThumbnail>
-> = props => {
+import { BEDoctorCategoryResponseDto } from '#generated/__entities';
+
+type IDoctorsCategoryThumbnail = {
+  item: BEDoctorCategoryResponseDto;
+  onPress: () => void;
+};
+
+export const DoctorsCategoryThumbnail: React.FC<IDoctorsCategoryThumbnail> = ({
+  item,
+  onPress,
+}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.icon}>
-        <Icon
-          fill={colors.white}
-          name="calendar"
-          size={40}
-        ></Icon>
+    <TouchableOpacity
+      activeOpacity={ActiveOpacities.HEAVY}
+      style={styles.container}
+      onPress={onPress}
+    >
+      <View
+        style={[
+          styles.icon,
+          shadow,
+          { backgroundColor: MapDoctorCategoryToColor[item.type] },
+        ]}
+      >
+        <View style={styles.iconTopLeftAnchor}>
+          <SvgXml
+            xml={`<svg
+                fill="none"
+                height="34"
+                viewBox="0 0 34 34"
+                width="34"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M34 0C34 4.46494 33.1206 8.88617 31.4119 13.0112C29.7032 17.1363 27.1988 20.8844 24.0416 24.0416C20.8844 27.1988 17.1363 29.7032 13.0112 31.4119C8.88617 33.1206 4.46494 34 0 34V0H34Z"
+                  fill="white"
+                  fillOpacity="0.2"
+                />
+              </svg>`}
+          />
+        </View>
+        <SvgXml xml={item.icon!} />
       </View>
       <TextXS
         numberOfLines={1}
         style={styles.text}
         weight="700"
       >
-        Dentistry
+        {MapDoctorCategoryToLabel[item.type]}
       </TextXS>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   text: {
-    maxWidth: 62,
+    maxWidth: 68,
+    fontSize: 10,
   },
   container: {
     alignItems: 'center',
     gap: 4,
   },
-  // TODO: add random color generation
-  // eslint-disable-next-line react-native/no-color-literals
   icon: {
-    height: 62,
-    width: 62,
+    height: 68,
+    width: 68,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
-    backgroundColor: '#22775544',
+    borderRadius: 16,
+  },
+  iconTopLeftAnchor: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 });

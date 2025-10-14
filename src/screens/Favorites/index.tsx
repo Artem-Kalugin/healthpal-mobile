@@ -26,6 +26,7 @@ export const Favorites: React.FC<
             {props.route.name === FavoritesRoutes.FavoriteDosctors ? (
               <DoctorCard />
             ) : (
+              //@ts-expect-error
               <MedicalCenterCard style={styles.medicalCenterCard} />
             )}
           </View>

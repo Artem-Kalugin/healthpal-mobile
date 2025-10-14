@@ -18,7 +18,7 @@ export const UserAPI = Query.injectEndpoints({
 
     updateCurrent: build.mutation<
       Requests['updateCurrent']['response'],
-      Requests['updateCurrent']['args']
+      NonNullable<Requests['updateCurrent']['args']>
     >({
       query: args => {
         const formData = new FormData();

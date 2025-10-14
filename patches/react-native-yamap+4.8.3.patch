@@ -64,8 +64,7 @@ index 0000000..0d259dd
 +o/classes
 diff --git a/node_modules/react-native-yamap/android/build/.transforms/0690d2abcd111e060f79ce8abac5c3c7/transformed/classes/classes_dex/classes.dex b/node_modules/react-native-yamap/android/build/.transforms/0690d2abcd111e060f79ce8abac5c3c7/transformed/classes/classes_dex/classes.dex
 new file mode 100644
-index 0000000..bc8a542
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/.transforms/0690d2abcd111e060f79ce8abac5c3c7/transformed/classes/classes_dex/classes.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/generated/source/buildConfig/debug/ru/vvdev/yamap/BuildConfig.java b/node_modules/react-native-yamap/android/build/generated/source/buildConfig/debug/ru/vvdev/yamap/BuildConfig.java
 new file mode 100644
 index 0000000..aa1edd3
@@ -143,12 +142,10 @@ index 0000000..9e26dfe
 \ No newline at end of file
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar b/node_modules/react-native-yamap/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar
 new file mode 100644
-index 0000000..c895857
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/react-native-yamap/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
 new file mode 100644
-index 0000000..bcf0699
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt b/node_modules/react-native-yamap/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt
 new file mode 100644
 index 0000000..e69de29
@@ -197,12 +194,10 @@ index 0000000..3f1a309
 \ No newline at end of file
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/react-native-yamap_debug.kotlin_module b/node_modules/react-native-yamap/android/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/react-native-yamap_debug.kotlin_module
 new file mode 100644
-index 0000000..9dbc290
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/react-native-yamap_debug.kotlin_module differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/ru/vvdev/yamap/BuildConfig.class b/node_modules/react-native-yamap/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/ru/vvdev/yamap/BuildConfig.class
 new file mode 100644
-index 0000000..265fab6
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/ru/vvdev/yamap/BuildConfig.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt b/node_modules/react-native-yamap/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
 new file mode 100644
 index 0000000..78ac5b8
@@ -256,8 +251,7 @@ index 0000000..08f4ebe
 \ No newline at end of file
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar b/node_modules/react-native-yamap/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar
 new file mode 100644
-index 0000000..04c0cdd
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt b/node_modules/react-native-yamap/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
 new file mode 100644
 index 0000000..6fd4358
@@ -267,168 +261,127 @@ index 0000000..6fd4358
 +ru.vvdev.yamap
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab
 new file mode 100644
-index 0000000..c0d25db
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream
 new file mode 100644
-index 0000000..406f150
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len
 new file mode 100644
-index 0000000..bf2fd05
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len
 new file mode 100644
-index 0000000..fa43224
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at
 new file mode 100644
-index 0000000..6a89841
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i
 new file mode 100644
-index 0000000..c267c5f
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab
 new file mode 100644
-index 0000000..fa702b0
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream
 new file mode 100644
-index 0000000..3c91300
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len
 new file mode 100644
-index 0000000..2942f52
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len
 new file mode 100644
-index 0000000..a123325
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at
 new file mode 100644
-index 0000000..ab739f2
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i
 new file mode 100644
-index 0000000..07f078d
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab
 new file mode 100644
-index 0000000..6ae868a
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream
 new file mode 100644
-index 0000000..3c91300
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len
 new file mode 100644
-index 0000000..2942f52
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len
 new file mode 100644
-index 0000000..a123325
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at
 new file mode 100644
-index 0000000..bbce503
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i
 new file mode 100644
-index 0000000..07f078d
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab
 new file mode 100644
-index 0000000..e696fc6
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.keystream
 new file mode 100644
-index 0000000..27ec0d2
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.keystream.len
 new file mode 100644
-index 0000000..ab1f3a3
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.len
 new file mode 100644
-index 0000000..9e27f73
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.values.at
 new file mode 100644
-index 0000000..71cfc77
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab_i
 new file mode 100644
-index 0000000..350ce32
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/constants.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab
 new file mode 100644
-index 0000000..bdefe07
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream
 new file mode 100644
-index 0000000..5335b57
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len
 new file mode 100644
-index 0000000..ebc7d33
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len
 new file mode 100644
-index 0000000..022c717
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at
 new file mode 100644
-index 0000000..5e4b298
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i
 new file mode 100644
-index 0000000..2e164ba
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab
 new file mode 100644
-index 0000000..c72c1a4
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream
 new file mode 100644
-index 0000000..042f9e1
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len
 new file mode 100644
-index 0000000..c80b687
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len
 new file mode 100644
-index 0000000..41d6c24
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values
 new file mode 100644
-index 0000000..55ac8d3
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at
 new file mode 100644
-index 0000000..9a56d93
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s
 new file mode 100644
 index 0000000..10d3e83
@@ -439,96 +392,73 @@ index 0000000..10d3e83
 \ No newline at end of file
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i
 new file mode 100644
-index 0000000..1fe6450
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab
 new file mode 100644
-index 0000000..037c706
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream
 new file mode 100644
-index 0000000..406f150
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len
 new file mode 100644
-index 0000000..bf2fd05
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len
 new file mode 100644
-index 0000000..fa43224
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at
 new file mode 100644
-index 0000000..e76241c
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i
 new file mode 100644
-index 0000000..c267c5f
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab
 new file mode 100644
-index 0000000..7d70053
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream
 new file mode 100644
-index 0000000..bc51cba
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len
 new file mode 100644
-index 0000000..c664f81
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len
 new file mode 100644
-index 0000000..14f7c06
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at
 new file mode 100644
-index 0000000..254cb5e
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i
 new file mode 100644
-index 0000000..62f7669
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab
 new file mode 100644
-index 0000000..6f433f5
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream
 new file mode 100644
-index 0000000..b6e04f6
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len
 new file mode 100644
-index 0000000..0cfcfa1
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len
 new file mode 100644
-index 0000000..8fe89d8
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at
 new file mode 100644
-index 0000000..c80ab34
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i
 new file mode 100644
-index 0000000..9ee0809
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/counters.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/counters.tab
 new file mode 100644
 index 0000000..703ad20
@@ -540,100 +470,76 @@ index 0000000..703ad20
 \ No newline at end of file
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab
 new file mode 100644
-index 0000000..9092890
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream
 new file mode 100644
-index 0000000..406f150
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len
 new file mode 100644
-index 0000000..bf2fd05
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len
 new file mode 100644
-index 0000000..fa43224
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at
 new file mode 100644
-index 0000000..b70d3ef
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i
 new file mode 100644
-index 0000000..c267c5f
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab
 new file mode 100644
-index 0000000..9eedda7
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream
 new file mode 100644
-index 0000000..fa194ba
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len
 new file mode 100644
-index 0000000..a930d6b
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len
 new file mode 100644
-index 0000000..fa43224
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at
 new file mode 100644
-index 0000000..2972418
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i
 new file mode 100644
-index 0000000..20619a7
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab
 new file mode 100644
-index 0000000..e3f8da0
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream
 new file mode 100644
-index 0000000..0ff97b1
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len
 new file mode 100644
-index 0000000..044cd57
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len
 new file mode 100644
-index 0000000..5b5f36b
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at
 new file mode 100644
-index 0000000..8561dd1
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i
 new file mode 100644
-index 0000000..ce9dcd8
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/last-build.bin b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/last-build.bin
 new file mode 100644
-index 0000000..d857692
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/cacheable/last-build.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin
 new file mode 100644
-index 0000000..b441384
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin
 new file mode 100644
-index 0000000..a9bd4fa
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-yamap/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
 index 0000000..63b388c
@@ -659,292 +565,220 @@ index 0000000..63b388c
 +		INJECTED from /Users/artemkalugin/Documents/GitHub/healthpal/node_modules/react-native-yamap/android/src/main/AndroidManifest.xml
 diff --git a/node_modules/react-native-yamap/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin b/node_modules/react-native-yamap/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
 new file mode 100644
-index 0000000..5ce5b80
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/META-INF/react-native-yamap_debug.kotlin_module b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/META-INF/react-native-yamap_debug.kotlin_module
 new file mode 100644
-index 0000000..9dbc290
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/META-INF/react-native-yamap_debug.kotlin_module differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/ClusteredYamapViewManager$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/ClusteredYamapViewManager$Companion.class
 new file mode 100644
-index 0000000..0f13aa8
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/ClusteredYamapViewManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/ClusteredYamapViewManager.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/ClusteredYamapViewManager.class
 new file mode 100644
-index 0000000..fb3eec8
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/ClusteredYamapViewManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapModule$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapModule$Companion.class
 new file mode 100644
-index 0000000..abe09bc
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapModule$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapModule.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapModule.class
 new file mode 100644
-index 0000000..ea62d52
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapPackage.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapPackage.class
 new file mode 100644
-index 0000000..e2e4d83
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/RNYamapPackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapCircleManager$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapCircleManager$Companion.class
 new file mode 100644
-index 0000000..75ddf69
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapCircleManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapCircleManager.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapCircleManager.class
 new file mode 100644
-index 0000000..70f2ec0
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapCircleManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapMarkerManager$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapMarkerManager$Companion.class
 new file mode 100644
-index 0000000..e159896
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapMarkerManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapMarkerManager.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapMarkerManager.class
 new file mode 100644
-index 0000000..c9e9689
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapMarkerManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolygonManager$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolygonManager$Companion.class
 new file mode 100644
-index 0000000..0571dc2
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolygonManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolygonManager.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolygonManager.class
 new file mode 100644
-index 0000000..65092eb
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolygonManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolylineManager$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolylineManager$Companion.class
 new file mode 100644
-index 0000000..9c4aa58
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolylineManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolylineManager.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolylineManager.class
 new file mode 100644
-index 0000000..a7e44a9
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapPolylineManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapViewManager$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapViewManager$Companion.class
 new file mode 100644
-index 0000000..869a5e1
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapViewManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapViewManager.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapViewManager.class
 new file mode 100644
-index 0000000..6e443d6
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/YamapViewManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/models/ReactMapObject.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/models/ReactMapObject.class
 new file mode 100644
-index 0000000..78789db
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/models/ReactMapObject.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchClient.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchClient.class
 new file mode 100644
-index 0000000..2b5bf7d
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchClient.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchItem.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchItem.class
 new file mode 100644
-index 0000000..e93391b
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchItem.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchItemComponent.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchItemComponent.class
 new file mode 100644
-index 0000000..bf2c557
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/MapSearchItemComponent.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$Companion.class
 new file mode 100644
-index 0000000..80a83c5
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$addressToGeo$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$addressToGeo$1$1.class
 new file mode 100644
-index 0000000..b42ae4a
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$addressToGeo$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$addressToGeo$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$addressToGeo$1$2.class
 new file mode 100644
-index 0000000..82fe5e4
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$addressToGeo$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$geoToAddress$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$geoToAddress$1$1.class
 new file mode 100644
-index 0000000..89ceadd
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$geoToAddress$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$geoToAddress$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$geoToAddress$1$2.class
 new file mode 100644
-index 0000000..62046b7
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$geoToAddress$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$resolveURI$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$resolveURI$1$1.class
 new file mode 100644
-index 0000000..a7a1828
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$resolveURI$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$resolveURI$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$resolveURI$1$2.class
 new file mode 100644
-index 0000000..75fd6d4
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$resolveURI$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByAddress$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByAddress$1$1.class
 new file mode 100644
-index 0000000..29510a1
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByAddress$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByAddress$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByAddress$1$2.class
 new file mode 100644
-index 0000000..3e7dc1a
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByAddress$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByPoint$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByPoint$1$1.class
 new file mode 100644
-index 0000000..e96b183
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByPoint$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByPoint$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByPoint$1$2.class
 new file mode 100644
-index 0000000..ede892c
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByPoint$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByURI$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByURI$1$1.class
 new file mode 100644
-index 0000000..121442a
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByURI$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByURI$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByURI$1$2.class
 new file mode 100644
-index 0000000..f638551
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule$searchByURI$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule.class
 new file mode 100644
-index 0000000..adb4e25
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/RNYandexSearchModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$resolveURI$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$resolveURI$1.class
 new file mode 100644
-index 0000000..f839e69
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$resolveURI$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchAddress$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchAddress$1.class
 new file mode 100644
-index 0000000..7c6f10e
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchAddress$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchByURI$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchByURI$1.class
 new file mode 100644
-index 0000000..68bf97c
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchByURI$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchPoint$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchPoint$1.class
 new file mode 100644
-index 0000000..c3f5acb
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient$searchPoint$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient.class
 new file mode 100644
-index 0000000..b25b37b
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexMapSearchClient.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexSearchRNArgsHelper.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexSearchRNArgsHelper.class
 new file mode 100644
-index 0000000..cb9e8f8
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/search/YandexSearchRNArgsHelper.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/MapSuggestClient.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/MapSuggestClient.class
 new file mode 100644
-index 0000000..6bc13fc
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/MapSuggestClient.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/MapSuggestItem.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/MapSuggestItem.class
 new file mode 100644
-index 0000000..bfddd4e
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/MapSuggestItem.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$Companion.class
 new file mode 100644
-index 0000000..79ac16f
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggest$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggest$1$1.class
 new file mode 100644
-index 0000000..4a1212a
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggest$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggest$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggest$1$2.class
 new file mode 100644
-index 0000000..fb13790
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggest$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggestWithOptions$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggestWithOptions$1$1.class
 new file mode 100644
-index 0000000..34b4258
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggestWithOptions$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggestWithOptions$1$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggestWithOptions$1$2.class
 new file mode 100644
-index 0000000..4051489
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule$suggestWithOptions$1$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule.class
 new file mode 100644
-index 0000000..0e8ddca
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestPackage.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestPackage.class
 new file mode 100644
-index 0000000..7c36173
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/RNYandexSuggestPackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexMapSuggestClient$suggestHandler$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexMapSuggestClient$suggestHandler$1.class
 new file mode 100644
-index 0000000..5883ec4
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexMapSuggestClient$suggestHandler$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexMapSuggestClient.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexMapSuggestClient.class
 new file mode 100644
-index 0000000..ffb5e64
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexMapSuggestClient.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexSuggestRNArgsHelper.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexSuggestRNArgsHelper.class
 new file mode 100644
-index 0000000..9442d92
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/suggest/YandexSuggestRNArgsHelper.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/Callback.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/Callback.class
 new file mode 100644
-index 0000000..4449638
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/Callback.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/ImageLoader$DownloadImageBitmap$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/ImageLoader$DownloadImageBitmap$1.class
 new file mode 100644
-index 0000000..9b43d48
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/ImageLoader$DownloadImageBitmap$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/ImageLoader.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/ImageLoader.class
 new file mode 100644
-index 0000000..54c150c
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/ImageLoader.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/RouteManager$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/RouteManager$Companion.class
 new file mode 100644
-index 0000000..78584bc
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/RouteManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/RouteManager.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/RouteManager.class
 new file mode 100644
-index 0000000..665c6a8
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/utils/RouteManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView$Companion.class
 new file mode 100644
-index 0000000..90d7185
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView$TextImageProvider.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView$TextImageProvider.class
 new file mode 100644
-index 0000000..34bf618
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView$TextImageProvider.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView.class
 new file mode 100644
-index 0000000..1ca3eb3
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/ClusteredYamapView.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapCircle.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapCircle.class
 new file mode 100644
-index 0000000..9725b01
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapCircle.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapMarker$updateMarker$1$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapMarker$updateMarker$1$1.class
 new file mode 100644
-index 0000000..fc705f5
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapMarker$updateMarker$1$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapMarker.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapMarker.class
 new file mode 100644
-index 0000000..744d4fb
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapMarker.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapPolygon.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapPolygon.class
 new file mode 100644
-index 0000000..bf32211
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapPolygon.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapPolyline.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapPolyline.class
 new file mode 100644
-index 0000000..8950cab
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapPolyline.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$Companion$DEFAULT_VEHICLE_COLORS$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$Companion$DEFAULT_VEHICLE_COLORS$1.class
 new file mode 100644
-index 0000000..87ac0cb
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$Companion$DEFAULT_VEHICLE_COLORS$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$Companion.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$Companion.class
 new file mode 100644
-index 0000000..3d5bb30
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$findRoutes$listener$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$findRoutes$listener$1.class
 new file mode 100644
-index 0000000..e9a5dc7
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$findRoutes$listener$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$findRoutes$listener$2.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$findRoutes$listener$2.class
 new file mode 100644
-index 0000000..e630323
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$findRoutes$listener$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$setUserLocationIcon$1.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$setUserLocationIcon$1.class
 new file mode 100644
-index 0000000..73712ee
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView$setUserLocationIcon$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView.class b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView.class
 new file mode 100644
-index 0000000..d78499b
-Binary files /dev/null and b/node_modules/react-native-yamap/android/build/tmp/kotlin-classes/debug/ru/vvdev/yamap/view/YamapView.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-yamap/android/src/main/java/ru/vvdev/yamap/ClusteredYamapViewManager.kt b/node_modules/react-native-yamap/android/src/main/java/ru/vvdev/yamap/ClusteredYamapViewManager.kt
 index 54d8a0f..1e55e7b 100644
 --- a/node_modules/react-native-yamap/android/src/main/java/ru/vvdev/yamap/ClusteredYamapViewManager.kt
@@ -1209,10 +1043,18 @@ index ce9fd1e..7713155 100644
          }
          NSArray<NSString*>* vehicles = [RCTConvert Vehicles:json[@"vehicles"]];
 diff --git a/node_modules/react-native-yamap/ios/View/RNYMView.m b/node_modules/react-native-yamap/ios/View/RNYMView.m
-index 70691f8..e145c02 100644
+index 70691f8..3f6a111 100644
 --- a/node_modules/react-native-yamap/ios/View/RNYMView.m
 +++ b/node_modules/react-native-yamap/ios/View/RNYMView.m
-@@ -59,12 +59,17 @@ - (instancetype)init {
+@@ -34,6 +34,7 @@ @implementation RNYMView {
+     YMKMasstransitSessionRouteHandler routeHandler;
+     YMKRouteOptions *routeOptions;
+     NSMutableArray<UIView*> *_reactSubviews;
++    Boolean _listenerAttached;
+     NSMutableArray *routes;
+     NSMutableArray *currentRouteInfo;
+     NSMutableArray<YMKRequestPoint *> *lastKnownRoutePoints;
+@@ -59,12 +60,20 @@ - (instancetype)init {
      self = [super initWithFrame:CGRectZero];
  #endif
  
@@ -1222,6 +1064,9 @@ index 70691f8..e145c02 100644
 +    }
 +
      _reactSubviews = [[NSMutableArray alloc] init];
++    _listenerAttached = NO;
++    
++    
      masstransitRouter = [[YMKTransportFactory instance] createMasstransitRouter];
      drivingRouter = [[YMKDirectionsFactory instance] createDrivingRouterWithType:YMKDrivingRouterTypeOnline];
      pedestrianRouter = [[YMKTransportFactory instance] createPedestrianRouter];
@@ -1231,68 +1076,42 @@ index 70691f8..e145c02 100644
      routes = [[NSMutableArray alloc] init];
      currentRouteInfo = [[NSMutableArray alloc] init];
      lastKnownRoutePoints = [[NSMutableArray alloc] init];
-@@ -85,9 +90,65 @@ - (instancetype)init {
-     [self.mapWindow.map addInputListenerWithInputListener:(id<YMKMapInputListener>) self];
-     [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
-     initializedRegion = NO;
-+    dispatch_async(dispatch_get_main_queue(), ^{
-+      self.frame = [UIScreen mainScreen].bounds;
-+      [self setNeedsLayout];
-+      [self layoutIfNeeded];
-+    });
+@@ -88,6 +97,39 @@ - (instancetype)init {
      return self;
  }
  
-+- (void)layoutSubviews {
-+    [super layoutSubviews];
-+    
-+    dispatch_async(dispatch_get_main_queue(), ^{
-+        // self.frame = self.superview.bounds;
-+        if (self.superview != nil) {
-+          self.bounds = self.superview.bounds;
-+          self.center = CGPointMake(CGRectGetMidX(self.superview.bounds), CGRectGetMidY(self.superview.bounds));
-+        }
-+        Boolean isListenerSet = false;
-+        // гарантируем, что листенер навешен только когда map уже жива
-+        if (self.mapWindow != nil && self.mapWindow.map != nil) {
-+            [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
-+            isListenerSet = true;
-+        }
-+        
-+        // заставляем обновить layout OpenGL-слоя
-+        [self setNeedsLayout];
-+        [self layoutIfNeeded];
-+        // [self setNeedsDisplay];
-+        
-+        // повторно регистрируем listener, если карта есть, но его нет
-+        if (self.mapWindow != nil && self.mapWindow.map != nil && isListenerSet == false) {
-+            [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
-+        }
-+    });
-+}
-+
 +- (void)didMoveToSuperview {
-+  [super didMoveToSuperview];
-+  dispatch_async(dispatch_get_main_queue(), ^{
-+    if (self.mapWindow != nil && self.mapWindow.map != nil) {
-+      NSLog(@"[RNYMView] didMoveToSuperview -> attaching mapLoadedListener");
-+      [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
-+    }
-+  });
-+}
++      [super didMoveToSuperview];
++      [self setNeedsLayout];
++      }
 +
 +- (void)didMoveToWindow {
 +  [super didMoveToWindow];
-+    
-+  if (self.mapWindow != nil && self.mapWindow.map != nil) {
++
++  if (self.mapWindow != nil && self.mapWindow.map != nil && _listenerAttached == NO) {
 +    [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
++    _listenerAttached = YES;
++    NSLog(@"[RNYMView] MapLoadedListener attached");
 +  }
-+  dispatch_async(dispatch_get_main_queue(), ^{
-+    self.frame = self.superview.bounds;
-+    [self setNeedsLayout];
-+    [self layoutIfNeeded];
-+  });
 +}
++
++- (void)layoutSubviews {
++  [super layoutSubviews];
++
++  if (self.superview != nil) {
++    self.bounds = self.superview.bounds;
++    self.center = CGPointMake(CGRectGetMidX(self.superview.bounds), CGRectGetMidY(self.superview.bounds));
++  }
++}
++
++- (void)dealloc {
++  if (self.mapWindow != nil && self.mapWindow.map != nil) {
++    [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:nil];
++    NSLog(@"[RNYMView] dealloc: listener removed");
++  }
++}
++
++
 +
  - (NSDictionary*)convertDrivingRouteSection:(YMKDrivingRoute*)route withSection:(YMKDrivingSection*)section {
      int routeIndex = 0;

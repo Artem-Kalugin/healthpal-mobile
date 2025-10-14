@@ -13,8 +13,8 @@ const useBEErrorHandler = <T extends object>(
 ) => {
   useEffect(() => {
     //@ts-expect-error
-    const error = meta.error;
 
+    const error = meta.error;
     if (!error) return;
 
     const beError = error as BEError;

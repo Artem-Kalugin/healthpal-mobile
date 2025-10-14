@@ -25,16 +25,16 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useCompleteRegistationMutation } from '#api/Auth';
 import { useGetCurrentUserQuery, useUpdateCurrentMutation } from '#api/User';
-import { Gender, UpdateUserDto } from '#api/User/dto/UpdateUserDto';
+import { UpdateUserDto } from '#api/User/dto/UpdateUserDto';
 
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
   colors,
   Images,
-  MapGenderToLabel,
   SAFE_ZONE_BOTTOM,
 } from '#config';
+import { MapGenderToLabel } from '#config/locale';
 
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
@@ -43,6 +43,8 @@ import { delay } from '#utils';
 
 import { useDispatch, useSelector } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
+
+import { Gender } from '#generated/schema';
 
 const MINIMAL_BIRTHDAY_YEAR = new Date();
 MINIMAL_BIRTHDAY_YEAR.setFullYear(new Date().getFullYear() - 18);

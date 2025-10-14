@@ -1,3 +1,5 @@
+import { DoctorCategoryType } from '#generated/schema';
+
 export const colors = {
   main: {
     white: '#FFFFFF',
@@ -27,4 +29,15 @@ export const colors = {
     800: '#1F2A37',
     900: '#111928',
   },
+};
+
+export const MapDoctorCategoryToColor: { [x in DoctorCategoryType]: string } = {
+  [DoctorCategoryType.dentistry]: '#80c78a',
+  [DoctorCategoryType.cardiology]: '#f78078',
+  [DoctorCategoryType.pulmonology]: '#6bb5f0',
+  [DoctorCategoryType.general]: '#b87fd0',
+  [DoctorCategoryType.neurology]: '#ffb84d',
+  [DoctorCategoryType.gastroenterology]: '#a1887f',
+  [DoctorCategoryType.laboratory]: '#33d6e6',
+  [DoctorCategoryType.vaccination]: '#ff8c66',
 };

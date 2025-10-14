@@ -62,6 +62,7 @@ const fetchBaseQuery = async (
     }
 
     const urlWithPath = getUrlWithPathParams(url, path);
+    Debug.requestStart(`${method.toUpperCase()} ${urlWithPath}`);
     const urlObj = new URL(process.env.EXPO_PUBLIC_API_URL + urlWithPath);
 
     if (params) {
@@ -139,7 +140,7 @@ const baseQuery = retry(
       result.error &&
       typeof result.error === 'object' &&
       'status' in result.error &&
-      [422, 403, 401, 409, 404].includes(result.error?.status as number)
+      [422, 403, 401, 409, 404, 500].includes(result.error?.status as number)
     ) {
       retry.fail(result.error);
     }
