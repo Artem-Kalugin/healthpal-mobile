@@ -1,17 +1,20 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { Image } from 'expo-image';
+import { Divider, Icon, Image, TextBase, TextSmall, TextXS } from '#ui-kit';
 
-import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
+import { colors, shadow } from '#config';
+import { MapDoctorCategoryToLabel } from '#config/locale';
 
-import { colors, Images, shadow } from '#config';
+import { BEDoctorResponseDto } from '#generated/__entities';
 
 type IDoctorCard = {
+  item: BEDoctorResponseDto;
   onPress?: () => void;
 };
 
-export const DoctorCard: React.FC<Partial<IDoctorCard>> = ({
+export const DoctorCard: React.FC<IDoctorCard> = ({
+  item,
   onPress = undefined,
 }) => {
   return (
@@ -21,7 +24,7 @@ export const DoctorCard: React.FC<Partial<IDoctorCard>> = ({
       onPress={onPress}
     >
       <Image
-        source={Images.clinic}
+        source={item?.image}
         style={styles.image}
       />
       <View style={styles.content}>
@@ -31,20 +34,22 @@ export const DoctorCard: React.FC<Partial<IDoctorCard>> = ({
             numberOfLines={1}
             weight="700"
           >
-            Врач Иванов Борис В.
+            {item?.name} {item?.surname}
           </TextBase>
           <Icon name="favorite" />
         </View>
         <Divider style={styles.divider} />
         <View style={styles.details}>
-          <TextSmall weight="600">Кардиолог</TextSmall>
+          <TextSmall weight="600">
+            {MapDoctorCategoryToLabel[item.category?.type]}
+          </TextSmall>
           <View style={styles.locationContainer}>
             <Icon
               name="map"
               size={14}
             />
             <TextXS color={colors.grayscale['600']}>
-              Медицинский центр ЛОДЭ
+              {item?.medicalCenter.address}
             </TextXS>
           </View>
           <View style={styles.footer}>
@@ -57,13 +62,15 @@ export const DoctorCard: React.FC<Partial<IDoctorCard>> = ({
                 color={colors.grayscale['500']}
                 weight="400"
               >
-                5
+                {item?.rating}
               </TextXS>
             </View>
             <View style={styles.verticalDividerContainer}>
               <View style={styles.verticalDivider} />
             </View>
-            <TextXS color={colors.grayscale['500']}>58 отзывов</TextXS>
+            <TextXS color={colors.grayscale['500']}>
+              {item?.reviewsCount} отзывов
+            </TextXS>
           </View>
         </View>
       </View>
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
   },
   image: {
     aspectRatio: 1,
-    borderRadius: 12,
+    borderRadius: 8,
   },
   titleContainer: {
     flexDirection: 'row',

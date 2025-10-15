@@ -46,14 +46,8 @@ export const ReviewItem: React.FC<Partial<IDoctorCard>> = ({
       </View>
 
       <TextSmall color={colors.grayscale['500']}>
-        Dr. David Patel, a dedicated cardiologist, brings a wealth of experience
-        to Golden Gate Cardiology Center in Golden Gate, CA.{' '}
-        <TextSmall
-          color={colors.grayscale['900']}
-          textDecorationLine="underline"
-        >
-          view more
-        </TextSmall>
+        Я единственный пользователь этого приложения, сейчас напишу это под
+        всеми врачами.
       </TextSmall>
     </TouchableOpacity>
   );

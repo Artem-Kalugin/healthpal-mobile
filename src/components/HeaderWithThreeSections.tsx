@@ -9,11 +9,12 @@ import {
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { TextXL } from '#ui-kit';
+import { TextSmall, TextXL } from '#ui-kit';
 import ButtonGoBack from '#ui-kit/ButtonGoBack';
 
 export interface IHeaderSegmented {
   title: text;
+  subtitle?: text;
   titleTextAlign: TextStyle['textAlign'];
   titleSize: number;
   haveTitleFade: boolean;
@@ -30,6 +31,7 @@ export interface IHeaderSegmented {
 
 const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
   title = 'Header',
+  subtitle,
   titleTextAlign = 'left',
   leftElement = <ButtonGoBack />,
   rightElement = null,
@@ -37,7 +39,7 @@ const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
 
   paddingHorizontal = 16,
   paddingBottom = 16,
-  paddingTop = 32,
+  paddingTop = 8,
   containerStyle,
 }) => {
   const insets = useSafeAreaInsets();
@@ -58,14 +60,24 @@ const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
         {centerElement ? (
           centerElement
         ) : (
-          <TextXL
-            numberOfLines={1}
-            style={styles.title}
-            textAlign={titleTextAlign}
-            weight="600"
-          >
-            {title}
-          </TextXL>
+          <>
+            <TextXL
+              numberOfLines={1}
+              style={styles.title}
+              textAlign={titleTextAlign}
+              weight="600"
+            >
+              {title}
+            </TextXL>
+            {subtitle && (
+              <TextSmall
+                textAlign="center"
+                weight="400"
+              >
+                {subtitle}
+              </TextSmall>
+            )}
+          </>
         )}
       </View>
 
@@ -109,6 +121,8 @@ const getStyles = ({
     },
     centerSide: {
       flex: 1,
+      alignItems: 'center',
+      gap: 4,
     },
     title: {
       flexWrap: 'nowrap',

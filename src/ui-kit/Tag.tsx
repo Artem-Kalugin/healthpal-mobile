@@ -14,10 +14,12 @@ import Animated, {
 
 import { BORDER_RADIUS_ROUNDED, colors, withCustomAnimation } from '#config';
 
+import { Loader } from './Loader';
 import { TextSmall } from './Text';
 
 interface ITag {
   value: text;
+  isLoading: boolean;
   active: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
@@ -30,6 +32,7 @@ const AnimatedText = Animated.createAnimatedComponent(TextSmall);
 export const Tag = ({
   value = 'tag',
   active = false,
+  isLoading,
   onPress,
   style,
 }: ITag) => {
@@ -63,24 +66,35 @@ export const Tag = ({
     >
       <AnimatedText
         color={colors.white}
-        style={rText}
+        style={[styles.text, rText]}
         weight="600"
       >
         {value}
       </AnimatedText>
+      {isLoading && (
+        <Loader
+          color={colors.white}
+          cover={false}
+        />
+      )}
     </AnimatedTouchableOpacity>
   );
 };
 export const styles = StyleSheet.create({
   container: {
+    minHeight: 36,
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 20,
     gap: 8,
-    borderWidth: 1,
     borderColor: colors.main.midnightBlue,
+    borderWidth: 1,
     borderRadius: BORDER_RADIUS_ROUNDED,
     backgroundColor: colors.main.midnightBlue,
+  },
+  text: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

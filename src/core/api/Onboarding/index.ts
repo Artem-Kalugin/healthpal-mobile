@@ -9,7 +9,7 @@ const OnboardingAPI = Query.injectEndpoints({
       Requests['onboarding']['args']
     >({
       query: () => ({
-        url: '/onboarding',
+        url: '/onboarding/slides',
         method: 'get',
       }),
     }),

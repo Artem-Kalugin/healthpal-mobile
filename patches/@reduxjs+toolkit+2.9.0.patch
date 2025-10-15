@@ -1,0 +1,40 @@
+diff --git a/node_modules/@reduxjs/toolkit/dist/query/rtk-query.legacy-esm.js b/node_modules/@reduxjs/toolkit/dist/query/rtk-query.legacy-esm.js
+index 0f29c22..3f70161 100644
+--- a/node_modules/@reduxjs/toolkit/dist/query/rtk-query.legacy-esm.js
++++ b/node_modules/@reduxjs/toolkit/dist/query/rtk-query.legacy-esm.js
+@@ -993,10 +993,6 @@ function buildThunks({
+               data: result.data.pages[0]
+             };
+           }
+-          for (let i = 1; i < totalPages; i++) {
+-            const param = getNextPageParam(infiniteQueryOptions, result.data, arg.originalArgs);
+-            result = await fetchPage(result.data, param, maxPages);
+-          }
+         }
+         finalQueryReturnValue = result;
+       } else {
+diff --git a/node_modules/@reduxjs/toolkit/src/query/core/buildThunks.ts b/node_modules/@reduxjs/toolkit/src/query/core/buildThunks.ts
+index f8e3b33..0480017 100644
+--- a/node_modules/@reduxjs/toolkit/src/query/core/buildThunks.ts
++++ b/node_modules/@reduxjs/toolkit/src/query/core/buildThunks.ts
+@@ -742,19 +742,7 @@ export function buildThunks<
+             } as QueryReturnValue
+           }
+ 
+-          // Fetch remaining pages
+-          for (let i = 1; i < totalPages; i++) {
+-            const param = getNextPageParam(
+-              infiniteQueryOptions,
+-              result.data as InfiniteData<unknown, unknown>,
+-              arg.originalArgs,
+-            )
+-            result = await fetchPage(
+-              result.data as InfiniteData<unknown, unknown>,
+-              param,
+-              maxPages,
+-            )
+-          }
++         
+         }
+ 
+         finalQueryReturnValue = result

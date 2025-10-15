@@ -11,7 +11,7 @@ interface IStatisticsFact extends PropsWithChildren {
   icon: IconNames;
   iconProps?: Partial<IIcon>;
   label: string;
-  value: string;
+  value: text;
 }
 
 export const StatisticsFact = ({

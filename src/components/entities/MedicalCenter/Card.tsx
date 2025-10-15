@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import { Divider, Icon, Image, Rating, TextSmall, TextXS } from '#ui-kit';
 
@@ -11,14 +17,20 @@ import { BEMedicalCenterResponseDto } from '#generated/__entities';
 type IMedicalCenterCard = {
   item: BEMedicalCenterResponseDto;
   style?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 };
 
 export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
   style,
   item,
+  onPress,
 }) => {
   return (
-    <View style={[styles.container, StyleSheet.flatten(style), shadow]}>
+    <TouchableOpacity
+      disabled={!onPress}
+      style={[styles.container, StyleSheet.flatten(style), shadow]}
+      onPress={onPress}
+    >
       <Image
         source={item?.image}
         style={styles.image}
@@ -66,7 +78,7 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
           </>
         )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

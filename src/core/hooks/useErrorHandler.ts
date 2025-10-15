@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast/headless';
 import { BEError } from '#api/types';
 
 import { handleBEValidationError, isBEValidationError } from '#utils';
+import Debug from '#utils/debug';
 
 const useBEErrorHandler = <T extends object>(
   meta: unknown,
@@ -14,8 +15,9 @@ const useBEErrorHandler = <T extends object>(
   useEffect(() => {
     //@ts-expect-error
 
-    const error = meta.error;
+    const error = meta?.error;
     if (!error) return;
+    Debug.requestError('error', error?.data);
 
     const beError = error as BEError;
 

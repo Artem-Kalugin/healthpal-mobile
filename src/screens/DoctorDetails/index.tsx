@@ -1,14 +1,25 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+import { toast } from 'react-hot-toast/headless';
 
 import { DoctorDetailsCard } from '#components/entities/Doctor/DetailsCard';
 import { ReviewItem } from '#components/entities/Review/Item';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import ListExtender from '#components/ListExtender';
 
-import { Button, StatisticsFact, Text, TextSmall, TextXL } from '#ui-kit';
+import {
+  Button,
+  Loader,
+  StatisticsFact,
+  Text,
+  TextSmall,
+  TextXL,
+} from '#ui-kit';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
+
+import { useGetDoctorQuery } from '#api/Doctor';
 
 import { colors, headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
 
@@ -39,27 +50,50 @@ const schedule: {
 export const DoctorDetails: React.FC<
   MainScreenProps<MainRoutes.DoctorDetails>
 > = props => {
-  return (
-    <View style={styles.container}>
-      <HeaderWithThreeSections
-        containerStyle={[styles.headerContainer, headerShadow]}
-        title="Информация о враче"
-        titleTextAlign="center"
+  const [doctorDetails, setDoctorDetails] = useState(
+    props.route.params.defaultItem,
+  );
+  const [shouldCutDescription, setShouldCutDescription] = useState(true);
+
+  const doctorQuery = useGetDoctorQuery({
+    path: {
+      id: props.route.params.id,
+    },
+  });
+
+  useEffect(() => {
+    if (doctorQuery.data) {
+      setDoctorDetails(doctorQuery.data);
+    }
+  }, [doctorQuery.data]);
+
+  const descriptionOverflows =
+    shouldCutDescription &&
+    doctorDetails?.description &&
+    doctorDetails?.description?.length > 130
+      ? true
+      : false;
+
+  const content = !doctorDetails ? (
+    <Loader />
+  ) : (
+    <ScrollView contentContainerStyle={styles.mainContainer}>
+      <DoctorDetailsCard
+        item={doctorDetails}
+        style={styles.doctorCard}
       />
 
-      <ScrollView contentContainerStyle={styles.mainContainer}>
-        <DoctorDetailsCard style={styles.doctorCard} />
-
+      {doctorDetails ? (
         <View style={styles.statisicsContainer}>
           <StatisticsFact
             icon="patients"
             label="Пациентов"
-            value="2000+"
+            value={doctorDetails!.patientsCount}
           />
           <StatisticsFact
             icon="medal"
             label="Лет опыта"
-            value="10"
+            value={new Date().getFullYear() - doctorDetails?.practiceStartYear}
           />
           <StatisticsFact
             icon="star"
@@ -67,104 +101,128 @@ export const DoctorDetails: React.FC<
               size: 24,
             }}
             label="Оценка"
-            value="5"
+            value={doctorDetails?.rating}
           />
           <StatisticsFact
             icon="comment"
             label="Отзывов"
-            value="120"
+            value={doctorDetails?.reviewsCount}
           />
         </View>
+      ) : null}
 
-        <View style={styles.description}>
-          <TextXL
-            color={colors.grayscale['800']}
-            weight="700"
-          >
-            О враче
-          </TextXL>
+      <View style={styles.description}>
+        <TextXL
+          color={colors.grayscale['800']}
+          weight="700"
+        >
+          О враче
+        </TextXL>
+        <Text>
           <TextSmall color={colors.grayscale['500']}>
-            Dr. David Patel, a dedicated cardiologist, brings a wealth of
-            experience to Golden Gate Cardiology Center in Golden Gate, CA.{' '}
+            {shouldCutDescription
+              ? doctorDetails?.description.slice(0, 130)
+              : doctorDetails?.description}
+            {descriptionOverflows ? '... ' : ' '}
             <TextSmall
               color={colors.grayscale['900']}
               textDecorationLine="underline"
+              onPress={() => setShouldCutDescription(old => !old)}
             >
-              view more
+              {shouldCutDescription ? 'показать еще' : 'скрыть'}
             </TextSmall>
           </TextSmall>
-        </View>
+        </Text>
+      </View>
 
-        <View style={styles.schedule}>
+      <View style={styles.schedule}>
+        <TextXL
+          color={colors.grayscale['800']}
+          weight="700"
+        >
+          Расписание
+        </TextXL>
+        {Object.keys(schedule).map(dayId => (
+          <View
+            key={dayId}
+            style={styles.scheduleDay}
+          >
+            <Text style={styles.scheduleDayTitle}>
+              {
+                //@ts-expect-error TODO: fix after BE
+                MapDayIdToName[dayId]
+              }
+            </Text>
+
+            <View style={styles.scheduleRows}>
+              {
+                //@ts-expect-error TODO: fix after BE
+                schedule[dayId].length ? (
+                  //@ts-expect-error TODO: fix after BE
+                  schedule[dayId]?.map(el => (
+                    <View
+                      key={el[0]}
+                      style={styles.scheduleRow}
+                    >
+                      <Text>
+                        {el[0]}
+                        {'\t'} —
+                      </Text>
+                      <Text>
+                        {'\t'}
+                        {el[1]}
+                      </Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text>Выходной</Text>
+                )
+              }
+            </View>
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.reviews}>
+        <View style={styles.sectionHeader}>
           <TextXL
             color={colors.grayscale['800']}
             weight="700"
           >
-            Расписание
+            Отзывы
           </TextXL>
-          {Object.keys(schedule).map(dayId => (
-            <View
-              key={dayId}
-              style={styles.scheduleDay}
-            >
-              <Text style={styles.scheduleDayTitle}>
-                {
-                  //@ts-expect-error TODO: fix after BE
-                  MapDayIdToName[dayId]
-                }
-              </Text>
-
-              <View style={styles.scheduleRows}>
-                {
-                  //@ts-expect-error TODO: fix after BE
-                  schedule[dayId].length ? (
-                    //@ts-expect-error TODO: fix after BE
-                    schedule[dayId]?.map(el => (
-                      <View
-                        key={el[0]}
-                        style={styles.scheduleRow}
-                      >
-                        <Text>
-                          {el[0]}
-                          {'\t'} —
-                        </Text>
-                        <Text>
-                          {'\t'}
-                          {el[1]}
-                        </Text>
-                      </View>
-                    ))
-                  ) : (
-                    <Text>Выходной</Text>
-                  )
-                }
-              </View>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.reviews}>
-          <View style={styles.sectionHeader}>
-            <TextXL
-              color={colors.grayscale['800']}
-              weight="700"
-            >
-              Отзывы
-            </TextXL>
+          <TouchableOpacity
+            onPress={() => {
+              toast(
+                'Этого экрана не было в дизайне :( но вы можете посмотреть остальную часть приложения :)',
+              );
+            }}
+          >
             <TextSmall
               color={colors.grayscale['500']}
               weight="500"
             >
               Все
             </TextSmall>
-          </View>
-          <ReviewItem />
+          </TouchableOpacity>
         </View>
+        <ReviewItem />
+      </View>
 
-        <ListExtender />
-      </ScrollView>
+      <ListExtender />
+    </ScrollView>
+  );
+  return (
+    <View style={styles.container}>
+      <HeaderWithThreeSections
+        containerStyle={[styles.headerContainer, headerShadow]}
+        title="Информация о враче"
+        titleTextAlign="center"
+      />
+      {content}
       <View style={[styles.footer, tabbarShadow]}>
         <Button
+          disabled={!doctorDetails}
           onPress={() =>
             props.navigation.navigate(MainRoutes.ScheduleAppointment)
           }

@@ -1,6 +1,11 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import {
+  BEDoctorCategoryResponseDto,
+  BEDoctorResponseDto,
+} from '#generated/__entities';
+
 import { FavoritesParamList } from './Favorites/types';
 import { TabParamList } from './Tab/types';
 
@@ -14,8 +19,14 @@ export enum MainRoutes {
 }
 
 export type MainParamList = {
-  [MainRoutes.Search]: undefined;
-  [MainRoutes.DoctorDetails]: undefined;
+  [MainRoutes.Search]: {
+    medicalCenterId?: string;
+    autoFocus?: boolean;
+    title?: string;
+    categoryId?: string;
+    availableCategories: BEDoctorCategoryResponseDto[];
+  };
+  [MainRoutes.DoctorDetails]: { defaultItem?: BEDoctorResponseDto; id: string };
   [MainRoutes.ScheduleAppointment]: undefined;
   [MainRoutes.Notifications]: undefined;
   [MainRoutes.Favorites]: NavigatorScreenParams<FavoritesParamList>;

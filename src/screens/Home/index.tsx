@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 
+import { RefreshControl } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompositeScreenProps } from '@react-navigation/native';
@@ -62,7 +63,18 @@ export const Home: React.FC<
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={doctorCategories.isLoading || medicalCenters.isLoading}
+            onRefresh={() => {
+              doctorCategories.refetch();
+              medicalCenters.refetch();
+            }}
+          />
+        }
+        style={styles.container}
+      >
         <SafeAreaView
           edges={['top']}
           style={styles.header}
@@ -82,7 +94,14 @@ export const Home: React.FC<
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              props.navigation.navigate(MainRoutes.Search, {
+                availableCategories: doctorCategories.data!,
+                autoFocus: true,
+              })
+            }
+          >
             <TextInput
               IconLeft={<Icon name="search" />}
               inputWrapperStyle={styles.searchBar}
@@ -123,7 +142,12 @@ export const Home: React.FC<
           <View style={styles.sectionHeader}>
             <TextBase weight="700">Специализации</TextBase>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate(MainRoutes.Search)}
+              disabled={!doctorCategories.data}
+              onPress={() =>
+                props.navigation.navigate(MainRoutes.Search, {
+                  availableCategories: doctorCategories.data!,
+                })
+              }
             >
               <TextSmall
                 color={colors.grayscale['500']}
@@ -144,7 +168,12 @@ export const Home: React.FC<
                     <DoctorsCategoryThumbnail
                       key={doctorCategory.type}
                       item={doctorCategory}
-                      onPress={() => {}}
+                      onPress={() =>
+                        props.navigation.navigate(MainRoutes.Search, {
+                          categoryId: doctorCategory.id,
+                          availableCategories: doctorCategories.data!,
+                        })
+                      }
                     />
                   ))}
                 </View>
@@ -167,7 +196,18 @@ export const Home: React.FC<
             horizontal
             contentContainerStyle={styles.clinicsContentContainer}
             data={medicalCenters.data || []}
-            renderItem={({ item }) => <MedicalCenterCard item={item} />}
+            renderItem={({ item }) => (
+              <MedicalCenterCard
+                item={item}
+                onPress={() =>
+                  props.navigation.navigate(MainRoutes.Search, {
+                    availableCategories: doctorCategories.data!,
+                    medicalCenterId: item.id,
+                    title: item.name,
+                  })
+                }
+              />
+            )}
             showsHorizontalScrollIndicator={false}
             style={styles.clinicsContent}
             keyExtractor={item => item.id}

@@ -24,6 +24,7 @@ export const Favorites: React.FC<
         renderItem={() => (
           <View style={styles.cardWrapper}>
             {props.route.name === FavoritesRoutes.FavoriteDosctors ? (
+              //@ts-expect-error
               <DoctorCard />
             ) : (
               //@ts-expect-error

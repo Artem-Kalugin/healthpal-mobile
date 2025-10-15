@@ -11,7 +11,7 @@ const AuthAPI = Query.injectEndpoints({
       Requests['verifyPhone']['args']
     >({
       query: args => ({
-        url: '/auth/recovery/request-otp',
+        url: '/auth/recovery/otp/request',
         method: 'post',
         ...args,
       }),
@@ -21,7 +21,7 @@ const AuthAPI = Query.injectEndpoints({
       Requests['verifyCode']['args']
     >({
       query: args => ({
-        url: '/auth/recovery/verify-otp',
+        url: '/auth/recovery/otp/verify',
         method: 'post',
         ...args,
       }),
