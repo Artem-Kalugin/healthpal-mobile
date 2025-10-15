@@ -62,7 +62,6 @@ const fetchBaseQuery = async (
     }
 
     const urlWithPath = getUrlWithPathParams(url, path);
-    Debug.requestStart(`${method.toUpperCase()} ${urlWithPath}`);
     const urlObj = new URL(process.env.EXPO_PUBLIC_API_URL + urlWithPath);
 
     if (params) {
@@ -72,6 +71,8 @@ const fetchBaseQuery = async (
         }
       });
     }
+
+    Debug.requestStart(`${method.toUpperCase()} ${urlObj.toString()}`);
 
     const isFormData = data instanceof FormData;
 
@@ -112,7 +113,7 @@ const fetchBaseQuery = async (
     Debug.requestSuccess(`${method.toUpperCase()} ${urlWithPath}`);
 
     return {
-      data: json?.data ?? json ?? {},
+      data: json ?? {},
       meta: {
         ...json,
         timestamp: new Date().toISOString(),

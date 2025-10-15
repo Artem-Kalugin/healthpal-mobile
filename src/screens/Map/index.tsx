@@ -22,6 +22,7 @@ import { Icon, TextInput } from '#ui-kit';
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
+import { useDoctorCategoriesQuery } from '#api/Doctor';
 import { useLazyMedicalCentersQuery } from '#api/MedicalCenters';
 
 import { shadow } from '#config';
@@ -52,6 +53,7 @@ export const Map: React.FC<
     MainScreenProps<MainRoutes>
   >
 > = props => {
+  const doctorCategories = useDoctorCategoriesQuery(null);
   const medicalCentersListRef = useRef<FlatList>(null);
   const yamapRef = useRef<YaMap>(null);
   const showMedicalCentersProgress = useSharedValue(0);
@@ -185,7 +187,14 @@ export const Map: React.FC<
   return (
     <View style={styles.container}>
       <View style={styles.searchBarAnchor}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            props.navigation.navigate(MainRoutes.Search, {
+              availableCategories: doctorCategories.data!,
+              autoFocus: true,
+            })
+          }
+        >
           <TextInput
             IconLeft={<Icon name="search" />}
             inputWrapperStyle={shadow}
@@ -213,7 +222,16 @@ export const Map: React.FC<
           data={medicalCentersSorted}
           renderItem={({ item }) => (
             <BlinkAnimator startAnimation={itemToBlink?.id === item.id}>
-              <MedicalCenterCard item={item} />
+              <MedicalCenterCard
+                item={item}
+                onPress={() =>
+                  props.navigation.navigate(MainRoutes.Search, {
+                    availableCategories: doctorCategories.data!,
+                    medicalCenterId: item.id,
+                    title: item.name,
+                  })
+                }
+              />
             </BlinkAnimator>
           )}
           showsHorizontalScrollIndicator={false}

@@ -7,18 +7,21 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { Image } from 'expo-image';
+import { Divider, Icon, Image, TextBase, TextSmall, TextXS } from '#ui-kit';
 
-import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
+import { colors, shadow } from '#config';
+import { MapDoctorCategoryToLabel } from '#config/locale';
 
-import { colors, Images, shadow } from '#config';
+import { BEDoctorResponseDto } from '#generated/__entities';
 
 type IDoctorDetailsCard = {
+  item: BEDoctorResponseDto;
   onPress?: () => void;
   style: StyleProp<ViewStyle>;
 };
 
 export const DoctorDetailsCard: React.FC<Partial<IDoctorDetailsCard>> = ({
+  item,
   onPress = undefined,
   style,
 }) => {
@@ -29,7 +32,7 @@ export const DoctorDetailsCard: React.FC<Partial<IDoctorDetailsCard>> = ({
       onPress={onPress}
     >
       <Image
-        source={Images.clinic}
+        source={item?.image}
         style={styles.image}
       />
       <View style={styles.content}>
@@ -38,17 +41,24 @@ export const DoctorDetailsCard: React.FC<Partial<IDoctorDetailsCard>> = ({
           numberOfLines={1}
           weight="700"
         >
-          Врач Иванов Борис В.
+          {item?.name} {item?.surname}
         </TextBase>
         <Divider />
-        <TextSmall weight="600">Кардиолог</TextSmall>
+        <TextSmall weight="600">
+          {item?.category?.type &&
+            MapDoctorCategoryToLabel[item?.category?.type]}
+        </TextSmall>
         <View style={styles.locationContainer}>
           <Icon
-            name="map"
+            name="hospital"
             size={14}
           />
-          <TextXS color={colors.grayscale['600']}>
-            Медицинский центр ЛОДЭ
+          <TextXS
+            color={colors.grayscale['600']}
+            numberOfLines={2}
+            style={styles.locationText}
+          >
+            {item?.medicalCenter.name}
           </TextXS>
         </View>
       </View>
@@ -67,7 +77,7 @@ const styles = StyleSheet.create({
   },
   image: {
     aspectRatio: 1,
-    borderRadius: 12,
+    borderRadius: 8,
   },
 
   content: {
@@ -76,8 +86,13 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   locationContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    paddingRight: 8,
+    gap: 8,
+  },
+  locationText: {
+    flex: 1,
   },
 });

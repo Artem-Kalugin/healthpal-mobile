@@ -20,3 +20,10 @@ export type FetchArgs = {
   params?: Record<string, string | number | boolean | null | undefined>;
   path?: Record<string, string | number>;
 };
+
+export type PaginationType = {
+  page: number;
+  count: number;
+  lastPage: number;
+  size: number;
+};

@@ -1,3 +1,3 @@
 export type RequestsOnboarding = {
-  onboarding: PickApiData<'/onboarding', 'get'>;
+  onboarding: PickApiData<'/onboarding/slides', 'get'>;
 };

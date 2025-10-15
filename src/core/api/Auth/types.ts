@@ -1,6 +1,6 @@
 export type RequestsAuth = {
-  verifyPhone: PickApiData<'/auth/recovery/request-otp', 'post'>;
-  verifyCode: PickApiData<'/auth/recovery/verify-otp', 'post'>;
+  verifyPhone: PickApiData<'/auth/recovery/otp/request', 'post'>;
+  verifyCode: PickApiData<'/auth/recovery/otp/verify', 'post'>;
   resetPassword: PickApiData<'/auth/recovery/reset-password', 'post'>;
   login: PickApiData<'/auth/login', 'post'>;
   register: PickApiData<'/auth/register', 'post'>;

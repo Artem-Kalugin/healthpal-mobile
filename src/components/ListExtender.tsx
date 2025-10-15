@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const ListExtender: React.FC<Partial<{ height: number }>> = ({
-  height = 14,
-}) => {
+const ListExtender: React.FC<
+  Partial<{ height: number; children: ReactNode }>
+> = ({ height = 14, children = null }) => {
   const styles = getStyles(height);
-  return <View style={styles.container} />;
+  return <View style={styles.container}>{children}</View>;
 };
 
 const getStyles = (height: number) =>

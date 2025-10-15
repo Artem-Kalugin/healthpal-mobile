@@ -24,7 +24,7 @@ export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
 export type ITextInput = Omit<
   TextInputProps,
-  'onChange' | 'onBlur' | 'onFocus'
+  'onChange' | 'onBlur' | 'onFocus' | 'onChangeText'
 > & {
   errors?: string[];
   size: 'default' | 'small';
