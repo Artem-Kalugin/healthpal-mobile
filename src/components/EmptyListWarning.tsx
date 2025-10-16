@@ -52,7 +52,7 @@ const getStyles = (cover: boolean) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 16,
+      padding: 24,
       gap: 8,
       ...(cover ? { flex: 1 } : {}),
     },

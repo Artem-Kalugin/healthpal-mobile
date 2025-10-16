@@ -41,7 +41,7 @@ export const ReviewItem: React.FC<Partial<IDoctorCard>> = ({
           >
             Иваныч
           </TextBase>
-          <Rating />
+          <Rating value={5} />
         </View>
       </View>
 

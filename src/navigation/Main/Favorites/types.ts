@@ -3,19 +3,19 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { NavigatorHeaderTabRouteConfig } from '#components/NavigatorHeaderTabs';
 
 export enum FavoritesRoutes {
-  FavoriteDosctors = 'FavoriteDoctors',
+  FavoriteDoctors = 'FavoriteDoctors',
   FavoriteMedicalCenters = 'FavoriteMedicalCenters',
 }
 
 export type FavoritesParamList = {
-  [FavoritesRoutes.FavoriteDosctors]: undefined;
+  [FavoritesRoutes.FavoriteDoctors]: undefined;
   [FavoritesRoutes.FavoriteMedicalCenters]: undefined;
 };
 
 export const TabsConfig: {
   [key in FavoritesRoutes]: NavigatorHeaderTabRouteConfig;
 } = {
-  [FavoritesRoutes.FavoriteDosctors]: {
+  [FavoritesRoutes.FavoriteDoctors]: {
     label: 'Врачи',
   },
   [FavoritesRoutes.FavoriteMedicalCenters]: {

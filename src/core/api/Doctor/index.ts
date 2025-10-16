@@ -1,4 +1,5 @@
 import { Query } from '#api';
+import { PaginationConfig } from '#api/config';
 
 import { RequestsDoctor as Requests } from './types';
 
@@ -19,17 +20,21 @@ const DoctorAPI = Query.injectEndpoints({
       Requests['search']['args'],
       number
     >({
-      infiniteQueryOptions: {
-        initialPageParam: 1,
-        getNextPageParam: (lastPage, allPages, lastPageParam) => {
-          if (lastPage.page * lastPage.size > lastPage.count) {
-            return undefined;
-          }
-          return lastPageParam + 1;
-        },
-      },
+      infiniteQueryOptions: PaginationConfig,
       query: ({ pageParam, queryArg }) => ({
-        url: `/doctors/search?page=${pageParam}&size=${20}`,
+        url: `/doctors/search?page=${pageParam}&size=${10}`,
+        method: 'get',
+        ...queryArg,
+      }),
+    }),
+    favoriteDoctors: build.infiniteQuery<
+      Requests['favorites']['response'],
+      Requests['favorites']['args'],
+      number
+    >({
+      infiniteQueryOptions: PaginationConfig,
+      query: ({ pageParam, queryArg }) => ({
+        url: `/doctors/favorites?page=${pageParam}&size=${10}`,
         method: 'get',
         ...queryArg,
       }),
@@ -51,5 +56,6 @@ export const {
   useDoctorCategoriesQuery,
   useLazyDoctorCategoriesQuery,
   useSearchDoctorsInfiniteQuery,
+  useFavoriteDoctorsInfiniteQuery,
   useGetDoctorQuery,
 } = DoctorAPI;

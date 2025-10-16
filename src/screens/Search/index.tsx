@@ -80,11 +80,15 @@ export const Search: React.FC<
   const categoriesScrollRef =
     useRef<FlatList<BEDoctorCategoryResponseDto>>(null);
   const doctorsListRef = useRef<FlatList<BEDoctorResponseDto[]>>(null);
-  const [foldableContainerHeight, setFoldableContainerHeight] = useState(0);
+  const [foldableContainerHeight, setFoldableContainerHeight] = useState(200);
   const foldProgress = useSharedValue(1);
   const previousScrollPositionRef = useRef(0);
+  const isCategoriesInitalyScrolled = useRef(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const headerHeight = foldableContainerHeight;
+  const queryFullfiled =
+    (searchQuery.isSuccess || searchQuery.isError) && !searchQuery.isFetching;
 
   const resetListPosition = () => {
     doctorsListRef.current?.scrollToOffset({
@@ -98,6 +102,15 @@ export const Search: React.FC<
     initial = false,
   ) => {
     await delay(0);
+
+    if (initial) {
+      if (isCategoriesInitalyScrolled.current) {
+        return;
+      } else {
+        isCategoriesInitalyScrolled.current = true;
+      }
+    }
+
     categoriesScrollRef.current?.scrollToItem({
       item,
       viewPosition: 0.5,
@@ -121,6 +134,12 @@ export const Search: React.FC<
       resetListPosition();
     }
   }, [!!searchQuery.data]);
+
+  useEffect(() => {
+    if (queryFullfiled) {
+      setIsRefreshing(false);
+    }
+  }, [queryFullfiled]);
 
   const handler = useAnimatedScrollHandler({
     onScroll: event => {
@@ -147,15 +166,11 @@ export const Search: React.FC<
 
   useBEErrorHandler(searchQuery);
 
-  const isRefreshing =
-    searchQuery.isFetching &&
-    !searchQuery.isFetchingNextPage &&
-    !isQueryChangingSource.current;
-
   const listData =
     (searchQuery.data?.pages
       .map(el => el.data)
       .flat() as unknown as BEDoctorResponseDto[]) || [];
+
   return (
     <View style={styles.flex}>
       <TapKeyboardDissmissArea />
@@ -166,7 +181,6 @@ export const Search: React.FC<
           title="Все специалисты"
           titleTextAlign="center"
         />
-
         <View>
           <Animated.View
             style={[styles.foldableContainer, rFoldable, headerShadow]}
@@ -207,7 +221,6 @@ export const Search: React.FC<
                   key={item.id}
                   active={item.type === activeCategory?.type}
                   isLoading={
-                    // true
                     activeCategory === item &&
                     (searchQuery.isLoading || searchQuery.isFetching)
                   }
@@ -273,16 +286,16 @@ export const Search: React.FC<
         <Animated.FlatList
           ref={doctorsListRef}
           automaticallyAdjustContentInsets={true}
-          contentContainerStyle={[styles.cardsListContent, ,]}
+          contentContainerStyle={styles.cardsListContent}
           contentInsetAdjustmentBehavior="always"
           data={listData}
+          initialNumToRender={4}
           keyboardShouldPersistTaps="never"
           ListEmptyComponent={
-            searchQuery.isFetching ? (
+            searchQuery.isLoading ? (
               <Loader size="large" />
             ) : (
               <EmptyListWarning
-                enabled={!isRefreshing}
                 subtitle="Попробуйте изменить параметры поиска"
                 title="Ничего не нашли"
               />
@@ -322,7 +335,8 @@ export const Search: React.FC<
             </View>
           )}
           style={styles.cardsList}
-          updateCellsBatchingPeriod={10}
+          updateCellsBatchingPeriod={100}
+          windowSize={10}
           keyExtractor={item => item.id}
           onEndReached={() =>
             !searchQuery.isFetching &&
@@ -330,7 +344,10 @@ export const Search: React.FC<
             searchQuery.fetchNextPage()
           }
           onEndReachedThreshold={1}
-          onRefresh={searchQuery.refetch}
+          onRefresh={() => {
+            setIsRefreshing(true);
+            searchQuery.refetch();
+          }}
           onScroll={handler}
           onScrollBeginDrag={() => Keyboard.dismiss()}
         />
@@ -387,6 +404,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingHorizontal: 24,
   },
+
   sortButton: {
     marginLeft: 'auto',
   },

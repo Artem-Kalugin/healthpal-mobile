@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { toast } from 'react-hot-toast/headless';
 
 import { DoctorDetailsCard } from '#components/entities/Doctor/DetailsCard';
+import { DoctorFavoriteButton } from '#components/entities/Doctor/FavoriteButton';
 import { ReviewItem } from '#components/entities/Review/Item';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import ListExtender from '#components/ListExtender';
@@ -216,6 +217,14 @@ export const DoctorDetails: React.FC<
     <View style={styles.container}>
       <HeaderWithThreeSections
         containerStyle={[styles.headerContainer, headerShadow]}
+        rightElement={
+          doctorDetails && (
+            <DoctorFavoriteButton
+              doctorId={doctorDetails?.id}
+              isFavoriteOnBackend={doctorDetails?.isFavorite}
+            />
+          )
+        }
         title="Информация о враче"
         titleTextAlign="center"
       />

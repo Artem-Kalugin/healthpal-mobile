@@ -7,17 +7,18 @@ import { Icon } from './Icon';
 import { TextXS } from './Text';
 
 interface IRating extends PropsWithChildren {
+  value: text;
   style?: StyleProp<ViewStyle>;
 }
 
-export const Rating = ({ style }: IRating) => {
+export const Rating = ({ style, value }: IRating) => {
   return (
     <View style={styles.container}>
       <TextXS
         color={colors.grayscale['500']}
         weight="600"
       >
-        5.0
+        {value}
       </TextXS>
       <View style={styles.icons}>
         <Icon
