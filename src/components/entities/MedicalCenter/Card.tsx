@@ -9,10 +9,12 @@ import {
 
 import { Divider, Icon, Image, Rating, TextSmall, TextXS } from '#ui-kit';
 
-import { colors, shadow } from '#config';
+import { BORDER_RADIUS_ROUNDED, colors, shadow } from '#config';
 import { MapMedicalCenterTypeToLabel } from '#config/locale';
 
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
+
+import { FavoriteButton } from './FavoriteButton';
 
 type IMedicalCenterCard = {
   item: BEMedicalCenterResponseDto;
@@ -31,6 +33,11 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
       style={[styles.container, StyleSheet.flatten(style), shadow]}
       onPress={onPress}
     >
+      <FavoriteButton
+        isFavoriteOnBackend={item.isFavorite}
+        medicalCenterId={item.id}
+        style={styles.favoriteButton}
+      />
       <Image
         source={item?.image}
         style={styles.image}
@@ -53,8 +60,10 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
             <TextXS color={colors.grayscale['500']}>{item?.address}</TextXS>
           </View>
           <View style={styles.ratingContainer}>
-            <Rating />
-            <TextXS color={colors.grayscale['500']}>(58 reviews)</TextXS>
+            <Rating value={item.rating} />
+            <TextXS color={colors.grayscale['500']}>
+              {item?.reviewsCount} отзывов
+            </TextXS>
           </View>
         </View>
         {item.distance && (
@@ -88,6 +97,18 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 8,
     backgroundColor: colors.main.white,
+  },
+  favoriteButton: {
+    width: 28,
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 2,
+    top: 8,
+    right: 8,
+    borderRadius: BORDER_RADIUS_ROUNDED,
+    backgroundColor: `${colors.black}55`,
   },
   image: {
     width: '100%',

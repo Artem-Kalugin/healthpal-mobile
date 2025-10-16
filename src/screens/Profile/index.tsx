@@ -69,7 +69,7 @@ export const Profile: React.FC<
       icon: 'heart',
       onPress: () =>
         props.navigation.navigate(MainRoutes.Favorites, {
-          screen: FavoritesRoutes.FavoriteDosctors,
+          screen: FavoritesRoutes.FavoriteDoctors,
         }),
     },
     {

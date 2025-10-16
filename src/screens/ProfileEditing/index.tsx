@@ -263,6 +263,7 @@ export const ProfileEditing: React.FC<
                   defaultValue: form.getValues('gender'),
                   onSelectionEnd: item => {
                     Keyboard.dismiss();
+                    //@ts-expect-error
                     form.setValue('gender', item || '');
                     item && form.clearErrors('gender');
                   },

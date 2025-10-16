@@ -47,7 +47,10 @@ export const SignIn: React.FC<
 
   const passwordInputRef = useRef<TextInput>(null);
 
-  const { form, getFormInputProps } = useAppForm(LoginDto);
+  const { form, getFormInputProps } = useAppForm(LoginDto, {
+    phone: '78888888888',
+    password: '123123aa',
+  });
 
   const [login, loginMetadata] = useLoginMutation();
 

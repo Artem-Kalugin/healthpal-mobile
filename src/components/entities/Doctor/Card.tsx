@@ -8,6 +8,8 @@ import { MapDoctorCategoryToLabel } from '#config/locale';
 
 import { BEDoctorResponseDto } from '#generated/__entities';
 
+import { DoctorFavoriteButton } from './FavoriteButton';
+
 type IDoctorCard = {
   item: BEDoctorResponseDto;
   onPress?: () => void;
@@ -36,7 +38,10 @@ export const DoctorCard: React.FC<IDoctorCard> = ({
           >
             {item?.name} {item?.surname}
           </TextBase>
-          <Icon name="favorite" />
+          <DoctorFavoriteButton
+            doctorId={item.id}
+            isFavoriteOnBackend={item.isFavorite}
+          />
         </View>
         <Divider style={styles.divider} />
         <View style={styles.details}>

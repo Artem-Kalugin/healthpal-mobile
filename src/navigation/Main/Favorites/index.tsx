@@ -17,7 +17,7 @@ const Tabs = createMaterialTopTabNavigator<FavoritesParamList>();
 export const FavoritesStack = () => {
   return (
     <Tabs.Navigator
-      initialRouteName={FavoritesRoutes.FavoriteDosctors}
+      initialRouteName={FavoritesRoutes.FavoriteDoctors}
       tabBar={({ state, navigation }) => {
         return (
           <View>
@@ -39,7 +39,7 @@ export const FavoritesStack = () => {
     >
       <Tabs.Screen
         component={Favorites}
-        name={FavoritesRoutes.FavoriteDosctors}
+        name={FavoritesRoutes.FavoriteDoctors}
       />
       <Tabs.Screen
         component={Favorites}

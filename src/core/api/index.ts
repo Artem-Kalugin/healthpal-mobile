@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce';
 import { toast } from 'react-hot-toast/headless';
 import { REHYDRATE } from 'redux-persist';
 
+import { delay } from '#utils';
 import Debug from '#utils/debug';
 
 import { RootState } from '#store';
@@ -71,6 +72,8 @@ const fetchBaseQuery = async (
         }
       });
     }
+
+    await delay(2000);
 
     Debug.requestStart(`${method.toUpperCase()} ${urlObj.toString()}`);
 
