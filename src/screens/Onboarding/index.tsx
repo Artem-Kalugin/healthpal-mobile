@@ -6,7 +6,7 @@ import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import Swiper from '#components/Swiper';
 import { ISwiperRef } from '#components/Swiper/Swiper';
 
-import { Button, Image, TextLarge, TextSmall } from '#ui-kit';
+import { Button, Image, Loader, TextLarge, TextSmall } from '#ui-kit';
 
 import { AuthRoutes } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
@@ -40,6 +40,9 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
     isRenderedRef.current = true;
   }, []);
 
+  if (!onboardingQuery?.data?.length) {
+    return <Loader />;
+  }
   return (
     <View style={styles.container}>
       <Swiper

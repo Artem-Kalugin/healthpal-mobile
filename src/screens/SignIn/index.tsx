@@ -30,6 +30,7 @@ import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
 
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
+import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
 import { delay } from '#utils';
 
@@ -45,6 +46,7 @@ export const SignIn: React.FC<
 > = props => {
   const dispatch = useDispatch();
 
+  const { prefetchApp, isPrefetching } = usePrefetchApp();
   const passwordInputRef = useRef<TextInput>(null);
 
   const { form, getFormInputProps } = useAppForm(LoginDto, {
@@ -72,7 +74,7 @@ export const SignIn: React.FC<
 
     dispatch(RuntimeActions.setToken(response.accessToken));
 
-    await delay(0);
+    await prefetchApp();
 
     props.navigation.navigate(
       //@ts-expect-error
@@ -156,7 +158,7 @@ export const SignIn: React.FC<
                 />
               </View>
               <Button
-                isLoading={loginMetadata.isLoading}
+                isLoading={loginMetadata.isLoading || isPrefetching}
                 onPress={submitForm}
               >
                 Войти

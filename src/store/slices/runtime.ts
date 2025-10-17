@@ -43,6 +43,7 @@ const runtimeSlice = createSlice({
         registrationComplete,
       };
     },
+    reset: () => initialState,
   },
 });
 

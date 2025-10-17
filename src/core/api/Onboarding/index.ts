@@ -17,3 +17,5 @@ const OnboardingAPI = Query.injectEndpoints({
 });
 
 export const { useOnboardingQuery, useLazyOnboardingQuery } = OnboardingAPI;
+
+export default OnboardingAPI;

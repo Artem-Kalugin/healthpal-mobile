@@ -11,6 +11,7 @@ const appSlice = createSlice({
     setShouldShowOnboarding(state, action: PayloadAction<boolean>) {
       state.shouldShowOnboarding = action.payload;
     },
+    reset: () => initialState,
   },
 });
 

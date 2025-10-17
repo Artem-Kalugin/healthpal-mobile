@@ -25,7 +25,7 @@ import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { useDoctorCategoriesQuery } from '#api/Doctor';
 import { useLazyMedicalCentersQuery } from '#api/MedicalCenters';
 
-import { shadow } from '#config';
+import { colors, shadow } from '#config';
 
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
@@ -44,7 +44,7 @@ const initCoordinates = {
 };
 const initRegion = {
   ...initCoordinates,
-  zoom: 15,
+  zoom: 10,
 };
 
 export const Map: React.FC<
@@ -207,8 +207,10 @@ export const Map: React.FC<
       </View>
       <YaMap
         ref={yamapRef}
+        followUser={false}
         initialRegion={initRegion}
         style={styles.map}
+        userLocationAccuracyFillColor={colors.main.midnightBlue}
         onCameraPositionChange={hideMedicalCenters}
       >
         {Markers}

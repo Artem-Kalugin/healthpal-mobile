@@ -9,6 +9,12 @@ import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
+import { PermissionManager } from '#services/Permissions';
+import {
+  CameraPermission,
+  GalleryPermission,
+} from '#services/Permissions/config';
+
 import { colors } from '#config';
 
 import useModal from '#hooks/utils/useModal';
@@ -19,7 +25,35 @@ export const ImagePicker: React.FC<
   const modal = useModal(true);
 
   const pickImage = async () => {
+    const permission = await PermissionManager.request(GalleryPermission);
+
+    if (!permission) {
+      return;
+    }
+
     let result = await ImagePickerExpo.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.97,
+      shape: 'oval',
+      base64: true,
+    });
+
+    if (!result.canceled) {
+      modal.close();
+      props.route.params.onEnd(result.assets[0]);
+    }
+  };
+
+  const takePhoto = async () => {
+    const permission = await PermissionManager.request(CameraPermission);
+
+    if (!permission) {
+      return;
+    }
+
+    let result = await ImagePickerExpo.launchCameraAsync({
       mediaTypes: ['images', 'videos'],
       allowsEditing: true,
       aspect: [1, 1],
@@ -63,6 +97,7 @@ export const ImagePicker: React.FC<
         <Button
           appearance="outlined"
           size="small"
+          onPress={takePhoto}
         >
           <Icon
             fill={colors.main.midnightBlue}

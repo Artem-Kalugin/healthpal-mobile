@@ -56,6 +56,10 @@ class Debug {
     this.__log(consoleStyles.complited, `✅[COMPLITED]\t ${text}`, data);
   }
 
+  static custom(tag = 'CUSTOM', text = 'Hello world', data?: any) {
+    this.__log(consoleStyles.info, `[${tag.toUpperCase()}]\t ${text}`, data);
+  }
+
   static log(text = 'Hello world', data?: any) {
     this.__log(consoleStyles.default, text, data);
   }

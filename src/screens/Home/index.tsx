@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   ScrollView,
@@ -27,6 +27,8 @@ import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { useDoctorCategoriesQuery } from '#api/Doctor';
 import { useMedicalCentersQuery } from '#api/MedicalCenters';
 
+import { LocationService } from '#services/Location';
+
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
@@ -42,20 +44,37 @@ export const Home: React.FC<
     MainScreenProps<MainRoutes>
   >
 > = props => {
+  const [isUserDecidedLocationUsage, setIsUserDecidedLocationUsage] =
+    useState(false);
+  const [location, setLocation] =
+    useState<
+      Awaited<ReturnType<(typeof LocationService)['getCurrentLocation']>>
+    >();
   const doctorCategories = useDoctorCategoriesQuery(null);
   const medicalCenters = useMedicalCentersQuery(
     {
       params: {
-        lat: '55.7558',
-        lon: '37.6173',
+        lat: location ? `${location?.coords.latitude}` : undefined,
+        lon: location ? `${location?.coords.longitude}` : undefined,
         shouldTake5Only: true,
       },
     },
     {
+      skip: !isUserDecidedLocationUsage,
       refetchOnMountOrArgChange: true,
     },
   );
   const swiperRef = useRef<ISwiperRef>(null);
+
+  const renewLocation = async () => {
+    const _location = await LocationService.getCurrentLocation();
+
+    setLocation(_location);
+  };
+
+  useEffect(() => {
+    renewLocation().finally(() => setIsUserDecidedLocationUsage(true));
+  }, []);
 
   const doctorCategoriesChunked = doctorCategories.data
     ? chunk(doctorCategories.data, 4)
