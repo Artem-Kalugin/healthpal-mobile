@@ -1,39 +1,48 @@
-import React, { PropsWithChildren, useCallback, useState } from 'react';
+/* eslint-disable react/jsx-sort-props */
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import { Calendar as _Calendar, DateData } from 'react-native-calendars';
 import Animated from 'react-native-reanimated';
 
-import { DateTime } from 'luxon';
-
 import { colors, layoutAnimation, shadow } from '#config';
 
-import { normalizeDefaultStyles } from './config';
+import { DayProps, normalizeDefaultStyles } from './config';
 import { CalendarDay } from './day';
 import { CalendarHeader } from './header';
-import {
-  changeAnchorDate,
-  getMonthAndYearFromCalendarDateString,
-} from './utils';
+import { changeAnchorDate, dateToYYYYMM, toDateString } from './utils';
 
 interface ICalendar extends PropsWithChildren {
+  initialAnchorDate: Pick<DateData, 'dateString'>;
+  activeDates: string[];
+  loading?: boolean;
   maxDate: string;
   minDate: string;
-  selectedDate: DateData;
+  outlinedDate?: Pick<DateData, 'dateString'>;
+  selectedDate: Pick<DateData, 'dateString'>;
   setSelectedDate: (date: DateData) => void;
-  activeDays: number[];
+  onViewableMonthChange?: (anchorDate: string) => void;
   style?: StyleProp<ViewStyle>;
 }
 
 export const Calendar = ({
-  activeDays,
+  initialAnchorDate,
+  activeDates = [],
   selectedDate,
+  loading,
+  outlinedDate,
   minDate,
   maxDate,
   setSelectedDate,
+  onViewableMonthChange,
   style,
 }: ICalendar) => {
-  const [anchorDate, setAnchorDate] = useState(selectedDate);
+  const [anchorDate, setAnchorDate] = useState(initialAnchorDate);
 
   const addMonth = useCallback(() => {
     setAnchorDate(old => changeAnchorDate(old, +1));
@@ -44,11 +53,35 @@ export const Calendar = ({
   }, []);
 
   const disableHeaderArrowLeft =
-    getMonthAndYearFromCalendarDateString(anchorDate.dateString) <=
-    getMonthAndYearFromCalendarDateString(minDate);
+    dateToYYYYMM(anchorDate.dateString) <= dateToYYYYMM(minDate);
   const disableHeaderArrowRight =
-    getMonthAndYearFromCalendarDateString(anchorDate.dateString) >=
-    getMonthAndYearFromCalendarDateString(maxDate);
+    dateToYYYYMM(anchorDate.dateString) >= dateToYYYYMM(maxDate);
+
+  useEffect(() => {
+    onViewableMonthChange &&
+      onViewableMonthChange(toDateString(anchorDate.dateString));
+  }, [anchorDate]);
+
+  const renderDay = useCallback(
+    (dayProps: DayProps) => (
+      <CalendarDay
+        key={dayProps.date}
+        date={dayProps.date}
+        state={
+          dayProps.date?.dateString &&
+          !activeDates.includes(dayProps.date?.dateString)
+            ? 'disabled'
+            : dayProps.date?.dateString === selectedDate?.dateString
+              ? 'selected'
+              : dayProps.date?.dateString === outlinedDate?.dateString
+                ? 'outlined'
+                : 'inactive'
+        }
+        onPress={dayProps.onPress}
+      />
+    ),
+    [activeDates, selectedDate],
+  );
 
   return (
     <Animated.View
@@ -57,31 +90,17 @@ export const Calendar = ({
     >
       <_Calendar
         customHeader={CalendarHeader}
-        dayComponent={dayProps => {
-          return (
-            <CalendarDay
-              {...dayProps}
-              state={
-                !activeDays.includes(
-                  DateTime.fromMillis(dayProps.date!.timestamp).weekday,
-                )
-                  ? 'disabled'
-                  : dayProps.date?.timestamp === selectedDate?.timestamp
-                    ? 'selected'
-                    : dayProps.state
-              }
-            />
-          );
-        }}
+        dayComponent={renderDay}
         disableArrowLeft={disableHeaderArrowLeft}
         disableArrowRight={disableHeaderArrowRight}
+        displayLoadingIndicator={loading}
         firstDay={1}
         initialDate={anchorDate.dateString}
-        minDate={minDate}
         //@ts-expect-error broken internal lib typings, type requires structure but code requires slug
         theme={normalizeDefaultStyles}
-        onDayLongPress={setSelectedDate}
+        minDate={minDate}
         onDayPress={setSelectedDate}
+        onMonthChange={setAnchorDate}
         onPressArrowLeft={subtractMonth}
         onPressArrowRight={addMonth}
       />

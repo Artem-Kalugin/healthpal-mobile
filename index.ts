@@ -1,6 +1,5 @@
 import { registerRootComponent } from 'expo';
 import Constants from 'expo-constants';
-import { Settings } from 'luxon';
 
 import '@formatjs/intl-locale/polyfill';
 import '@formatjs/intl-datetimeformat/polyfill';
@@ -10,13 +9,18 @@ import YaMap from 'react-native-yamap';
 
 import { setStatusBarHidden } from 'expo-status-bar';
 
-import { IS_IOS } from '#config';
+import 'dayjs/locale/ru';
+
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
 import App from './src/App';
 
+dayjs.locale('ru');
+dayjs.extend(duration);
+
 YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);
 
-Settings.defaultLocale = 'ru';
 setStatusBarHidden(true);
 
 //https://github.com/software-mansion/react-native-reanimated/issues/8307 uncomment after fixed

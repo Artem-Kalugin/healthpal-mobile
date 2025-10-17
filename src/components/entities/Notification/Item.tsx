@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
 
 import { Icon, IconNames, TextBase, TextSmall } from '#ui-kit';
 
@@ -68,7 +68,7 @@ export const NotifcationItem: React.FC<IDoctorCard> = ({ item, style }) => {
             color={colors.grayscale['500']}
             weight="400"
           >
-            {DateTime.fromISO(item.timestamp).setLocale('ru').toFormat('HH:mm')}
+            {dayjs(item.timestamp).format('HH:mm')}
           </TextSmall>
         </View>
         <TextSmall

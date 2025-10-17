@@ -7,8 +7,8 @@ const DoctorAPI = Query.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     doctorCategories: build.query<
-      Requests['doctorCategories']['response'],
-      Requests['doctorCategories']['args']
+      Requests['getDoctorCategories']['response'],
+      Requests['getDoctorCategories']['args']
     >({
       query: () => ({
         url: '/doctor-categories',
@@ -16,8 +16,8 @@ const DoctorAPI = Query.injectEndpoints({
       }),
     }),
     searchDoctors: build.infiniteQuery<
-      Requests['search']['response'],
-      Requests['search']['args'],
+      Requests['getSearch']['response'],
+      Requests['getSearch']['args'],
       number
     >({
       infiniteQueryOptions: PaginationConfig,
@@ -28,8 +28,8 @@ const DoctorAPI = Query.injectEndpoints({
       }),
     }),
     favoriteDoctors: build.infiniteQuery<
-      Requests['favorites']['response'],
-      Requests['favorites']['args'],
+      Requests['getFavorites']['response'],
+      Requests['getFavorites']['args'],
       number
     >({
       infiniteQueryOptions: PaginationConfig,
@@ -40,14 +40,65 @@ const DoctorAPI = Query.injectEndpoints({
       }),
     }),
     getDoctor: build.query<
-      Requests['doctor']['response'],
-      Requests['doctor']['args']
+      Requests['getDoctor']['response'],
+      Requests['getDoctor']['args']
     >({
       query: args => ({
         url: '/doctors/{id}',
         method: 'get',
         ...args,
       }),
+    }),
+    getDoctorSchedule: build.query<
+      Requests['getSchedule']['response'],
+      Requests['getSchedule']['args']
+    >({
+      query: args => ({
+        url: '/doctors/{doctorId}/schedule',
+        method: 'get',
+        ...args,
+      }),
+    }),
+    getDoctorTimeSlotsRange: build.query<
+      Requests['getTimeslotsRange']['response'],
+      Requests['getTimeslotsRange']['args']
+    >({
+      query: args => ({
+        url: '/doctors/{doctorId}/time-slots/range',
+        method: 'get',
+        ...args,
+      }),
+    }),
+    getDoctorTimeSlots: build.query<
+      Requests['getTimeslots']['response'],
+      Requests['getTimeslots']['args']
+    >({
+      query: args => ({
+        url: '/doctors/{doctorId}/time-slots',
+        method: 'get',
+        ...args,
+      }),
+      serializeQueryArgs: args => {
+        return args.endpointName + args.queryArgs?.path.doctorId;
+      },
+      forceRefetch(payload) {
+        return payload.currentArg !== payload.previousArg;
+      },
+      merge(currentCacheData, responseData) {
+        const newTimeSlots = new Map();
+
+        for (const dayWithTimeSlotNew of responseData) {
+          newTimeSlots.set(dayWithTimeSlotNew.date, dayWithTimeSlotNew);
+        }
+
+        for (const dayWithTimeSlotsOld of currentCacheData) {
+          if (!newTimeSlots.has(dayWithTimeSlotsOld.date)) {
+            newTimeSlots.set(dayWithTimeSlotsOld.date, dayWithTimeSlotsOld);
+          }
+        }
+
+        return Array.from(newTimeSlots.values());
+      },
     }),
   }),
 });
@@ -58,4 +109,7 @@ export const {
   useSearchDoctorsInfiniteQuery,
   useFavoriteDoctorsInfiniteQuery,
   useGetDoctorQuery,
+  useGetDoctorTimeSlotsQuery,
+  useGetDoctorTimeSlotsRangeQuery,
+  useGetDoctorScheduleQuery,
 } = DoctorAPI;

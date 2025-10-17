@@ -29,10 +29,12 @@ export const normalizeDefaultStyles = {
   },
 };
 
-export const DayTextColors: Partial<{ [x in DayState]: string }> = {
-  selected: colors.white,
-  disabled: colors.grayscale['300'],
-};
+export const DayTextColors: Partial<{ [x in DayState | 'outlined']: string }> =
+  {
+    selected: colors.white,
+    disabled: colors.grayscale['300'],
+    outlined: colors.grayscale['900'],
+  };
 
 export const CalendarMonthNames = [
   'Январь',

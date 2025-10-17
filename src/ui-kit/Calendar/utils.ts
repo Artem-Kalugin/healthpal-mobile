@@ -1,5 +1,7 @@
 import { DateData } from 'react-native-calendars';
 
+import dayjs from 'dayjs';
+
 export const timestampToCalendarDate = (timestamp: number): DateData => {
   return jsDateObjectToCalendarDate(new Date(timestamp));
 };
@@ -14,16 +16,31 @@ export const jsDateObjectToCalendarDate = (date: Date): DateData => {
 
   return {
     ...res,
-    dateString: `${res.year}-${res.month < 10 ? '0' + res.month : res.month}-${res.day < 10 ? '0' + res.day : res.day}`,
+    dateString: toDateString(date.toISOString()),
   };
 };
 
-export const getMonthAndYearFromCalendarDateString = (dateString: string) => {
-  return dateString.slice(0, 7);
+export const toDateString = (isoTime: string, resetDay = false) => {
+  const dateDayJs = dayjs(isoTime);
+
+  if (resetDay) {
+    dateDayJs.date(1);
+  }
+
+  return dateDayJs.format('YYYY-MM-DD');
 };
 
-export const changeAnchorDate = (oldMonth: DateData, changeValue: number) => {
-  const newAnchorDate = new Date(oldMonth.timestamp);
+export const dateToYYYYMM = (isoTime: string) => {
+  const dateDayJs = dayjs(isoTime);
+
+  return dateDayJs.format('YYYY-MM');
+};
+
+export const changeAnchorDate = (
+  oldMonth: Pick<DateData, 'dateString'>,
+  changeValue: number,
+) => {
+  const newAnchorDate = new Date(oldMonth.dateString);
 
   newAnchorDate.setDate(1);
   const newMonth = newAnchorDate.getMonth() + changeValue;

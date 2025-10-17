@@ -5,6 +5,8 @@ import {
   PathsDoctorsSearchGetParametersQuerySort,
 } from '#generated/schema';
 
+export const FOLDABLE_HEADER_INITIAL_HEIGHT = 150;
+
 export enum SortOptions {
   'rating' = 'Наивысший рейтинг',
   'practiceStartYear' = 'Наибольший стаж',
@@ -14,7 +16,7 @@ export enum SortOptions {
 export const SortOptionsDTO: {
   [x in SortOptions]: NonNullable<
     Pick<
-      NonNullable<NonNullable<RequestsDoctor['search']['args']>['params']>,
+      NonNullable<NonNullable<RequestsDoctor['getSearch']['args']>['params']>,
       'order' | 'sort'
     >
   >;

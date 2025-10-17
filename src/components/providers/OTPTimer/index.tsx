@@ -2,7 +2,8 @@ import React, { ReactNode, useEffect, useState } from 'react';
 
 import BackgroundTimer from 'react-native-background-timer';
 
-import { Duration } from 'luxon';
+import * as dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
 type TimerContext = {
   value: string;
@@ -29,10 +30,10 @@ export const OTPTimerProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [timer, setTimer] = useState(0);
 
-  const startTimer = (duration = OTP_TIMER_DURATION) => {
+  const startTimer = (_duration = OTP_TIMER_DURATION) => {
     BackgroundTimer.stopBackgroundTimer();
 
-    setTimer(duration);
+    setTimer(_duration);
 
     BackgroundTimer.runBackgroundTimer(() => {
       setTimer(old => old - 1);
@@ -54,7 +55,11 @@ export const OTPTimerProvider: React.FC<{ children: ReactNode }> = ({
     <OTPTimer.Provider
       value={{
         valueRaw: timer,
-        value: `${Duration.fromObject({ seconds: Math.max(timer, 0) }).toFormat('mm:ss')}`,
+        value: `${dayjs
+          .extend(duration)
+          //@ts-expect-error
+          .duration(Math.max(timer, 0), 'seconds')
+          .format('mm:ss')}`,
         start: startTimer,
         stop: stopTimer,
       }}
