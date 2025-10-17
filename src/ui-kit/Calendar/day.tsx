@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated, { FadeOut } from 'react-native-reanimated';
 
 import { colors } from '#config';
 
@@ -10,24 +10,21 @@ import { DayProps, DayTextColors } from './config';
 
 export const CalendarDay = ({
   onPress,
-  onLongPress,
   date,
   state,
-  ...rest
-}: DayProps) => {
+}: Omit<DayProps, 'state'> & { state: DayProps['state'] | 'outlined' }) => {
   return (
     <Animated.View
-      entering={FadeIn}
       exiting={FadeOut}
       style={styles.wrapper}
     >
       <TouchableOpacity
         style={[
           styles.textContainer,
+          state === 'outlined' && styles.textContainerOutlined,
           state === 'selected' && styles.textContainerActive,
         ]}
-        onLongPress={() => onLongPress && onLongPress(date)}
-        onPress={() => onPress && onPress(date)}
+        onPress={() => state !== 'disabled' && onPress && onPress(date)}
       >
         <TextXS
           color={
@@ -54,9 +51,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 8,
+  },
+  textContainerOutlined: {
+    backgroundColor: colors.grayscale['300'],
   },
   textContainerActive: {
-    borderRadius: 8,
     backgroundColor: colors.main.midnightBlue,
   },
 });

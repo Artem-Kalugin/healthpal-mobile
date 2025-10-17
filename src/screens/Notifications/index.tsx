@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 
-import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
 
 import { NotifcationItem } from '#components/entities/Notification/Item';
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
@@ -14,18 +14,18 @@ import { colors, headerShadow } from '#config';
 import { NotificationTypes } from '#config/types';
 
 export function formatNotificationDate(timestamp: string): string {
-  const date = DateTime.fromISO(timestamp);
-  const now = DateTime.now();
+  const date = dayjs(timestamp);
+  const now = dayjs();
 
-  if (date.hasSame(now, 'day')) {
+  if (date.isSame(now, 'day')) {
     return 'сегодня';
   }
 
-  if (date.hasSame(now.minus({ days: 1 }), 'day')) {
+  if (date.isSame(now.subtract(1, 'day'), 'day')) {
     return 'вчера';
   }
 
-  return date.toFormat('d LLLL');
+  return date.format('D MMMM');
 }
 
 const now = new Date();
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingHorizontal: 24,
-    borderBottomWidth: 1,
     borderBottomColor: colors.grayscale['200'],
+    borderBottomWidth: 1,
   },
   sectionFooterSpacer: {
     paddingVertical: 8,

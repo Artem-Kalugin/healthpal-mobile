@@ -10,7 +10,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 import { StackActions } from '@react-navigation/native';
-import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
 import { FormTextInput } from '#components/FormTextInput';
@@ -102,9 +102,7 @@ export const ProfileEditing: React.FC<
 
     const formValues = form.getValues();
 
-    const birthday = DateTime.fromISO(formValues.birthday)
-      .setLocale('ru')
-      .toFormat('yyyy-MM-dd');
+    const birthday = dayjs(formValues.birthday).format('YYYY-MM-DD');
 
     const res = await targetRequest({
       data: {
@@ -239,11 +237,7 @@ export const ProfileEditing: React.FC<
               pointerEvents="none"
               submitBehavior="blurAndSubmit"
               transformValue={value =>
-                value
-                  ? DateTime.fromISO(value)
-                      .setLocale('ru')
-                      .toFormat('dd LLLL yyyy')
-                  : ''
+                value ? dayjs(value).format('DD MMMM YYYY') : ''
               }
               {...getFormInputProps('birthday')}
             />

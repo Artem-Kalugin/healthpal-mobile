@@ -20,6 +20,13 @@ export const SAFE_ZONE_BOTTOM =
   (IS_IOS ? insets?.bottom : (insets?.bottom || 0) + 14) || 14;
 export const STATUS_BAR_HEIGHT = insets?.top;
 
+export const hitSlopSmall = {
+  bottom: 8,
+  left: 8,
+  right: 8,
+  top: 8,
+};
+
 export const hitSlop = {
   bottom: 16,
   left: 16,

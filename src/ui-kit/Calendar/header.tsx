@@ -3,13 +3,16 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { CalendarHeaderProps } from 'react-native-calendars/src/calendar/header';
 
-import { colors, hitSlop } from '#config';
+import { Loader } from '#ui-kit/Loader';
+
+import { colors, hitSlopSmall } from '#config';
 
 import { Icon } from '../Icon';
 import { TextSmall, TextXS } from '../Text';
 import { CalendarMonthNames } from './config';
 
 export const CalendarHeader = ({
+  displayLoadingIndicator,
   disableArrowLeft,
   disableArrowRight,
   onPressArrowLeft,
@@ -23,17 +26,20 @@ export const CalendarHeader = ({
   return (
     <View style={styles.headerWrapper}>
       <View style={styles.monthAndYearWrapper}>
-        <TextSmall
-          color={colors.main.midnightBlue}
-          weight="700"
-        >
-          {CalendarMonthNames[displayableDate.getMonth()]}{' '}
-          {displayableDate.getFullYear()}
-        </TextSmall>
+        <View style={styles.title}>
+          <TextSmall
+            color={colors.main.midnightBlue}
+            weight="700"
+          >
+            {CalendarMonthNames[displayableDate.getMonth()]}{' '}
+            {displayableDate.getFullYear()}
+          </TextSmall>
+          {displayLoadingIndicator && <Loader />}
+        </View>
         <View style={styles.monthControls}>
           <TouchableOpacity
             disabled={disableArrowLeft}
-            hitSlop={hitSlop}
+            hitSlop={hitSlopSmall}
             onPress={onPressArrowLeft}
           >
             <Icon
@@ -48,7 +54,7 @@ export const CalendarHeader = ({
           </TouchableOpacity>
           <TouchableOpacity
             disabled={disableArrowRight}
-            hitSlop={hitSlop}
+            hitSlop={hitSlopSmall}
             onPress={onPressArrowRight}
           >
             <Icon
@@ -86,7 +92,10 @@ const styles = StyleSheet.create({
   headerWrapper: {
     flex: 1,
   },
-
+  title: {
+    flexDirection: 'row',
+    gap: 16,
+  },
   monthAndYearWrapper: {
     flex: 1,
     flexDirection: 'row',

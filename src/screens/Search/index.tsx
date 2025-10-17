@@ -45,7 +45,11 @@ import {
   BEDoctorResponseDto,
 } from '#generated/__entities';
 
-import { SortOptions, SortOptionsDTO } from './config';
+import {
+  FOLDABLE_HEADER_INITIAL_HEIGHT,
+  SortOptions,
+  SortOptionsDTO,
+} from './config';
 
 const fakeAllCategory = {
   id: undefined,
@@ -80,7 +84,9 @@ export const Search: React.FC<
   const categoriesScrollRef =
     useRef<FlatList<BEDoctorCategoryResponseDto>>(null);
   const doctorsListRef = useRef<FlatList<BEDoctorResponseDto[]>>(null);
-  const [foldableContainerHeight, setFoldableContainerHeight] = useState(200);
+  const [foldableContainerHeight, setFoldableContainerHeight] = useState(
+    FOLDABLE_HEADER_INITIAL_HEIGHT,
+  );
   const foldProgress = useSharedValue(1);
   const previousScrollPositionRef = useRef(0);
   const isCategoriesInitalyScrolled = useRef(false);

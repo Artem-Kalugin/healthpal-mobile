@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { toast } from 'react-hot-toast/headless';
 
@@ -20,34 +26,12 @@ import {
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
-import { useGetDoctorQuery } from '#api/Doctor';
+import { useGetDoctorQuery, useGetDoctorScheduleQuery } from '#api/Doctor';
 
 import { colors, headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
 
-const MapDayIdToName = {
-  1: 'Пн',
-  2: 'Вт',
-  3: 'Ср',
-  4: 'Чт',
-  5: 'Пт',
-  6: 'Сб',
-  7: 'Вс',
-};
+import { MapWeekDayToName } from './config';
 
-const schedule: {
-  [x in keyof typeof MapDayIdToName]: [string, string][];
-} = {
-  1: [
-    ['10:00', '14:00'],
-    ['15:00', '18:00'],
-  ],
-  2: [['15:00', '20:00']],
-  3: [['8:00', '14:00']],
-  4: [['8:00', '16:00']],
-  5: [['18:00', '21:00']],
-  6: [],
-  7: [],
-};
 export const DoctorDetails: React.FC<
   MainScreenProps<MainRoutes.DoctorDetails>
 > = props => {
@@ -59,6 +43,12 @@ export const DoctorDetails: React.FC<
   const doctorQuery = useGetDoctorQuery({
     path: {
       id: props.route.params.id,
+    },
+  });
+
+  const doctorScheduleQuery = useGetDoctorScheduleQuery({
+    path: {
+      doctorId: props.route.params.id,
     },
   });
 
@@ -78,7 +68,18 @@ export const DoctorDetails: React.FC<
   const content = !doctorDetails ? (
     <Loader />
   ) : (
-    <ScrollView contentContainerStyle={styles.mainContainer}>
+    <ScrollView
+      contentContainerStyle={styles.mainContainer}
+      refreshControl={
+        <RefreshControl
+          refreshing={doctorQuery.isFetching || doctorScheduleQuery.isFetching}
+          onRefresh={() => {
+            doctorQuery.refetch();
+            doctorScheduleQuery.refetch();
+          }}
+        />
+      }
+    >
       <DoctorDetailsCard
         item={doctorDetails}
         style={styles.doctorCard}
@@ -136,79 +137,82 @@ export const DoctorDetails: React.FC<
         </Text>
       </View>
 
-      <View style={styles.schedule}>
-        <TextXL
-          color={colors.grayscale['800']}
-          weight="700"
-        >
-          Расписание
-        </TextXL>
-        {Object.keys(schedule).map(dayId => (
-          <View
-            key={dayId}
-            style={styles.scheduleDay}
-          >
-            <Text style={styles.scheduleDayTitle}>
-              {
-                //@ts-expect-error TODO: fix after BE
-                MapDayIdToName[dayId]
-              }
-            </Text>
+      {doctorScheduleQuery?.data ? (
+        <>
+          <View style={styles.scheduleContainer}>
+            <TextXL
+              color={colors.grayscale['800']}
+              weight="700"
+            >
+              Расписание
+            </TextXL>
+            <View style={styles.scheduleDays}>
+              {Object.keys(doctorScheduleQuery.data).map(
+                //@ts-expect-error
+                (dayId: keyof typeof MapWeekDayToName) => (
+                  <View
+                    key={dayId}
+                    style={styles.scheduleDay}
+                  >
+                    <Text style={styles.scheduleDayTitle}>
+                      {MapWeekDayToName[dayId]}
+                    </Text>
 
-            <View style={styles.scheduleRows}>
-              {
-                //@ts-expect-error TODO: fix after BE
-                schedule[dayId].length ? (
-                  //@ts-expect-error TODO: fix after BE
-                  schedule[dayId]?.map(el => (
-                    <View
-                      key={el[0]}
-                      style={styles.scheduleRow}
-                    >
-                      <Text>
-                        {el[0]}
-                        {'\t'} —
-                      </Text>
-                      <Text>
-                        {'\t'}
-                        {el[1]}
-                      </Text>
+                    <View style={styles.scheduleRows}>
+                      {doctorScheduleQuery.data![dayId].length ? (
+                        doctorScheduleQuery.data![dayId]?.map(el => (
+                          <View
+                            key={`${el.start}${el.end}`}
+                            style={styles.scheduleRow}
+                          >
+                            <Text style={styles.scheduleCol}>{el.start}</Text>
+                            <Text>—</Text>
+                            <Text
+                              style={styles.scheduleCol}
+                              textAlign="right"
+                            >
+                              {el.end}
+                            </Text>
+                          </View>
+                        ))
+                      ) : (
+                        <Text>Выходной</Text>
+                      )}
                     </View>
-                  ))
-                ) : (
-                  <Text>Выходной</Text>
-                )
-              }
+                  </View>
+                ),
+              )}
             </View>
           </View>
-        ))}
-      </View>
-
-      <View style={styles.reviews}>
-        <View style={styles.sectionHeader}>
-          <TextXL
-            color={colors.grayscale['800']}
-            weight="700"
-          >
-            Отзывы
-          </TextXL>
-          <TouchableOpacity
-            onPress={() => {
-              toast(
-                'Этого экрана не было в дизайне :( но вы можете посмотреть остальную часть приложения :)',
-              );
-            }}
-          >
-            <TextSmall
-              color={colors.grayscale['500']}
-              weight="500"
-            >
-              Все
-            </TextSmall>
-          </TouchableOpacity>
-        </View>
-        <ReviewItem />
-      </View>
+          <View style={styles.reviews}>
+            <View style={styles.sectionHeader}>
+              <TextXL
+                color={colors.grayscale['800']}
+                weight="700"
+              >
+                Отзывы
+              </TextXL>
+              <TouchableOpacity
+                onPress={() => {
+                  toast(
+                    'Этого экрана не было в дизайне :( но вы можете посмотреть остальную часть приложения :)',
+                  );
+                }}
+              >
+                <TextSmall
+                  color={colors.grayscale['500']}
+                  weight="500"
+                >
+                  Все
+                </TextSmall>
+              </TouchableOpacity>
+            </View>
+            <ReviewItem />
+          </View>
+        </>
+      ) : (
+        <Loader />
+      )}
 
       <ListExtender />
     </ScrollView>
@@ -233,7 +237,9 @@ export const DoctorDetails: React.FC<
         <Button
           disabled={!doctorDetails}
           onPress={() =>
-            props.navigation.navigate(MainRoutes.ScheduleAppointment)
+            props.navigation.navigate(MainRoutes.ScheduleAppointment, {
+              doctorId: props.route.params.id,
+            })
           }
         >
           Записаться на приём
@@ -267,7 +273,10 @@ const styles = StyleSheet.create({
   description: {
     gap: 8,
   },
-  schedule: {
+  scheduleContainer: {
+    gap: 12,
+  },
+  scheduleDays: {
     gap: 8,
   },
   reviews: {
@@ -282,10 +291,13 @@ const styles = StyleSheet.create({
   },
   scheduleRows: {
     flexDirection: 'column',
+    gap: 0,
   },
   scheduleRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+  },
+  scheduleCol: {
+    width: '30%',
   },
   footer: {
     flexShrink: 0,
