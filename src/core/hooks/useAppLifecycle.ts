@@ -10,7 +10,7 @@ import { usePrefetchApp } from './usePrefetchApp';
 const useAppLifecycle = () => {
   const [inited, setInited] = useState(false);
   const dispatch = useDispatch();
-  const prefetchApp = usePrefetchApp();
+  const { prefetchApp } = usePrefetchApp();
 
   const onAppStart = async () => {
     const credentials = await Keychain.getGenericPassword();

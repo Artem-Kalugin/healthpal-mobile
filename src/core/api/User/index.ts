@@ -54,3 +54,5 @@ export const {
   useGetCurrentQuery: useGetCurrentUserQuery,
   useUpdateCurrentMutation: useUpdateCurrentMutation,
 } = UserAPI;
+
+export default UserAPI;
