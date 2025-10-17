@@ -27,7 +27,10 @@ export type MainParamList = {
     availableCategories: BEDoctorCategoryResponseDto[];
   };
   [MainRoutes.DoctorDetails]: { defaultItem?: BEDoctorResponseDto; id: string };
-  [MainRoutes.ScheduleAppointment]: { doctorId: string };
+  [MainRoutes.ScheduleAppointment]: {
+    doctorId: string;
+    appointmentToResheduleId?: string;
+  };
   [MainRoutes.Notifications]: undefined;
   [MainRoutes.Favorites]: NavigatorScreenParams<FavoritesParamList>;
   [MainRoutes.Tab]: NavigatorScreenParams<TabParamList>;

@@ -13,8 +13,6 @@ import FocusAwareStatusBar from '#components/FocusAwareStatusBar';
 import { OTPTimerProvider } from '#components/providers/OTPTimer';
 import ToastProvider from '#components/providers/Toaster';
 
-import { delay } from '#utils';
-
 import { persistor, store } from '#store';
 
 import AppMiddleware from './AppMiddleware';
@@ -35,10 +33,7 @@ export default function App() {
                       background: 'transparent',
                     },
                   }}
-                  onReady={async () => {
-                    await delay(200);
-                    await BootSplash.hide({ fade: true });
-                  }}
+                  onReady={() => BootSplash.hide({ fade: true })}
                 >
                   <FocusAwareStatusBar barStyle="dark-content" />
                   <AppMiddleware />

@@ -324,7 +324,6 @@ export const Search: React.FC<
               }}
             />
           }
-          maxToRenderPerBatch={5}
           progressViewOffset={headerHeight + 8}
           refreshing={isRefreshing}
           renderItem={({ item }) => (
@@ -341,8 +340,6 @@ export const Search: React.FC<
             </View>
           )}
           style={styles.cardsList}
-          updateCellsBatchingPeriod={100}
-          windowSize={10}
           keyExtractor={item => item.id}
           onEndReached={() =>
             !searchQuery.isFetching &&

@@ -1,15 +1,15 @@
+import YaMap from 'react-native-yamap';
+
 import { registerRootComponent } from 'expo';
 import Constants from 'expo-constants';
+import { setStatusBarHidden } from 'expo-status-bar';
 
 import '@formatjs/intl-locale/polyfill';
 import '@formatjs/intl-datetimeformat/polyfill';
 import '@formatjs/intl-datetimeformat/locale-data/ru';
-
-import YaMap from 'react-native-yamap';
-
-import { setStatusBarHidden } from 'expo-status-bar';
-
 import 'dayjs/locale/ru';
+
+import { enableFreeze } from 'react-native-screens';
 
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
@@ -20,11 +20,9 @@ dayjs.locale('ru');
 dayjs.extend(duration);
 
 YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);
-
 setStatusBarHidden(true);
 
-//https://github.com/software-mansion/react-native-reanimated/issues/8307 uncomment after fixed
-// enableFreeze(true);
+enableFreeze(true);
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,

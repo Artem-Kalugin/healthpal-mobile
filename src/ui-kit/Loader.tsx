@@ -27,8 +27,8 @@ export const Loader: React.FC<Partial<ILoader>> = ({
   const defaultColor = !inverted
     ? IS_IOS
       ? ACTIVITY_INDICATOR_IOS_DEFAULT_COLOR
-      : colors.primary.normal
-    : colors.primary.normal;
+      : colors.black
+    : colors.black;
 
   return (
     <ActivityIndicator

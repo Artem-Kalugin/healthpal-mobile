@@ -5,6 +5,7 @@ import { DateData } from 'react-native-calendars';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 
 import dayjs from 'dayjs';
+import { toast } from 'react-hot-toast/headless';
 
 import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
 import ListExtender from '#components/ListExtender';
@@ -12,14 +13,24 @@ import ListExtender from '#components/ListExtender';
 import { Button, Calendar, Loader, TextSmall, TextXL } from '#ui-kit';
 import { toDateString } from '#ui-kit/Calendar/utils';
 
+import { AppointmentsRoutes } from '#navigation/Main/Tab/Appointments/types';
+import { TabRoutes } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
 import {
+  useCreateAppointmentMutation,
+  useRescheduleAppointmentMutation,
+} from '#api/Appointments';
+import DoctorAPI, {
   useGetDoctorTimeSlotsQuery,
   useGetDoctorTimeSlotsRangeQuery,
 } from '#api/Doctor';
 
 import { colors, headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
+
+import useBEErrorHandler from '#hooks/useErrorHandler';
+
+import { useDispatch } from '#store';
 
 import { BETimeSlotDto } from '#generated/__entities';
 
@@ -28,11 +39,17 @@ const MAX_OVERLAP_DAYS_IN_UI = 6;
 export const ScheduleAppointment: React.FC<
   MainScreenProps<MainRoutes.ScheduleAppointment>
 > = props => {
+  const isReschedule = !!props.route.params.appointmentToResheduleId;
+  const dispatch = useDispatch();
   const availableTimeSlotsRangeQuery = useGetDoctorTimeSlotsRangeQuery({
     path: {
       doctorId: props.route.params.doctorId,
     },
   });
+
+  const [bookAppointment, bookAppointmentMeta] = useCreateAppointmentMutation();
+  const [rescheduleAppointment, rescheduleAppointmentMeta] =
+    useRescheduleAppointmentMutation();
 
   const [anchorDate, setAnchorDate] = useState('');
 
@@ -69,16 +86,57 @@ export const ScheduleAppointment: React.FC<
     Pick<DateData, 'dateString'> | undefined
   >();
 
-  useEffect(() => {
-    if (availableTimeSlotsQuery.data?.[0].date) {
-      setSelectedDate({ dateString: availableTimeSlotsQuery.data[0].date });
-      setTimeSlotActive(availableTimeSlotsQuery.data[0].slots[0]);
-    }
-  }, [availableTimeSlotsQuery.data && !selectedDate]);
+  const onBookAppointment = async () => {
+    try {
+      const dateSent = { ...selectedDate };
+      const timeSlotSent = { ...timeSlotActive };
 
-  useEffect(() => {
-    setOutlinedDate(selectedDate);
-  }, [timeSlotActive]);
+      if (!isReschedule) {
+        await bookAppointment({
+          data: {
+            doctorId: props.route.params.doctorId,
+            timeSlotId: timeSlotSent.id,
+          },
+        }).unwrap();
+        toast(
+          `Вы успешно записались на прием ${dayjs(dateSent.dateString).format('DD MMMM')} в ${timeSlotActive?.startTime.slice(0, 5)}`,
+        );
+      }
+
+      if (isReschedule) {
+        await rescheduleAppointment({
+          path: {
+            id: props.route.params.appointmentToResheduleId!,
+          },
+          data: {
+            newTimeSlotId: timeSlotSent.id!,
+          },
+        }).unwrap();
+        toast(
+          `Вы перенесли запись на ${dayjs(dateSent.dateString).format('DD MMMM')}, ${timeSlotActive?.startTime.slice(0, 5)}`,
+        );
+      }
+
+      props.navigation.navigate(MainRoutes.Tab, {
+        screen: TabRoutes.Appointments,
+        params: {
+          screen: AppointmentsRoutes.FutureAppointments,
+        },
+      });
+      dispatch(
+        DoctorAPI.util.updateQueryData(
+          'getDoctorTimeSlots',
+          {
+            path: { doctorId: props.route.params.doctorId },
+          },
+          () => [],
+        ),
+      );
+    } catch {
+      availableTimeSlotsQuery.refetch();
+      setSelectedDate(undefined);
+    }
+  };
 
   useEffect(() => {
     if (availableTimeSlotsRangeQuery.data) {
@@ -86,7 +144,18 @@ export const ScheduleAppointment: React.FC<
         toDateString(availableTimeSlotsRangeQuery.data.minDate, true),
       );
     }
-  }, [availableTimeSlotsRangeQuery]);
+  }, [availableTimeSlotsRangeQuery.fulfilledTimeStamp]);
+
+  useEffect(() => {
+    if (availableTimeSlotsQuery.data?.[0]?.date && !selectedDate) {
+      setSelectedDate({ dateString: availableTimeSlotsQuery.data[0].date });
+      setTimeSlotActive(availableTimeSlotsQuery.data[0].slots[0]);
+    }
+  }, [availableTimeSlotsQuery.fulfilledTimeStamp]);
+
+  useEffect(() => {
+    setOutlinedDate(selectedDate);
+  }, [timeSlotActive]);
 
   useEffect(() => {
     if (timeSlotActive && availableTimeSlotsQuery.data) {
@@ -98,11 +167,14 @@ export const ScheduleAppointment: React.FC<
         setTimeSlotActive(undefined);
       }
     }
-  }, [availableTimeSlotsQuery.data]);
+  }, [availableTimeSlotsQuery.fulfilledTimeStamp]);
+
+  useBEErrorHandler(bookAppointmentMeta);
+  useBEErrorHandler(rescheduleAppointmentMeta);
 
   const content =
     !selectedDate || !anchorDate ? (
-      <Loader />
+      <Loader size="large" />
     ) : (
       <ScrollView
         contentContainerStyle={styles.mainContainer}
@@ -172,6 +244,7 @@ export const ScheduleAppointment: React.FC<
             </Button>
           )}
           scrollEnabled={false}
+          keyExtractor={item => item.id}
         />
         <ListExtender />
       </ScrollView>
@@ -181,7 +254,7 @@ export const ScheduleAppointment: React.FC<
     <View style={styles.container}>
       <HeaderWithThreeSections
         containerStyle={[styles.headerContainer, headerShadow]}
-        title="Запланировать прием"
+        title={isReschedule ? 'Перенести запись' : 'Запланировать прием'}
         titleTextAlign="center"
       />
       {content}
@@ -191,8 +264,12 @@ export const ScheduleAppointment: React.FC<
             !timeSlotActive ||
             outlinedDate?.dateString !== selectedDate?.dateString
           }
+          isLoading={
+            bookAppointmentMeta.isLoading || rescheduleAppointmentMeta.isLoading
+          }
+          onPress={onBookAppointment}
         >
-          Записаться на приём
+          {isReschedule ? 'Перенести' : 'Записаться на приём'}
         </Button>
       </View>
     </View>

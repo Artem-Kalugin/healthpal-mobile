@@ -1,5 +1,5 @@
 import { Query } from '#api';
-import { PaginationConfig } from '#api/config';
+import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
 
 import { RequestsMedicalCenters as Requests } from './types';
 
@@ -25,7 +25,7 @@ const MedicalCentersAPI = Query.injectEndpoints({
     >({
       infiniteQueryOptions: PaginationConfig,
       query: ({ pageParam, queryArg }) => ({
-        url: `/medical-centers/favorites?page=${pageParam}&size=${10}`,
+        url: `/medical-centers/favorites?page=${pageParam}&size=${API_PAGINATION_PAGE_SIZE}`,
         method: 'get',
         ...queryArg,
       }),
@@ -38,3 +38,5 @@ export const {
   useFavoriteMedicalCentersInfiniteQuery,
   useLazyMedicalCentersQuery,
 } = MedicalCentersAPI;
+
+export default MedicalCentersAPI;

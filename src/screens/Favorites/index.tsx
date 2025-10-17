@@ -64,10 +64,8 @@ export const Favorites: React.FC<
     []) as unknown as (BEDoctorResponseDto | BEMedicalCenterResponseDto)[];
 
   useEffect(() => {
-    setIsRefreshing(
-      favoritesQuery.isFetching && !favoritesQuery.isFetchingNextPage,
-    );
-  }, [favoritesQuery.isFetching, favoritesQuery.isFetchingNextPage]);
+    setIsRefreshing(false);
+  }, [favoritesQuery.fulfilledTimeStamp]);
 
   return (
     <FlatList
@@ -127,7 +125,10 @@ export const Favorites: React.FC<
         favoritesQuery.fetchNextPage()
       }
       onEndReachedThreshold={1}
-      onRefresh={favoritesQuery.refetch}
+      onRefresh={() => {
+        favoritesQuery.refetch();
+        setIsRefreshing(true);
+      }}
     />
   );
 };

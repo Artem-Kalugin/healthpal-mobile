@@ -3,27 +3,47 @@ import {
   StyleProp,
   StyleSheet,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 
-import { Image } from 'expo-image';
+import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
 
-import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
+import { Divider, TextSmall } from '#ui-kit';
 
-import { colors, Images, shadow } from '#config';
+import { MainRoutes } from '#navigation/Main/types';
+import { AppRoutes } from '#navigation/types';
+
+import { colors, shadow } from '#config';
+
+import { BEAppointmentResponseDto } from '#generated/__entities';
+
+import { DoctorItem } from '../Doctor/Item';
 
 type IAppointmentCard = {
+  item: BEAppointmentResponseDto;
   onPress?: () => void;
-  Footer: ReactNode;
-  style: StyleProp<ViewStyle>;
+  Footer?: ReactNode;
+  style?: StyleProp<ViewStyle>;
 };
 
-export const AppointmentCard: React.FC<Partial<IAppointmentCard>> = ({
+export const AppointmentCard: React.FC<IAppointmentCard> = ({
+  item,
   onPress = undefined,
   Footer,
   style,
 }) => {
+  const navigation = useNavigation();
+
+  const onDoctorItemPress = () => {
+    navigation.navigate(AppRoutes.StackMain, {
+      screen: MainRoutes.DoctorDetails,
+      params: {
+        id: item.doctor.id,
+        defaultItem: item.doctor,
+      },
+    });
+  };
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -34,34 +54,14 @@ export const AppointmentCard: React.FC<Partial<IAppointmentCard>> = ({
         color={colors.grayscale['800']}
         weight="700"
       >
-        May 22, 2023 - 10.00 AM
+        {dayjs(item.date).format('DD MMMM')}, {item.startTime.slice(0, 5)} -{' '}
+        {item.endTime.slice(0, 5)}
       </TextSmall>
       <Divider />
-      <View style={styles.main}>
-        <Image
-          source={Images.clinic}
-          style={styles.image}
-        />
-        <View style={styles.content}>
-          <TextBase
-            color={colors.grayscale['800']}
-            numberOfLines={1}
-            weight="700"
-          >
-            Врач Иванов Борис В.
-          </TextBase>
-          <TextSmall weight="600">Кардиолог</TextSmall>
-          <View style={styles.locationContainer}>
-            <Icon
-              name="map"
-              size={14}
-            />
-            <TextXS color={colors.grayscale['600']}>
-              Медицинский центр ЛОДЭ
-            </TextXS>
-          </View>
-        </View>
-      </View>
+      <DoctorItem
+        item={item.doctor}
+        onPress={onDoctorItemPress}
+      />
       {!!Footer && <Divider />}
       {Footer}
     </TouchableOpacity>
@@ -75,24 +75,5 @@ const styles = StyleSheet.create({
     gap: 12,
     borderRadius: 12,
     backgroundColor: colors.main.white,
-  },
-  main: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  image: {
-    width: 110,
-    aspectRatio: 1,
-    borderRadius: 12,
-  },
-  content: {
-    flex: 1,
-    gap: 8,
-  },
-  locationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
   },
 });

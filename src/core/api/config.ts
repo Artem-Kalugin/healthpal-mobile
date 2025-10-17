@@ -13,3 +13,5 @@ export const PaginationConfig = {
     return lastPageParam + 1;
   },
 };
+
+export const API_PAGINATION_PAGE_SIZE = 20;
