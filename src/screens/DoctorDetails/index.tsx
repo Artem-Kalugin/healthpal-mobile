@@ -66,7 +66,7 @@ export const DoctorDetails: React.FC<
       : false;
 
   const content = !doctorDetails ? (
-    <Loader />
+    <Loader size="large" />
   ) : (
     <ScrollView
       contentContainerStyle={styles.mainContainer}
@@ -211,7 +211,7 @@ export const DoctorDetails: React.FC<
           </View>
         </>
       ) : (
-        <Loader />
+        <Loader size="large" />
       )}
 
       <ListExtender />

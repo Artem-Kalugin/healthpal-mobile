@@ -8,7 +8,7 @@ import { colors } from '#config';
 import { TextXS } from '../Text';
 import { DayProps, DayTextColors } from './config';
 
-export const CalendarDay = ({
+export const _CalendarDay = ({
   onPress,
   date,
   state,
@@ -60,3 +60,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main.midnightBlue,
   },
 });
+
+export const CalendarDay = React.memo(_CalendarDay);

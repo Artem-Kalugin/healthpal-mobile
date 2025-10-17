@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Animated, {
+  cancelAnimation,
   Easing,
   FadeIn,
   FadeInDown,
@@ -38,7 +39,10 @@ export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
   useEffect(() => {
     onInit();
 
-    return () => setStatusBarHidden(false);
+    return () => {
+      cancelAnimation(animationProgress);
+      setStatusBarHidden(false);
+    };
   }, []);
 
   const startAnimation = () => {
@@ -108,6 +112,7 @@ export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
               <Loader
                 color={!IS_IOS ? colors.white : undefined}
                 cover={false}
+                size={!IS_IOS ? 'large' : undefined}
               />
             </Animated.View>
           )}

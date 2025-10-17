@@ -48,7 +48,7 @@ export const SignIn: React.FC<
   const passwordInputRef = useRef<TextInput>(null);
 
   const { form, getFormInputProps } = useAppForm(LoginDto, {
-    phone: '78888888888',
+    phone: '+7 (888) 888-88-88',
     password: '123123aa',
   });
 

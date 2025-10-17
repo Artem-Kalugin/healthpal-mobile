@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
@@ -10,6 +10,7 @@ interface IEmptyListWarning {
   cover: boolean;
   title: string;
   subtitle: string;
+  footer: ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -18,6 +19,7 @@ export const EmptyListWarning = ({
   cover = false,
   subtitle = 'Empty list warning subtitle ',
   title = 'List Subtitle',
+  footer,
   style,
 }: Partial<IEmptyListWarning>) => {
   if (!enabled) {
@@ -42,6 +44,7 @@ export const EmptyListWarning = ({
       >
         {subtitle}
       </TextSmall>
+      {footer}
     </KeyboardAvoidingView>
   );
 };

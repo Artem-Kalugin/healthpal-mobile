@@ -1,5 +1,5 @@
 import { Query } from '#api';
-import { PaginationConfig } from '#api/config';
+import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
 
 import { RequestsDoctor as Requests } from './types';
 
@@ -22,7 +22,7 @@ const DoctorAPI = Query.injectEndpoints({
     >({
       infiniteQueryOptions: PaginationConfig,
       query: ({ pageParam, queryArg }) => ({
-        url: `/doctors/search?page=${pageParam}&size=${10}`,
+        url: `/doctors/search?page=${pageParam}&size=${API_PAGINATION_PAGE_SIZE}`,
         method: 'get',
         ...queryArg,
       }),
@@ -34,7 +34,7 @@ const DoctorAPI = Query.injectEndpoints({
     >({
       infiniteQueryOptions: PaginationConfig,
       query: ({ pageParam, queryArg }) => ({
-        url: `/doctors/favorites?page=${pageParam}&size=${10}`,
+        url: `/doctors/favorites?page=${pageParam}&size=${API_PAGINATION_PAGE_SIZE}`,
         method: 'get',
         ...queryArg,
       }),
@@ -71,7 +71,7 @@ const DoctorAPI = Query.injectEndpoints({
     }),
     getDoctorTimeSlots: build.query<
       Requests['getTimeslots']['response'],
-      Requests['getTimeslots']['args']
+      NonNullable<Requests['getTimeslots']['args']>
     >({
       query: args => ({
         url: '/doctors/{doctorId}/time-slots',
@@ -84,15 +84,22 @@ const DoctorAPI = Query.injectEndpoints({
       forceRefetch(payload) {
         return payload.currentArg !== payload.previousArg;
       },
-      merge(currentCacheData, responseData) {
+      merge(currentCacheData, responseData, args) {
         const newTimeSlots = new Map();
 
         for (const dayWithTimeSlotNew of responseData) {
           newTimeSlots.set(dayWithTimeSlotNew.date, dayWithTimeSlotNew);
         }
 
+        const startDateParam = args.arg?.params?.startDate.slice(0, 10) || '';
+        const endDateParam = args.arg?.params?.endDate.slice(0, 10) || '';
+
         for (const dayWithTimeSlotsOld of currentCacheData) {
-          if (!newTimeSlots.has(dayWithTimeSlotsOld.date)) {
+          if (
+            !newTimeSlots.has(dayWithTimeSlotsOld.date) &&
+            (dayWithTimeSlotsOld.date < startDateParam ||
+              dayWithTimeSlotsOld.date > endDateParam)
+          ) {
             newTimeSlots.set(dayWithTimeSlotsOld.date, dayWithTimeSlotsOld);
           }
         }
@@ -113,3 +120,5 @@ export const {
   useGetDoctorTimeSlotsRangeQuery,
   useGetDoctorScheduleQuery,
 } = DoctorAPI;
+
+export default DoctorAPI;

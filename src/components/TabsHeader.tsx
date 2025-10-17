@@ -18,7 +18,7 @@ import Animated, {
 
 import { TextBase } from '#ui-kit';
 
-import { BORDER_RADIUS_ROUNDED, colors, hitSlop } from '#config';
+import { BORDER_RADIUS_ROUNDED, colors, hitSlop, SCREEN_WIDTH } from '#config';
 
 export interface IHeaderTabs<T extends unknown> {
   data: T[];
@@ -49,7 +49,7 @@ export const HeaderTabs = <T extends unknown>({
   style,
 }: IHeaderTabs<T>) => {
   const translateX = useSharedValue(0);
-  const width = useSharedValue(0);
+  const width = useSharedValue(SCREEN_WIDTH / data.length / 1.5);
 
   const activeItemIndex = useSharedValue(
     activeItem

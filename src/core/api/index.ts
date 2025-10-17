@@ -5,12 +5,12 @@ import debounce from 'lodash/debounce';
 import { toast } from 'react-hot-toast/headless';
 import { REHYDRATE } from 'redux-persist';
 
-import { delay } from '#utils';
 import Debug from '#utils/debug';
 
 import { RootState } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
 
+import { TagsAppointmentAPI } from './Appointments/types';
 import { BEError, FetchArgs } from './types';
 import { TagsUserAPI } from './User/types';
 
@@ -72,8 +72,6 @@ const fetchBaseQuery = async (
         }
       });
     }
-
-    await delay(2000);
 
     Debug.requestStart(`${method.toUpperCase()} ${urlObj.toString()}`);
 
@@ -144,7 +142,9 @@ const baseQuery = retry(
       result.error &&
       typeof result.error === 'object' &&
       'status' in result.error &&
-      [422, 403, 401, 409, 404, 500].includes(result.error?.status as number)
+      [422, 403, 401, 409, 404, 500, 400].includes(
+        result.error?.status as number,
+      )
     ) {
       retry.fail(result.error);
     }
@@ -164,7 +164,10 @@ const Query = createApi({
       return action?.payload?.[reducerPath];
     }
   },
-  tagTypes: [...Object.values(TagsUserAPI)],
+  tagTypes: [
+    ...Object.values(TagsUserAPI),
+    ...Object.values(TagsAppointmentAPI),
+  ],
   keepUnusedDataFor: 600,
 });
 
