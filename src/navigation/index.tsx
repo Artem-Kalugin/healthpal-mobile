@@ -27,7 +27,9 @@ const AppStack = () => {
           ? runtimeState.token.registrationComplete
             ? AppRoutes.StackMain
             : AppRoutes.ProfileEditing
-          : AppRoutes.StackAuth
+          : appState.shouldShowOnboarding
+            ? AppRoutes.Onboarding
+            : AppRoutes.StackAuth
       }
       screenOptions={{
         ...DEFAULT_STACK_OPTIONS,

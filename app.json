@@ -9,13 +9,22 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.healthpal"
+      "bundleIdentifier": "com.healthpal",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Приложению $(PRODUCT_NAME) необходим доступ к геолокации для отображения карты и ближайших медицинских центров",
+        "NSCameraUsageDescription": "Приложению $(PRODUCT_NAME) нужен доступ к камере для изменения фотографии профиля",
+        "NSPhotoLibraryUsageDescription": "Приложению $(PRODUCT_NAME) нужен доступ к фотографиям для изменения фотографии профиля"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#352261"
       },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.healthpal"
@@ -26,19 +35,22 @@
     "plugins": [
       ["react-native-bootsplash", { "assetsDir": "assets/bootsplash" }],
       [
+        "react-native-permissions",
+        {
+          "iosPermissions": [
+            "Camera",
+            "PhotoLibrary",
+            "LocationWhenInUse"
+          ]
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {
             "minSdkVersion": 26,
             "usesCleartextTraffic": true
           }
-        }
-      ],
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "Приложению $(PRODUCT_NAME) нужен доступ к фотографиям для изменения фотографии профиля",
-          "cameraPermission": "Приложению $(PRODUCT_NAME) нужен доступ к камере для изменения фотографии профиля"
         }
       ],
       [

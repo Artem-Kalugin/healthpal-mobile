@@ -33,8 +33,7 @@ import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
-
-import { delay } from '#utils';
+import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
@@ -49,6 +48,8 @@ export const PasswordRecoverySetPassword: React.FC<
   const confirmPasswordInputRef = useRef<TextInput>(null);
 
   const dispatch = useDispatch();
+
+  const { prefetchApp, isPrefetching } = usePrefetchApp();
 
   const [enableSecurePassword, setEnableSecurePassword] = useState(true);
   const [enableSecureConfirmPassword, setEnableSecureConfirmPassword] =
@@ -76,7 +77,7 @@ export const PasswordRecoverySetPassword: React.FC<
 
     toast('Пароль был успешно изменен');
 
-    await delay(0);
+    await prefetchApp();
 
     if (res.user.registrationComplete) {
       props.navigation.replace(AppRoutes.StackMain, {
@@ -172,7 +173,12 @@ export const PasswordRecoverySetPassword: React.FC<
                   {...getFormInputProps('confirmPassword')}
                 />
               </View>
-              <Button onPress={submitForm}>Сменить пароль</Button>
+              <Button
+                isLoading={resetPasswordMetadata.isLoading || isPrefetching}
+                onPress={submitForm}
+              >
+                Сменить пароль
+              </Button>
             </View>
           </View>
         </View>

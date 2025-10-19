@@ -38,8 +38,7 @@ import { MapGenderToLabel } from '#config/locale';
 
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
-
-import { delay } from '#utils';
+import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
 import { useDispatch, useSelector } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
@@ -54,6 +53,8 @@ export const ProfileEditing: React.FC<
 > = props => {
   const surnameInputRef = useRef<_TextInput>(null);
   const nicknameInputRef = useRef<_TextInput>(null);
+
+  const { prefetchApp, isPrefetching } = usePrefetchApp();
 
   const dispatch = useDispatch();
 
@@ -118,8 +119,7 @@ export const ProfileEditing: React.FC<
     if ('accessToken' in res) {
       dispatch(RuntimeActions.setToken(res.accessToken));
 
-      //todo prefetch
-      await delay(0);
+      await prefetchApp();
 
       //@ts-expect-error
       props.navigation.replace(AppRoutes.StackMain);
@@ -282,7 +282,10 @@ export const ProfileEditing: React.FC<
           </TouchableOpacity>
         </View>
         <View style={styles.footer}>
-          <Button onPress={submitForm}>
+          <Button
+            isLoading={targetMetadata.isLoading || isPrefetching}
+            onPress={submitForm}
+          >
             {token?.registrationComplete ? 'Обновить' : 'Войти'}
           </Button>
         </View>

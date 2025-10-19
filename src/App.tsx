@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
-import BootSplash from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider as KeyboardController } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -18,6 +18,8 @@ import { persistor, store } from '#store';
 import AppMiddleware from './AppMiddleware';
 
 export default function App() {
+  const [navigationReady, setNavigationReady] = useState(false);
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -33,10 +35,10 @@ export default function App() {
                       background: 'transparent',
                     },
                   }}
-                  onReady={() => BootSplash.hide({ fade: true })}
+                  onReady={async () => setNavigationReady(true)}
                 >
                   <FocusAwareStatusBar barStyle="dark-content" />
-                  <AppMiddleware />
+                  <AppMiddleware navigationReady={navigationReady} />
                   <ToastProvider />
                 </NavigationContainer>
               </GestureHandlerRootView>
