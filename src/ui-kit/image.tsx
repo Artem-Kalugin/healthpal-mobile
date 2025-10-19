@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 
 import { Image as ExpoImage } from 'expo-image';
 
@@ -25,9 +25,12 @@ type ImageWithPossibleApiSource = (
   | ImageWithSourceFromApi
   | ImageWithUnknownSource
 ) &
-  ExpoImageProps;
+  ExpoImageProps & {
+    imageRef?: RefObject<ExpoImage | null>;
+  };
 
 export const Image: React.FC<ImageWithPossibleApiSource> = ({
+  imageRef,
   source,
   placeholder,
   forceSourceFromApi,
@@ -41,6 +44,7 @@ export const Image: React.FC<ImageWithPossibleApiSource> = ({
 
   return (
     <ExpoImage
+      ref={imageRef}
       placeholder={
         isApiImage ? { thumbhash: (source as ApiImage).thumbhash } : placeholder
       }

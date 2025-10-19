@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
 
-import { RefreshControl } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompositeScreenProps } from '@react-navigation/native';
@@ -34,6 +34,7 @@ import {
   BORDER_RADIUS_ROUNDED,
   colors,
   shadow,
+  STATUS_BAR_HEIGHT,
 } from '#config';
 
 import { slides } from './config';
@@ -81,163 +82,165 @@ export const Home: React.FC<
     : undefined;
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={doctorCategories.isLoading || medicalCenters.isLoading}
-            onRefresh={() => {
-              doctorCategories.refetch();
-              medicalCenters.refetch();
-            }}
-          />
-        }
-        style={styles.container}
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          progressViewOffset={STATUS_BAR_HEIGHT}
+          refreshing={doctorCategories.isLoading || medicalCenters.isLoading}
+          onRefresh={() => {
+            doctorCategories.refetch();
+            medicalCenters.refetch();
+          }}
+        />
+      }
+      style={styles.container}
+    >
+      <SafeAreaView
+        edges={['top']}
+        style={styles.header}
       >
-        <SafeAreaView
-          edges={['top']}
-          style={styles.header}
-        >
-          <View style={styles.locationAndNotificationsWrapper}>
-            <View style={styles.locationContainer}>
-              <TextSmall color={colors.grayscale['500']}>Город</TextSmall>
-              <TouchableOpacity style={styles.locationSelector}>
-                <Icon name="mapActive" />
-                <TextSmall weight="600">Москва</TextSmall>
-                <Icon name="chevronDown" />
-              </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity style={styles.notificationsContainer}>
-              <Icon name="notification"></Icon>
+        <View style={styles.locationAndNotificationsWrapper}>
+          <View style={styles.locationContainer}>
+            <TextSmall color={colors.grayscale['500']}>Город</TextSmall>
+            <TouchableOpacity style={styles.locationSelector}>
+              <Icon name="mapActive" />
+              <TextSmall weight="600">Москва</TextSmall>
+              <Icon name="chevronDown" />
             </TouchableOpacity>
           </View>
 
+          <TouchableOpacity style={styles.notificationsContainer}>
+            <Icon name="notification"></Icon>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          onPress={() =>
+            props.navigation.navigate(MainRoutes.Search, {
+              availableCategories: doctorCategories.data!,
+              autoFocus: true,
+            })
+          }
+        >
+          <TextInput
+            IconLeft={<Icon name="search" />}
+            inputWrapperStyle={styles.searchBar}
+            placeholder="Поиск врача…"
+            pointerEvents="none"
+            size="small"
+          />
+        </TouchableOpacity>
+      </SafeAreaView>
+
+      <Swiper
+        autoplayInterval={10000}
+        contentContainerStyle={styles.slideWrapper}
+        data={slides}
+        paginationColorInterpolation={[colors.grayscale['200'], colors.white]}
+        paginationShouldOverlay={true}
+        paginationWidthInterpolation={[6, 30]}
+        renderItem={({ item }) => (
+          <View style={styles.slideWrapper}>
+            <TouchableOpacity
+              activeOpacity={ActiveOpacities.HEAVY}
+              style={[styles.shadowedImageContainer, shadow]}
+            >
+              <Image
+                key={item.image}
+                source={item.image}
+                style={styles.slideImage}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+        style={styles.swiper}
+        swiperRef={swiperRef}
+        keyExtractor={(item, index) => index}
+      />
+
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <TextBase weight="700">Специализации</TextBase>
           <TouchableOpacity
+            disabled={!doctorCategories.data}
             onPress={() =>
               props.navigation.navigate(MainRoutes.Search, {
                 availableCategories: doctorCategories.data!,
-                autoFocus: true,
               })
             }
           >
-            <TextInput
-              IconLeft={<Icon name="search" />}
-              inputWrapperStyle={styles.searchBar}
-              placeholder="Поиск врача…"
-              pointerEvents="none"
-              size="small"
-            />
-          </TouchableOpacity>
-        </SafeAreaView>
-
-        <Swiper
-          autoplayInterval={10000}
-          contentContainerStyle={styles.slideWrapper}
-          data={slides}
-          paginationColorInterpolation={[colors.grayscale['200'], colors.white]}
-          paginationShouldOverlay={true}
-          paginationWidthInterpolation={[6, 30]}
-          renderItem={({ item }) => (
-            <View style={styles.slideWrapper}>
-              <TouchableOpacity
-                activeOpacity={ActiveOpacities.HEAVY}
-                style={[styles.shadowedImageContainer, shadow]}
-              >
-                <Image
-                  key={item.image}
-                  source={item.image}
-                  style={styles.slideImage}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-          style={styles.swiper}
-          swiperRef={swiperRef}
-          keyExtractor={(item, index) => index}
-        />
-
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <TextBase weight="700">Специализации</TextBase>
-            <TouchableOpacity
-              disabled={!doctorCategories.data}
-              onPress={() =>
-                props.navigation.navigate(MainRoutes.Search, {
-                  availableCategories: doctorCategories.data!,
-                })
-              }
-            >
-              <TextSmall
-                color={colors.grayscale['500']}
-                weight="500"
-              >
-                Все
-              </TextSmall>
-            </TouchableOpacity>
-          </View>
-          {doctorCategoriesChunked && doctorCategoriesChunked.length && (
-            <View style={styles.categoriesContent}>
-              {doctorCategoriesChunked.map(_chunk => (
-                <View
-                  key={_chunk.map(el => el.type).join('')}
-                  style={styles.categoryRow}
-                >
-                  {_chunk.map(doctorCategory => (
-                    <DoctorsCategoryThumbnail
-                      key={doctorCategory.type}
-                      item={doctorCategory}
-                      onPress={() =>
-                        props.navigation.navigate(MainRoutes.Search, {
-                          categoryId: doctorCategory.id,
-                          availableCategories: doctorCategories.data!,
-                        })
-                      }
-                    />
-                  ))}
-                </View>
-              ))}
-            </View>
-          )}
-        </View>
-
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <TextBase weight="700">Ближайшие медицинские центры</TextBase>
             <TextSmall
               color={colors.grayscale['500']}
               weight="500"
             >
               Все
             </TextSmall>
-          </View>
-          <FlatList
-            horizontal
-            contentContainerStyle={styles.clinicsContentContainer}
-            data={medicalCenters.data || []}
-            renderItem={({ item }) => (
-              <MedicalCenterCard
-                item={item}
-                onPress={() =>
-                  props.navigation.navigate(MainRoutes.Search, {
-                    availableCategories: doctorCategories.data!,
-                    medicalCenterId: item.id,
-                    title: item.name,
-                  })
-                }
-              />
-            )}
-            showsHorizontalScrollIndicator={false}
-            style={styles.clinicsContent}
-            keyExtractor={item => item.id}
-          />
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </View>
+        {doctorCategoriesChunked && doctorCategoriesChunked.length && (
+          <View style={styles.categoriesContent}>
+            {doctorCategoriesChunked.map(_chunk => (
+              <View
+                key={_chunk.map(el => el.type).join('')}
+                style={styles.categoryRow}
+              >
+                {_chunk.map(doctorCategory => (
+                  <DoctorsCategoryThumbnail
+                    key={doctorCategory.type}
+                    item={doctorCategory}
+                    onPress={() =>
+                      props.navigation.navigate(MainRoutes.Search, {
+                        categoryId: doctorCategory.id,
+                        availableCategories: doctorCategories.data!,
+                      })
+                    }
+                  />
+                ))}
+              </View>
+            ))}
+          </View>
+        )}
+      </View>
+
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <TextBase weight="700">Ближайшие медицинские центры</TextBase>
+          <TextSmall
+            color={colors.grayscale['500']}
+            weight="500"
+          >
+            Все
+          </TextSmall>
+        </View>
+        <FlatList
+          horizontal
+          contentContainerStyle={styles.clinicsContentContainer}
+          data={medicalCenters.data || []}
+          renderItem={({ item }) => (
+            <MedicalCenterCard
+              item={item}
+              onPress={() =>
+                props.navigation.navigate(MainRoutes.Search, {
+                  availableCategories: doctorCategories.data!,
+                  medicalCenterId: item.id,
+                  title: item.name,
+                })
+              }
+            />
+          )}
+          showsHorizontalScrollIndicator={false}
+          style={styles.clinicsContent}
+          keyExtractor={item => item.id}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   locationAndNotificationsWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -263,10 +266,7 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS_ROUNDED,
     backgroundColor: colors.grayscale['100'],
   },
-  container: {
-    flex: 1,
-    gap: 12,
-  },
+
   searchBar: {
     height: 40,
     marginBottom: 16,
