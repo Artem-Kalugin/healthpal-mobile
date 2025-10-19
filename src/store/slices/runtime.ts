@@ -5,8 +5,11 @@ import { jwtDecode } from 'jwt-decode';
 
 import Debug from '#utils/debug';
 
-type TokenDecoded = {
+import { BELoginResponseDto } from '#generated/__entities';
+
+export type TokenDecoded = {
   plain: string;
+  refresh: string;
   userId: string;
   registrationComplete: string;
 };
@@ -18,7 +21,12 @@ const runtimeSlice = createSlice({
   name: 'runtime',
   initialState,
   reducers: {
-    setToken(state, action: PayloadAction<string | undefined>) {
+    setToken(
+      state,
+      action: PayloadAction<
+        Pick<BELoginResponseDto, 'accessToken' | 'refreshToken'> | undefined
+      >,
+    ) {
       if (!action.payload) {
         Keychain.resetGenericPassword();
 
@@ -26,19 +34,23 @@ const runtimeSlice = createSlice({
         return;
       }
 
-      Keychain.setGenericPassword(action.payload, 'todo');
+      Keychain.setGenericPassword(
+        action.payload.accessToken,
+        action.payload.refreshToken,
+      );
 
       const decoded = jwtDecode<{
         id: string;
         registrationComplete: string;
-      }>(action.payload);
+      }>(action.payload.accessToken);
 
       const { id, registrationComplete } = decoded;
 
       Debug.log('Set new token', decoded);
 
       state.token = {
-        plain: action.payload,
+        plain: action.payload.accessToken,
+        refresh: action.payload.refreshToken,
         userId: id,
         registrationComplete,
       };

@@ -117,7 +117,7 @@ export const ProfileEditing: React.FC<
     }).unwrap();
 
     if ('accessToken' in res) {
-      dispatch(RuntimeActions.setToken(res.accessToken));
+      dispatch(RuntimeActions.setToken(res));
 
       await prefetchApp();
 

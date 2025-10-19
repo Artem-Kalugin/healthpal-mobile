@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { Query } from '../../core/api/index';
+import { RtkAppApi } from '../../core/api/index';
 import app from './app';
 import favoritesAdded from './favoritesAdded';
 import favoritesRemoved from './favoritesRemoved';
@@ -11,5 +11,5 @@ export default combineReducers({
   runtime,
   favoritesAdded,
   favoritesRemoved,
-  [Query.reducerPath]: Query.reducer,
+  [RtkAppApi.reducerPath]: RtkAppApi.reducer,
 });

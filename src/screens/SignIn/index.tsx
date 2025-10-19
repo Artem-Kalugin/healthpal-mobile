@@ -32,8 +32,6 @@ import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
-import { delay } from '#utils';
-
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
 import { RuntimeActions } from '#store/slices/runtime';
@@ -72,7 +70,7 @@ export const SignIn: React.FC<
 
     dispatch(AppActions.setShouldShowOnboarding(false));
 
-    dispatch(RuntimeActions.setToken(response.accessToken));
+    dispatch(RuntimeActions.setToken(response));
 
     await prefetchApp();
 

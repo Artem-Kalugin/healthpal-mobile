@@ -1,133 +1,128 @@
-import NetInfo from '@react-native-community/netinfo';
 import type { BaseQueryApi, BaseQueryFn } from '@reduxjs/toolkit/query';
 import { createApi, retry } from '@reduxjs/toolkit/query/react';
-import debounce from 'lodash/debounce';
-import { toast } from 'react-hot-toast/headless';
 import { REHYDRATE } from 'redux-persist';
 
+import { FetchService } from '#services/Fetch';
+
+import { delay } from '#utils';
 import Debug from '#utils/debug';
 
 import { RootState } from '#store';
-import { RuntimeActions } from '#store/slices/runtime';
+import { RuntimeActions, TokenDecoded } from '#store/slices/runtime';
 
 import { TagsAppointmentAPI } from './Appointments/types';
 import { BEError, FetchArgs } from './types';
 import { TagsUserAPI } from './User/types';
 
-const handleNoInternet = debounce(() => {
-  toast.error('Отсутствует соединение с интернетом');
-}, 2500);
-
-const getUrlWithPathParams = (
-  url: string,
-  path?: Record<string, string | number>,
-) =>
-  Object.entries(path || {}).reduce(
-    (acc, [k, v]) => acc.replace(`{${k}}`, encodeURIComponent(String(v))),
-    url,
-  );
-
-const logOut = (api: BaseQueryApi) => {
+const logOut = async (api: BaseQueryApi) => {
   api.dispatch(RuntimeActions.setToken(undefined));
-  api.dispatch(Query.util.resetApiState());
+  //dirty, but waits for unmounts to prevent from bursting backend with auto executed rtk-hooks again
+  //ideally make auth guard equivalent on endpoint definition to allow it to be sent without token
+  //and check that token exists in base query
+  await delay(750);
+
+  api.dispatch(RtkAppApi.util.resetApiState());
 };
 
-const fetchWithTimeout = (
-  url: string,
-  options: RequestInit,
-  timeout = 20000,
-) => {
-  return Promise.race([
-    fetch(url, options),
-    new Promise<Response>((_, reject) =>
-      setTimeout(() => reject(new Error('Request timeout')), timeout),
-    ),
-  ]);
-};
-
-const fetchBaseQuery = async (
-  { url, method = 'GET', data, params, path }: FetchArgs,
-  api: BaseQueryApi,
-) => {
-  try {
-    !process.env.EXPO_PUBLIC_API_URL &&
-      Debug.error('no API_URL available, make sure .env file inited');
-
-    const { isConnected } = await NetInfo.fetch();
-
-    if (!isConnected) {
-      if (['PUT', 'POST', 'PATCH'].includes(method.toUpperCase())) {
-        handleNoInternet();
-      }
-      throw new Error('No internet connection');
+let refreshingToken = '';
+let lastRefreshResult: Promise<
+  | {
+      data: { accessToken: string; refreshToken: string };
     }
+  | undefined
+>;
 
-    const urlWithPath = getUrlWithPathParams(url, path);
-    const urlObj = new URL(process.env.EXPO_PUBLIC_API_URL + urlWithPath);
+const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
+  if (refreshingToken === tokenToRefresh.plain) {
+    return lastRefreshResult;
+  }
 
-    if (params) {
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          urlObj.searchParams.append(key, String(value));
-        }
-      });
-    }
+  refreshingToken = tokenToRefresh.plain;
 
-    Debug.requestStart(`${method.toUpperCase()} ${urlObj.toString()}`);
-
-    const isFormData = data instanceof FormData;
-
-    const headers: Record<string, string> = {
-      'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
-    };
-
-    const runtimeToken = (api.getState() as RootState).runtime.token;
-
-    if (runtimeToken) headers.Authorization = `Bearer ${runtimeToken.plain}`;
-
-    const body = isFormData ? data : data ? JSON.stringify(data) : undefined;
-
-    const result = await fetchWithTimeout(urlObj.toString(), {
-      method,
-      headers,
-      body,
-    });
-
-    const json = await result.json().catch(() => ({}));
-
-    if (!result.ok) {
-      if (
-        result.status === 401 &&
-        (api.getState() as RootState).runtime.token
-      ) {
-        logOut(api);
-      }
-
-      return {
-        error: {
-          status: result.status,
-          data: json || result.statusText,
+  lastRefreshResult = (async () => {
+    try {
+      const response = (await FetchService.query(
+        {
+          url: '/auth/refresh',
+          method: 'post',
+          data: {
+            refreshToken: tokenToRefresh.refresh,
+            userId: tokenToRefresh.userId,
+          },
         },
-      };
+        process.env.EXPO_PUBLIC_API_URL,
+        undefined,
+        true,
+      ))!;
+
+      api.dispatch(RuntimeActions.setToken(response.data));
+
+      return response.data;
+    } catch (err) {
+      Debug.error('Token refresh failed', err);
+      return undefined;
+    }
+  })();
+
+  return lastRefreshResult;
+};
+
+const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
+  const { url, method = 'GET', data, params, path } = args;
+  !process.env.EXPO_PUBLIC_API_URL &&
+    Debug.error('no API_URL available, make sure .env file inited');
+
+  let runtimeToken = (api.getState() as RootState).runtime.token;
+
+  let accessToken = runtimeToken?.plain;
+
+  try {
+    if (refreshingToken === accessToken) {
+      const refreshResult = await lastRefreshResult;
+
+      if (refreshResult) {
+        return apiBaseQuery(args, api);
+      } else {
+        logOut(api);
+
+        return {
+          error: {
+            meta: {
+              loggedOut: true,
+            },
+          },
+        };
+      }
     }
 
-    Debug.requestSuccess(`${method.toUpperCase()} ${urlWithPath}`);
-
-    return {
-      data: json ?? {},
-      meta: {
-        ...json,
-        timestamp: new Date().toISOString(),
-        data: undefined,
+    const req = await FetchService.query(
+      {
+        url,
+        method,
+        data,
+        params,
+        path,
       },
-    };
-  } catch (err: any) {
-    Debug.requestError('', err);
+      process.env.EXPO_PUBLIC_API_URL,
+      `Bearer ${accessToken}`,
+      true,
+    );
+
+    return req!;
+  } catch (error) {
+    //@ts-expect-error
+    const errorStatus = 'statusCode' in error ? error.statusCode : undefined;
+
+    if (errorStatus === 401 && runtimeToken) {
+      refresh(api, runtimeToken);
+
+      return await apiBaseQuery(args, api);
+    }
 
     return {
       error: {
-        status: undefined,
-        data: err?.message ?? 'Unknown error',
+        status: errorStatus,
+        data: error,
       },
     };
   }
@@ -135,16 +130,17 @@ const fetchBaseQuery = async (
 
 const baseQuery = retry(
   async (args: FetchArgs, _api) => {
-    const result = await fetchBaseQuery(args, _api);
+    const result = await apiBaseQuery(args, _api);
 
     if (
       'error' in result &&
       result.error &&
       typeof result.error === 'object' &&
-      'status' in result.error &&
-      [422, 403, 401, 409, 404, 500, 400].includes(
-        result.error?.status as number,
-      )
+      (('status' in result.error &&
+        [422, 403, 401, 409, 404, 500, 400].includes(
+          result.error?.status as number,
+        )) ||
+        ('meta' in result.error && result.error.meta?.loggedOut))
     ) {
       retry.fail(result.error);
     }
@@ -154,7 +150,7 @@ const baseQuery = retry(
   { maxRetries: 2 },
 );
 
-const Query = createApi({
+const RtkAppApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQuery as BaseQueryFn<FetchArgs, unknown, BEError>,
   endpoints: () => ({}),
@@ -171,4 +167,4 @@ const Query = createApi({
   keepUnusedDataFor: 600,
 });
 
-export { Query, fetchBaseQuery };
+export { RtkAppApi, apiBaseQuery };

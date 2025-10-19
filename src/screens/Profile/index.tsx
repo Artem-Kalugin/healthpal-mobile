@@ -27,7 +27,7 @@ import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 import { useGetCurrentUserQuery } from '#api/User';
 
 import {
@@ -106,7 +106,7 @@ export const Profile: React.FC<
       icon: 'logOut',
       onPress: () => {
         dispatch(RuntimeActions.setToken(undefined));
-        dispatch(Query.util.resetApiState());
+        dispatch(RtkAppApi.util.resetApiState());
       },
     },
   ];

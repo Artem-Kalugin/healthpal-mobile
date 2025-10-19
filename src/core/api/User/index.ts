@@ -1,8 +1,8 @@
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 
 import { RequestsUser as Requests, TagsUserAPI } from './types';
 
-export const UserAPI = Query.injectEndpoints({
+const UserAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     getCurrent: build.query<

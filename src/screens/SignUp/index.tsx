@@ -73,7 +73,7 @@ export const SignUp: React.FC<
 
     dispatch(AppActions.setShouldShowOnboarding(false));
 
-    dispatch(RuntimeActions.setToken(response.accessToken));
+    dispatch(RuntimeActions.setToken(response));
 
     await delay(0);
 

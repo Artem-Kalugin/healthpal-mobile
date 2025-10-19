@@ -1,9 +1,9 @@
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
 
 import { RequestsAppointment as Requests, TagsAppointmentAPI } from './types';
 
-const AppointmentAPI = Query.injectEndpoints({
+const AppointmentAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     appointments: build.infiniteQuery<

@@ -73,7 +73,7 @@ export const PasswordRecoverySetPassword: React.FC<
 
     dispatch(AppActions.setShouldShowOnboarding(false));
 
-    dispatch(RuntimeActions.setToken(res.accessToken));
+    dispatch(RuntimeActions.setToken(res));
 
     toast('Пароль был успешно изменен');
 
