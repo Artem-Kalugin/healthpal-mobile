@@ -64,6 +64,11 @@ export const HeaderTabs = <T extends unknown>({
     activeItemIndex.value = withTiming(index);
 
     const trackWidth = tabTextWidthMap.current[index] + TRACK_ADDITIONAL_WIDTH;
+
+    if (!trackWidth) {
+      return;
+    }
+
     width.value = force ? trackWidth : withTiming(trackWidth);
 
     const trackXOffsetAnchor = anchorOffsetPoints.current[index];
@@ -72,13 +77,15 @@ export const HeaderTabs = <T extends unknown>({
       : withTiming(trackXOffsetAnchor);
   };
 
-  const rTrackAnchorStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: translateX.value,
-      },
-    ],
-  }));
+  const rTrackAnchorStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: translateX.value,
+        },
+      ],
+    };
+  });
 
   const rTrackStyle = useAnimatedStyle(() => ({
     width: width.value,
