@@ -30,7 +30,7 @@ export const ReviewItem: React.FC<Partial<IDoctorCard>> = ({
     >
       <View style={styles.header}>
         <Image
-          source={Images.clinic}
+          source={Images.profileCircle}
           style={styles.image}
         />
         <View style={styles.headerInfo}>

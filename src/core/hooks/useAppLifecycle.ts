@@ -14,18 +14,20 @@ const useAppLifecycle = () => {
   const { prefetchApp } = usePrefetchApp();
 
   const onAppStart = async () => {
-    const credentials = await Keychain.getGenericPassword();
+    try {
+      const credentials = await Keychain.getGenericPassword();
 
-    if (credentials) {
-      const { username: accessToken } = credentials;
+      if (credentials) {
+        const { username: accessToken, password: refreshToken } = credentials;
 
-      dispatch(RuntimeActions.setToken(accessToken));
-    }
+        dispatch(RuntimeActions.setToken({ accessToken, refreshToken }));
+      }
 
-    BootSplash.hide({ fade: true });
-    await prefetchApp();
+      BootSplash.hide({ fade: true });
+      await prefetchApp();
 
-    setInited(true);
+      setInited(true);
+    } catch {}
   };
 
   const onAppEnd = () => {};

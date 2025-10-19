@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -6,6 +6,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+
+import { Image as ExpoImage } from 'expo-image';
 
 import { Divider, Icon, Image, Rating, TextSmall, TextXS } from '#ui-kit';
 
@@ -18,15 +20,27 @@ import { FavoriteButton } from './FavoriteButton';
 
 type IMedicalCenterCard = {
   item: BEMedicalCenterResponseDto;
+  lockImage?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
 };
 
 export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
   style,
+  lockImage = false,
   item,
   onPress,
 }) => {
+  const imageRef = useRef<ExpoImage | null>(null);
+
+  //@ts-expect-error
+  useEffect(() => {
+    if (lockImage) {
+      imageRef.current?.lockResourceAsync();
+
+      return () => imageRef.current?.unlockResourceAsync();
+    }
+  }, [imageRef.current]);
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -39,6 +53,8 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
         style={styles.favoriteButton}
       />
       <Image
+        cachePolicy="memory"
+        imageRef={imageRef}
         source={item?.image}
         style={styles.image}
       />

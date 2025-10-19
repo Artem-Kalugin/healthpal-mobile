@@ -159,19 +159,23 @@ export const Map: React.FC<
   };
 
   const rMedicalCentersContainer = useAnimatedStyle(() => ({
-    transformOrigin: 'center 150%',
     pointerEvents: showMedicalCentersProgress.value === 1 ? 'auto' : 'none',
     transform: [
       {
-        scale: showMedicalCentersProgress.value,
+        translateY: interpolate(
+          showMedicalCentersProgress.value,
+          [0, 1],
+          [50, 0],
+        ),
       },
     ],
-    opacity: interpolate(showMedicalCentersProgress.value, [0.75, 1], [0, 1]),
+    opacity: interpolate(showMedicalCentersProgress.value, [0.0, 1], [0.01, 1]),
   }));
 
   useEffect(() => {
     onInit();
   }, []);
+
   useBEErrorHandler(meta);
 
   const Markers = useMemo(() => {
@@ -222,9 +226,11 @@ export const Map: React.FC<
           horizontal
           contentContainerStyle={styles.clinicsContentContainer}
           data={medicalCentersSorted}
+          initialNumToRender={30}
           renderItem={({ item }) => (
             <BlinkAnimator startAnimation={itemToBlink?.id === item.id}>
               <MedicalCenterCard
+                lockImage
                 item={item}
                 onPress={() =>
                   props.navigation.navigate(MainRoutes.Search, {
@@ -238,6 +244,7 @@ export const Map: React.FC<
           )}
           showsHorizontalScrollIndicator={false}
           style={styles.clinicsContent}
+          keyExtractor={item => item.id}
         />
       </Animated.View>
     </View>
