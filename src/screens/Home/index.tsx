@@ -23,6 +23,8 @@ import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
+import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
+import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useDoctorCategoriesQuery } from '#api/Doctor';
 import { useMedicalCentersQuery } from '#api/MedicalCenters';
@@ -42,7 +44,10 @@ import { slides } from './config';
 export const Home: React.FC<
   CompositeScreenProps<
     TabScreenProps<TabRoutes.Home>,
-    MainScreenProps<MainRoutes>
+    CompositeScreenProps<
+      MainScreenProps<MainRoutes>,
+      RootScreenProps<AppRoutes>
+    >
   >
 > = props => {
   const [isUserDecidedLocationUsage, setIsUserDecidedLocationUsage] =
@@ -62,7 +67,6 @@ export const Home: React.FC<
     },
     {
       skip: !isUserDecidedLocationUsage,
-      refetchOnMountOrArgChange: true,
     },
   );
   const swiperRef = useRef<ISwiperRef>(null);
@@ -102,14 +106,38 @@ export const Home: React.FC<
         <View style={styles.locationAndNotificationsWrapper}>
           <View style={styles.locationContainer}>
             <TextSmall color={colors.grayscale['500']}>Город</TextSmall>
-            <TouchableOpacity style={styles.locationSelector}>
+            <TouchableOpacity
+              style={styles.locationSelector}
+              onPress={() => {
+                props.navigation.navigate(AppRoutes.StackModals, {
+                  screen: ModalsRoutes.Select,
+                  params: {
+                    title: 'Выберите город',
+                    data: ['Москва', 'Тоже Москва'],
+                    keyExtractor: item => item,
+                    checkedExtractor: (item, currentItem) =>
+                      item === currentItem,
+                    renderItem: item => (
+                      <TextBase weight="400">{item}</TextBase>
+                    ),
+                    onSelectionEnd: () => {},
+                    defaultValue: 'Москва',
+                  } as SelectModalParams<string>,
+                });
+              }}
+            >
               <Icon name="mapActive" />
               <TextSmall weight="600">Москва</TextSmall>
               <Icon name="chevronDown" />
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.notificationsContainer}>
+          <TouchableOpacity
+            style={styles.notificationsContainer}
+            onPress={() => {
+              props.navigation.navigate(MainRoutes.Notifications);
+            }}
+          >
             <Icon name="notification"></Icon>
           </TouchableOpacity>
         </View>

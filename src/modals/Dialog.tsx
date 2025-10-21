@@ -31,7 +31,9 @@ export const Dialog: React.FC<ModalsScreenProps<ModalsRoutes.Dialog>> = ({
 
       <View style={styles.buttons}>
         <Button
+          fullwidth={false}
           {...route.params.confirmButtonProps}
+          style={styles.button}
           onPress={() => {
             route.params.confirmButtonProps.onPress &&
               route.params.confirmButtonProps.onPress(
@@ -43,7 +45,10 @@ export const Dialog: React.FC<ModalsScreenProps<ModalsRoutes.Dialog>> = ({
 
         {route.params.declineButtonProps && (
           <Button
+            fullwidth={false}
             {...route.params.declineButtonProps}
+            style={styles.button}
+            type="secondary"
             onPress={() => {
               route?.params?.declineButtonProps?.onPress &&
                 route.params.declineButtonProps.onPress(
@@ -69,6 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   buttons: {
+    flexDirection: 'row',
     gap: 12,
+  },
+  button: {
+    flex: 1,
   },
 });
