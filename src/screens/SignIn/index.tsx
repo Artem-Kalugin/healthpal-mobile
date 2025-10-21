@@ -74,7 +74,7 @@ export const SignIn: React.FC<
 
     await prefetchApp();
 
-    props.navigation.navigate(
+    props.navigation.replace(
       //@ts-expect-error
       response.user.registrationComplete
         ? AppRoutes.StackMain

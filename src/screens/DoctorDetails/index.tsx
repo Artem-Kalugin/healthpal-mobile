@@ -58,12 +58,10 @@ export const DoctorDetails: React.FC<
     }
   }, [doctorQuery.data]);
 
+  const descriptionCanOverflow =
+    doctorDetails?.description && doctorDetails?.description?.length > 130;
   const descriptionOverflows =
-    shouldCutDescription &&
-    doctorDetails?.description &&
-    doctorDetails?.description?.length > 130
-      ? true
-      : false;
+    shouldCutDescription && descriptionCanOverflow ? true : false;
 
   const content = !doctorDetails ? (
     <Loader size="large" />
@@ -126,13 +124,27 @@ export const DoctorDetails: React.FC<
               ? doctorDetails?.description.slice(0, 130)
               : doctorDetails?.description}
             {descriptionOverflows ? '... ' : ' '}
-            <TextSmall
-              color={colors.grayscale['900']}
-              textDecorationLine="underline"
-              onPress={() => setShouldCutDescription(old => !old)}
-            >
-              {shouldCutDescription ? 'показать еще' : 'скрыть'}
-            </TextSmall>
+            {descriptionCanOverflow ? (
+              shouldCutDescription ? (
+                <TextSmall
+                  key="DESCRIPTION_ACTION_UNCUT_TEXT"
+                  color={colors.grayscale['900']}
+                  textDecorationLine="underline"
+                  onPress={() => setShouldCutDescription(old => !old)}
+                >
+                  показать еще
+                </TextSmall>
+              ) : (
+                <TextSmall
+                  key="DESCRIPTION_ACTION_CUT_TEXT"
+                  color={colors.grayscale['900']}
+                  textDecorationLine="underline"
+                  onPress={() => setShouldCutDescription(old => !old)}
+                >
+                  скрыть
+                </TextSmall>
+              )
+            ) : null}
           </TextSmall>
         </Text>
       </View>

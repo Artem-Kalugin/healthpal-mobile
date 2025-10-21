@@ -117,7 +117,7 @@ export const ScheduleAppointment: React.FC<
         );
       }
 
-      props.navigation.navigate(MainRoutes.Tab, {
+      props.navigation.replace(MainRoutes.Tab, {
         screen: TabRoutes.Appointments,
         params: {
           screen: AppointmentsRoutes.FutureAppointments,

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Animated, {
   interpolate,
@@ -10,6 +10,7 @@ import Animated, {
 import YaMap, { Point } from 'react-native-yamap';
 
 import { CompositeScreenProps } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
 import { distance, point as turfPoint } from '@turf/turf';
 import { debounce } from 'lodash';
 
@@ -25,7 +26,7 @@ import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { useDoctorCategoriesQuery } from '#api/Doctor';
 import { useLazyMedicalCentersQuery } from '#api/MedicalCenters';
 
-import { colors, shadow } from '#config';
+import { shadow } from '#config';
 
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
@@ -54,7 +55,6 @@ export const Map: React.FC<
   >
 > = props => {
   const doctorCategories = useDoctorCategoriesQuery(null);
-  const medicalCentersListRef = useRef<FlatList>(null);
   const yamapRef = useRef<YaMap>(null);
   const showMedicalCentersProgress = useSharedValue(0);
   const [triggerMedicalCentersQuery, meta] = useLazyMedicalCentersQuery();
@@ -135,11 +135,6 @@ export const Map: React.FC<
   const highlightItem = async (el: BEMedicalCenterResponseDto) => {
     setItemToBlink(el);
     await reactSync();
-    medicalCentersListRef.current?.scrollToIndex({
-      animated: true,
-      index: 0,
-      viewPosition: CONTAINER_HORIZONTAL_PADDING,
-    });
     setItemToBlink(undefined);
   };
 
@@ -214,23 +209,23 @@ export const Map: React.FC<
         followUser={false}
         initialRegion={initRegion}
         style={styles.map}
-        userLocationAccuracyFillColor={colors.main.midnightBlue}
         onCameraPositionChange={hideMedicalCenters}
       >
         {Markers}
       </YaMap>
 
       <Animated.View style={[styles.clinicsAnchor, rMedicalCentersContainer]}>
-        <FlatList
-          ref={medicalCentersListRef}
+        <FlashList
+          key={JSON.stringify(medicalCentersSorted.map(el => el.id))}
           horizontal
           contentContainerStyle={styles.clinicsContentContainer}
           data={medicalCentersSorted}
-          initialNumToRender={30}
           renderItem={({ item }) => (
-            <BlinkAnimator startAnimation={itemToBlink?.id === item.id}>
+            <BlinkAnimator
+              startAnimation={itemToBlink?.id === item.id}
+              style={styles.cardWrapper}
+            >
               <MedicalCenterCard
-                lockImage
                 item={item}
                 onPress={() =>
                   props.navigation.navigate(MainRoutes.Search, {
@@ -252,6 +247,7 @@ export const Map: React.FC<
 };
 
 const CONTAINER_HORIZONTAL_PADDING = 24;
+const LIST_ITEM_GAP = 8;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -274,12 +270,14 @@ const styles = StyleSheet.create({
   },
   clinicsContentContainer: {
     alignItems: 'center',
-    paddingHorizontal: CONTAINER_HORIZONTAL_PADDING,
-    gap: 16,
+    paddingHorizontal: CONTAINER_HORIZONTAL_PADDING - LIST_ITEM_GAP,
+  },
+  cardWrapper: {
+    paddingBottom: 12,
+    paddingHorizontal: LIST_ITEM_GAP,
   },
   clinicsContent: {
     marginBottom: 24,
-    paddingBottom: 12,
   },
   searchBar: {
     height: 40,

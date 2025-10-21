@@ -77,7 +77,7 @@ export const SignUp: React.FC<
 
     await reactSync();
 
-    props.navigation.navigate(
+    props.navigation.replace(
       //@ts-expect-error
       response.user.registrationComplete
         ? AppRoutes.StackMain
