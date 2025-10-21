@@ -3,7 +3,7 @@ import { Permission } from 'react-native-permissions';
 export interface PermissionRequestConfig {
   toastForUnavailablePermission?: string;
   toastForDeniedPermission?: string;
-  blockedAlert?: {
+  blockedAlert: {
     title?: string;
     message?: string;
   };

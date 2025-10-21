@@ -3,10 +3,8 @@ import { StyleSheet, View } from 'react-native';
 
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 
-import Swiper from '#components/Swiper';
-import { ISwiperRef } from '#components/Swiper/Swiper';
-
 import { Button, Image, Loader, TextLarge, TextSmall } from '#ui-kit';
+import Swiper, { ISwiperRef } from '#ui-kit/Swiper';
 
 import { AuthRoutes } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';

@@ -4,9 +4,9 @@ import { UseFormReturn } from 'react-hook-form';
 import { toast } from 'react-hot-toast/headless';
 
 import { BEError } from '#api/types';
+import { handleBEValidationError, isBEValidationError } from '#api/utils';
 
-import { handleBEValidationError, isBEValidationError } from '#utils';
-import Debug from '#utils/debug';
+import Logger from '#services/Logger';
 
 const useBEErrorHandler = <T extends object>(
   meta: unknown,
@@ -17,7 +17,7 @@ const useBEErrorHandler = <T extends object>(
 
     const error = meta?.error;
     if (!error) return;
-    Debug.requestError('error', error?.data);
+    Logger.requestError('error', error?.data);
 
     const beError = error as BEError;
 

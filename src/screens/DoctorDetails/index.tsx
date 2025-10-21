@@ -9,11 +9,11 @@ import {
 
 import { toast } from 'react-hot-toast/headless';
 
-import { DoctorDetailsCard } from '#components/entities/Doctor/DetailsCard';
-import { DoctorFavoriteButton } from '#components/entities/Doctor/FavoriteButton';
-import { ReviewItem } from '#components/entities/Review/Item';
-import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
-import ListExtender from '#components/ListExtender';
+import { DoctorDetailsCard } from '#components/domain/Doctor/DetailsCard';
+import { DoctorFavoriteButton } from '#components/domain/Doctor/FavoriteButton';
+import { ReviewItem } from '#components/domain/Review/Item';
+import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import ListExtender from '#components/infrastructure/ListExtender';
 
 import {
   Button,
@@ -58,12 +58,10 @@ export const DoctorDetails: React.FC<
     }
   }, [doctorQuery.data]);
 
+  const descriptionCanOverflow =
+    doctorDetails?.description && doctorDetails?.description?.length > 130;
   const descriptionOverflows =
-    shouldCutDescription &&
-    doctorDetails?.description &&
-    doctorDetails?.description?.length > 130
-      ? true
-      : false;
+    shouldCutDescription && descriptionCanOverflow ? true : false;
 
   const content = !doctorDetails ? (
     <Loader size="large" />
@@ -103,7 +101,7 @@ export const DoctorDetails: React.FC<
               size: 24,
             }}
             label="Оценка"
-            value={doctorDetails?.rating}
+            value={+doctorDetails?.rating}
           />
           <StatisticsFact
             icon="comment"
@@ -126,13 +124,27 @@ export const DoctorDetails: React.FC<
               ? doctorDetails?.description.slice(0, 130)
               : doctorDetails?.description}
             {descriptionOverflows ? '... ' : ' '}
-            <TextSmall
-              color={colors.grayscale['900']}
-              textDecorationLine="underline"
-              onPress={() => setShouldCutDescription(old => !old)}
-            >
-              {shouldCutDescription ? 'показать еще' : 'скрыть'}
-            </TextSmall>
+            {descriptionCanOverflow ? (
+              shouldCutDescription ? (
+                <TextSmall
+                  key="DESCRIPTION_ACTION_UNCUT_TEXT"
+                  color={colors.grayscale['900']}
+                  textDecorationLine="underline"
+                  onPress={() => setShouldCutDescription(old => !old)}
+                >
+                  показать еще
+                </TextSmall>
+              ) : (
+                <TextSmall
+                  key="DESCRIPTION_ACTION_CUT_TEXT"
+                  color={colors.grayscale['900']}
+                  textDecorationLine="underline"
+                  onPress={() => setShouldCutDescription(old => !old)}
+                >
+                  скрыть
+                </TextSmall>
+              )
+            ) : null}
           </TextSmall>
         </Text>
       </View>

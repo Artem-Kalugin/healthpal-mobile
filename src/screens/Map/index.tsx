@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Animated, {
   interpolate,
@@ -10,12 +10,13 @@ import Animated, {
 import YaMap, { Point } from 'react-native-yamap';
 
 import { CompositeScreenProps } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
 import { distance, point as turfPoint } from '@turf/turf';
 import { debounce } from 'lodash';
 
-import { BlinkAnimator } from '#components/BlinkAnimator';
-import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
-import { MedicalCenterMarker } from '#components/entities/MedicalCenter/Marker';
+import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
+import { MedicalCenterMarker } from '#components/domain/MedicalCenter/Marker';
+import { BlinkAnimator } from '#components/infrastructure/BlinkAnimator';
 
 import { Icon, TextInput } from '#ui-kit';
 
@@ -25,14 +26,13 @@ import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { useDoctorCategoriesQuery } from '#api/Doctor';
 import { useLazyMedicalCentersQuery } from '#api/MedicalCenters';
 
-import { colors, shadow } from '#config';
+import { shadow } from '#config';
 
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
-import { delay } from '#utils';
-
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
 
+import { reactSync } from '../../core/utils';
 import {
   CENTER_ON_MARKER_DISTANCE_THRESHOLD,
   getSortedMedicalCentersByDistance,
@@ -54,7 +54,6 @@ export const Map: React.FC<
   >
 > = props => {
   const doctorCategories = useDoctorCategoriesQuery(null);
-  const medicalCentersListRef = useRef<FlatList>(null);
   const yamapRef = useRef<YaMap>(null);
   const showMedicalCentersProgress = useSharedValue(0);
   const [triggerMedicalCentersQuery, meta] = useLazyMedicalCentersQuery();
@@ -100,7 +99,7 @@ export const Map: React.FC<
   const debounceSortAndShowMedicalCenters = useMemo(() => {
     return debounce(async (point?: { lat: number; lon: number }) => {
       point && sortMedicalCenters(point.lat, point.lon);
-      await delay(0);
+      await reactSync();
       showMedicalCenters();
     }, 100);
   }, []);
@@ -134,12 +133,7 @@ export const Map: React.FC<
 
   const highlightItem = async (el: BEMedicalCenterResponseDto) => {
     setItemToBlink(el);
-    await delay(0);
-    medicalCentersListRef.current?.scrollToIndex({
-      animated: true,
-      index: 0,
-      viewPosition: CONTAINER_HORIZONTAL_PADDING,
-    });
+    await reactSync();
     setItemToBlink(undefined);
   };
 
@@ -159,19 +153,23 @@ export const Map: React.FC<
   };
 
   const rMedicalCentersContainer = useAnimatedStyle(() => ({
-    transformOrigin: 'center 150%',
     pointerEvents: showMedicalCentersProgress.value === 1 ? 'auto' : 'none',
     transform: [
       {
-        scale: showMedicalCentersProgress.value,
+        translateY: interpolate(
+          showMedicalCentersProgress.value,
+          [0, 1],
+          [50, 0],
+        ),
       },
     ],
-    opacity: interpolate(showMedicalCentersProgress.value, [0.75, 1], [0, 1]),
+    opacity: interpolate(showMedicalCentersProgress.value, [0.0, 1], [0.01, 1]),
   }));
 
   useEffect(() => {
     onInit();
   }, []);
+
   useBEErrorHandler(meta);
 
   const Markers = useMemo(() => {
@@ -210,20 +208,22 @@ export const Map: React.FC<
         followUser={false}
         initialRegion={initRegion}
         style={styles.map}
-        userLocationAccuracyFillColor={colors.main.midnightBlue}
         onCameraPositionChange={hideMedicalCenters}
       >
         {Markers}
       </YaMap>
 
       <Animated.View style={[styles.clinicsAnchor, rMedicalCentersContainer]}>
-        <FlatList
-          ref={medicalCentersListRef}
+        <FlashList
+          key={JSON.stringify(medicalCentersSorted.map(el => el.id))}
           horizontal
           contentContainerStyle={styles.clinicsContentContainer}
           data={medicalCentersSorted}
           renderItem={({ item }) => (
-            <BlinkAnimator startAnimation={itemToBlink?.id === item.id}>
+            <BlinkAnimator
+              startAnimation={itemToBlink?.id === item.id}
+              style={styles.cardWrapper}
+            >
               <MedicalCenterCard
                 item={item}
                 onPress={() =>
@@ -238,6 +238,7 @@ export const Map: React.FC<
           )}
           showsHorizontalScrollIndicator={false}
           style={styles.clinicsContent}
+          keyExtractor={item => item.id}
         />
       </Animated.View>
     </View>
@@ -245,6 +246,7 @@ export const Map: React.FC<
 };
 
 const CONTAINER_HORIZONTAL_PADDING = 24;
+const LIST_ITEM_GAP = 8;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -267,12 +269,14 @@ const styles = StyleSheet.create({
   },
   clinicsContentContainer: {
     alignItems: 'center',
-    paddingHorizontal: CONTAINER_HORIZONTAL_PADDING,
-    gap: 16,
+    paddingHorizontal: CONTAINER_HORIZONTAL_PADDING - LIST_ITEM_GAP,
+  },
+  cardWrapper: {
+    paddingBottom: 12,
+    paddingHorizontal: LIST_ITEM_GAP,
   },
   clinicsContent: {
     marginBottom: 24,
-    paddingBottom: 12,
   },
   searchBar: {
     height: 40,

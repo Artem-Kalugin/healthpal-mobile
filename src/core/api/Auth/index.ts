@@ -1,9 +1,9 @@
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 import { TagsUserAPI } from '#api/User/types';
 
 import { RequestsAuth as Requests } from './types';
 
-const AuthAPI = Query.injectEndpoints({
+const AuthAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     verifyPhone: build.mutation<

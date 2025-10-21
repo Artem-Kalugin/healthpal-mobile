@@ -3,9 +3,10 @@ import { Dimensions, Platform, StyleSheet } from 'react-native';
 import { Easing, LinearTransition, withSpring } from 'react-native-reanimated';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 
+import Banner2 from '#assets/images/Banner-1.png';
+import Banner3 from '#assets/images/Banner-2.png';
+import Banner1 from '#assets/images/Banner.png';
 /* PLOP_INJECT_IMPORT */
-import clinic from '#assets/images/clinic.png';
-import home1 from '#assets/images/home-1.png';
 import onboarding1 from '#assets/images/onboarding-1.png';
 import onboarding2 from '#assets/images/onboarding-2.png';
 import onboarding3 from '#assets/images/onboarding-3.png';
@@ -91,8 +92,9 @@ export const tabbarShadow = StyleSheet.create({
 
 export const Images = {
   /* PLOP_INJECT_KEY */
-  clinic: clinic,
-  home1: home1,
+  Banner1,
+  Banner2,
+  Banner3,
   onboarding3: onboarding3,
   onboarding2: onboarding2,
   onboarding1: onboarding1,

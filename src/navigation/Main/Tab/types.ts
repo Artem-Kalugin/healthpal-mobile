@@ -1,7 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { NavigatorBottomTabRouteConfig } from '#components/NavigatorBottomTabs';
+import { NavigatorBottomTabRouteConfig } from '#components/infrastructure/NavigatorBottomTabs';
 
 import { AppointmentsParamList } from './Appointments/types';
 

@@ -10,10 +10,10 @@ import { IButton } from '#ui-kit/Button';
 
 import { AppParamList } from '#navigation/types';
 
-import { ModalController } from '#hooks/utils/useModal';
+import { ModalController } from '#hooks/useModalState';
 
 export type UIActionModalButton = Partial<
-  Omit<IButton, 'onPress'> & { bypassGoBackOnClose: boolean } & {
+  Omit<IButton, 'onPress'> & {
     onPress: (
       navigation: StackNavigationProp<AppParamList>,
       modal: ModalController,

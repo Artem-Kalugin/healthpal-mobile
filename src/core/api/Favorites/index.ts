@@ -1,8 +1,8 @@
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 
 import { RequestsFavorites as Requests } from './types';
 
-export const FavoritesAPI = Query.injectEndpoints({
+export const FavoritesAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     addDoctor: build.mutation<

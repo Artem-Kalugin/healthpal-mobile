@@ -4,9 +4,9 @@ import { FlatList, Keyboard, StyleSheet, View } from 'react-native';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import { EmptyListWarning } from '#components/EmptyListWarning';
-import { AppointmentCard } from '#components/entities/Appointment/Card';
-import { PaginatableListFooter } from '#components/PaginatableListFooter';
+import { AppointmentCard } from '#components/domain/Appointment/Card';
+import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
+import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
 
 import { Button, Icon, Loader, TextBase } from '#ui-kit';
 

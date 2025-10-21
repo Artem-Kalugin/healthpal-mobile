@@ -1,8 +1,8 @@
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 
 import { RequestsOnboarding as Requests } from './types';
 
-const OnboardingAPI = Query.injectEndpoints({
+const OnboardingAPI = RtkAppApi.injectEndpoints({
   endpoints: build => ({
     onboarding: build.query<
       Requests['onboarding']['response'],

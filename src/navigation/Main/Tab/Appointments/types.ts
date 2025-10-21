@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { NavigatorHeaderTabRouteConfig } from '#components/NavigatorHeaderTabs';
+import { NavigatorHeaderTabRouteConfig } from '#components/infrastructure/NavigatorHeaderTabs';
 
 export enum AppointmentsRoutes {
   FutureAppointments = 'FutureAppointments',

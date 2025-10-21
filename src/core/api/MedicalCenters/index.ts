@@ -1,9 +1,9 @@
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
 
 import { RequestsMedicalCenters as Requests } from './types';
 
-const MedicalCentersAPI = Query.injectEndpoints({
+const MedicalCentersAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     medicalCenters: build.query<

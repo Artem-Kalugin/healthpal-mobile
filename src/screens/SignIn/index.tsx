@@ -13,8 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/FormTextInput';
-import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+import { FormTextInput } from '#components/infrastructure/FormTextInput';
+import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 import { Brand } from '#ui-kit/Brand';
@@ -31,8 +31,6 @@ import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 import { usePrefetchApp } from '#hooks/usePrefetchApp';
-
-import { delay } from '#utils';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
@@ -72,16 +70,19 @@ export const SignIn: React.FC<
 
     dispatch(AppActions.setShouldShowOnboarding(false));
 
-    dispatch(RuntimeActions.setToken(response.accessToken));
+    dispatch(RuntimeActions.setToken(response));
 
     await prefetchApp();
 
-    props.navigation.navigate(
+    if (response.user.registrationComplete) {
       //@ts-expect-error
-      response.user.registrationComplete
-        ? AppRoutes.StackMain
-        : AppRoutes.ProfileEditing,
-    );
+      props.navigation.replace(AppRoutes.StackMain);
+    } else {
+      props.navigation.replace(AppRoutes.ProfileEditing, {
+        user: response.user,
+      });
+    }
+
     form.reset();
   };
 

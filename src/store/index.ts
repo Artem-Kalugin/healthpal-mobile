@@ -8,7 +8,7 @@ import { MMKV } from 'react-native-mmkv';
 import { Action, configureStore, Middleware } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import { Query } from '#api';
+import { RtkAppApi } from '#api';
 
 import reducers from './slices';
 
@@ -70,7 +70,7 @@ export const store = configureStore({
       serializableCheck: false,
       immutableCheck: false,
     })
-      .concat(Query.middleware)
+      .concat(RtkAppApi.middleware)
       .concat(loggerMiddleware),
 });
 
@@ -80,8 +80,9 @@ export const persistor = persistStore(store);
 
 // persistor.purge();
 
-// store.dispatch(Query.util.resetApiState());
+// store.dispatch(RtkAppApi.util.resetApiState());
 
+export type Store = typeof store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

@@ -13,8 +13,8 @@ import Animated from 'react-native-reanimated';
 import { colors, layoutAnimation, shadow } from '#config';
 
 import { DayProps, normalizeDefaultStyles } from './config';
-import { CalendarDay } from './day';
-import { CalendarHeader } from './header';
+import { CalendarDay } from './Day';
+import { CalendarHeader } from './Header';
 import { changeAnchorDate, dateToYYYYMM, toDateString } from './utils';
 
 interface ICalendar extends PropsWithChildren {

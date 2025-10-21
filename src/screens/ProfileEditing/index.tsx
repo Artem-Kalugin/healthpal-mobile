@@ -13,9 +13,9 @@ import { StackActions } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/FormTextInput';
-import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
-import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+import { FormTextInput } from '#components/infrastructure/FormTextInput';
+import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Button, Icon, Image, TextBase } from '#ui-kit';
 import ButtonGoBack from '#ui-kit/ButtonGoBack';
@@ -45,6 +45,8 @@ import { RuntimeActions } from '#store/slices/runtime';
 
 import { Gender } from '#generated/schema';
 
+import { reactSync } from '../../core/utils';
+
 const MINIMAL_BIRTHDAY_YEAR = new Date();
 MINIMAL_BIRTHDAY_YEAR.setFullYear(new Date().getFullYear() - 18);
 
@@ -71,7 +73,10 @@ export const ProfileEditing: React.FC<
     ? updateUser
     : completeRegistration;
 
-  const { form, getFormInputProps } = useAppForm(UpdateUserDto, userQuery.data);
+  const { form, getFormInputProps } = useAppForm(
+    UpdateUserDto,
+    props.route.params.user || userQuery.data,
+  );
 
   const [avatar, setAvatar] = useState<null | string>('');
 
@@ -117,7 +122,7 @@ export const ProfileEditing: React.FC<
     }).unwrap();
 
     if ('accessToken' in res) {
-      dispatch(RuntimeActions.setToken(res.accessToken));
+      dispatch(RuntimeActions.setToken(res));
 
       await prefetchApp();
 
@@ -135,6 +140,55 @@ export const ProfileEditing: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
+  const openSelectBirthdayModal = async () => {
+    Keyboard.dismiss();
+
+    await reactSync();
+
+    props.navigation.navigate(AppRoutes.StackModals, {
+      screen: ModalsRoutes.DateTimePicker,
+      params: {
+        pickerProps: {
+          maximumDate: MINIMAL_BIRTHDAY_YEAR,
+          date: form.getValues('birthday')
+            ? new Date(form.getValues('birthday'))
+            : MINIMAL_BIRTHDAY_YEAR,
+          mode: 'date',
+        },
+        onEnd: _date => {
+          Keyboard.dismiss();
+          form.setValue('birthday', _date.toISOString());
+          form.clearErrors('birthday');
+        },
+      },
+    });
+  };
+
+  const openSelectSexModal = async () => {
+    Keyboard.dismiss();
+
+    await reactSync();
+
+    props.navigation.navigate(AppRoutes.StackModals, {
+      screen: ModalsRoutes.Select,
+      params: {
+        title: 'Выберите пол',
+        data: Object.values(Gender),
+        keyExtractor: item => item,
+        checkedExtractor: (item, currentItem) => item === currentItem,
+        renderItem: item => (
+          <TextBase weight="400">{MapGenderToLabel[item]}</TextBase>
+        ),
+        defaultValue: form.getValues('gender'),
+        onSelectionEnd: item => {
+          Keyboard.dismiss();
+          //@ts-expect-error
+          form.setValue('gender', item || '');
+          item && form.clearErrors('gender');
+        },
+      } as SelectModalParams<Gender>,
+    });
+  };
   useBEErrorHandler(targetMetadata);
 
   return (
@@ -210,27 +264,7 @@ export const ProfileEditing: React.FC<
             submitBehavior="blurAndSubmit"
             {...getFormInputProps('nickname')}
           />
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate(AppRoutes.StackModals, {
-                screen: ModalsRoutes.DateTimePicker,
-                params: {
-                  pickerProps: {
-                    maximumDate: MINIMAL_BIRTHDAY_YEAR,
-                    date: form.getValues('birthday')
-                      ? new Date(form.getValues('birthday'))
-                      : MINIMAL_BIRTHDAY_YEAR,
-                    mode: 'date',
-                  },
-                  onEnd: _date => {
-                    Keyboard.dismiss();
-                    form.setValue('birthday', _date.toISOString());
-                    form.clearErrors('birthday');
-                  },
-                },
-              })
-            }
-          >
+          <TouchableOpacity onPress={openSelectBirthdayModal}>
             <FormTextInput
               IconLeft={<Icon name="calendar" />}
               label="День рождения"
@@ -242,29 +276,7 @@ export const ProfileEditing: React.FC<
               {...getFormInputProps('birthday')}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate(AppRoutes.StackModals, {
-                screen: ModalsRoutes.Select,
-                params: {
-                  title: 'Выберите пол',
-                  data: Object.values(Gender),
-                  keyExtractor: item => item,
-                  checkedExtractor: (item, currentItem) => item === currentItem,
-                  renderItem: item => (
-                    <TextBase weight="400">{MapGenderToLabel[item]}</TextBase>
-                  ),
-                  defaultValue: form.getValues('gender'),
-                  onSelectionEnd: item => {
-                    Keyboard.dismiss();
-                    //@ts-expect-error
-                    form.setValue('gender', item || '');
-                    item && form.clearErrors('gender');
-                  },
-                } as SelectModalParams<Gender>,
-              })
-            }
-          >
+          <TouchableOpacity onPress={openSelectSexModal}>
             <FormTextInput
               IconRight={
                 <Icon

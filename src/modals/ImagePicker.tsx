@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import * as ImagePickerExpo from 'expo-image-picker';
 
-import ModalWrapper from '#components/ModalWrapper';
+import ModalWrapper from '#components/infrastructure/ModalWrapper';
 
 import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
@@ -17,7 +17,7 @@ import {
 
 import { colors } from '#config';
 
-import useModal from '#hooks/utils/useModal';
+import useModal from '#hooks/useModalState';
 
 export const ImagePicker: React.FC<
   ModalsScreenProps<ModalsRoutes.ImagePicker>
