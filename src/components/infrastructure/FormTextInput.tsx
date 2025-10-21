@@ -13,7 +13,7 @@ import {
 } from 'react-hook-form';
 
 import { ITextInput, TextInput } from '#ui-kit';
-import { MaskedInput } from '#ui-kit/TextInput/MaskedInput';
+import { MaskedInput } from '#ui-kit/Inputs/MaskedInput';
 
 export const animateLayout = (onAnimationEnd = () => {}) => {
   LayoutAnimation.configureNext(

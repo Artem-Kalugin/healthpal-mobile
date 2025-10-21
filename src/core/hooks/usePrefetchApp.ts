@@ -7,9 +7,9 @@ import UserAPI from '#api/User';
 
 import { LocationService } from '#services/Location';
 
-import { delay } from '#utils';
-
 import { store } from '#store';
+
+import { delay } from '../utils';
 
 const prefetchConfig = {
   ifOlderThan: 600,

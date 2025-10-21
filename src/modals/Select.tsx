@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
-import ModalWrapper from '#components/ModalWrapper';
+import ModalWrapper from '#components/infrastructure/ModalWrapper';
 
 import { Button, Checkbox, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
-import useModal from '#hooks/utils/useModal';
+import useModal from '#hooks/useModalState';
 
 const Select: React.FC<ModalsScreenProps<ModalsRoutes.Select>> = props => {
   const modal = useModal(true);

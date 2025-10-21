@@ -12,11 +12,11 @@ import Animated, {
 import { CompositeScreenProps } from '@react-navigation/native';
 import { FlashList, FlashListRef } from '@shopify/flash-list';
 
-import { EmptyListWarning } from '#components/EmptyListWarning';
-import { DoctorCard } from '#components/entities/Doctor/Card';
-import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
-import { PaginatableListFooter } from '#components/PaginatableListFooter';
-import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+import { DoctorCard } from '#components/domain/Doctor/Card';
+import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
+import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
+import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Icon, Loader, TextBase, TextInput, TextSmall } from '#ui-kit';
 import { Tag } from '#ui-kit/Tag';
@@ -33,13 +33,12 @@ import { MapDoctorCategoryToLabel } from '#config/locale';
 import useDebouncedState from '#hooks/useDebouncedState';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
-import { reactSync } from '#utils';
-
 import {
   BEDoctorCategoryResponseDto,
   BEDoctorResponseDto,
 } from '#generated/__entities';
 
+import { reactSync } from '../../core/utils';
 import {
   FOLDABLE_HEADER_INITIAL_HEIGHT,
   SortOptions,

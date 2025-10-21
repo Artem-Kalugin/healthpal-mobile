@@ -3,10 +3,10 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import { CompositeScreenProps } from '@react-navigation/native';
 
-import { EmptyListWarning } from '#components/EmptyListWarning';
-import { DoctorCard } from '#components/entities/Doctor/Card';
-import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
-import { PaginatableListFooter } from '#components/PaginatableListFooter';
+import { DoctorCard } from '#components/domain/Doctor/Card';
+import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
+import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
+import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
 
 import { Loader } from '#ui-kit';
 

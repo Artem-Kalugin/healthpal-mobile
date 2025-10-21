@@ -10,7 +10,7 @@ import {
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
+import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
 
 import {
   Divider,

@@ -13,9 +13,9 @@ import { StackActions } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/FormTextInput';
-import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
-import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+import { FormTextInput } from '#components/infrastructure/FormTextInput';
+import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Button, Icon, Image, TextBase } from '#ui-kit';
 import ButtonGoBack from '#ui-kit/ButtonGoBack';
@@ -40,12 +40,12 @@ import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
-import { reactSync } from '#utils';
-
 import { useDispatch, useSelector } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
 
 import { Gender } from '#generated/schema';
+
+import { reactSync } from '../../core/utils';
 
 const MINIMAL_BIRTHDAY_YEAR = new Date();
 MINIMAL_BIRTHDAY_YEAR.setFullYear(new Date().getFullYear() - 18);

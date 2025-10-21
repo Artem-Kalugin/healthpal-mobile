@@ -13,8 +13,8 @@ import Animated from 'react-native-reanimated';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/FormTextInput';
-import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+import { FormTextInput } from '#components/infrastructure/FormTextInput';
+import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
@@ -35,11 +35,11 @@ import {
 import useAppForm from '#hooks/useAppForm';
 import useErrorHandler from '#hooks/useErrorHandler';
 
-import { reactSync } from '#utils';
-
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
 import { RuntimeActions } from '#store/slices/runtime';
+
+import { reactSync } from '../../core/utils';
 
 export const SignUp: React.FC<
   CompositeScreenProps<

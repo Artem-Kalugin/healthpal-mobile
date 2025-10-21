@@ -13,13 +13,13 @@ import { primaryFontNameMap } from '../Text';
 
 const LABEL_TRANSLATE_Y = -12;
 
-export interface ITextInputLabel {
+export interface IInputLabel {
   value: string;
   hasVisibleValue: boolean;
   isFocused: boolean;
 }
 
-export const TextInputLabel: React.FC<Partial<ITextInputLabel>> = ({
+export const InputLabel: React.FC<Partial<IInputLabel>> = ({
   value = '',
   hasVisibleValue = '',
   isFocused = false,

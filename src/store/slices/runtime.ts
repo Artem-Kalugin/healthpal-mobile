@@ -3,7 +3,7 @@ import Keychain from 'react-native-keychain';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 
-import Debug from '#utils/debug';
+import Logger from '#services/Logger';
 
 import { BELoginResponseDto } from '#generated/__entities';
 
@@ -46,7 +46,7 @@ const runtimeSlice = createSlice({
 
       const { id, registrationComplete } = decoded;
 
-      Debug.log('Set new token', decoded);
+      Logger.log('Set new token', decoded);
 
       state.token = {
         plain: action.payload.accessToken,

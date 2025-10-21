@@ -10,7 +10,7 @@ const consoleStyles = {
   success: 'color: PaleGreen;',
 };
 
-class Debug {
+class Logger {
   static __log(color: any, stylePrefixedText: string, data: any) {
     if (__DEV__) {
       const now = new Date();
@@ -71,4 +71,4 @@ class Debug {
   }
 }
 
-export default Debug;
+export default Logger;

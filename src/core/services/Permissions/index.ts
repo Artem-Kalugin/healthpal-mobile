@@ -11,7 +11,7 @@ import {
 
 import { toast } from 'react-hot-toast/headless';
 
-import Debug from '#utils/debug';
+import Logger from '#services/Logger';
 
 import { permissionsAlertsConfigs } from './config';
 import { PermissionRequestConfig, RequestedPermission } from './types';
@@ -61,10 +61,10 @@ export class PermissionManager {
     originalStatus: PermissionStatus;
     requestStatus?: PermissionStatus;
   }> {
-    Debug.custom('permission', '---CHECK---PERMISSION---', permission);
+    Logger.custom('permission', '---CHECK---PERMISSION---', permission);
     const status = await check(permission);
 
-    Debug.custom('permission', 'status initial', status);
+    Logger.custom('permission', 'status initial', status);
     if (status === RESULTS.UNAVAILABLE) {
       config.toastForUnavailablePermission &&
         toast(config.toastForUnavailablePermission);
@@ -76,7 +76,7 @@ export class PermissionManager {
     }
 
     if (silent) {
-      Debug.custom('permission', 'silent mode, returning', status);
+      Logger.custom('permission', 'silent mode, returning', status);
       return { allowed: false, originalStatus: status };
     }
 
@@ -87,7 +87,7 @@ export class PermissionManager {
 
     const result = await request(permission);
 
-    Debug.custom('permission', 'status after request', result);
+    Logger.custom('permission', 'status after request', result);
 
     if (grantedLikeStatuses.includes(result)) {
       return { allowed: true, originalStatus: status, requestStatus: result };
@@ -129,14 +129,14 @@ export class PermissionManager {
       const alertConfig = config ?? permissionsAlertsConfigs.get(permission);
 
       if (!alertConfig) {
-        Debug.error('No permission alert config specified');
+        Logger.error('No permission alert config specified');
         return { allowed: false, originalStatus: RESULTS.DENIED };
       }
 
       return this._request(permission[0], alertConfig, silent);
     }
 
-    Debug.error('add multi permission request feature :)');
+    Logger.error('add multi permission request feature :)');
     return { allowed: false, originalStatus: RESULTS.DENIED };
   }
 }

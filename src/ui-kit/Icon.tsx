@@ -53,9 +53,9 @@ import star from '#assets/icons/star.svg';
 import userEdit from '#assets/icons/user-edit.svg';
 import user from '#assets/icons/user.svg';
 
-import { colors } from '#config';
+import Logger from '#services/Logger';
 
-import Debug from '#utils/debug';
+import { colors } from '#config';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
@@ -125,7 +125,7 @@ export const Icon: React.FC<Partial<IIcon>> = ({
   const iconReference = IconFiles[name];
 
   if (!iconReference) {
-    Debug.error('no icon for name: ', name);
+    Logger.error('no icon for name: ', name);
     return null;
   }
 

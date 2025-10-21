@@ -1,6 +1,6 @@
 import { FetchArgs } from '#api/types';
 
-import Debug from '#utils/debug';
+import Logger from '#services/Logger';
 
 import {
   bodyInterceptor,
@@ -44,7 +44,7 @@ export class FetchService {
         context.headers.Authorization = Authorization;
       }
 
-      Debug.requestStart(`${method.toUpperCase()} ${urlString}`);
+      Logger.requestStart(`${method.toUpperCase()} ${urlString}`);
 
       urlSaved = urlObj.toString();
       const result = await fetchWithTimeout(urlObj.toString(), {
@@ -58,9 +58,9 @@ export class FetchService {
       status = result.status;
 
       if (result.ok) {
-        Debug.requestSuccess(`${method.toUpperCase()} ${urlWithPath}`);
+        Logger.requestSuccess(`${method.toUpperCase()} ${urlWithPath}`);
       } else {
-        Debug.requestError(urlSaved!, resultUnwrapped);
+        Logger.requestError(urlSaved!, resultUnwrapped);
       }
 
       return {
@@ -72,7 +72,7 @@ export class FetchService {
         },
       };
     } catch (err: any) {
-      Debug.requestError('FetchService.query error', err);
+      Logger.requestError('FetchService.query error', err);
     }
   };
 }

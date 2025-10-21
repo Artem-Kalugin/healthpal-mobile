@@ -15,12 +15,11 @@ import { Image } from 'expo-image';
 import chunk from 'lodash/chunk';
 import { toast } from 'react-hot-toast/headless';
 
-import { DoctorsCategoryThumbnail } from '#components/entities/DoctorsCategory/Thumbnail';
-import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
-import Swiper from '#components/Swiper';
-import { ISwiperRef } from '#components/Swiper/Swiper';
+import { DoctorsCategoryThumbnail } from '#components/domain/DoctorsCategory/Thumbnail';
+import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
 
 import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
+import Swiper, { ISwiperRef } from '#ui-kit/Swiper';
 
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';

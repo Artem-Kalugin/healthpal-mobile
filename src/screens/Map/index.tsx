@@ -14,9 +14,9 @@ import { FlashList } from '@shopify/flash-list';
 import { distance, point as turfPoint } from '@turf/turf';
 import { debounce } from 'lodash';
 
-import { BlinkAnimator } from '#components/BlinkAnimator';
-import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
-import { MedicalCenterMarker } from '#components/entities/MedicalCenter/Marker';
+import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
+import { MedicalCenterMarker } from '#components/domain/MedicalCenter/Marker';
+import { BlinkAnimator } from '#components/infrastructure/BlinkAnimator';
 
 import { Icon, TextInput } from '#ui-kit';
 
@@ -30,10 +30,9 @@ import { shadow } from '#config';
 
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
-import { reactSync } from '#utils';
-
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
 
+import { reactSync } from '../../core/utils';
 import {
   CENTER_ON_MARKER_DISTANCE_THRESHOLD,
   getSortedMedicalCentersByDistance,

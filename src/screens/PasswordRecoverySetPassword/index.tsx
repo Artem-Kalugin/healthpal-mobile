@@ -12,9 +12,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/FormTextInput';
-import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
-import TapKeyboardDissmissArea from '#components/TapKeyboardDismissArea';
+import { FormTextInput } from '#components/infrastructure/FormTextInput';
+import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 

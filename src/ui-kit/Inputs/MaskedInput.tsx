@@ -1,6 +1,5 @@
 import React, { ReactNode, RefObject, useState } from 'react';
 import {
-  TextInput as _TextInput,
   BlurEvent,
   FocusEvent,
   StyleProp,
@@ -11,25 +10,27 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import {
+  MaskedTextInput,
+  MaskedTextInputRef,
+} from 'react-native-advanced-input-mask';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { colors, IS_IOS } from '#config';
+import { colors, IS_IOS, PHONE_MASK } from '#config';
 
 import { Icon } from '../Icon';
 import { primaryFontNameMap } from '../Text';
-import { TextInputErrorBlock } from './ErrorBlock';
-import { TextInputLabel } from './Label';
+import { InputErrorBlock } from './InputErrorBlock';
+import { InputLabel } from './InputLabel';
 
 export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
-export type ITextInput = Omit<
-  TextInputProps,
-  'onChange' | 'onBlur' | 'onFocus' | 'onChangeText'
-> & {
+type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   errors?: string[];
+  mask: string;
+  onChange: (masked: string, unmasked: string) => void;
   size: 'default' | 'small';
-  onChange: TextInputProps['onChangeText'];
-  inputRef: RefObject<_TextInput | null>;
+  inputRef: RefObject<MaskedTextInputRef | null>;
   IconRight: ReactNode;
   IconLeft: ReactNode;
   outlineType: ITextInputOutline;
@@ -38,20 +39,18 @@ export type ITextInput = Omit<
   androidFixScrollMultiline: boolean;
   label: string;
   onErase?: () => void;
-  onBlur: (e?: BlurEvent) => void;
-  onFocus: (e?: FocusEvent) => void;
   style: StyleProp<ViewStyle>;
   containerStyle: StyleProp<ViewStyle>;
   inputWrapperStyle: StyleProp<ViewStyle>;
 };
 
-export const TextInput: React.FC<Partial<ITextInput>> = ({
+export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
+  mask = PHONE_MASK,
   value = '',
   multiline = false,
   pointerEvents = undefined,
   inputRef,
   outlineType,
-  autoComplete = 'off',
   size = 'default',
   label = '',
   showEraseOnlyIfFocused = true,
@@ -94,7 +93,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
   ) : showEraseIcon ? (
     <TouchableOpacity
       onPress={() => {
-        (onErase || onChange)('');
+        (onErase || onChange)('', '');
       }}
     >
       <Icon name="cross" />
@@ -120,8 +119,8 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
           </View>
         )}
 
-        <TextInputLabel
-          hasVisibleValue={!!(value || props.placeholder)}
+        <InputLabel
+          hasVisibleValue={!!(props.placeholder === '' ? value : value || mask)}
           isFocused={isFocused}
           value={label}
         />
@@ -131,14 +130,14 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
           pointerEvents={pointerEvents}
           style={styles.wrapper}
         >
-          <_TextInput
+          <MaskedTextInput
             ref={inputRef}
             autoCapitalize={autoCapitalize}
-            autoComplete={autoComplete}
+            autocomplete={false}
             autoFocus={autoFocus}
             editable={!disabled}
             enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
-            maxLength={50}
+            mask={mask}
             multiline={_multiline}
             placeholderTextColor={colors.grayscale['400']}
             pointerEvents={pointerEvents}
@@ -146,18 +145,19 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
             selectionColor={colors.grayscale['700']}
             style={[
               styles.inputShared,
+              styles.flex,
               size === 'small' && styles.inputSmall,
               size === 'default' && styles.inputDefault,
               StyleSheet.flatten(style),
             ]}
             submitBehavior={submitBehavior}
-            /*https://github.com/facebook/react-native/issues/47106 */
             textContentType="oneTimeCode"
             value={value}
             onBlur={_onBlur}
             onChangeText={onChange}
             onFocus={_onFocus}
             {...props}
+            placeholder={!isFocused ? props.placeholder : ''}
           />
         </View>
 
@@ -170,7 +170,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
         </Animated.View>
       </View>
 
-      <TextInputErrorBlock errors={errors} />
+      <InputErrorBlock errors={errors} />
     </View>
   );
 };
@@ -191,7 +191,7 @@ const getStyles = ({
   outlineType: ITextInputOutline;
   label: string;
   disabled: boolean;
-  multiline: ITextInput['multiline'];
+  multiline: IMaskedInput['multiline'];
 }) =>
   StyleSheet.create({
     container: {
@@ -204,10 +204,12 @@ const getStyles = ({
       borderRadius: 12,
       backgroundColor: colors.grayscale['50'],
     },
-    inputShared: {
+    flex: {
       flex: 1,
+    },
+    inputShared: {
       maxHeight: 300,
-      paddingHorizontal: 8,
+
       color: disabled ? colors.grayscale['200'] : colors.black,
       fontSize: 15,
       fontFamily: primaryFontNameMap[400],
@@ -230,6 +232,8 @@ const getStyles = ({
     },
     wrapper: {
       flex: 1,
+      flexDirection: 'row',
+      paddingHorizontal: 8,
     },
     iconLeft: {
       paddingLeft: 8,

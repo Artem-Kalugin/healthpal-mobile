@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 
-import Debug from '#utils/debug';
+import Logger from '#services/Logger';
 
 import { store } from '#store';
 import { AppActions } from '#store/slices/app';
@@ -36,7 +36,7 @@ export class LocationService {
 
       const res = await Location.getLastKnownPositionAsync({});
 
-      Debug.custom(
+      Logger.custom(
         'location',
         `got user location in ${((performance.now() - perf) / 1000).toFixed(3)}s`,
         JSON.stringify(res),
@@ -44,7 +44,7 @@ export class LocationService {
 
       return res;
     } catch (err) {
-      Debug.error('LocationService.getCurrentLocation failed', err);
+      Logger.error('LocationService.getCurrentLocation failed', err);
     }
   }
 }

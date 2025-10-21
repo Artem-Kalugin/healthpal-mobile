@@ -5,11 +5,11 @@ import { colors } from '#config';
 
 import { TextXS } from '../Text';
 
-export interface ITextInputErrorBlock {
+export interface IInputErrorBlock {
   errors: string[];
 }
 
-export const TextInputErrorBlock: React.FC<Partial<ITextInputErrorBlock>> = ({
+export const InputErrorBlock: React.FC<Partial<IInputErrorBlock>> = ({
   errors,
 }) => {
   const notEmptyErrors = errors?.filter(el => el);

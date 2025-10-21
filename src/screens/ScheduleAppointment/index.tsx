@@ -7,8 +7,8 @@ import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
-import HeaderWithThreeSections from '#components/HeaderWithThreeSections';
-import ListExtender from '#components/ListExtender';
+import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import ListExtender from '#components/infrastructure/ListExtender';
 
 import { Button, Calendar, Loader, TextSmall, TextXL } from '#ui-kit';
 import { toDateString } from '#ui-kit/Calendar/utils';

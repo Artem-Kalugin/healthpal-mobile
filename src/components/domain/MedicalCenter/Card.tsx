@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -6,8 +6,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-
-import { Image as ExpoImage } from 'expo-image';
 
 import { Divider, Icon, Image, Rating, TextSmall, TextXS } from '#ui-kit';
 

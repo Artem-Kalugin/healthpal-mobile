@@ -1,5 +1,6 @@
 import React, { ReactNode, RefObject, useState } from 'react';
 import {
+  TextInput as _TextInput,
   BlurEvent,
   FocusEvent,
   StyleProp,
@@ -10,27 +11,25 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {
-  MaskedTextInput,
-  MaskedTextInputRef,
-} from 'react-native-advanced-input-mask';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { colors, IS_IOS, PHONE_MASK } from '#config';
+import { colors, IS_IOS } from '#config';
 
 import { Icon } from '../Icon';
 import { primaryFontNameMap } from '../Text';
-import { TextInputErrorBlock } from './ErrorBlock';
-import { TextInputLabel } from './Label';
+import { InputErrorBlock } from './InputErrorBlock';
+import { InputLabel } from './InputLabel';
 
 export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
-type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
+export type ITextInput = Omit<
+  TextInputProps,
+  'onChange' | 'onBlur' | 'onFocus' | 'onChangeText'
+> & {
   errors?: string[];
-  mask: string;
-  onChange: (masked: string, unmasked: string) => void;
   size: 'default' | 'small';
-  inputRef: RefObject<MaskedTextInputRef | null>;
+  onChange: TextInputProps['onChangeText'];
+  inputRef: RefObject<_TextInput | null>;
   IconRight: ReactNode;
   IconLeft: ReactNode;
   outlineType: ITextInputOutline;
@@ -39,18 +38,20 @@ type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   androidFixScrollMultiline: boolean;
   label: string;
   onErase?: () => void;
+  onBlur: (e?: BlurEvent) => void;
+  onFocus: (e?: FocusEvent) => void;
   style: StyleProp<ViewStyle>;
   containerStyle: StyleProp<ViewStyle>;
   inputWrapperStyle: StyleProp<ViewStyle>;
 };
 
-export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
-  mask = PHONE_MASK,
+export const TextInput: React.FC<Partial<ITextInput>> = ({
   value = '',
   multiline = false,
   pointerEvents = undefined,
   inputRef,
   outlineType,
+  autoComplete = 'off',
   size = 'default',
   label = '',
   showEraseOnlyIfFocused = true,
@@ -93,7 +94,7 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
   ) : showEraseIcon ? (
     <TouchableOpacity
       onPress={() => {
-        (onErase || onChange)('', '');
+        (onErase || onChange)('');
       }}
     >
       <Icon name="cross" />
@@ -119,8 +120,8 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
           </View>
         )}
 
-        <TextInputLabel
-          hasVisibleValue={!!(props.placeholder === '' ? value : value || mask)}
+        <InputLabel
+          hasVisibleValue={!!(value || props.placeholder)}
           isFocused={isFocused}
           value={label}
         />
@@ -130,14 +131,14 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
           pointerEvents={pointerEvents}
           style={styles.wrapper}
         >
-          <MaskedTextInput
+          <_TextInput
             ref={inputRef}
             autoCapitalize={autoCapitalize}
-            autocomplete={false}
+            autoComplete={autoComplete}
             autoFocus={autoFocus}
             editable={!disabled}
             enablesReturnKeyAutomatically={enablesReturnKeyAutomatically}
-            mask={mask}
+            maxLength={50}
             multiline={_multiline}
             placeholderTextColor={colors.grayscale['400']}
             pointerEvents={pointerEvents}
@@ -145,19 +146,18 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
             selectionColor={colors.grayscale['700']}
             style={[
               styles.inputShared,
-              styles.flex,
               size === 'small' && styles.inputSmall,
               size === 'default' && styles.inputDefault,
               StyleSheet.flatten(style),
             ]}
             submitBehavior={submitBehavior}
+            /*https://github.com/facebook/react-native/issues/47106 */
             textContentType="oneTimeCode"
             value={value}
             onBlur={_onBlur}
             onChangeText={onChange}
             onFocus={_onFocus}
             {...props}
-            placeholder={!isFocused ? props.placeholder : ''}
           />
         </View>
 
@@ -170,7 +170,7 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
         </Animated.View>
       </View>
 
-      <TextInputErrorBlock errors={errors} />
+      <InputErrorBlock errors={errors} />
     </View>
   );
 };
@@ -191,7 +191,7 @@ const getStyles = ({
   outlineType: ITextInputOutline;
   label: string;
   disabled: boolean;
-  multiline: IMaskedInput['multiline'];
+  multiline: ITextInput['multiline'];
 }) =>
   StyleSheet.create({
     container: {
@@ -204,12 +204,10 @@ const getStyles = ({
       borderRadius: 12,
       backgroundColor: colors.grayscale['50'],
     },
-    flex: {
-      flex: 1,
-    },
     inputShared: {
+      flex: 1,
       maxHeight: 300,
-
+      paddingHorizontal: 8,
       color: disabled ? colors.grayscale['200'] : colors.black,
       fontSize: 15,
       fontFamily: primaryFontNameMap[400],
@@ -232,8 +230,6 @@ const getStyles = ({
     },
     wrapper: {
       flex: 1,
-      flexDirection: 'row',
-      paddingHorizontal: 8,
     },
     iconLeft: {
       paddingLeft: 8,

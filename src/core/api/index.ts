@@ -3,13 +3,12 @@ import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import { REHYDRATE } from 'redux-persist';
 
 import { FetchService } from '#services/Fetch';
-
-import { delay } from '#utils';
-import Debug from '#utils/debug';
+import Logger from '#services/Logger';
 
 import { RootState, Store } from '#store';
 import { RuntimeActions, TokenDecoded } from '#store/slices/runtime';
 
+import { delay } from '../utils';
 import { TagsAppointmentAPI } from './Appointments/types';
 import { BEError, FetchArgs } from './types';
 import { TagsUserAPI } from './User/types';
@@ -62,7 +61,7 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
 
       return response.data;
     } catch (err) {
-      Debug.error('Token refresh failed', err);
+      Logger.error('Token refresh failed', err);
       return undefined;
     }
   })();
@@ -73,7 +72,7 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
 const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
   const { url, method = 'GET', data, params, path } = args;
   !process.env.EXPO_PUBLIC_API_URL &&
-    Debug.error('no API_URL available, make sure .env file inited');
+    Logger.error('no API_URL available, make sure .env file inited');
 
   let runtimeToken = (api.getState() as RootState).runtime.token;
 

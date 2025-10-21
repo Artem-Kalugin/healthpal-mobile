@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import * as SystemUI from 'expo-system-ui';
 
-import { FakeSplashScreenOverlay } from '#components/FakeSplashScreenOverlay';
+import { FakeSplashScreenOverlay } from '#components/infrastructure/FakeSplashScreenOverlay';
 
 import RootStack from '#navigation';
 

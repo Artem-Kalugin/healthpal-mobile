@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 
 import DatePicker from 'react-native-date-picker';
 
-import ModalWrapper from '#components/ModalWrapper';
+import ModalWrapper from '#components/infrastructure/ModalWrapper';
 
 import { Button, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
-import useModal from '#hooks/utils/useModal';
+import useModal from '#hooks/useModalState';
 
 export const DateTimePicker: React.FC<
   ModalsScreenProps<ModalsRoutes.DateTimePicker>
