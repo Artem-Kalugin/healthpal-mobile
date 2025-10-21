@@ -25,9 +25,10 @@ import {
 import { FavoritesRoutes } from '#navigation/Main/Favorites/types';
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
+import { ModalsRoutes } from '#navigation/Modals/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
-import { RtkAppApi } from '#api';
+import { logOut } from '#api';
 import { useGetCurrentUserQuery } from '#api/User';
 
 import {
@@ -38,8 +39,9 @@ import {
   SAFE_ZONE_BOTTOM,
 } from '#config';
 
-import { useDispatch } from '#store';
-import { RuntimeActions } from '#store/slices/runtime';
+import { store } from '#store';
+
+import { formatPhone } from './utils';
 
 export const Profile: React.FC<
   CompositeScreenProps<
@@ -50,8 +52,6 @@ export const Profile: React.FC<
     >
   >
 > = props => {
-  const dispatch = useDispatch();
-
   const userQuery = useGetCurrentUserQuery(null);
 
   const settingsItems: {
@@ -105,8 +105,26 @@ export const Profile: React.FC<
       label: 'Выйти',
       icon: 'logOut',
       onPress: () => {
-        dispatch(RuntimeActions.setToken(undefined));
-        dispatch(RtkAppApi.util.resetApiState());
+        props.navigation.navigate(AppRoutes.StackModals, {
+          screen: ModalsRoutes.Dialog,
+          params: {
+            title: 'Выйти из аккаунта',
+            text: 'Вы действительно хотите выйти из аккаунта?',
+            confirmButtonProps: {
+              children: 'Да, выйти',
+              onPress: (navigation, modal) => {
+                logOut(store);
+                modal.close();
+              },
+            },
+            declineButtonProps: {
+              children: 'Нет',
+              onPress(navigation, modal) {
+                modal.close();
+              },
+            },
+          },
+        });
       },
     },
   ];
@@ -140,10 +158,16 @@ export const Profile: React.FC<
             {userQuery.data?.name} {userQuery.data?.surname}
           </TextBase>
           <TextSmall
+            color={colors.main.midnightBlue}
+            weight="300"
+          >
+            @{userQuery.data?.nickname}
+          </TextSmall>
+          <TextSmall
             color={colors.grayscale['500']}
             weight="400"
           >
-            +123 856479683
+            {formatPhone(userQuery.data?.phone!)}
           </TextSmall>
         </View>
         <FlatList

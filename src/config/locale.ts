@@ -17,7 +17,20 @@ export const MapDoctorCategoryToLabel: { [x in DoctorCategoryType]: string } = {
   [DoctorCategoryType.neurology]: 'Неврологи',
   [DoctorCategoryType.gastroenterology]: 'Гастроэнтерологи',
   [DoctorCategoryType.laboratory]: 'Лаборатория',
-  [DoctorCategoryType.vaccination]: 'Вакцинация',
+  [DoctorCategoryType.vaccination]: 'Инфекционисты',
+};
+
+export const MapDoctorCategoryToDoctorLabel: {
+  [x in DoctorCategoryType]: string;
+} = {
+  [DoctorCategoryType.dentistry]: 'Стоматолог',
+  [DoctorCategoryType.cardiology]: 'Кардиолог',
+  [DoctorCategoryType.pulmonology]: 'Пульмонолог',
+  [DoctorCategoryType.general]: 'Терапевт',
+  [DoctorCategoryType.neurology]: 'Невролог',
+  [DoctorCategoryType.gastroenterology]: 'Гастроэнтеролог',
+  [DoctorCategoryType.laboratory]: 'Врач-лаборант',
+  [DoctorCategoryType.vaccination]: 'Инфекционист',
 };
 
 export const MapMedicalCenterTypeToLabel: { [x in MedicalCenterType]: string } =

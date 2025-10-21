@@ -82,6 +82,7 @@ export const persistor = persistStore(store);
 
 // store.dispatch(RtkAppApi.util.resetApiState());
 
+export type Store = typeof store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

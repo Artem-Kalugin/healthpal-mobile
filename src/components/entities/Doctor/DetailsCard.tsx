@@ -10,7 +10,7 @@ import {
 import { Divider, Icon, Image, TextBase, TextSmall, TextXS } from '#ui-kit';
 
 import { colors, shadow } from '#config';
-import { MapDoctorCategoryToLabel } from '#config/locale';
+import { MapDoctorCategoryToDoctorLabel } from '#config/locale';
 
 import { BEDoctorResponseDto } from '#generated/__entities';
 
@@ -46,7 +46,7 @@ export const DoctorDetailsCard: React.FC<Partial<IDoctorDetailsCard>> = ({
         <Divider />
         <TextSmall weight="600">
           {item?.category?.type &&
-            MapDoctorCategoryToLabel[item?.category?.type]}
+            MapDoctorCategoryToDoctorLabel[item?.category?.type]}
         </TextSmall>
         <View style={styles.locationContainer}>
           <Icon
