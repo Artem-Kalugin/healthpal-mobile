@@ -167,7 +167,7 @@ export const Profile: React.FC<
             color={colors.grayscale['500']}
             weight="400"
           >
-            {formatPhone(userQuery.data?.phone!)}
+            {userQuery.data?.phone && formatPhone(userQuery.data?.phone)}
           </TextSmall>
         </View>
         <FlatList

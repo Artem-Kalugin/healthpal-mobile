@@ -40,6 +40,8 @@ import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
+import { reactSync } from '#utils';
+
 import { useDispatch, useSelector } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
 
@@ -135,6 +137,55 @@ export const ProfileEditing: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
+  const openSelectBirthdayModal = async () => {
+    Keyboard.dismiss();
+
+    await reactSync();
+
+    props.navigation.navigate(AppRoutes.StackModals, {
+      screen: ModalsRoutes.DateTimePicker,
+      params: {
+        pickerProps: {
+          maximumDate: MINIMAL_BIRTHDAY_YEAR,
+          date: form.getValues('birthday')
+            ? new Date(form.getValues('birthday'))
+            : MINIMAL_BIRTHDAY_YEAR,
+          mode: 'date',
+        },
+        onEnd: _date => {
+          Keyboard.dismiss();
+          form.setValue('birthday', _date.toISOString());
+          form.clearErrors('birthday');
+        },
+      },
+    });
+  };
+
+  const openSelectSexModal = async () => {
+    Keyboard.dismiss();
+
+    await reactSync();
+
+    props.navigation.navigate(AppRoutes.StackModals, {
+      screen: ModalsRoutes.Select,
+      params: {
+        title: 'Выберите пол',
+        data: Object.values(Gender),
+        keyExtractor: item => item,
+        checkedExtractor: (item, currentItem) => item === currentItem,
+        renderItem: item => (
+          <TextBase weight="400">{MapGenderToLabel[item]}</TextBase>
+        ),
+        defaultValue: form.getValues('gender'),
+        onSelectionEnd: item => {
+          Keyboard.dismiss();
+          //@ts-expect-error
+          form.setValue('gender', item || '');
+          item && form.clearErrors('gender');
+        },
+      } as SelectModalParams<Gender>,
+    });
+  };
   useBEErrorHandler(targetMetadata);
 
   return (
@@ -210,27 +261,7 @@ export const ProfileEditing: React.FC<
             submitBehavior="blurAndSubmit"
             {...getFormInputProps('nickname')}
           />
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate(AppRoutes.StackModals, {
-                screen: ModalsRoutes.DateTimePicker,
-                params: {
-                  pickerProps: {
-                    maximumDate: MINIMAL_BIRTHDAY_YEAR,
-                    date: form.getValues('birthday')
-                      ? new Date(form.getValues('birthday'))
-                      : MINIMAL_BIRTHDAY_YEAR,
-                    mode: 'date',
-                  },
-                  onEnd: _date => {
-                    Keyboard.dismiss();
-                    form.setValue('birthday', _date.toISOString());
-                    form.clearErrors('birthday');
-                  },
-                },
-              })
-            }
-          >
+          <TouchableOpacity onPress={openSelectBirthdayModal}>
             <FormTextInput
               IconLeft={<Icon name="calendar" />}
               label="День рождения"
@@ -242,29 +273,7 @@ export const ProfileEditing: React.FC<
               {...getFormInputProps('birthday')}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate(AppRoutes.StackModals, {
-                screen: ModalsRoutes.Select,
-                params: {
-                  title: 'Выберите пол',
-                  data: Object.values(Gender),
-                  keyExtractor: item => item,
-                  checkedExtractor: (item, currentItem) => item === currentItem,
-                  renderItem: item => (
-                    <TextBase weight="400">{MapGenderToLabel[item]}</TextBase>
-                  ),
-                  defaultValue: form.getValues('gender'),
-                  onSelectionEnd: item => {
-                    Keyboard.dismiss();
-                    //@ts-expect-error
-                    form.setValue('gender', item || '');
-                    item && form.clearErrors('gender');
-                  },
-                } as SelectModalParams<Gender>,
-              })
-            }
-          >
+          <TouchableOpacity onPress={openSelectSexModal}>
             <FormTextInput
               IconRight={
                 <Icon

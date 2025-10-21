@@ -1,12 +1,6 @@
 /* eslint-disable max-lines */
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  FlatList,
-  Keyboard,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -16,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { CompositeScreenProps } from '@react-navigation/native';
+import { FlashList, FlashListRef } from '@shopify/flash-list';
 
 import { EmptyListWarning } from '#components/EmptyListWarning';
 import { DoctorCard } from '#components/entities/Doctor/Card';
@@ -38,7 +33,7 @@ import { MapDoctorCategoryToLabel } from '#config/locale';
 import useDebouncedState from '#hooks/useDebouncedState';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
-import { delay } from '#utils';
+import { reactSync } from '#utils';
 
 import {
   BEDoctorCategoryResponseDto,
@@ -51,6 +46,9 @@ import {
   SortOptionsDTO,
 } from './config';
 
+const AnimatedFlashList = Animated.createAnimatedComponent(
+  FlashList<BEDoctorResponseDto>,
+);
 const fakeAllCategory = {
   id: undefined,
   type: undefined,
@@ -82,8 +80,8 @@ export const Search: React.FC<
     },
   });
   const categoriesScrollRef =
-    useRef<FlatList<BEDoctorCategoryResponseDto>>(null);
-  const doctorsListRef = useRef<FlatList<BEDoctorResponseDto[]>>(null);
+    useRef<FlashListRef<BEDoctorCategoryResponseDto>>(null);
+  const doctorsListRef = useRef<FlashListRef<BEDoctorResponseDto[]>>(null);
   const [foldableContainerHeight, setFoldableContainerHeight] = useState(
     FOLDABLE_HEADER_INITIAL_HEIGHT,
   );
@@ -93,10 +91,9 @@ export const Search: React.FC<
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const headerHeight = foldableContainerHeight;
-  const queryFullfiled =
-    (searchQuery.isSuccess || searchQuery.isError) && !searchQuery.isFetching;
 
-  const resetListPosition = () => {
+  const resetListPosition = async () => {
+    await reactSync();
     doctorsListRef.current?.scrollToOffset({
       offset: 0,
       animated: false,
@@ -107,7 +104,7 @@ export const Search: React.FC<
     item: BEDoctorCategoryResponseDto,
     initial = false,
   ) => {
-    await delay(0);
+    await reactSync();
 
     if (initial) {
       if (isCategoriesInitalyScrolled.current) {
@@ -119,6 +116,7 @@ export const Search: React.FC<
 
     categoriesScrollRef.current?.scrollToItem({
       item,
+      viewOffset: -TAGS_LIST_PADDING_HORIZONTAL / 2,
       viewPosition: 0.5,
       animated: !initial,
     });
@@ -129,23 +127,15 @@ export const Search: React.FC<
   }, [activeCategory, debouncedSearchFor, sort]);
 
   useEffect(() => {
+    if (searchQuery.fulfilledTimeStamp) {
+      setIsRefreshing(false);
+    }
+
     if (isQueryChangingSource.current) {
       resetListPosition();
       isQueryChangingSource.current = false;
     }
-  }, [searchQuery.data]);
-
-  useEffect(() => {
-    if (searchQuery.data) {
-      resetListPosition();
-    }
-  }, [!!searchQuery.data]);
-
-  useEffect(() => {
-    if (queryFullfiled) {
-      setIsRefreshing(false);
-    }
-  }, [queryFullfiled]);
+  }, [searchQuery.fulfilledTimeStamp]);
 
   const handler = useAnimatedScrollHandler({
     onScroll: event => {
@@ -176,6 +166,23 @@ export const Search: React.FC<
     (searchQuery.data?.pages
       .map(el => el.data)
       .flat() as unknown as BEDoctorResponseDto[]) || [];
+
+  const renderDoctorCard = useCallback(
+    ({ item }: { item: BEDoctorResponseDto }) => (
+      <View style={styles.cardWrapper}>
+        <DoctorCard
+          item={item}
+          onPress={() =>
+            props.navigation.navigate(MainRoutes.DoctorDetails, {
+              defaultItem: item,
+              id: item.id,
+            })
+          }
+        />
+      </View>
+    ),
+    [],
+  );
 
   return (
     <View style={styles.flex}>
@@ -210,34 +217,32 @@ export const Search: React.FC<
                 onSubmitEditing={Keyboard.dismiss}
               />
             </View>
-            <FlatList
+            <FlashList
               ref={categoriesScrollRef}
               horizontal
-              contentContainerStyle={styles.tagsContainer}
+              contentContainerStyle={styles.tagsListContent}
               data={[
                 fakeAllCategory,
                 ...props.route.params.availableCategories,
               ]}
-              disableVirtualization={true}
-              initialNumToRender={
-                props.route.params.availableCategories.length + 1
-              }
-              renderItem={({ item, index }) => (
-                <Tag
-                  key={item.id}
-                  active={item.type === activeCategory?.type}
-                  isLoading={
-                    activeCategory === item &&
-                    (searchQuery.isLoading || searchQuery.isFetching)
-                  }
-                  value={
-                    item.type ? MapDoctorCategoryToLabel[item.type] : 'Все'
-                  }
-                  onPress={() => {
-                    !searchQuery.isFetching && setActiveCategory(item);
-                    scrollNavbarToCategory(item);
-                  }}
-                />
+              renderItem={({ item }) => (
+                <View style={styles.tagWrapper}>
+                  <Tag
+                    key={item.id}
+                    active={item.type === activeCategory?.type}
+                    isLoading={
+                      activeCategory === item &&
+                      (searchQuery.isLoading || searchQuery.isFetching)
+                    }
+                    value={
+                      item.type ? MapDoctorCategoryToLabel[item.type] : 'Все'
+                    }
+                    onPress={() => {
+                      !searchQuery.isFetching && setActiveCategory(item);
+                      scrollNavbarToCategory(item);
+                    }}
+                  />
+                </View>
               )}
               showsHorizontalScrollIndicator={false}
               style={styles.tagsList}
@@ -293,13 +298,14 @@ export const Search: React.FC<
         </View>
       </View>
       {!!headerHeight && (
-        <Animated.FlatList
+        <AnimatedFlashList
+          //@ts-expect-error
           ref={doctorsListRef}
           automaticallyAdjustContentInsets={true}
           contentContainerStyle={styles.cardsListContent}
           contentInsetAdjustmentBehavior="always"
           data={listData}
-          initialNumToRender={4}
+          initialNumToRender={5}
           keyboardShouldPersistTaps="never"
           ListEmptyComponent={
             searchQuery.isLoading ? (
@@ -328,21 +334,12 @@ export const Search: React.FC<
               }}
             />
           }
+          maintainVisibleContentPosition={{
+            disabled: true,
+          }}
           progressViewOffset={headerHeight + 8}
           refreshing={isRefreshing}
-          renderItem={({ item }) => (
-            <View style={styles.cardWrapper}>
-              <DoctorCard
-                item={item}
-                onPress={() =>
-                  props.navigation.navigate(MainRoutes.DoctorDetails, {
-                    defaultItem: item,
-                    id: item.id,
-                  })
-                }
-              />
-            </View>
-          )}
+          renderItem={renderDoctorCard}
           style={styles.cardsList}
           keyExtractor={item => item.id}
           onEndReached={() =>
@@ -363,6 +360,7 @@ export const Search: React.FC<
   );
 };
 
+const TAGS_LIST_PADDING_HORIZONTAL = 20;
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
@@ -387,12 +385,15 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     backgroundColor: colors.grayscale['100'],
   },
-  tagsContainer: {
-    paddingHorizontal: 24,
-    gap: 8,
+  tagWrapper: {
+    //for some reason flash list dont have gap so we need to implement padding hack with wrapper + container style, TODO: back to gap when fixed
+    paddingHorizontal: 4,
   },
   tagsList: {
     marginBottom: 26,
+  },
+  tagsListContent: {
+    paddingHorizontal: TAGS_LIST_PADDING_HORIZONTAL,
   },
   sectionHeader: {
     flex: 1,

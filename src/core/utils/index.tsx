@@ -64,6 +64,9 @@ export const pluralize = (
   return wordForFive;
 };
 
+//syntax sugar for (await reactSync());
+export const reactSync = () => delay(0);
+
 export const delay = (time = 100) => {
   const _delay = new Promise(resolve => {
     setTimeout(() => {

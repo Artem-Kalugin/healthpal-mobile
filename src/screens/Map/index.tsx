@@ -29,7 +29,7 @@ import { colors, shadow } from '#config';
 
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
-import { delay } from '#utils';
+import { reactSync } from '#utils';
 
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
 
@@ -100,7 +100,7 @@ export const Map: React.FC<
   const debounceSortAndShowMedicalCenters = useMemo(() => {
     return debounce(async (point?: { lat: number; lon: number }) => {
       point && sortMedicalCenters(point.lat, point.lon);
-      await delay(0);
+      await reactSync();
       showMedicalCenters();
     }, 100);
   }, []);
@@ -134,7 +134,7 @@ export const Map: React.FC<
 
   const highlightItem = async (el: BEMedicalCenterResponseDto) => {
     setItemToBlink(el);
-    await delay(0);
+    await reactSync();
     medicalCentersListRef.current?.scrollToIndex({
       animated: true,
       index: 0,

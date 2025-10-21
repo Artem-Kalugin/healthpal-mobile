@@ -36,8 +36,9 @@ export const usePrefetchApp = () => {
     setIsPrefetching(true);
     const storeState = store.getState();
 
+    const shouldShowOnboarding = storeState.app.shouldShowOnboarding;
     const requestToPrefetch = [
-      storeState.app.shouldShowOnboarding && prefetchOnboarding(null),
+      shouldShowOnboarding && prefetchOnboarding(null),
       ...(storeState.runtime.token
         ? [prefetchDoctorCategories(null), prefetchCurrentUser(null), ,]
         : []),
@@ -64,7 +65,7 @@ export const usePrefetchApp = () => {
     const prefetchPromise = Promise.all(requestToPrefetch);
 
     //just for demo to let you see onboarding/splash screen animation
-    await delay(3000);
+    shouldShowOnboarding && (await delay(3000));
     const prefetchOrTimeoutPromise = await prefetchPromise;
 
     setIsPrefetching(false);

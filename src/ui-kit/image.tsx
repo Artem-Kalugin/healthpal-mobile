@@ -59,7 +59,7 @@ export const Image: React.FC<ImageWithPossibleApiSource> = ({
             }
           : source
       }
-      transition={isApiImage ? 100 : props.transition}
+      transition={isApiImage ? 250 : props.transition}
     />
   );
 };

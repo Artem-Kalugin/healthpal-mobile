@@ -13,10 +13,16 @@ const consoleStyles = {
 class Debug {
   static __log(color: any, stylePrefixedText: string, data: any) {
     if (__DEV__) {
+      const now = new Date();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const milliseconds = String(now.getMilliseconds()).padStart(2, '0');
+
+      const timeStamp = `[${minutes}:${seconds}:${milliseconds}]`;
+
       // eslint-disable-next-line no-console
       return console.log(
-        // '%c%s',
-        // color,
+        timeStamp,
         stylePrefixedText,
         data ? '=> ' : '',
         data || '',

@@ -35,7 +35,7 @@ import {
 import useAppForm from '#hooks/useAppForm';
 import useErrorHandler from '#hooks/useErrorHandler';
 
-import { delay } from '#utils';
+import { reactSync } from '#utils';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
@@ -75,7 +75,7 @@ export const SignUp: React.FC<
 
     dispatch(RuntimeActions.setToken(response));
 
-    await delay(0);
+    await reactSync();
 
     props.navigation.navigate(
       //@ts-expect-error
