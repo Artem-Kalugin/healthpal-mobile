@@ -77,12 +77,15 @@ export const SignUp: React.FC<
 
     await reactSync();
 
-    props.navigation.replace(
+    if (response.user.registrationComplete) {
       //@ts-expect-error
-      response.user.registrationComplete
-        ? AppRoutes.StackMain
-        : AppRoutes.ProfileEditing,
-    );
+      props.navigation.replace(AppRoutes.StackMain);
+    } else {
+      props.navigation.replace(AppRoutes.ProfileEditing, {
+        user: response.user,
+      });
+    }
+
     form.reset();
   };
 

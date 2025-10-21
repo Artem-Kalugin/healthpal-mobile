@@ -87,7 +87,9 @@ export const PasswordRecoverySetPassword: React.FC<
         },
       });
     } else {
-      props.navigation.replace(AppRoutes.ProfileEditing);
+      props.navigation.replace(AppRoutes.ProfileEditing, {
+        user: res.user,
+      });
     }
   };
 

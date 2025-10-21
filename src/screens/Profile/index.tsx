@@ -62,7 +62,10 @@ export const Profile: React.FC<
     {
       label: 'Редактировать профиль',
       icon: 'userEdit',
-      onPress: () => props.navigation.navigate(AppRoutes.ProfileEditing),
+      onPress: () =>
+        props.navigation.navigate(AppRoutes.ProfileEditing, {
+          user: userQuery.data,
+        }),
     },
     {
       label: 'Избранное',

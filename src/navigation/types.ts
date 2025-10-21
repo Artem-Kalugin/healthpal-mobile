@@ -1,6 +1,8 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { BEUserResponseDto } from '#generated/__entities';
+
 import { AuthParamList } from './Auth/types';
 import { MainParamList } from './Main/types';
 import { ModalsParamList } from './Modals/types';
@@ -18,7 +20,7 @@ export enum AppRoutes {
 
 export type AppParamList = {
   [AppRoutes.Onboarding]: undefined;
-  [AppRoutes.ProfileEditing]: undefined;
+  [AppRoutes.ProfileEditing]: { user?: BEUserResponseDto };
   [AppRoutes.StackPasswordRecovery]: NavigatorScreenParams<PasswordRecoveryParamList>;
   [AppRoutes.StackAuth]: NavigatorScreenParams<AuthParamList>;
   [AppRoutes.StackMain]: NavigatorScreenParams<MainParamList>;

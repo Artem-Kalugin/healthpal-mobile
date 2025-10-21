@@ -73,7 +73,10 @@ export const ProfileEditing: React.FC<
     ? updateUser
     : completeRegistration;
 
-  const { form, getFormInputProps } = useAppForm(UpdateUserDto, userQuery.data);
+  const { form, getFormInputProps } = useAppForm(
+    UpdateUserDto,
+    props.route.params.user || userQuery.data,
+  );
 
   const [avatar, setAvatar] = useState<null | string>('');
 
