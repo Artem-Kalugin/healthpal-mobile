@@ -276,6 +276,10 @@ export const Search: React.FC<
                   })
                 }
               >
+                <Icon
+                  name="sort"
+                  size={16}
+                />
                 <TextSmall
                   color={colors.grayscale['500']}
                   textAlign="right"
@@ -409,6 +413,9 @@ const styles = StyleSheet.create({
   },
 
   sortButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginLeft: 'auto',
+    gap: 4,
   },
 });

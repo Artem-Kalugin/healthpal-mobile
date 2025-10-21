@@ -2,20 +2,39 @@ import * as Location from 'expo-location';
 
 import Debug from '#utils/debug';
 
+import { store } from '#store';
+import { AppActions } from '#store/slices/app';
+
 import { PermissionManager } from './Permissions';
 import { LocationPermission } from './Permissions/config';
 
 export class LocationService {
   static async getCurrentLocation() {
     try {
-      const permission = await PermissionManager.request(LocationPermission);
+      const isSilent = store.getState().app.isUserBlockedLocationPermission;
 
-      if (!permission) {
+      const permission = await PermissionManager.request(
+        LocationPermission,
+        //@ts-expect-error
+        isSilent,
+      );
+
+      if (
+        (isSilent ||
+          [permission.originalStatus, permission.requestStatus].includes(
+            'blocked',
+          )) &&
+        !permission.allowed
+      ) {
+        store.dispatch(AppActions.setIsUserBlockedLocationPermission(true));
         return;
       }
 
+      store.dispatch(AppActions.setIsUserBlockedLocationPermission(false));
+
       const perf = performance.now();
-      const res = await Location.getCurrentPositionAsync({});
+
+      const res = await Location.getLastKnownPositionAsync({});
 
       Debug.custom(
         'location',
@@ -24,6 +43,8 @@ export class LocationService {
       );
 
       return res;
-    } catch {}
+    } catch (err) {
+      Debug.error('LocationService.getCurrentLocation failed', err);
+    }
   }
 }

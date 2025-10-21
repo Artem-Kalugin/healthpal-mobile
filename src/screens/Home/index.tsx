@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import chunk from 'lodash/chunk';
+import { toast } from 'react-hot-toast/headless';
 
 import { DoctorsCategoryThumbnail } from '#components/entities/DoctorsCategory/Thumbnail';
 import { MedicalCenterCard } from '#components/entities/MedicalCenter/Card';
@@ -232,10 +233,19 @@ export const Home: React.FC<
 
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <TextBase weight="700">Ближайшие медицинские центры</TextBase>
+          <TextBase weight="700">
+            {isUserDecidedLocationUsage && location
+              ? 'Ближайшие медицинские центры'
+              : 'Медицинские центры'}
+          </TextBase>
           <TextSmall
             color={colors.grayscale['500']}
             weight="500"
+            onPress={() => {
+              toast(
+                'Кажется, этого экрана не было в дизайне :( вы все еще можете просмотреть оставшуюся часть приложения',
+              );
+            }}
           >
             Все
           </TextSmall>

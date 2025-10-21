@@ -26,7 +26,6 @@ import gallery from '#assets/icons/gallery.svg';
 import heart from '#assets/icons/heart.svg';
 import homeActive from '#assets/icons/home-active.svg';
 import home from '#assets/icons/home.svg';
-/* PLOP_INJECT_IMPORT */
 import hospitalHeart from '#assets/icons/hospital-heart.svg';
 import hospital from '#assets/icons/hospital.svg';
 import lockSlash from '#assets/icons/lock-slash.svg';
@@ -48,6 +47,8 @@ import search from '#assets/icons/search.svg';
 import sequritySafe from '#assets/icons/sequrity-safe.svg';
 import settings from '#assets/icons/settings.svg';
 import sms from '#assets/icons/sms.svg';
+/* PLOP_INJECT_IMPORT */
+import sort from '#assets/icons/sort.svg';
 import star from '#assets/icons/star.svg';
 import userEdit from '#assets/icons/user-edit.svg';
 import user from '#assets/icons/user.svg';
@@ -58,6 +59,7 @@ import Debug from '#utils/debug';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */
+  sort: { component: sort },
   hospitalHeart: { component: hospitalHeart },
   eye: { component: eye, color: colors.grayscale['400'] },
   eyeSlash: { component: eyeSlash, color: colors.grayscale['400'] },

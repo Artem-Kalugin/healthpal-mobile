@@ -103,7 +103,7 @@ export const DoctorDetails: React.FC<
               size: 24,
             }}
             label="Оценка"
-            value={doctorDetails?.rating}
+            value={+doctorDetails?.rating}
           />
           <StatisticsFact
             icon="comment"
