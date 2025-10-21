@@ -7,14 +7,14 @@ import { FetchService } from '#services/Fetch';
 import { delay } from '#utils';
 import Debug from '#utils/debug';
 
-import { RootState } from '#store';
+import { RootState, Store } from '#store';
 import { RuntimeActions, TokenDecoded } from '#store/slices/runtime';
 
 import { TagsAppointmentAPI } from './Appointments/types';
 import { BEError, FetchArgs } from './types';
 import { TagsUserAPI } from './User/types';
 
-const logOut = async (api: BaseQueryApi) => {
+export const logOut = async (api: Pick<Store, 'dispatch'>) => {
   api.dispatch(RuntimeActions.setToken(undefined));
   //dirty, but waits for unmounts to prevent from bursting backend with auto executed rtk-hooks again
   //ideally make auth guard equivalent on endpoint definition to allow it to be sent without token
@@ -52,8 +52,11 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
         },
         process.env.EXPO_PUBLIC_API_URL,
         undefined,
-        true,
       ))!;
+
+      if (!response.ok) {
+        throw {};
+      }
 
       api.dispatch(RuntimeActions.setToken(response.data));
 
@@ -105,13 +108,18 @@ const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
       },
       process.env.EXPO_PUBLIC_API_URL,
       `Bearer ${accessToken}`,
-      true,
     );
 
-    return req!;
+    if (!req?.ok) {
+      throw req;
+    }
+    return {
+      data: req.data,
+      meta: req.meta,
+    };
   } catch (error) {
     //@ts-expect-error
-    const errorStatus = 'statusCode' in error ? error.statusCode : undefined;
+    const errorStatus = 'status' in error ? error.status : undefined;
 
     if (errorStatus === 401 && runtimeToken) {
       refresh(api, runtimeToken);
@@ -119,19 +127,13 @@ const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
       return await apiBaseQuery(args, api);
     }
 
-    return {
-      error: {
-        status: errorStatus,
-        data: error,
-      },
-    };
+    return { error };
   }
 };
 
 const baseQuery = retry(
   async (args: FetchArgs, _api) => {
     const result = await apiBaseQuery(args, _api);
-
     if (
       'error' in result &&
       result.error &&
@@ -140,6 +142,7 @@ const baseQuery = retry(
         [422, 403, 401, 409, 404, 500, 400].includes(
           result.error?.status as number,
         )) ||
+        //@ts-expect-error
         ('meta' in result.error && result.error.meta?.loggedOut))
     ) {
       retry.fail(result.error);
@@ -152,6 +155,7 @@ const baseQuery = retry(
 
 const RtkAppApi = createApi({
   reducerPath: 'api',
+  //@ts-expect-error
   baseQuery: baseQuery as BaseQueryFn<FetchArgs, unknown, BEError>,
   endpoints: () => ({}),
   extractRehydrationInfo(action, { reducerPath }) {

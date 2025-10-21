@@ -18,9 +18,10 @@ export class FetchService {
     { url, method = 'GET', data, params, path }: FetchArgs,
     baseUrl: string,
     Authorization?: string,
-    shouldBubbleUpError = true,
   ) => {
     let urlSaved: string;
+    let status: number;
+
     try {
       const context: InterceptorContext = {
         baseUrl,
@@ -54,30 +55,24 @@ export class FetchService {
 
       const resultUnwrapped = await result.json();
 
-      if (!result.ok) {
-        throw resultUnwrapped;
+      status = result.status;
+
+      if (result.ok) {
+        Debug.requestSuccess(`${method.toUpperCase()} ${urlWithPath}`);
+      } else {
+        Debug.requestError(urlSaved!, resultUnwrapped);
       }
 
-      Debug.requestSuccess(`${method.toUpperCase()} ${urlWithPath}`);
-
       return {
+        ok: result.ok,
+        status,
         data: resultUnwrapped ?? {},
         meta: {
           timestamp: new Date().toISOString(),
         },
       };
     } catch (err: any) {
-      const isApiError = 'statusCode' in err;
-
-      if (isApiError) {
-        Debug.requestError(urlSaved!, err);
-      }
-
-      if (isApiError && shouldBubbleUpError) {
-        throw err;
-      } else {
-        Debug.requestError('RtkAppApi unexpected error', err);
-      }
+      Debug.requestError('FetchService.query error', err);
     }
   };
 }
