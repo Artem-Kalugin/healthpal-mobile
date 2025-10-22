@@ -3,8 +3,6 @@ import fs from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import chalk from 'chalk';
-import inquirer from 'inquirer';
 import prettier from 'prettier';
 
 const prettierConfigPath = join(
@@ -25,33 +23,6 @@ export function executeCommand(command) {
       }
     });
   });
-}
-
-export function processChalkChoices(choices) {
-  return choices.map(choice => {
-    if (choice.description) {
-      return {
-        value: choice.value,
-        name: `${choice.name} - ${chalk.gray(choice.description)}`,
-      };
-    }
-
-    return choice;
-  });
-}
-
-export async function getChoice(message, options) {
-  const questions = [
-    {
-      type: 'list',
-      name: 'choice',
-      message: message,
-      choices: processChalkChoices(options),
-    },
-  ];
-
-  const answers = await inquirer.prompt(questions);
-  return answers.choice;
 }
 
 export function prettify(content) {

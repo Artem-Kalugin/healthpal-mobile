@@ -170,4 +170,4 @@ const RtkAppApi = createApi({
   keepUnusedDataFor: 600,
 });
 
-export { RtkAppApi, apiBaseQuery };
+export { RtkAppApi };

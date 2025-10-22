@@ -16,6 +16,6 @@ const OnboardingAPI = RtkAppApi.injectEndpoints({
   }),
 });
 
-export const { useOnboardingQuery, useLazyOnboardingQuery } = OnboardingAPI;
+export const { useOnboardingQuery } = OnboardingAPI;
 
 export default OnboardingAPI;

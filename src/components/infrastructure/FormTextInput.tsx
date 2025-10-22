@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { LayoutAnimation } from 'react-native';
 
 import {
   Control,
@@ -15,28 +14,6 @@ import {
 import { ITextInput, TextInput } from '#ui-kit';
 import { MaskedInput } from '#ui-kit/Inputs/MaskedInput';
 
-export const animateLayout = (onAnimationEnd = () => {}) => {
-  LayoutAnimation.configureNext(
-    {
-      duration: 250,
-      create: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      delete: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      update: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-    },
-    () => {
-      onAnimationEnd();
-    },
-  );
-};
 interface FormTextInputProps<T extends FieldValues>
   extends Omit<Partial<ITextInput>, 'value' | 'onChange' | 'outlineType'> {
   name: Path<T>;
@@ -80,14 +57,12 @@ export function FormTextInput<T extends FieldValues>({
           outlineType: fieldState.invalid ? ('error' as const) : undefined,
           value: transformValue(value) ?? '',
           onBlur: () => {
-            animateLayout();
             onBlur();
             externalProps.onBlur && externalProps?.onBlur();
             setIsFocused(false);
             fieldState.isTouched && trigger(name);
           },
           onErase: () => {
-            animateLayout();
             //@ts-expect-errors
             setValue(name, '', {
               shouldValidate: false,
@@ -107,7 +82,6 @@ export function FormTextInput<T extends FieldValues>({
             <MaskedInput
               mask={mask}
               onChange={(val, unmasked) => {
-                animateLayout();
                 onChange(val);
               }}
               {...baseInputProps}
@@ -119,7 +93,6 @@ export function FormTextInput<T extends FieldValues>({
         return (
           <TextInput
             onChange={val => {
-              animateLayout();
               onChange(val);
             }}
             {...baseInputProps}

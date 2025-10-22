@@ -2,11 +2,7 @@ import { DateData } from 'react-native-calendars';
 
 import dayjs from 'dayjs';
 
-export const timestampToCalendarDate = (timestamp: number): DateData => {
-  return jsDateObjectToCalendarDate(new Date(timestamp));
-};
-
-export const jsDateObjectToCalendarDate = (date: Date): DateData => {
+const jsDateObjectToCalendarDate = (date: Date): DateData => {
   const res = {
     month: date.getMonth() + 1,
     year: date.getFullYear(),

@@ -3,7 +3,7 @@ import {
   useSelector as _useSelector,
 } from 'react-redux';
 
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
 import { Action, configureStore, Middleware } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -12,9 +12,9 @@ import { RtkAppApi } from '#api';
 
 import reducers from './slices';
 
-const storage = new MMKV();
+export const storage = createMMKV();
 
-export const reduxStorage: Storage = {
+const reduxStorage: Storage = {
   setItem: (key, value) => {
     storage.set(key, value);
     return Promise.resolve(true);
@@ -25,7 +25,7 @@ export const reduxStorage: Storage = {
     return Promise.resolve(value);
   },
   removeItem: key => {
-    storage.delete(key);
+    storage.remove(key);
     return Promise.resolve();
   },
 };
@@ -78,9 +78,13 @@ export const persistor = persistStore(store);
 
 // uncomment to clear store
 
-// persistor.purge();
+export const clearPersistor = async () => {
+  persistor.pause();
 
-// store.dispatch(RtkAppApi.util.resetApiState());
+  await persistor.flush();
+
+  await persistor.purge();
+};
 
 export type Store = typeof store;
 export type RootState = ReturnType<typeof store.getState>;

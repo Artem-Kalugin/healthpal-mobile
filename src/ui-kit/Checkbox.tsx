@@ -52,7 +52,8 @@ export const Checkbox = ({
     </TouchableOpacity>
   );
 };
-export const styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',

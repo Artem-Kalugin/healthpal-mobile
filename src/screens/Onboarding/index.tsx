@@ -71,9 +71,11 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
                 {onboardingQuery.data?.[activeSlideIndex].text}
               </TextSmall>
             </Animated.View>
-            <Button onPress={onPressNext}>
-              {lastSlideIndex === activeSlideIndex ? 'Продолжить' : 'Далее'}
-            </Button>
+            <View style={styles.buttonContainer}>
+              <Button onPress={onPressNext}>
+                {lastSlideIndex === activeSlideIndex ? 'Продолжить' : 'Далее'}
+              </Button>
+            </View>
           </View>
         }
         renderItem={({ item }) => (
@@ -115,6 +117,9 @@ const styles = StyleSheet.create({
   },
   slideContent: {
     paddingVertical: 28,
-    paddingHorizontal: 40,
+    paddingHorizontal: 16,
+  },
+  buttonContainer: {
+    paddingHorizontal: 24,
   },
 });

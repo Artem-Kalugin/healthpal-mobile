@@ -80,7 +80,8 @@ export const Tag = ({
     </AnimatedTouchableOpacity>
   );
 };
-export const styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
   container: {
     minHeight: 36,
     flexDirection: 'row',
