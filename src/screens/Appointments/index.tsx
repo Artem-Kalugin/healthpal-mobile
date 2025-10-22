@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Keyboard, StyleSheet, View } from 'react-native';
 
 import { CompositeScreenProps } from '@react-navigation/native';
+import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
 import { AppointmentCard } from '#components/domain/Appointment/Card';
@@ -62,6 +63,10 @@ export const Appointments: React.FC<
           id: item.id,
         },
       }).unwrap();
+
+      toast(
+        `Вы успешно отменили прием ${dayjs(item.date).format('DD MMMM')}, ${item.startTime.slice(0, 5)}`,
+      );
     } catch {}
   };
 

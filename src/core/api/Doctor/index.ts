@@ -112,7 +112,6 @@ const DoctorAPI = RtkAppApi.injectEndpoints({
 
 export const {
   useDoctorCategoriesQuery,
-  useLazyDoctorCategoriesQuery,
   useSearchDoctorsInfiniteQuery,
   useFavoriteDoctorsInfiniteQuery,
   useGetDoctorQuery,

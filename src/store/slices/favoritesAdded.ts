@@ -2,7 +2,7 @@ import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '#store';
 
-export const FavoritesAddedAdapter = createEntityAdapter<{
+const FavoritesAddedAdapter = createEntityAdapter<{
   id: string;
 }>({});
 

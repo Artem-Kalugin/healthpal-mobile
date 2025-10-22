@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast/headless';
 import { BEError } from '#api/types';
 import { handleBEValidationError, isBEValidationError } from '#api/utils';
 
+import Haptics from '#services/Haptics';
 import Logger from '#services/Logger';
 
 const useBEErrorHandler = <T extends object>(
@@ -17,6 +18,9 @@ const useBEErrorHandler = <T extends object>(
 
     const error = meta?.error;
     if (!error) return;
+
+    Haptics.impactError();
+
     Logger.requestError('error', error?.data);
 
     const beError = error as BEError;

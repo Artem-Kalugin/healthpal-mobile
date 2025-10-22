@@ -78,7 +78,7 @@ export const generateFontNameMap = (baseFontName = 'Inter18pt') => {
 };
 
 export const primaryFontNameMap = generateFontNameMap();
-export const secondaryFontNameMap = generateFontNameMap('Poppins');
+const secondaryFontNameMap = generateFontNameMap('Poppins');
 
 const fontTypeMaps: {
   [key in IText['fontType']]: ReturnType<typeof generateFontNameMap>;

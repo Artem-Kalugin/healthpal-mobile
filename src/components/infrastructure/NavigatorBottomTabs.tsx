@@ -189,5 +189,3 @@ const styles = StyleSheet.create({
     backgroundColor: colors.grayscale['200'],
   },
 });
-
-export default BottomTab;
