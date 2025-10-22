@@ -39,12 +39,16 @@ export const usePrefetchApp = () => {
     const shouldShowOnboarding = storeState.app.shouldShowOnboarding;
     const requestToPrefetch = [
       shouldShowOnboarding && prefetchOnboarding(null),
-      ...(storeState.runtime.token
+      ...(storeState.runtime.token &&
+      storeState.runtime.token.registrationComplete
         ? [prefetchDoctorCategories(null), prefetchCurrentUser(null), ,]
         : []),
     ];
 
-    if (storeState.runtime.token) {
+    if (
+      storeState.runtime.token &&
+      storeState.runtime.token.registrationComplete
+    ) {
       try {
         const location = await LocationService.getCurrentLocation();
 

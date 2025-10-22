@@ -30,6 +30,15 @@
       "package": "com.healthpal"
     },
     "plugins": [
+       [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": ["ru"],
+            "android": ["ru"]
+          }
+        }
+      ],
       ["react-native-bootsplash", { "assetsDir": "./src/assets/bootsplash" }],
       [
         "react-native-permissions",

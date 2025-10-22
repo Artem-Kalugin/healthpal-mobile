@@ -160,12 +160,14 @@ export const Profile: React.FC<
           >
             {userQuery.data?.name} {userQuery.data?.surname}
           </TextBase>
-          <TextSmall
-            color={colors.main.midnightBlue}
-            weight="300"
-          >
-            @{userQuery.data?.nickname}
-          </TextSmall>
+          {userQuery.data?.nickname && (
+            <TextSmall
+              color={colors.main.midnightBlue}
+              weight="300"
+            >
+              @{userQuery.data?.nickname}
+            </TextSmall>
+          )}
           <TextSmall
             color={colors.grayscale['500']}
             weight="400"

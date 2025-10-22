@@ -23,6 +23,7 @@ import ButtonGoBack from '#ui-kit/ButtonGoBack';
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
+import { logOut } from '#api';
 import { useCompleteRegistationMutation } from '#api/Auth';
 import { useGetCurrentUserQuery, useUpdateCurrentMutation } from '#api/User';
 import { UpdateUserDto } from '#api/User/dto/UpdateUserDto';
@@ -40,7 +41,7 @@ import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
-import { useDispatch, useSelector } from '#store';
+import { store, useDispatch, useSelector } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
 
 import { Gender } from '#generated/schema';
@@ -60,7 +61,7 @@ export const ProfileEditing: React.FC<
 
   const dispatch = useDispatch();
 
-  const token = useSelector(store => store.runtime.token);
+  const token = useSelector(storage => storage.runtime.token);
 
   const userQuery = useGetCurrentUserQuery(null, {
     refetchOnMountOrArgChange: true,
@@ -75,7 +76,7 @@ export const ProfileEditing: React.FC<
 
   const { form, getFormInputProps } = useAppForm(
     UpdateUserDto,
-    props.route.params.user || userQuery.data,
+    props.route?.params?.user || userQuery.data,
   );
 
   const [avatar, setAvatar] = useState<null | string>('');
@@ -86,6 +87,7 @@ export const ProfileEditing: React.FC<
     if (canGoBack) {
       props.navigation.goBack();
     } else {
+      logOut(store);
       props.navigation.dispatch(StackActions.popTo(AppRoutes.StackAuth));
     }
   };

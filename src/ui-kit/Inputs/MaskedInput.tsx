@@ -120,7 +120,7 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
         )}
 
         <InputLabel
-          hasVisibleValue={!!(props.placeholder === '' ? value : value || mask)}
+          hasVisibleValue={!!(value || props.placeholder)}
           isFocused={isFocused}
           value={label}
         />
