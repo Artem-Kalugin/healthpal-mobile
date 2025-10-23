@@ -16,5 +16,6 @@
 <li><a href="./why-no-cd.md">Почему нет CD</a></li>
 <li><a href="./why-no-tests.md">Почему нет тестов</a></li>
 <li><a href="./why-not-bare.md">Почему Expo, а не Bare React Native</a></li>
+<li><a href="./build.md">Инструкция к сборке</a></li>
 </ul>
 

@@ -30,5 +30,6 @@
 <li><a href="./why-no-cd.md">Почему нет CD</a></li>
 <li><a href="./why-no-push.md">Почему нет пушей</a></li>
 <li><a href="./why-no-tests.md">Почему нет тестов</a></li>
+<li><a href="./build.md">Инструкция к сборке</a></li>
 </ul>
 
