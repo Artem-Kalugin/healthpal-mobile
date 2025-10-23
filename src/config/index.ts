@@ -106,4 +106,13 @@ export const PHONE_MASK = `+7 ([000]) [000]-[00]-[00]`;
 
 export const layoutAnimation = LinearTransition.easing(Easing.ease);
 
+//TODO: delete after backend expose
+export enum NotificationTypes {
+  'BOOKING_ACCEPTED',
+  'BOOKING_CANCELED',
+  'BOOKING_RESCHEDULED',
+  'PASSWORD_CHANGED',
+  'NEW_LOG_IN',
+}
+
 export * from './colors';

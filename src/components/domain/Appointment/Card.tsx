@@ -44,6 +44,7 @@ export const AppointmentCard: React.FC<IAppointmentCard> = ({
       },
     });
   };
+
   return (
     <TouchableOpacity
       disabled={!onPress}

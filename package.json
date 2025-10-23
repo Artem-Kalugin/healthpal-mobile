@@ -87,6 +87,7 @@
     "eslint": "^9.0.0",
     "eslint-config-expo": "~10.0.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-boundaries": "^5.1.0",
     "eslint-plugin-prettier": "^5.5.4",
     "expo-dev-client": "~6.0.15",
     "husky": "^9.1.7",

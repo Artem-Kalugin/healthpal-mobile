@@ -6,10 +6,12 @@ import DatePicker from 'react-native-date-picker';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { ImagePickerAsset } from 'expo-image-picker';
 
+// eslint-disable-next-line boundaries/element-types
 import { IButton } from '#ui-kit/Button';
 
 import { AppParamList } from '#navigation/types';
 
+// eslint-disable-next-line boundaries/element-types
 import { ModalController } from '#hooks/useModalState';
 
 export type UIActionModalButton = Partial<
