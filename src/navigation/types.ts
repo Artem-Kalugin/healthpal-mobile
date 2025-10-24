@@ -21,10 +21,10 @@ export enum AppRoutes {
 export type AppParamList = {
   [AppRoutes.Onboarding]: undefined;
   [AppRoutes.ProfileEditing]?: { user?: BEUserResponseDto };
-  [AppRoutes.StackPasswordRecovery]: NavigatorScreenParams<PasswordRecoveryParamList>;
-  [AppRoutes.StackAuth]: NavigatorScreenParams<AuthParamList>;
-  [AppRoutes.StackMain]: NavigatorScreenParams<MainParamList>;
-  [AppRoutes.StackModals]: NavigatorScreenParams<ModalsParamList>;
+  [AppRoutes.StackPasswordRecovery]?: NavigatorScreenParams<PasswordRecoveryParamList>;
+  [AppRoutes.StackAuth]?: NavigatorScreenParams<AuthParamList>;
+  [AppRoutes.StackMain]?: NavigatorScreenParams<MainParamList>;
+  [AppRoutes.StackModals]?: NavigatorScreenParams<ModalsParamList>;
 };
 
 export type RootScreenProps<RouteName extends AppRoutes> = StackScreenProps<

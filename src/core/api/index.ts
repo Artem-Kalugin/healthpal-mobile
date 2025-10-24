@@ -117,8 +117,10 @@ const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
       meta: req.meta,
     };
   } catch (error) {
-    //@ts-expect-error
-    const errorStatus = 'status' in error ? error.status : undefined;
+    const errorStatus =
+      error && typeof error === 'object' && 'status' in error
+        ? error.status
+        : undefined;
 
     if (errorStatus === 401 && runtimeToken) {
       refresh(api, runtimeToken);

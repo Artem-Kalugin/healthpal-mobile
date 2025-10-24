@@ -18,6 +18,24 @@ module.exports = defineConfig([
   {
     plugins: {
       'react-native': fixupPluginRules(reactNativePlugin),
+      boundaries: require('eslint-plugin-boundaries'),
+    },
+    settings: {
+      'boundaries/elements': [
+        { type: 'global', pattern: '{config,store,core/utils}' },
+        { type: 'core', pattern: '{core/services,core/hooks,core/api}' },
+        {
+          type: 'components/infrastructure',
+          pattern: 'components/infrastructure',
+        },
+        {
+          type: 'components/domain',
+          pattern: 'components/domain',
+        },
+        { type: 'ui-kit', pattern: 'ui-kit' },
+        { type: 'view', pattern: '{screens,modals}' },
+        { type: 'navigation', pattern: 'navigation' },
+      ],
     },
   },
 
@@ -58,6 +76,46 @@ module.exports = defineConfig([
 
       'import/first': error,
       'import/no-duplicates': error,
+      'boundaries/element-types': [
+        error,
+        {
+          default: 'disallow',
+          rules: [
+            { from: 'global', allow: ['core'] },
+            { from: 'core', allow: ['global', 'core'] },
+            {
+              from: 'components/domain',
+              allow: [
+                'global',
+                'navigation',
+                'components/domain',
+                'ui-kit',
+                'core',
+              ],
+            },
+            {
+              from: 'components/infrastructure',
+              allow: ['global', 'ui-kit', 'core'],
+            },
+            { from: 'ui-kit', allow: ['global'] },
+            {
+              from: 'view',
+              allow: [
+                'core',
+                'navigation',
+                'components/infrastructure',
+                'components/domain',
+                'ui-kit',
+                'global',
+              ],
+            },
+            {
+              from: 'navigation',
+              allow: ['global', 'view', 'components/infrastructure'],
+            },
+          ],
+        },
+      ],
     },
   },
 ]);

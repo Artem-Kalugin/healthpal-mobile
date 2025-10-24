@@ -1,0 +1,53 @@
+---
+config:
+  layout: elk
+---
+flowchart TD
+ subgraph Legend["Legend"]
+        L1["Global"]
+        L2["Core"]
+        L3["UI"]
+        L4["View"]
+  end
+ subgraph Global["Global"]
+        config["config"]
+        store["store"]
+        utils["utils"]
+  end
+ subgraph Architecture["HealthPal Architecture Layers - 23.10.25"]
+        Global
+        core["services / hooks"]
+        api["API"]
+        uiKit["UI-kit"]
+        domain["components/domain"]
+        infrastructure["components/infrastructure"]
+        views["screens/modals"]
+        navigation["App navigation"]
+  end
+
+    api --> core
+    domain --> api & uiKit & core
+    infrastructure --> uiKit & core
+    views --> core & api & uiKit & domain & infrastructure
+    navigation --> views
+    Architecture ~~~ Legend
+     L1:::global
+     L2:::core
+     L3:::ui
+     L4:::view
+     config:::global
+     store:::global
+     utils:::global
+     core:::core
+     api:::core
+     uiKit:::ui
+     domain:::ui
+     infrastructure:::ui
+     views:::view
+     navigation:::view
+    classDef global fill:#f9f,stroke:#333,stroke-width:1px,color:#000
+    classDef core fill:#9cf,stroke:#333,stroke-width:1px,color:#000
+    classDef ui fill:#fc9,stroke:#333,stroke-width:1px,color:#000
+    classDef view fill:#cfc,stroke:#333,stroke-width:1px,color:#000
+    style Global stroke:#000000
+

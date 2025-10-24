@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-color-literals */
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -258,7 +259,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
   },
-  // eslint-disable-next-line react-native/no-color-literals
   mainCard: {
     opacity: 1,
     backgroundColor: '#352261',
@@ -267,12 +267,10 @@ const styles = StyleSheet.create({
   cardTop: {
     transformOrigin: ['50%', '150%', 0],
   },
-  // eslint-disable-next-line react-native/no-color-literals
   cardTopLeft: {
     backgroundColor: '#ACA1CD',
     transformOrigin: ['150%', '150%', 0],
   },
-  // eslint-disable-next-line react-native/no-color-literals
   cardTopRight: {
     backgroundColor: '#DC9497',
     transformOrigin: ['-50%', '150%', 0],
@@ -283,12 +281,10 @@ const styles = StyleSheet.create({
   cardRight: {
     transformOrigin: ['-50%', '50%', 0],
   },
-  // eslint-disable-next-line react-native/no-color-literals
   cardBottomLeft: {
     backgroundColor: '#D7A99C',
     transformOrigin: ['150%', '-50%', 0],
   },
-  // eslint-disable-next-line react-native/no-color-literals
   cardBottomRight: {
     backgroundColor: '#4D9B91',
     transformOrigin: ['-50%', '-50%', 0],

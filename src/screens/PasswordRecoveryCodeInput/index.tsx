@@ -65,8 +65,7 @@ export const PasswordRecoveryCodeInput: React.FC<
           recoveryToken: res.recoveryToken,
         },
       );
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
+    } catch {
       setHasError(true);
     }
   };

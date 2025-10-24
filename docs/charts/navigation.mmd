@@ -1,0 +1,56 @@
+---
+config:
+  layout: elk
+---
+flowchart TD
+ subgraph Legend["Legend"]
+        L1["Group of views"]
+        L2["View"]
+        L3["Modals"]
+  end
+ subgraph Navigation["HealthPal Navigation Structure - 23.10.25"]
+        Onboarding["Onboarding"]
+        AuthStack["AuthStack"]
+        ProfileEditing["ProfileEditing"]
+        MainStack["MainStack"]
+        PasswordRecoveryStack["PasswordRecoveryStack"]
+        StackModals["Modals"]
+        AppStack["AppStack"]
+        TabStack["BottomTabs"]
+        Search["Search"]
+        Notifications["Notifications"]
+        FavoritesStack["FavoritesTopTabs"]
+        DoctorDetails["DoctorDetails"]
+        ScheduleAppointment["ScheduleAppointment"]
+        Home["Home"]
+        Map["Map"]
+        AppointmentsStack["AppointmentsTopTabs"]
+        Profile["Profile"]
+  end
+    AppStack --> Onboarding & AuthStack & ProfileEditing & MainStack & PasswordRecoveryStack & StackModals
+    MainStack --> TabStack & Search & Notifications & FavoritesStack & DoctorDetails & ScheduleAppointment
+    TabStack --> Home & Map & AppointmentsStack & Profile
+    Navigation ~~~ Legend
+     L1:::stack
+     L2:::screen
+     L3:::modal
+     AppStack:::stack
+     Onboarding:::screen
+     AuthStack:::stack
+     ProfileEditing:::screen
+     MainStack:::stack
+     PasswordRecoveryStack:::stack
+     StackModals:::modal
+     TabStack:::stack
+     Search:::screen
+     Notifications:::screen
+     FavoritesStack:::stack
+     DoctorDetails:::screen
+     ScheduleAppointment:::screen
+     Home:::screen
+     Map:::screen
+     AppointmentsStack:::stack
+     Profile:::screen
+    classDef stack fill:#9cf,stroke:#333,stroke-width:1px,color:#000
+    classDef screen fill:#cfc,stroke:#333,stroke-width:1px,color:#000
+    classDef modal fill:#fc9,stroke:#333,stroke-width:1px,color:#000

@@ -53,6 +53,7 @@ import star from '#assets/icons/star.svg';
 import userEdit from '#assets/icons/user-edit.svg';
 import user from '#assets/icons/user.svg';
 
+// eslint-disable-next-line boundaries/element-types
 import Logger from '#services/Logger';
 
 import { colors } from '#config';

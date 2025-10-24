@@ -128,7 +128,6 @@ export const ProfileEditing: React.FC<
 
       await prefetchApp();
 
-      //@ts-expect-error
       props.navigation.replace(AppRoutes.StackMain);
     } else {
       goBack();

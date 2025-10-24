@@ -1,8 +1,7 @@
 import React, { ReactNode, useEffect } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import Animated, {
-  AnimatedProps,
   Easing,
   useAnimatedStyle,
   useSharedValue,
@@ -22,7 +21,7 @@ type IBlinkAnimator = {
 };
 
 export const BlinkAnimator: React.FC<
-  Partial<IBlinkAnimator & AnimatedProps<View>>
+  Partial<IBlinkAnimator & Animated.View['props']>
 > = ({ delayAnimationBy = 0, startAnimation, style, children, ...rest }) => {
   const blinkAnimationProgress = useSharedValue(1);
 
@@ -58,7 +57,6 @@ export const BlinkAnimator: React.FC<
   });
 
   return (
-    //@ts-expect-error
     <Animated.View
       style={[animatedStyle, StyleSheet.flatten(style)]}
       {...rest}
