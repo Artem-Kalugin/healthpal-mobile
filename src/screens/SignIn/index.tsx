@@ -26,6 +26,8 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 import { useLoginMutation } from '#api/Auth';
 import { LoginDto } from '#api/Auth/dto/LoginDto';
 
+import { TokenService } from '#services/Token';
+
 import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
 
 import useAppForm from '#hooks/useAppForm';
@@ -34,7 +36,6 @@ import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
-import { RuntimeActions } from '#store/slices/runtime';
 
 export const SignIn: React.FC<
   CompositeScreenProps<
@@ -70,7 +71,7 @@ export const SignIn: React.FC<
 
     dispatch(AppActions.setShouldShowOnboarding(false));
 
-    dispatch(RuntimeActions.setToken(response));
+    await TokenService.save(response);
 
     await prefetchApp();
 

@@ -1,5 +1,3 @@
-import Keychain from 'react-native-keychain';
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 
@@ -28,16 +26,9 @@ const runtimeSlice = createSlice({
       >,
     ) {
       if (!action.payload) {
-        Keychain.resetGenericPassword();
-
         state.token = undefined;
         return;
       }
-
-      Keychain.setGenericPassword(
-        action.payload.accessToken,
-        action.payload.refreshToken,
-      );
 
       const decoded = jwtDecode<{
         id: string;
