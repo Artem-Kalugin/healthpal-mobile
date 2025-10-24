@@ -6223,6 +6223,11 @@ expo-modules-core@3.0.21:
   dependencies:
     invariant "^2.2.4"
 
+expo-secure-store@~15.0.7:
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-15.0.7.tgz#f74f928029889b8a32c0eafc2a214abee1e8b71e"
+  integrity sha512-9q7+G1Zxr5P6J5NRIlm86KulvmYwc6UnQlYPjQLDu1drDnerz6AT6l884dPu29HgtDTn4rR0heYeeGFhMKM7/Q==
+
 expo-server@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/expo-server/-/expo-server-1.0.1.tgz"
@@ -9644,11 +9649,6 @@ react-native-keyboard-controller@1.18.5:
   integrity sha512-wbYN6Tcu3G5a05dhRYBgjgd74KqoYWuUmroLpigRg9cXy5uYo7prTMIvMgvLtARQtUF7BOtFggUnzgoBOgk0TQ==
   dependencies:
     react-native-is-edge-to-edge "^1.2.1"
-
-react-native-keychain@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.npmjs.org/react-native-keychain/-/react-native-keychain-10.0.0.tgz"
-  integrity sha512-YzPKSAnSzGEJ12IK6CctNLU79T1W15WDrElRQ+1/FsOazGX9ucFPTQwgYe8Dy8jiSEDJKM4wkVa3g4lD2Z+Pnw==
 
 react-native-mmkv@^4.0.0:
   version "4.0.0"

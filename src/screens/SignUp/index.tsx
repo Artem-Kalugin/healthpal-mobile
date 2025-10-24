@@ -24,6 +24,8 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 import { useRegisterMutation } from '#api/Auth';
 import { CreateUserDto } from '#api/Auth/dto/CreateUserDto';
 
+import { TokenService } from '#services/Token';
+
 import {
   colors,
   hitSlop,
@@ -37,7 +39,6 @@ import useErrorHandler from '#hooks/useErrorHandler';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
-import { RuntimeActions } from '#store/slices/runtime';
 
 import { reactSync } from '../../core/utils';
 
@@ -73,7 +74,7 @@ export const SignUp: React.FC<
 
     dispatch(AppActions.setShouldShowOnboarding(false));
 
-    dispatch(RuntimeActions.setToken(response));
+    await TokenService.save(response);
 
     await reactSync();
 

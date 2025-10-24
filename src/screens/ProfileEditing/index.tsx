@@ -28,6 +28,8 @@ import { useCompleteRegistationMutation } from '#api/Auth';
 import { useGetCurrentUserQuery, useUpdateCurrentMutation } from '#api/User';
 import { UpdateUserDto } from '#api/User/dto/UpdateUserDto';
 
+import { TokenService } from '#services/Token';
+
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
@@ -41,8 +43,7 @@ import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
-import { store, useDispatch, useSelector } from '#store';
-import { RuntimeActions } from '#store/slices/runtime';
+import { store, useSelector } from '#store';
 
 import { Gender } from '#generated/schema';
 
@@ -58,8 +59,6 @@ export const ProfileEditing: React.FC<
   const nicknameInputRef = useRef<_TextInput>(null);
 
   const { prefetchApp, isPrefetching } = usePrefetchApp();
-
-  const dispatch = useDispatch();
 
   const token = useSelector(storage => storage.runtime.token);
 
@@ -124,7 +123,7 @@ export const ProfileEditing: React.FC<
     }).unwrap();
 
     if ('accessToken' in res) {
-      dispatch(RuntimeActions.setToken(res));
+      await TokenService.save(res);
 
       await prefetchApp();
 

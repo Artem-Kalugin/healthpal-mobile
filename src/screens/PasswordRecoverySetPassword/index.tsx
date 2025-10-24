@@ -29,6 +29,8 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 import { useResetPasswordMutation } from '#api/Auth';
 import { ResetPasswordDto } from '#api/Auth/dto/ResetPasswordDto';
 
+import { TokenService } from '#services/Token';
+
 import { colors, SAFE_ZONE_BOTTOM } from '#config';
 
 import useAppForm from '#hooks/useAppForm';
@@ -37,7 +39,6 @@ import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
-import { RuntimeActions } from '#store/slices/runtime';
 
 export const PasswordRecoverySetPassword: React.FC<
   CompositeScreenProps<
@@ -73,7 +74,7 @@ export const PasswordRecoverySetPassword: React.FC<
 
     dispatch(AppActions.setShouldShowOnboarding(false));
 
-    dispatch(RuntimeActions.setToken(res));
+    await TokenService.save(res);
 
     toast('Пароль был успешно изменен');
 

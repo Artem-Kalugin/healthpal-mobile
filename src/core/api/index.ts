@@ -4,9 +4,10 @@ import { REHYDRATE } from 'redux-persist';
 
 import { FetchService } from '#services/Fetch';
 import Logger from '#services/Logger';
+import { TokenService } from '#services/Token';
 
 import { RootState, Store } from '#store';
-import { RuntimeActions, TokenDecoded } from '#store/slices/runtime';
+import { TokenDecoded } from '#store/slices/runtime';
 
 import { delay } from '../utils';
 import { TagsAppointmentAPI } from './Appointments/types';
@@ -14,7 +15,7 @@ import { BEError, FetchArgs } from './types';
 import { TagsUserAPI } from './User/types';
 
 export const logOut = async (api: Pick<Store, 'dispatch'>) => {
-  api.dispatch(RuntimeActions.setToken(undefined));
+  await TokenService.clear();
   //dirty, but waits for unmounts to prevent from bursting backend with auto executed rtk-hooks again
   //ideally make auth guard equivalent on endpoint definition to allow it to be sent without token
   //and check that token exists in base query
@@ -57,7 +58,7 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
         throw {};
       }
 
-      api.dispatch(RuntimeActions.setToken(response.data));
+      await TokenService.save(response.data);
 
       return response.data;
     } catch (err) {
