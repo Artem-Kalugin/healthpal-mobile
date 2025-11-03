@@ -1,7 +1,7 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import { fireEvent, render } from '@testing-library/react-native';
-import { View } from 'react-native-reanimated/lib/typescript/Animated';
 
 import { CheckboxTestIds } from './config';
 import { Checkbox } from './index';
@@ -48,6 +48,6 @@ describe('Checkbox', () => {
     const { getByTestId } = render(<Checkbox active={false} />);
     const touchable = getByTestId(CheckboxTestIds.root);
 
-    expect(touchable.props.disabled).toBe(true);
+    expect(touchable.props.accessibilityState.disabled).toBe(true);
   });
 });

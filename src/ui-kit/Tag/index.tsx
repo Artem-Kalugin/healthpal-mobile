@@ -14,15 +14,17 @@ import Animated, {
 
 import { BORDER_RADIUS_ROUNDED, colors, withCustomAnimation } from '#config';
 
-import { Loader } from './Loader';
-import { TextSmall } from './Text';
+import { Loader } from '../Loader';
+import { TextSmall } from '../Text';
+import { TagTestIds } from './config';
 
 interface ITag {
-  value: text;
-  isLoading: boolean;
-  active: boolean;
+  value?: text;
+  isLoading?: boolean;
+  active?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
+  testIdsConfig?: typeof TagTestIds;
 }
 
 const AnimatedTouchableOpacity =
@@ -35,6 +37,7 @@ export const Tag = ({
   isLoading,
   onPress,
   style,
+  testIdsConfig = TagTestIds,
 }: ITag) => {
   const animationProgress = useSharedValue(0);
 
@@ -62,11 +65,13 @@ export const Tag = ({
     <AnimatedTouchableOpacity
       disabled={!onPress}
       style={[styles.container, rContainer, StyleSheet.flatten(style)]}
+      testID={testIdsConfig.root}
       onPress={onPress}
     >
       <AnimatedText
         color={colors.white}
         style={[styles.text, rText]}
+        testId={testIdsConfig.text}
         weight="600"
       >
         {value}
@@ -75,6 +80,7 @@ export const Tag = ({
         <Loader
           color={colors.white}
           cover={false}
+          testID={testIdsConfig.loader}
         />
       )}
     </AnimatedTouchableOpacity>
