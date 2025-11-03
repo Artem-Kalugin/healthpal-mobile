@@ -9,7 +9,8 @@ import {
 
 import { colors } from '#config';
 
-import { Icon } from './Icon';
+import { Icon } from '../Icon';
+import { CheckboxTestIds } from './config';
 
 interface ICheckboxBig {
   style?: StyleProp<ViewStyle>;
@@ -17,6 +18,7 @@ interface ICheckboxBig {
   active: boolean;
   onPress?: () => void;
   isRound?: boolean;
+  testIdConfig?: typeof CheckboxTestIds;
 }
 
 export const Checkbox = ({
@@ -25,11 +27,13 @@ export const Checkbox = ({
   onPress,
   style,
   isRound = true,
+  testIdConfig = CheckboxTestIds,
 }: ICheckboxBig) => {
   return (
     <TouchableOpacity
       disabled={!onPress}
       style={[styles.container, StyleSheet.flatten(style)]}
+      testID={testIdConfig.root}
       onPress={onPress}
     >
       <View
@@ -44,6 +48,7 @@ export const Checkbox = ({
             name="check"
             size={22}
             style={styles.check}
+            testID={testIdConfig.checkMark}
           />
         )}
       </View>
