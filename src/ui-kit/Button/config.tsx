@@ -5,6 +5,12 @@ import { colors } from '#config';
 import { ButtonAppearance, ButtonSize, ButtonType } from '.';
 import { IText, TextBase, TextSmall, TextXS } from '../Text';
 
+export const ButtonTestIds = {
+  root: 'Button',
+  loader: 'Button_Loader',
+  text: 'Button_Text',
+};
+
 export type IButtonTypeStyles = {
   default: any;
   disabled: any;

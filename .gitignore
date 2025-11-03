@@ -1,6 +1,7 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
+coverage
 node_modules/
 package-lock.json
 # Expo
@@ -38,3 +39,4 @@ generated
 # generated native folders
 /ios
 /android
+.clineignore
