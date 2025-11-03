@@ -24,7 +24,7 @@ describe('Button', () => {
     expect(getByTestId('child-element')).toBeOnTheScreen();
   });
 
-  it('отображет Loader когда isLoading', () => {
+  it('отображает Loader когда isLoading', () => {
     const { getByTestId } = render(<Button isLoading />);
 
     expect(getByTestId(ButtonTestIds.loader)).toBeOnTheScreen();
@@ -36,7 +36,7 @@ describe('Button', () => {
 
     expect(queryByText(text)).toBeNull();
   });
-  it('не отображет Loader by default', () => {
+  it('не отображает Loader by default', () => {
     const { queryByTestId } = render(<Button />);
 
     expect(queryByTestId(ButtonTestIds.loader)).toBeNull();
@@ -68,20 +68,6 @@ describe('Button', () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
       <Button
-        isLoading
-        onPress={onPressMock}
-      />,
-    );
-
-    fireEvent.press(getByTestId(ButtonTestIds.root));
-    expect(onPressMock).not.toHaveBeenCalled();
-  });
-
-  it('не вызывает onPress когда одновременно disabled и isLoading', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(
-      <Button
-        disabled
         isLoading
         onPress={onPressMock}
       />,

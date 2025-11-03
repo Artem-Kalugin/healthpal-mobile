@@ -9,7 +9,7 @@
     "prebuild": "npx expo prebuild --clean --no-install",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "test": "jest --watchAll --no-coverage",
+    "test": "jest  --verbose --watchAll --no-coverage",
     "coverage": "jest --coverage",
     "android:new": "yarn prebuild && yarn android",
     "ios:new": "yarn prebuild && yarn ios",

@@ -19,7 +19,7 @@ describe('Tag', () => {
     expect(getByTestId(TagTestIds.loader)).toBeOnTheScreen();
   });
 
-  it('не отображет Loader by default', () => {
+  it('не отображает Loader by default', () => {
     const { queryByTestId } = render(<Tag />);
 
     expect(queryByTestId(TagTestIds.loader)).toBeNull();

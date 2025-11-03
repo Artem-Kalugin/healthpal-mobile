@@ -12,12 +12,10 @@ type ApiImage = {
 };
 
 type ImageWithSourceFromApi = {
-  forceSourceFromApi: true;
   source: ApiImage;
 };
 
 type ImageWithUnknownSource = {
-  forceSourceFromApi?: boolean;
   source: ApiImage | ExpoImageProps['source'];
 };
 
@@ -33,14 +31,11 @@ export const Image: React.FC<ImageWithPossibleApiSource> = ({
   imageRef,
   source,
   placeholder,
-  forceSourceFromApi,
   ...props
 }) => {
   const token = useSelector(store => store.runtime.token?.plain);
   const isApiImage =
-    forceSourceFromApi !== undefined
-      ? forceSourceFromApi
-      : source && typeof source === 'object' && 'thumbhash' in source;
+    source && typeof source === 'object' && 'thumbhash' in source;
 
   return (
     <ExpoImage
