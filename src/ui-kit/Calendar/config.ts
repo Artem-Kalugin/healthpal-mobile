@@ -7,6 +7,11 @@ export type DayProps = Omit<_DayProps, 'date'> & {
   date: DateData;
 };
 
+export const CalendarHeaderTestIds = {
+  arrowLeft: 'CalendarHeader_arrowLeft',
+  arrowRight: 'CalendarHeader_arrowRight',
+  loader: 'CalendarHeader_loader',
+};
 export const normalizeDefaultStyles = {
   'stylesheet.calendar.main': {
     container: {

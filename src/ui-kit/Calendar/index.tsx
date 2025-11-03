@@ -101,6 +101,7 @@ export const Calendar = ({
         //@ts-expect-error broken internal lib typings, type requires structure but code requires slug
         theme={normalizeDefaultStyles}
         minDate={minDate}
+        maxDate={maxDate}
         onDayPress={setSelectedDate}
         onMonthChange={setAnchorDate}
         onPressArrowLeft={subtractMonth}

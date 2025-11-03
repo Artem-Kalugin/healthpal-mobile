@@ -9,7 +9,7 @@ import { colors, hitSlopSmall } from '#config';
 
 import { Icon } from '../Icon';
 import { TextSmall, TextXS } from '../Text';
-import { CalendarMonthNames } from './config';
+import { CalendarHeaderTestIds, CalendarMonthNames } from './config';
 
 export const CalendarHeader = ({
   displayLoadingIndicator,
@@ -18,9 +18,11 @@ export const CalendarHeader = ({
   onPressArrowLeft,
   onPressArrowRight,
   month,
+  testIdsConfig = CalendarHeaderTestIds,
 }: CalendarHeaderProps & {
   onPressArrowLeft: () => void;
   onPressArrowRight: () => void;
+  testIdsConfig: typeof CalendarHeaderTestIds;
 }) => {
   const displayableDate = new Date(month);
   return (
@@ -34,12 +36,13 @@ export const CalendarHeader = ({
             {CalendarMonthNames[displayableDate.getMonth()]}{' '}
             {displayableDate.getFullYear()}
           </TextSmall>
-          {displayLoadingIndicator && <Loader />}
+          {displayLoadingIndicator && <Loader testID={testIdsConfig.loader} />}
         </View>
         <View style={styles.monthControls}>
           <TouchableOpacity
             disabled={disableArrowLeft}
             hitSlop={hitSlopSmall}
+            testID={testIdsConfig.arrowLeft}
             onPress={onPressArrowLeft}
           >
             <Icon
@@ -55,6 +58,7 @@ export const CalendarHeader = ({
           <TouchableOpacity
             disabled={disableArrowRight}
             hitSlop={hitSlopSmall}
+            testID={testIdsConfig.arrowRight}
             onPress={onPressArrowRight}
           >
             <Icon
