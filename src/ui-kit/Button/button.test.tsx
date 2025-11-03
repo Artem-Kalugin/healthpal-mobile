@@ -7,73 +7,80 @@ import { ButtonTestIds } from './config';
 import { Button } from './index';
 
 describe('Button', () => {
-  it('отображает переданный текст', () => {
-    const text = 'Test Text123';
-    const { queryByText } = render(<Button>{text}</Button>);
+  describe('Render', () => {
+    it('отображает строку', () => {
+      const text = 'Test Text123';
+      const { getByText } = render(<Button>{text}</Button>);
 
-    expect(queryByText(text)).toBeOnTheScreen();
+      expect(getByText(text)).toBeOnTheScreen();
+    });
+
+    it('отображает children', () => {
+      const { getByTestId } = render(
+        <Button>
+          <View testID="child-element" />
+        </Button>,
+      );
+
+      expect(getByTestId('child-element')).toBeOnTheScreen();
+    });
   });
 
-  it('отображает children React-элемент', () => {
-    const { getByTestId } = render(
-      <Button>
-        <View testID="child-element" />
-      </Button>,
-    );
+  describe('Loader', () => {
+    it('отображает Loader когда isLoading', () => {
+      const { getByTestId } = render(<Button isLoading />);
 
-    expect(getByTestId('child-element')).toBeOnTheScreen();
+      expect(getByTestId(ButtonTestIds.loader)).toBeOnTheScreen();
+    });
+
+    it('не отображает текст когда isLoading', () => {
+      const text = 'Test Text';
+      const { queryByText } = render(<Button isLoading>{text}</Button>);
+
+      expect(queryByText(text)).toBeNull();
+    });
+
+    it('не отображает Loader by default', () => {
+      const { queryByTestId } = render(<Button />);
+
+      expect(queryByTestId(ButtonTestIds.loader)).toBeNull();
+    });
   });
 
-  it('отображает Loader когда isLoading', () => {
-    const { getByTestId } = render(<Button isLoading />);
+  describe('Callbacks', () => {
+    it('вызывает onPress по нажатию', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(<Button onPress={onPressMock} />);
 
-    expect(getByTestId(ButtonTestIds.loader)).toBeOnTheScreen();
-  });
+      fireEvent.press(getByTestId(ButtonTestIds.root));
 
-  it('не отображает текст когда isLoading', () => {
-    const text = 'Test Text';
-    const { queryByText } = render(<Button isLoading>{text}</Button>);
+      expect(onPressMock).toHaveBeenCalledTimes(1);
+    });
 
-    expect(queryByText(text)).toBeNull();
-  });
-  it('не отображает Loader by default', () => {
-    const { queryByTestId } = render(<Button />);
+    it('не вызывает onPress когда disabled', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(
+        <Button
+          disabled
+          onPress={onPressMock}
+        />,
+      );
 
-    expect(queryByTestId(ButtonTestIds.loader)).toBeNull();
-  });
+      fireEvent.press(getByTestId(ButtonTestIds.root));
+      expect(onPressMock).not.toHaveBeenCalled();
+    });
 
-  it('вызывает onPress по нажатию', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(<Button onPress={onPressMock} />);
+    it('не вызывает onPress  когда isLoading', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(
+        <Button
+          isLoading
+          onPress={onPressMock}
+        />,
+      );
 
-    fireEvent.press(getByTestId(ButtonTestIds.root));
-
-    expect(onPressMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('не вызывает onPress когда disabled', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(
-      <Button
-        disabled
-        onPress={onPressMock}
-      />,
-    );
-
-    fireEvent.press(getByTestId(ButtonTestIds.root));
-    expect(onPressMock).not.toHaveBeenCalled();
-  });
-
-  it('не вызывает onPress  когда isLoading', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(
-      <Button
-        isLoading
-        onPress={onPressMock}
-      />,
-    );
-
-    fireEvent.press(getByTestId(ButtonTestIds.root));
-    expect(onPressMock).not.toHaveBeenCalled();
+      fireEvent.press(getByTestId(ButtonTestIds.root));
+      expect(onPressMock).not.toHaveBeenCalled();
+    });
   });
 });

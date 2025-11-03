@@ -3,8 +3,8 @@ import { DateData, DayState } from 'react-native-calendars/src/types';
 
 import { colors } from '#config';
 
-export type DayProps = _DayProps & {
-  date?: DateData;
+export type DayProps = Omit<_DayProps, 'date'> & {
+  date: DateData;
 };
 
 export const normalizeDefaultStyles = {

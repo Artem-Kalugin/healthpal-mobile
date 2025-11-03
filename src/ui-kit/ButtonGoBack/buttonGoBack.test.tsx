@@ -20,28 +20,32 @@ describe('ButtonGoBack', () => {
     jest.clearAllMocks();
   });
 
-  it('рендерится с иконкой', () => {
-    const { getByTestId } = render(<ButtonGoBack />);
-    const root = getByTestId(ButtonGoBackTestIds.root);
-    expect(root).toBeTruthy();
+  describe('Render', () => {
+    it('рендерится с иконкой', () => {
+      const { getByTestId } = render(<ButtonGoBack />);
+      const root = getByTestId(ButtonGoBackTestIds.root);
+      expect(root).toBeTruthy();
 
-    const icon = root.findByType(Icon);
-    expect(icon).toBeTruthy();
+      const icon = root.findByType(Icon);
+      expect(icon).toBeTruthy();
+    });
   });
 
-  it('вызывает onPress, если передан', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(<ButtonGoBack onPress={onPressMock} />);
+  describe('Callbacks', () => {
+    it('вызывает onPress, если передан', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(<ButtonGoBack onPress={onPressMock} />);
 
-    fireEvent.press(getByTestId(ButtonGoBackTestIds.root));
-    expect(onPressMock).toHaveBeenCalledTimes(1);
-    expect(goBackMock).not.toHaveBeenCalled();
-  });
+      fireEvent.press(getByTestId(ButtonGoBackTestIds.root));
+      expect(onPressMock).toHaveBeenCalledTimes(1);
+      expect(goBackMock).not.toHaveBeenCalled();
+    });
 
-  it('вызывает navigation.goBack, если onPress не передан', () => {
-    const { getByTestId } = render(<ButtonGoBack />);
+    it('вызывает navigation.goBack, если onPress не передан', () => {
+      const { getByTestId } = render(<ButtonGoBack />);
 
-    fireEvent.press(getByTestId(ButtonGoBackTestIds.root));
-    expect(goBackMock).toHaveBeenCalledTimes(1);
+      fireEvent.press(getByTestId(ButtonGoBackTestIds.root));
+      expect(goBackMock).toHaveBeenCalledTimes(1);
+    });
   });
 });

@@ -31,34 +31,36 @@ describe('Image component', () => {
     jest.clearAllMocks();
   });
 
-  it('подставляет uri и headers для api source', () => {
-    (useSelector as unknown as jest.Mock).mockReturnValue('token123');
-    const source = { image: '/path', thumbhash: 'hash' };
+  describe('Render', () => {
+    it('пробрасывает uri и headers для api source', () => {
+      (useSelector as unknown as jest.Mock).mockReturnValue('token123');
+      const source = { image: '/path', thumbhash: 'hash' };
 
-    const { getByTestId } = render(
-      <Image
-        source={source}
-        testID="img"
-      />,
-    );
-    const img = getByTestId('img');
+      const { getByTestId } = render(
+        <Image
+          source={source}
+          testID="img"
+        />,
+      );
+      const img = getByTestId('img');
 
-    expect(img.props.source.uri).toContain(
-      `${process.env.EXPO_PUBLIC_API_URL}/path`,
-    );
-    expect(img.props.source.headers.Authorization).toBe('Bearer token123');
-  });
+      expect(img.props.source.uri).toContain(
+        `${process.env.EXPO_PUBLIC_API_URL}/path`,
+      );
+      expect(img.props.source.headers.Authorization).toBe('Bearer token123');
+    });
 
-  it('рендерит обычный require', () => {
-    const source = 1;
-    const { getByTestId } = render(
-      <Image
-        source={source}
-        testID="img"
-      />,
-    );
-    const img = getByTestId('img');
+    it('пробрасывает обычный require', () => {
+      const source = 1;
+      const { getByTestId } = render(
+        <Image
+          source={source}
+          testID="img"
+        />,
+      );
+      const img = getByTestId('img');
 
-    expect(img.props.source).toBe(source);
+      expect(img.props.source).toBe(source);
+    });
   });
 });

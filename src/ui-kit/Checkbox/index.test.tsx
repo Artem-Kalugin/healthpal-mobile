@@ -7,47 +7,58 @@ import { CheckboxTestIds } from './config';
 import { Checkbox } from './index';
 
 describe('Checkbox', () => {
-  it('отображает чекбокс как активный при active=true', () => {
-    const { getByTestId } = render(<Checkbox active />);
+  describe('Render', () => {
+    it('рендрится', () => {
+      const { getByTestId } = render(<Checkbox active={false} />);
 
-    expect(getByTestId(CheckboxTestIds.checkMark)).toBeOnTheScreen();
+      expect(getByTestId(CheckboxTestIds.root)).toBeOnTheScreen();
+    });
+
+    it('отображает children', () => {
+      const childTestId = 'test-id-123';
+      const { getByTestId } = render(
+        <Checkbox active={false}>
+          <View testID={childTestId}></View>
+        </Checkbox>,
+      );
+
+      expect(getByTestId(childTestId)).toBeOnTheScreen();
+    });
   });
 
-  it('отображает children', () => {
-    const childTestId = 'test-id-123';
-    const { getByTestId } = render(
-      <Checkbox active={false}>
-        <View testID={childTestId}></View>
-      </Checkbox>,
-    );
+  describe('Check mark', () => {
+    it('отображает чекбокс как активный при active=true', () => {
+      const { getByTestId } = render(<Checkbox active />);
 
-    expect(getByTestId(childTestId)).toBeOnTheScreen();
+      expect(getByTestId(CheckboxTestIds.checkMark)).toBeOnTheScreen();
+    });
+
+    it('не отображает чекбокс как активный при active=false', () => {
+      const { queryByTestId } = render(<Checkbox active={false} />);
+
+      expect(queryByTestId(CheckboxTestIds.checkMark)).toBeNull();
+    });
   });
+  describe('Callbacks', () => {
+    it('вызывает onPress по нажатию', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(
+        <Checkbox
+          active={false}
+          onPress={onPressMock}
+        />,
+      );
 
-  it('не отображает чекбокс как активный при active=false', () => {
-    const { queryByTestId } = render(<Checkbox active={false} />);
+      fireEvent.press(getByTestId(CheckboxTestIds.root));
 
-    expect(queryByTestId(CheckboxTestIds.checkMark)).toBeNull();
-  });
+      expect(onPressMock).toHaveBeenCalledTimes(1);
+    });
 
-  it('вызывает onPress по нажатию', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(
-      <Checkbox
-        active={false}
-        onPress={onPressMock}
-      />,
-    );
+    it('становится disabled, если onPress не передан', () => {
+      const { getByTestId } = render(<Checkbox active={false} />);
+      const touchable = getByTestId(CheckboxTestIds.root);
 
-    fireEvent.press(getByTestId(CheckboxTestIds.root));
-
-    expect(onPressMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('становится disabled, если onPress не передан', () => {
-    const { getByTestId } = render(<Checkbox active={false} />);
-    const touchable = getByTestId(CheckboxTestIds.root);
-
-    expect(touchable.props.accessibilityState.disabled).toBe(true);
+      expect(touchable.props.accessibilityState.disabled).toBe(true);
+    });
   });
 });
