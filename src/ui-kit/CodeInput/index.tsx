@@ -19,13 +19,15 @@ import Animated, {
 
 import { colors, withCustomAnimation } from '#config';
 
-import { TextXL } from './Text';
+import { TextXL } from '../Text';
+import { CodeInputTestIds } from './config';
 
 interface ICodeInput extends TextInputProps {
   value: string;
   isError?: boolean;
   setValue: (e: string) => void;
   style?: StyleProp<ViewStyle>;
+  testIdsConfig?: typeof CodeInputTestIds;
 }
 
 interface ICodeCell {
@@ -34,16 +36,17 @@ interface ICodeCell {
   isError: boolean | undefined;
   index: number;
   getCellOnLayoutHandler: ReturnType<typeof useClearByFocusCell>['1'];
+  testIdsConfig: typeof CodeInputTestIds;
 }
 
 export const OTP_CELL_COUNT = 5;
-let autoFocusTimerId: NodeJS.Timeout;
 export const CodeInput: React.FC<ICodeInput> = ({
   value,
   setValue,
   isError,
   style,
   autoFocus,
+  testIdsConfig = CodeInputTestIds,
 }) => {
   const ref = useBlurOnFulfill({ value, cellCount: OTP_CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -51,18 +54,11 @@ export const CodeInput: React.FC<ICodeInput> = ({
     setValue,
   });
 
-  useEffect(() => {
-    if (autoFocus) {
-      autoFocusTimerId = setTimeout(() => ref.current?.focus(), 0);
-
-      return () => clearTimeout(autoFocusTimerId);
-    }
-  }, [autoFocus, ref]);
-
   return (
     <CodeField
       ref={ref}
       {...props}
+      autoFocus={autoFocus}
       cellCount={OTP_CELL_COUNT}
       keyboardType="number-pad"
       renderCell={({ index, symbol, isFocused }) => (
@@ -73,9 +69,11 @@ export const CodeInput: React.FC<ICodeInput> = ({
           isError={isError}
           isFocused={isFocused}
           symbol={symbol}
+          testIdsConfig={testIdsConfig}
         />
       )}
       rootStyle={[styles.codeFieldRoot, StyleSheet.flatten(style)]}
+      testID={testIdsConfig.root}
       textContentType="oneTimeCode"
       value={value}
       onChangeText={code => setValue(code.match(/\d+/g)?.join('') || '')}
@@ -86,12 +84,13 @@ export const CodeInput: React.FC<ICodeInput> = ({
   );
 };
 
-const CodeInputCell: React.FC<ICodeCell> = ({
+export const CodeInputCell: React.FC<ICodeCell> = ({
   symbol,
   isFocused,
   isError,
   index,
   getCellOnLayoutHandler,
+  testIdsConfig,
 }) => {
   const cellHasValue = !!symbol;
 
@@ -170,6 +169,7 @@ const CodeInputCell: React.FC<ICodeCell> = ({
       <TextXL
         key={index}
         size={28}
+        testId={testIdsConfig.cellText}
         textAlign="center"
         weight="700"
         onLayout={getCellOnLayoutHandler(index)}
