@@ -9,7 +9,7 @@
     "prebuild": "npx expo prebuild --clean --no-install",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --no-coverage",
     "coverage": "jest --coverage",
     "android:new": "yarn prebuild && yarn android",
     "ios:new": "yarn prebuild && yarn ios",
@@ -122,9 +122,16 @@
   "jest": {
     "preset": "jest-expo",
     "collectCoverage": true,
+    "setupFiles": ["<rootDir>/__tests__/config/setup-tests.ts"],
+    "moduleNameMapper": {
+      "\\.svg$": "<rootDir>/__tests__/config/mocks/svgMock.js"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/config/"
+    ],
     "collectCoverageFrom": [
-      "src/**/*.{ts,tsx,js,jsx}",
-      "!src/assets/**/*" 
+      "<rootDir>/src/**/*.{ts,tsx,js,jsx}",
+      "!<rootDir>/src/assets/**/*" 
     ]
   }
 }
