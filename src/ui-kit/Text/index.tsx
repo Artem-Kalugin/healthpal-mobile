@@ -23,6 +23,7 @@ export interface IText {
   onLayout: TextProps['onLayout'];
   children: text | ReactNode;
   style: StyleProp<TextStyle>;
+  testId: string;
 }
 
 const _Text: React.FC<Partial<IText>> = ({
@@ -38,6 +39,7 @@ const _Text: React.FC<Partial<IText>> = ({
   textDecorationLine = 'none',
   onPress = undefined,
   onLayout = undefined,
+  testId = 'Text',
   style = {},
 }) => {
   const styles = getStyles({
@@ -55,6 +57,7 @@ const _Text: React.FC<Partial<IText>> = ({
       numberOfLines={numberOfLines}
       selectable={selectable}
       style={[styles.text, StyleSheet.flatten(style)]}
+      testID={testId}
       onLayout={onLayout}
       onPress={onPress}
     >

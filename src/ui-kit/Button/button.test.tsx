@@ -1,0 +1,86 @@
+import React from 'react';
+import { View } from 'react-native';
+
+import { fireEvent, render } from '@testing-library/react-native';
+
+import { ButtonTestIds } from './config';
+import { Button } from './index';
+
+describe('Button', () => {
+  describe('Render', () => {
+    it('отображает строку', () => {
+      const text = 'Test Text123';
+      const { getByText } = render(<Button>{text}</Button>);
+
+      expect(getByText(text)).toBeOnTheScreen();
+    });
+
+    it('отображает children', () => {
+      const { getByTestId } = render(
+        <Button>
+          <View testID="child-element" />
+        </Button>,
+      );
+
+      expect(getByTestId('child-element')).toBeOnTheScreen();
+    });
+  });
+
+  describe('Loader', () => {
+    it('отображает Loader когда isLoading', () => {
+      const { getByTestId } = render(<Button isLoading />);
+
+      expect(getByTestId(ButtonTestIds.loader)).toBeOnTheScreen();
+    });
+
+    it('не отображает текст когда isLoading', () => {
+      const text = 'Test Text';
+      const { queryByText } = render(<Button isLoading>{text}</Button>);
+
+      expect(queryByText(text)).toBeNull();
+    });
+
+    it('не отображает Loader by default', () => {
+      const { queryByTestId } = render(<Button />);
+
+      expect(queryByTestId(ButtonTestIds.loader)).toBeNull();
+    });
+  });
+
+  describe('Callbacks', () => {
+    it('вызывает onPress по нажатию', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(<Button onPress={onPressMock} />);
+
+      fireEvent.press(getByTestId(ButtonTestIds.root));
+
+      expect(onPressMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('не вызывает onPress когда disabled', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(
+        <Button
+          disabled
+          onPress={onPressMock}
+        />,
+      );
+
+      fireEvent.press(getByTestId(ButtonTestIds.root));
+      expect(onPressMock).not.toHaveBeenCalled();
+    });
+
+    it('не вызывает onPress  когда isLoading', () => {
+      const onPressMock = jest.fn();
+      const { getByTestId } = render(
+        <Button
+          isLoading
+          onPress={onPressMock}
+        />,
+      );
+
+      fireEvent.press(getByTestId(ButtonTestIds.root));
+      expect(onPressMock).not.toHaveBeenCalled();
+    });
+  });
+});

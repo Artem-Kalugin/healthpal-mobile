@@ -46,6 +46,7 @@ const SlideContainer: React.FC<ISlideContainer> = ({
   return (
     <Animated.View
       style={[containerStyle, animatedStyle]}
+      testID={`slide-container-${index}`}
       onLayout={onLayout}
     >
       {children}

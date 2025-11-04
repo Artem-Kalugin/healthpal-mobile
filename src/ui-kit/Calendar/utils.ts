@@ -2,6 +2,18 @@ import { DateData } from 'react-native-calendars';
 
 import dayjs from 'dayjs';
 
+export const getDayState = (
+  dateString: string,
+  activeDates: string[],
+  selectedDate?: string,
+  outlinedDate?: string,
+): 'disabled' | 'selected' | 'outlined' | 'inactive' => {
+  if (!activeDates.includes(dateString)) return 'disabled';
+  if (dateString === selectedDate) return 'selected';
+  if (dateString === outlinedDate) return 'outlined';
+  return 'inactive';
+};
+
 const jsDateObjectToCalendarDate = (date: Date): DateData => {
   const res = {
     month: date.getMonth() + 1,
@@ -17,10 +29,10 @@ const jsDateObjectToCalendarDate = (date: Date): DateData => {
 };
 
 export const toDateString = (isoTime: string, resetDay = false) => {
-  const dateDayJs = dayjs(isoTime);
+  let dateDayJs = dayjs(isoTime);
 
   if (resetDay) {
-    dateDayJs.date(1);
+    dateDayJs = dateDayJs.date(1);
   }
 
   return dateDayJs.format('YYYY-MM-DD');

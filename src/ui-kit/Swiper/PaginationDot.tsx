@@ -58,7 +58,12 @@ const PaginationDot: React.FC<IPaginationDot> = ({
     };
   });
 
-  return <Animated.View style={[animatedStyle, styles.paginationDot]} />;
+  return (
+    <Animated.View
+      style={[animatedStyle, styles.paginationDot]}
+      testID={`pagination-dot-${index}`}
+    />
+  );
 };
 
 const styles = StyleSheet.create({

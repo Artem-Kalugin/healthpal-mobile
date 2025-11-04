@@ -12,6 +12,7 @@ import { Loader } from '#ui-kit/Loader';
 
 import {
   ButtonSizeStyles,
+  ButtonTestIds,
   ButtonTextComponents,
   MapButtonStyles,
 } from './config';
@@ -29,8 +30,8 @@ export interface IButton {
   disabled: boolean;
   color: string;
   onPress: () => void;
-  onLongPress: () => void;
   children: ReactNode;
+  testIdConfig: typeof ButtonTestIds;
   style: StyleProp<ViewStyle>;
 }
 
@@ -45,7 +46,7 @@ export const Button: FC<Partial<IButton>> = ({
   color = '',
   style = {},
   onPress = () => {},
-  onLongPress = () => {},
+  testIdConfig = ButtonTestIds,
 }) => {
   const styles = getStyles({ fullwidth, disabled });
   const typeStyle = MapButtonStyles[appearance][type].default;
@@ -75,7 +76,7 @@ export const Button: FC<Partial<IButton>> = ({
         disabled && styles.disabled,
         StyleSheet.flatten(style),
       ]}
-      onLongPress={onLongPress}
+      testID={testIdConfig.root}
       onPress={onPress}
     >
       {isLoading ? (
@@ -83,6 +84,7 @@ export const Button: FC<Partial<IButton>> = ({
           <Loader
             cover
             color={typeStyle.color}
+            testID={testIdConfig.loader}
           />
         </View>
       ) : (

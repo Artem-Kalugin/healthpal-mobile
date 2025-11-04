@@ -3,10 +3,15 @@ import { DateData, DayState } from 'react-native-calendars/src/types';
 
 import { colors } from '#config';
 
-export type DayProps = _DayProps & {
-  date?: DateData;
+export type DayProps = Omit<_DayProps, 'date'> & {
+  date: DateData;
 };
 
+export const CalendarHeaderTestIds = {
+  arrowLeft: 'CalendarHeader_arrowLeft',
+  arrowRight: 'CalendarHeader_arrowRight',
+  loader: 'CalendarHeader_loader',
+};
 export const normalizeDefaultStyles = {
   'stylesheet.calendar.main': {
     container: {

@@ -15,7 +15,12 @@ import { colors, layoutAnimation, shadow } from '#config';
 import { DayProps, normalizeDefaultStyles } from './config';
 import { CalendarDay } from './Day';
 import { CalendarHeader } from './Header';
-import { changeAnchorDate, dateToYYYYMM, toDateString } from './utils';
+import {
+  changeAnchorDate,
+  dateToYYYYMM,
+  getDayState,
+  toDateString,
+} from './utils';
 
 interface ICalendar extends PropsWithChildren {
   initialAnchorDate: Pick<DateData, 'dateString'>;
@@ -65,18 +70,14 @@ export const Calendar = ({
   const renderDay = useCallback(
     (dayProps: DayProps) => (
       <CalendarDay
-        key={dayProps.date}
+        key={dayProps.date.dateString}
         date={dayProps.date}
-        state={
-          dayProps.date?.dateString &&
-          !activeDates.includes(dayProps.date?.dateString)
-            ? 'disabled'
-            : dayProps.date?.dateString === selectedDate?.dateString
-              ? 'selected'
-              : dayProps.date?.dateString === outlinedDate?.dateString
-                ? 'outlined'
-                : 'inactive'
-        }
+        state={getDayState(
+          dayProps.date?.dateString || '',
+          activeDates,
+          selectedDate?.dateString,
+          outlinedDate?.dateString,
+        )}
         onPress={dayProps.onPress}
       />
     ),
@@ -90,6 +91,7 @@ export const Calendar = ({
     >
       <_Calendar
         customHeader={CalendarHeader}
+        //@ts-expect-error wrong lib typing
         dayComponent={renderDay}
         disableArrowLeft={disableHeaderArrowLeft}
         disableArrowRight={disableHeaderArrowRight}
@@ -99,6 +101,7 @@ export const Calendar = ({
         //@ts-expect-error broken internal lib typings, type requires structure but code requires slug
         theme={normalizeDefaultStyles}
         minDate={minDate}
+        maxDate={maxDate}
         onDayPress={setSelectedDate}
         onMonthChange={setAnchorDate}
         onPressArrowLeft={subtractMonth}
