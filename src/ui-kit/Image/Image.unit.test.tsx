@@ -22,7 +22,7 @@ describe('Image component', () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules(); // чтобы импорт заново подхватывал env
+    jest.resetModules();
     process.env = { ...OLD_ENV, EXPO_PUBLIC_API_URL: 'test' };
   });
 

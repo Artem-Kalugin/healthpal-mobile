@@ -3,7 +3,7 @@ import NetInfo from '@react-native-community/netinfo';
 import type { InterceptorContext } from './types';
 
 export const connectionInterceptor = async (
-  context: InterceptorContext,
+  contex?: InterceptorContext,
 ): Promise<void> => {
   const { isConnected } = await NetInfo.fetch();
 

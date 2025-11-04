@@ -11,7 +11,7 @@ const consoleStyles = {
 };
 
 class Logger {
-  static __log(color: any, stylePrefixedText: string, data: any) {
+  static __log(color: any, stylePrefixedText: string, data: any[]) {
     if (__DEV__) {
       const now = new Date();
       const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -24,49 +24,49 @@ class Logger {
       return console.log(
         timeStamp,
         stylePrefixedText,
-        data ? '=> ' : '',
-        data || '',
+        data.length ? '=> ' : '',
+        ...(data || []),
       );
     }
   }
 
-  static error(text = 'Hello world', data?: any) {
+  static error(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles.error, `🆘[ERROR]\t ${text}`, data);
   }
 
-  static warn(text = 'Hello world', data?: any) {
+  static warn(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles.warn, `[WARN]\t ${text}`, data);
   }
 
-  static info(text = 'Hello world', data?: any) {
+  static info(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles.info, `[INFO]\t ${text}`, data);
   }
 
-  static success(text = 'Hello world', data?: any) {
+  static success(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles.success, `✅[SUCCESS]\t ${text}`, data);
   }
 
-  static requestStart(text = 'Hello world', data?: any) {
+  static requestStart(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles['api-success'], `➡️ [API START]\t ${text}`, data);
   }
 
-  static requestSuccess(text = 'Hello world', data?: any) {
+  static requestSuccess(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles['api-success'], `✅[API SUCCESS]\t ${text}`, data);
   }
 
-  static requestError(text = 'Hello world', data?: any) {
+  static requestError(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles['api-error'], `🆘[API ERROR]\t ${text}`, data);
   }
 
-  static complited(text = 'Hello world', data?: any) {
+  static complited(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles.complited, `✅[COMPLITED]\t ${text}`, data);
   }
 
-  static custom(tag = 'CUSTOM', text = 'Hello world', data?: any) {
+  static custom(tag = 'CUSTOM', text = 'Hello world', ...data: any) {
     this.__log(consoleStyles.info, `[${tag.toUpperCase()}]\t ${text}`, data);
   }
 
-  static log(text = 'Hello world', data?: any) {
+  static log(text = 'Hello world', ...data: any) {
     this.__log(consoleStyles.default, text, data);
   }
 }

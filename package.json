@@ -121,17 +121,23 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "silent": false,
     "collectCoverage": true,
-    "setupFiles": ["<rootDir>/__tests__/config/setup-tests.ts"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/__tests__/config/setup-tests.ts"
+    ],
     "moduleNameMapper": {
       "\\.svg$": "<rootDir>/__tests__/config/mocks/svgMock.js"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/config/"
     ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(immer|expo|expo-.*|@expo|expo-modules-core|react-redux|react-native-gesture-handler|react-native-confirmation-code-field|@react-native|react-native|@react-navigation|react-native-worklets|@react-native-community|react-native-reanimated)/)"
+    ],
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{ts,tsx,js,jsx}",
-      "!<rootDir>/src/assets/**/*" 
+      "!<rootDir>/src/assets/**/*"
     ]
   }
 }
