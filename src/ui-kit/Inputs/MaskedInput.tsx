@@ -92,6 +92,7 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
     IconRight
   ) : showEraseIcon ? (
     <TouchableOpacity
+      testID="erase-button"
       onPress={() => {
         (onErase || onChange)('', '');
       }}
