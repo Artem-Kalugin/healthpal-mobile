@@ -5,8 +5,8 @@ import Logger from '#services/Logger';
 import { store } from '#store';
 import { AppActions } from '#store/slices/app';
 
-import { PermissionManager } from './Permissions';
-import { LocationPermission } from './Permissions/config';
+import { PermissionManager } from '../Permissions';
+import { LocationPermission } from '../Permissions/config';
 
 export class LocationService {
   static async getCurrentLocation() {

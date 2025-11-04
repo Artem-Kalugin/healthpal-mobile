@@ -4,7 +4,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { toast } from 'react-hot-toast/headless';
 
 import { BEError } from '#api/types';
-import { handleBEValidationError, isBEValidationError } from '#api/utils';
+import { isBEValidationError } from '#api/utils';
 
 import Haptics from '#services/Haptics';
 import Logger from '#services/Logger';
@@ -26,18 +26,22 @@ const useBEErrorHandler = <T extends object>(
     const beError = error as BEError;
 
     const errorData = beError?.data;
+
     if (!errorData) return;
 
     if (form && isBEValidationError<T>(beError)) {
-      handleBEValidationError(beError.data.validation, form);
+      for (const field in beError.data.validation) {
+        //@ts-expect-error
+        form.setError(field, { message: validationErrors[field][0] });
+      }
+
       return;
     }
 
     if (
       typeof errorData === 'object' &&
       'message' in errorData &&
-      typeof errorData.message === 'string' &&
-      errorData.message
+      typeof errorData.message === 'string'
     ) {
       toast.error(errorData.message);
     }

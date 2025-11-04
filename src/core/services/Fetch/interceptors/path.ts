@@ -9,6 +9,8 @@ const getUrlWithPathParams = (
     url,
   );
 
-export const pathInterceptor = (context: InterceptorContext): string => {
+export const pathInterceptor = (
+  context: Pick<InterceptorContext, 'url' | 'path'>,
+): string => {
   return getUrlWithPathParams(context.url, context.path);
 };

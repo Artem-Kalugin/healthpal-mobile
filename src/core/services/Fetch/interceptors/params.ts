@@ -1,7 +1,7 @@
 import type { InterceptorContext } from './types';
 
 export const paramsInterceptor = (
-  context: InterceptorContext,
+  context: Pick<InterceptorContext, 'params'>,
   urlObj: URL,
 ): void => {
   const { params } = context;

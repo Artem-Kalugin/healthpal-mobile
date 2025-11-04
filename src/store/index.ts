@@ -1,3 +1,6 @@
+// uncomment to clear store
+// clearPersistor();
+
 import {
   useDispatch as _useDispatch,
   useSelector as _useSelector,
@@ -10,10 +13,11 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import { RtkAppApi } from '#api';
 
+import { TokenService } from '#services/Token';
+
 import reducers from './slices';
 
 export const storage = createMMKV();
-
 const reduxStorage: Storage = {
   setItem: (key, value) => {
     storage.set(key, value);
@@ -37,26 +41,25 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
-
-export const loggerMiddleware: Middleware = store => next => _action => {
+const loggerMiddleware: Middleware = store => next => _action => {
   const action = _action as unknown as Action<any>;
-  if (
-    !action.type.startsWith('api') &&
-    !action.type.startsWith('persist/REHYDRATE')
-  ) {
-    // eslint-disable-next-line no-console
-    console.log('⚡️Action:', action.type);
+  // if (
+  //   !action.type.startsWith('api') &&
+  //   !action.type.startsWith('persist/REHYDRATE')
+  // ) {
+  //   // eslint-disable-next-line no-console
+  //   console.log('⚡️Action:', action.type);
 
-    //@ts-expect-error
-    if (action.payload !== undefined) {
-      // eslint-disable-next-line no-console
-      console.log(
-        '📦Payload:',
-        //@ts-expect-error
-        action.payload,
-      );
-    }
-  }
+  //   //@ts-expect-error
+  //   if (action.payload !== undefined) {
+  //     // eslint-disable-next-line no-console
+  //     console.log(
+  //       '📦Payload:',
+  //       //@ts-expect-error
+  //       action.payload,
+  //     );
+  //   }
+  // }
 
   const result = next(action);
 
@@ -73,10 +76,8 @@ export const store = configureStore({
       .concat(RtkAppApi.middleware)
       .concat(loggerMiddleware),
 });
-
+TokenService.injectStore(store);
 export const persistor = persistStore(store);
-
-// uncomment to clear store
 
 export const clearPersistor = async () => {
   persistor.pause();

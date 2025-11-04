@@ -33,7 +33,7 @@ export const Image: React.FC<ImageWithPossibleApiSource> = ({
   placeholder,
   ...props
 }) => {
-  const token = useSelector(store => store.runtime.token?.plain);
+  const token = useSelector(store => store.runtime.token?.accessToken);
   const isApiImage =
     source && typeof source === 'object' && 'thumbhash' in source;
 

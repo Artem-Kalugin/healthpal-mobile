@@ -1,3 +1,4 @@
+import { Store } from '@reduxjs/toolkit';
 import type { BaseQueryApi, BaseQueryFn } from '@reduxjs/toolkit/query';
 import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import { REHYDRATE } from 'redux-persist';
@@ -6,7 +7,7 @@ import { FetchService } from '#services/Fetch';
 import Logger from '#services/Logger';
 import { TokenService } from '#services/Token';
 
-import { RootState, Store } from '#store';
+import { RootState } from '#store';
 import { TokenDecoded } from '#store/slices/runtime';
 
 import { delay } from '../utils';
@@ -24,29 +25,30 @@ export const logOut = async (api: Pick<Store, 'dispatch'>) => {
   api.dispatch(RtkAppApi.util.resetApiState());
 };
 
-let refreshingToken = '';
-let lastRefreshResult: Promise<
-  | {
-      data: { accessToken: string; refreshToken: string };
-    }
-  | undefined
->;
+export const refreshState = {
+  refreshingToken: '',
+  lastRefreshResult: undefined as
+    | Promise<{
+        data: { accessToken: string; refreshToken: string };
+      }>
+    | undefined,
+};
 
 const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
-  if (refreshingToken === tokenToRefresh.plain) {
-    return lastRefreshResult;
+  if (refreshState.refreshingToken === tokenToRefresh.accessToken) {
+    return refreshState.lastRefreshResult;
   }
 
-  refreshingToken = tokenToRefresh.plain;
+  refreshState.refreshingToken = tokenToRefresh.accessToken;
 
-  lastRefreshResult = (async () => {
+  refreshState.lastRefreshResult = (async () => {
     try {
       const response = (await FetchService.query(
         {
           url: '/auth/refresh',
           method: 'post',
           data: {
-            refreshToken: tokenToRefresh.refresh,
+            refreshToken: tokenToRefresh.refreshToken,
             userId: tokenToRefresh.userId,
           },
         },
@@ -67,26 +69,31 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
     }
   })();
 
-  return lastRefreshResult;
+  return refreshState.lastRefreshResult;
 };
 
-const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
+//@ts-expect-error
+export const apiBaseQuery: BaseQueryFn<FetchArgs, unknown, BEError> = async (
+  args: FetchArgs,
+  api: BaseQueryApi,
+  extraOptions: object,
+) => {
   const { url, method = 'GET', data, params, path } = args;
   !process.env.EXPO_PUBLIC_API_URL &&
     Logger.error('no API_URL available, make sure .env file inited');
 
   let runtimeToken = (api.getState() as RootState).runtime.token;
 
-  let accessToken = runtimeToken?.plain;
+  let accessToken = runtimeToken?.accessToken;
 
   try {
-    if (refreshingToken === accessToken) {
-      const refreshResult = await lastRefreshResult;
+    if (refreshState.refreshingToken === accessToken) {
+      const refreshResult = await refreshState.lastRefreshResult;
 
       if (refreshResult) {
-        return apiBaseQuery(args, api);
+        return apiBaseQuery(args, api, extraOptions);
       } else {
-        logOut(api);
+        await logOut(api);
 
         return {
           error: {
@@ -126,7 +133,7 @@ const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
     if (errorStatus === 401 && runtimeToken) {
       refresh(api, runtimeToken);
 
-      return await apiBaseQuery(args, api);
+      return await apiBaseQuery(args, api, extraOptions);
     }
 
     return { error };
@@ -134,8 +141,8 @@ const apiBaseQuery = async (args: FetchArgs, api: BaseQueryApi) => {
 };
 
 const baseQuery = retry(
-  async (args: FetchArgs, _api) => {
-    const result = await apiBaseQuery(args, _api);
+  async (args: FetchArgs, _api, extraOptions) => {
+    const result = await apiBaseQuery(args, _api, extraOptions);
     if (
       'error' in result &&
       result.error &&
@@ -157,8 +164,7 @@ const baseQuery = retry(
 
 const RtkAppApi = createApi({
   reducerPath: 'api',
-  //@ts-expect-error
-  baseQuery: baseQuery as BaseQueryFn<FetchArgs, unknown, BEError>,
+  baseQuery: baseQuery,
   endpoints: () => ({}),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {

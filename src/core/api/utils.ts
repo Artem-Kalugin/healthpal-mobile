@@ -1,6 +1,4 @@
-import { UseFormReturn } from 'react-hook-form';
-
-import { BEValidationError, BEValidationScheme } from './types';
+import { BEValidationError } from './types';
 
 export function __checkBEValidationError(error: unknown) {
   if (
@@ -8,8 +6,8 @@ export function __checkBEValidationError(error: unknown) {
       error &&
       typeof error === 'object' &&
       'data' in error &&
-      typeof (error as any).data === 'object' &&
-      (error as any).data !== null
+      typeof error.data === 'object' &&
+      error.data !== null
     )
   ) {
     return false;
@@ -34,16 +32,4 @@ export function isBEValidationError<T extends object>(
   error: unknown,
 ): error is { data: BEValidationError<T> } {
   return __checkBEValidationError(error);
-}
-
-export function handleBEValidationError<T extends object>(
-  validationErrors: BEValidationScheme<T>,
-  form: UseFormReturn<T, any, T>,
-): boolean {
-  for (const field in validationErrors) {
-    //@ts-expect-error
-    form.setError(field, { message: validationErrors[field][0] });
-  }
-
-  return true;
 }
