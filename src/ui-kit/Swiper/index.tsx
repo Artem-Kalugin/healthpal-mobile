@@ -68,13 +68,15 @@ const Swiper = <T extends unknown>({
   const autoplayStartTimeoutId = useRef(0);
   const autoplayIntervalId = useRef(0);
 
-  const interruptAutoplay = () => {
+  const interruptAutoplay = (autoRestart = true) => {
     clearTimeout(autoplayStartTimeoutId.current);
     clearInterval(autoplayIntervalId.current);
 
-    autoplayStartTimeoutId.current = setTimeout(() => {
-      autoplay();
-    }, autoplayInterval) as unknown as number;
+    if (autoRestart) {
+      autoplayStartTimeoutId.current = setTimeout(() => {
+        autoplay();
+      }, autoplayInterval) as unknown as number;
+    }
   };
 
   const gesture = useMemo(
@@ -132,6 +134,8 @@ const Swiper = <T extends unknown>({
 
   useEffect(() => {
     autoplay();
+
+    return () => interruptAutoplay(false);
   }, []);
 
   return (
