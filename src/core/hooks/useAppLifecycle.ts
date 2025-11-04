@@ -16,17 +16,14 @@ const useAppLifecycle = () => {
 
       BootSplash.hide({ fade: true });
       await prefetchApp();
-
+    } catch {
+    } finally {
       setInited(true);
-    } catch {}
+    }
   };
-
-  const onAppEnd = () => {};
 
   useEffect(() => {
     onAppStart();
-
-    return onAppEnd;
   }, []);
 
   return { isReadyToRender: inited };

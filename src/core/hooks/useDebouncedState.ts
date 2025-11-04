@@ -16,6 +16,10 @@ const useDebouncedState = <T>(
 
   useEffect(() => {
     debouncedSet(value);
+
+    return () => {
+      debouncedSet.cancel?.();
+    };
   }, [value]);
 
   return [value, setValue, debouncedValue, setDebouncedValue];
