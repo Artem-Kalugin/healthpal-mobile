@@ -93,6 +93,7 @@ export const TextInput: React.FC<Partial<ITextInput>> = ({
     IconRight
   ) : showEraseIcon ? (
     <TouchableOpacity
+      testID="erase-button"
       onPress={() => {
         (onErase || onChange)('');
       }}
