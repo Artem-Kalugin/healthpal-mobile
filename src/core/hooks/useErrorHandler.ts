@@ -31,8 +31,11 @@ const useBEErrorHandler = <T extends object>(
 
     if (form && isBEValidationError<T>(beError)) {
       for (const field in beError.data.validation) {
-        //@ts-expect-error
-        form.setError(field, { message: validationErrors[field][0] });
+        form.setError(
+          //@ts-expect-error
+          field,
+          { message: beError.data.validation[field][0] },
+        );
       }
 
       return;
