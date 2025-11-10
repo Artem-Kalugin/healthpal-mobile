@@ -22,8 +22,10 @@ export const Dialog: React.FC<ModalsScreenProps<ModalsRoutes.Dialog>> = ({
   return (
     <ModalWrapper
       visible={modal.visible}
-      onClose={route.params?.onClose}
-      setVisible={modal.setVisible}
+      onClose={() => {
+        route.params?.onClose && route.params.onClose();
+        modal.close();
+      }}
     >
       <Text style={styles.title}>{route.params?.title}</Text>
 

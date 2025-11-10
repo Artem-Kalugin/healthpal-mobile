@@ -21,7 +21,7 @@ export const DateTimePicker: React.FC<
     <ModalWrapper
       contentContainerStyle={styles.modal}
       visible={modal.visible}
-      setVisible={modal.setVisible}
+      onClose={modal.close}
     >
       <TextXL
         style={styles.title}

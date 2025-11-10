@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {
   PasswordRecoveryCodeInput,
@@ -12,7 +12,7 @@ import { DEFAULT_STACK_OPTIONS } from '#navigation/config';
 
 import { PasswordRecoveryParamList, PasswordRecoveryRoutes } from './types';
 
-const Stack = createStackNavigator<PasswordRecoveryParamList>();
+const Stack = createNativeStackNavigator<PasswordRecoveryParamList>();
 
 export const PasswordRecoveryStack = () => {
   return (

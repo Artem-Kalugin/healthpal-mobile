@@ -51,7 +51,7 @@ const Select: React.FC<ModalsScreenProps<ModalsRoutes.Select>> = props => {
   return (
     <ModalWrapper
       visible={modal.visible}
-      setVisible={modal.setVisible}
+      onClose={modal.close}
     >
       <TextXL weight="600">
         {props.route.params.title || 'Выберите время'}

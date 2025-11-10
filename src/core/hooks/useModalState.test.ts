@@ -58,34 +58,34 @@ describe('useModal', () => {
   });
 
   describe('close()', () => {
-    it('должно закрываться', () => {
+    it('должно закрываться', async () => {
       const { result } = renderHook(() => useModal(true));
 
-      act(() => {
-        result.current.close();
+      await act(async () => {
+        await result.current.close();
       });
 
       expect(result.current.visible).toBe(false);
     });
 
-    it('должно вызывать goBack() когда canGoBack', () => {
+    it('должно вызывать goBack() когда canGoBack', async () => {
       mockNavigation.canGoBack.mockReturnValue(true);
       const { result } = renderHook(() => useModal(true));
 
-      act(() => {
-        result.current.close();
+      await act(async () => {
+        await result.current.close();
       });
 
       expect(mockNavigation.canGoBack).toHaveBeenCalled();
       expect(mockNavigation.goBack).toHaveBeenCalled();
     });
 
-    it('не должно вызывать goBack() когда !canGoBack', () => {
+    it('не должно вызывать goBack() когда !canGoBack', async () => {
       mockNavigation.canGoBack.mockReturnValue(false);
       const { result } = renderHook(() => useModal(true));
 
-      act(() => {
-        result.current.close();
+      await act(async () => {
+        await result.current.close();
       });
 
       expect(mockNavigation.canGoBack).toHaveBeenCalled();
@@ -117,18 +117,18 @@ describe('useModal', () => {
   });
 
   describe('setVisible()', () => {
-    it('должен вести себя как setState', () => {
+    it('должен вести себя как setState', async () => {
       const { result } = renderHook(() => useModal(false));
 
-      act(() => {
-        result.current.setVisible(true);
+      await act(async () => {
+        await result.current.setVisible(true);
       });
 
       expect(result.current.visible).toBe(true);
       expect(mockNavigation.goBack).not.toHaveBeenCalled();
 
-      act(() => {
-        result.current.setVisible(false);
+      await act(async () => {
+        await result.current.setVisible(false);
       });
 
       expect(result.current.visible).toBe(false);

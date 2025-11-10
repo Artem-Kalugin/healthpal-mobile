@@ -32,7 +32,7 @@ export default function App() {
                     ...DefaultTheme,
                     colors: {
                       ...DefaultTheme.colors,
-                      background: 'transparent',
+                      background: 'white',
                     },
                   }}
                   onReady={async () => setNavigationReady(true)}

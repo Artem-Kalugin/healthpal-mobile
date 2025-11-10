@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Onboarding, ProfileEditing } from '#screens';
 
@@ -14,7 +14,7 @@ import StackModals from './Modals';
 import { PasswordRecoveryStack } from './PasswordRecovery';
 import { AppParamList, AppRoutes } from './types';
 
-const App = createStackNavigator<AppParamList>();
+const App = createNativeStackNavigator<AppParamList>();
 
 const AppStack = () => {
   const appState = useSelector(store => store.app);
@@ -33,8 +33,6 @@ const AppStack = () => {
       }
       screenOptions={{
         ...DEFAULT_STACK_OPTIONS,
-        //https://github.com/react-navigation/react-navigation/issues/12531 TODO: delete after fixed
-        detachPreviousScreen: false,
       }}
     >
       {appState.shouldShowOnboarding && (
@@ -77,13 +75,8 @@ const AppStack = () => {
         name={AppRoutes.StackModals}
         options={{
           headerShown: false,
-          //https://github.com/react-navigation/react-navigation/issues/12531 TODO: uncomment after fixed
-          //detachPreviousScreen: false,
+          animation: 'none',
           presentation: 'transparentModal',
-          cardStyle: {
-            backgroundColor: 'transparent',
-          },
-          cardStyleInterpolator: () => ({}),
         }}
       />
     </App.Navigator>

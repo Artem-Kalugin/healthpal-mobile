@@ -115,9 +115,9 @@ export const Profile: React.FC<
             text: 'Вы действительно хотите выйти из аккаунта?',
             confirmButtonProps: {
               children: 'Да, выйти',
-              onPress: (navigation, modal) => {
+              onPress: async (navigation, modal) => {
+                await modal.close();
                 logOut(store);
-                modal.close();
               },
             },
             declineButtonProps: {

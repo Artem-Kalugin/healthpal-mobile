@@ -33,28 +33,20 @@ const AnimatedTouchableOpacity =
 
 export interface IModalWrapper {
   visible: boolean;
-  avoidKeyboard: boolean;
-  setVisible: (value: boolean) => void;
-  onClose?: () => void;
-  contentContainerStyle: StyleProp<ViewStyle>;
-  containerStyle: StyleProp<ViewStyle>;
   children: ReactNode;
-  transparent: boolean;
+  onClose?: () => void;
   isClosable: boolean;
-  animatedIn: boolean;
-  isSwipeable: boolean;
   style: StyleProp<ViewStyle>;
+  containerStyle: StyleProp<ViewStyle>;
+  contentContainerStyle: StyleProp<ViewStyle>;
 }
 
 const ModalWrapper: React.FC<Partial<IModalWrapper>> = ({
-  visible = false,
-  animatedIn = true,
-  setVisible = () => {},
+  visible = true,
   onClose = () => {},
   isClosable = true,
   children,
   style = {},
-  avoidKeyboard = true,
   containerStyle = {},
   contentContainerStyle = {},
 }) => {
@@ -62,10 +54,9 @@ const ModalWrapper: React.FC<Partial<IModalWrapper>> = ({
   const styles = getStyles(insets.bottom);
   const y = useSharedValue(0);
 
-  const closeModal = () => {
+  const closeModal = async () => {
     if (isClosable) {
       onClose();
-      setVisible(false);
     }
   };
 
@@ -124,13 +115,10 @@ const ModalWrapper: React.FC<Partial<IModalWrapper>> = ({
 
         <KeyboardAvoidingView
           behavior="padding"
-          enabled={avoidKeyboard}
           style={styles.avoidKeyboardContainer}
         >
           <Animated.View
-            entering={
-              animatedIn ? SlideInDown.springify().mass(0.5) : undefined
-            }
+            entering={SlideInDown.springify().mass(0.5)}
             exiting={SlideOutDown.springify().stiffness(0)}
             style={[styles.content, containerStyle]}
           >

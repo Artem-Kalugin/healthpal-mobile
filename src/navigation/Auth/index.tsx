@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { SignIn, SignUp } from '#screens';
 
@@ -8,7 +8,7 @@ import { DEFAULT_STACK_OPTIONS } from '#navigation/config';
 
 import { AuthParamList, AuthRoutes } from './types';
 
-const Stack = createStackNavigator<AuthParamList>();
+const Stack = createNativeStackNavigator<AuthParamList>();
 
 export const AuthStack = () => {
   return (

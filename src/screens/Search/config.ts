@@ -5,7 +5,7 @@ import {
   PathsDoctorsSearchGetParametersQuerySort,
 } from '#generated/schema';
 
-export const FOLDABLE_HEADER_INITIAL_HEIGHT = 150;
+export const FOLDABLE_HEADER_HEIGHT = 164;
 
 export enum SortOptions {
   'rating' = 'Наивысший рейтинг',

@@ -1,6 +1,12 @@
 /* eslint-disable max-lines */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Keyboard,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -10,7 +16,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { CompositeScreenProps } from '@react-navigation/native';
-import { FlashList, FlashListRef } from '@shopify/flash-list';
+import { FlashListRef } from '@shopify/flash-list';
 
 import { DoctorCard } from '#components/domain/Doctor/Card';
 import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
@@ -39,14 +45,10 @@ import {
 } from '#generated/__entities';
 
 import { reactSync } from '../../core/utils';
-import {
-  FOLDABLE_HEADER_INITIAL_HEIGHT,
-  SortOptions,
-  SortOptionsDTO,
-} from './config';
+import { FOLDABLE_HEADER_HEIGHT, SortOptions, SortOptionsDTO } from './config';
 
 const AnimatedFlashList = Animated.createAnimatedComponent(
-  FlashList<BEDoctorResponseDto>,
+  FlatList<BEDoctorResponseDto>,
 );
 const fakeAllCategory = {
   id: undefined,
@@ -59,6 +61,7 @@ export const Search: React.FC<
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const isRendered = useRef(false);
   const isQueryChangingSource = useRef(false);
   const [sort, setSort] = useState(SortOptions.rating);
   const [searchFor, setSearchFor, debouncedSearchFor] = useDebouncedState('');
@@ -79,17 +82,12 @@ export const Search: React.FC<
     },
   });
   const categoriesScrollRef =
-    useRef<FlashListRef<BEDoctorCategoryResponseDto>>(null);
+    useRef<FlatList<BEDoctorCategoryResponseDto>>(null);
   const doctorsListRef = useRef<FlashListRef<BEDoctorResponseDto[]>>(null);
-  const [foldableContainerHeight, setFoldableContainerHeight] = useState(
-    FOLDABLE_HEADER_INITIAL_HEIGHT,
-  );
   const foldProgress = useSharedValue(1);
   const previousScrollPositionRef = useRef(0);
   const isCategoriesInitalyScrolled = useRef(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const headerHeight = foldableContainerHeight;
 
   const resetListPosition = async () => {
     await reactSync();
@@ -115,31 +113,15 @@ export const Search: React.FC<
 
     categoriesScrollRef.current?.scrollToItem({
       item,
-      viewOffset: -TAGS_LIST_PADDING_HORIZONTAL / 2,
       viewPosition: 0.5,
       animated: !initial,
     });
   };
 
-  useEffect(() => {
-    isQueryChangingSource.current = true;
-  }, [activeCategory, debouncedSearchFor, sort]);
-
-  useEffect(() => {
-    if (searchQuery.fulfilledTimeStamp) {
-      setIsRefreshing(false);
-    }
-
-    if (isQueryChangingSource.current) {
-      resetListPosition();
-      isQueryChangingSource.current = false;
-    }
-  }, [searchQuery.fulfilledTimeStamp]);
-
   const handler = useAnimatedScrollHandler({
     onScroll: event => {
       const nextProgressValueByOffset = +(
-        event.contentOffset.y < foldableContainerHeight
+        event.contentOffset.y < FOLDABLE_HEADER_HEIGHT
       );
 
       const nextProgressValueByVelocity =
@@ -155,7 +137,7 @@ export const Search: React.FC<
 
   const rFoldable = useAnimatedStyle(() => ({
     transform: [
-      { translateY: (foldProgress.value - 1) * foldableContainerHeight },
+      { translateY: (foldProgress.value - 1) * FOLDABLE_HEADER_HEIGHT },
     ],
   }));
 
@@ -183,178 +165,190 @@ export const Search: React.FC<
     [],
   );
 
+  useEffect(() => {
+    if (!isRendered.current) {
+      return;
+    }
+
+    isQueryChangingSource.current = true;
+  }, [activeCategory, debouncedSearchFor, sort]);
+
+  useEffect(() => {
+    if (!isRendered.current) {
+      return;
+    }
+
+    if (searchQuery.fulfilledTimeStamp) {
+      setIsRefreshing(false);
+    }
+
+    if (isQueryChangingSource.current) {
+      resetListPosition();
+      isQueryChangingSource.current = false;
+    }
+  }, [searchQuery.fulfilledTimeStamp]);
+
+  useEffect(() => {
+    isRendered.current = true;
+    scrollNavbarToCategory(activeCategory);
+  }, []);
+
   return (
     <View style={styles.flex}>
       <TapKeyboardDissmissArea />
+      <HeaderWithThreeSections
+        containerStyle={styles.headerContainer}
+        subtitle={props.route.params.title}
+        title="Все специалисты"
+        titleTextAlign="center"
+      />
       <View>
-        <HeaderWithThreeSections
-          containerStyle={styles.headerContainer}
-          subtitle={props.route.params.title}
-          title="Все специалисты"
-          titleTextAlign="center"
-        />
-        <View>
-          <Animated.View
-            style={[styles.foldableContainer, rFoldable, headerShadow]}
-            onLayout={el =>
-              setFoldableContainerHeight(el.nativeEvent.layout.height)
-            }
-          >
-            <View style={styles.searchBarContainer}>
-              <TextInput
-                autoFocus={props.route.params?.autoFocus}
-                IconLeft={<Icon name="search" />}
-                inputWrapperStyle={styles.searchBar}
-                placeholder="Поиск врача…"
-                size="small"
-                value={searchFor}
-                onChange={setSearchFor}
-                onErase={() => {
-                  Keyboard.dismiss();
-                  setSearchFor('');
-                }}
-                onSubmitEditing={Keyboard.dismiss}
-              />
-            </View>
-            <FlashList
-              ref={categoriesScrollRef}
-              horizontal
-              contentContainerStyle={styles.tagsListContent}
-              data={[
-                fakeAllCategory,
-                ...props.route.params.availableCategories,
-              ]}
-              renderItem={({ item }) => (
-                <View style={styles.tagWrapper}>
-                  <Tag
-                    key={item.id}
-                    active={item.type === activeCategory?.type}
-                    isLoading={
-                      activeCategory === item &&
-                      (searchQuery.isLoading || searchQuery.isFetching)
-                    }
-                    value={
-                      item.type ? MapDoctorCategoryToLabel[item.type] : 'Все'
-                    }
-                    onPress={() => {
-                      !searchQuery.isFetching && setActiveCategory(item);
-                      scrollNavbarToCategory(item);
-                    }}
-                  />
-                </View>
-              )}
-              showsHorizontalScrollIndicator={false}
-              style={styles.tagsList}
-              keyExtractor={item => item.id}
-              onContentSizeChange={() => {
-                scrollNavbarToCategory(activeCategory, true);
+        <Animated.View
+          style={[styles.foldableContainer, rFoldable, headerShadow]}
+        >
+          <View style={styles.searchBarContainer}>
+            <TextInput
+              autoFocus={props.route.params?.autoFocus}
+              IconLeft={<Icon name="search" />}
+              inputWrapperStyle={styles.searchBar}
+              placeholder="Поиск врача…"
+              size="small"
+              value={searchFor}
+              onChange={setSearchFor}
+              onErase={() => {
+                Keyboard.dismiss();
+                setSearchFor('');
               }}
+              onSubmitEditing={Keyboard.dismiss}
             />
-
-            <View style={styles.sectionHeader}>
-              {!!searchQuery.data?.pages.at(-1)?.count && (
-                <TextBase weight="700">
-                  {searchQuery.data?.pages.at(-1)?.count} найдено
-                </TextBase>
-              )}
-              <TouchableOpacity
-                style={styles.sortButton}
-                onPress={() =>
-                  props.navigation.navigate(AppRoutes.StackModals, {
-                    screen: ModalsRoutes.Select,
-                    params: {
-                      title: 'Выберите порядок сортировки',
-                      data: Object.values(SortOptions),
-                      keyExtractor: item => item,
-                      checkedExtractor: (item, currentItem) =>
-                        item === currentItem,
-                      renderItem: item => (
-                        <TextBase weight="400">{item}</TextBase>
-                      ),
-                      defaultValue: sort,
-                      onSelectionEnd: item => {
-                        Keyboard.dismiss();
-                        item && setSort(item);
-                      },
-                    } as SelectModalParams<SortOptions>,
-                  })
-                }
-              >
-                <Icon
-                  name="sort"
-                  size={16}
+          </View>
+          <FlatList
+            ref={categoriesScrollRef}
+            horizontal
+            contentContainerStyle={styles.tagsListContent}
+            data={[fakeAllCategory, ...props.route.params.availableCategories]}
+            renderItem={({ item }) => (
+              <View style={styles.tagWrapper}>
+                <Tag
+                  key={item.id}
+                  active={item.type === activeCategory?.type}
+                  isLoading={
+                    activeCategory === item &&
+                    (searchQuery.isLoading || searchQuery.isFetching)
+                  }
+                  value={
+                    item.type ? MapDoctorCategoryToLabel[item.type] : 'Все'
+                  }
+                  onPress={() => {
+                    !searchQuery.isFetching && setActiveCategory(item);
+                    scrollNavbarToCategory(item);
+                  }}
                 />
-                <TextSmall
-                  color={colors.grayscale['500']}
-                  textAlign="right"
-                  weight="500"
-                >
-                  {sort}
-                </TextSmall>
-              </TouchableOpacity>
-            </View>
-          </Animated.View>
-        </View>
-      </View>
-      {!!headerHeight && (
-        <AnimatedFlashList
-          //@ts-expect-error
-          ref={doctorsListRef}
-          automaticallyAdjustContentInsets={true}
-          contentContainerStyle={styles.cardsListContent}
-          contentInsetAdjustmentBehavior="always"
-          data={listData}
-          initialNumToRender={5}
-          keyboardShouldPersistTaps="never"
-          ListEmptyComponent={
-            searchQuery.isLoading ? (
-              <Loader size="large" />
-            ) : (
-              <EmptyListWarning
-                subtitle="Попробуйте изменить параметры поиска"
-                title="Ничего не нашли"
-              />
-            )
-          }
-          ListFooterComponent={
-            <PaginatableListFooter
-              enabled={!!listData.length && !isRefreshing}
-              message="Кажется, мы отобразили всех врачей"
-              showLoader={
-                searchQuery.isFetching && !isQueryChangingSource.current
+              </View>
+            )}
+            showsHorizontalScrollIndicator={false}
+            style={styles.tagsList}
+            keyExtractor={item => item.id}
+          />
+
+          <View style={styles.sectionHeader}>
+            {!!searchQuery.data?.pages.at(-1)?.count && (
+              <TextBase weight="700">
+                {searchQuery.data?.pages.at(-1)?.count} найдено
+              </TextBase>
+            )}
+            <TouchableOpacity
+              style={styles.sortButton}
+              onPress={() =>
+                props.navigation.navigate(AppRoutes.StackModals, {
+                  screen: ModalsRoutes.Select,
+                  params: {
+                    title: 'Выберите порядок сортировки',
+                    data: Object.values(SortOptions),
+                    keyExtractor: item => item,
+                    checkedExtractor: (item, currentItem) =>
+                      item === currentItem,
+                    renderItem: item => (
+                      <TextBase weight="400">{item}</TextBase>
+                    ),
+                    defaultValue: sort,
+                    onSelectionEnd: item => {
+                      Keyboard.dismiss();
+                      item && setSort(item);
+                    },
+                  } as SelectModalParams<SortOptions>,
+                })
               }
-              showMessage={!searchQuery.hasNextPage}
+            >
+              <Icon
+                name="sort"
+                size={16}
+              />
+              <TextSmall
+                color={colors.grayscale['500']}
+                textAlign="right"
+                weight="500"
+              >
+                {sort}
+              </TextSmall>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
+      </View>
+      <AnimatedFlashList
+        //@ts-expect-error
+        ref={doctorsListRef}
+        automaticallyAdjustContentInsets={true}
+        contentContainerStyle={styles.cardsListContent}
+        contentInsetAdjustmentBehavior="always"
+        data={listData}
+        initialNumToRender={5}
+        keyboardShouldPersistTaps="never"
+        ListEmptyComponent={
+          searchQuery.isLoading ? (
+            <Loader size="large" />
+          ) : (
+            <EmptyListWarning
+              subtitle="Попробуйте изменить параметры поиска"
+              title="Ничего не нашли"
             />
-          }
-          ListHeaderComponent={
-            <View
-              style={{
-                paddingTop: headerHeight + 8,
-              }}
-            />
-          }
-          maintainVisibleContentPosition={{
-            disabled: true,
-          }}
-          progressViewOffset={headerHeight + 8}
-          refreshing={isRefreshing}
-          renderItem={renderDoctorCard}
-          style={styles.cardsList}
-          keyExtractor={item => item.id}
-          onEndReached={() =>
-            !searchQuery.isFetching &&
-            searchQuery.hasNextPage &&
-            searchQuery.fetchNextPage()
-          }
-          onEndReachedThreshold={1}
-          onRefresh={() => {
-            setIsRefreshing(true);
-            searchQuery.refetch();
-          }}
-          onScroll={handler}
-          onScrollBeginDrag={() => Keyboard.dismiss()}
-        />
-      )}
+          )
+        }
+        ListFooterComponent={
+          <PaginatableListFooter
+            enabled={!!listData.length && !isRefreshing}
+            message="Кажется, мы отобразили всех врачей"
+            showLoader={
+              searchQuery.isFetching && !isQueryChangingSource.current
+            }
+            showMessage={!searchQuery.hasNextPage}
+          />
+        }
+        ListHeaderComponent={
+          <View
+            style={{
+              paddingTop: FOLDABLE_HEADER_HEIGHT + 8,
+            }}
+          />
+        }
+        progressViewOffset={FOLDABLE_HEADER_HEIGHT + 8}
+        refreshing={isRefreshing}
+        renderItem={renderDoctorCard}
+        style={styles.cardsList}
+        keyExtractor={item => item.id}
+        onEndReached={() =>
+          !searchQuery.isFetching &&
+          searchQuery.hasNextPage &&
+          searchQuery.fetchNextPage()
+        }
+        onEndReachedThreshold={1}
+        onRefresh={() => {
+          setIsRefreshing(true);
+          searchQuery.refetch();
+        }}
+        onScroll={handler}
+        onScrollBeginDrag={() => Keyboard.dismiss()}
+      />
     </View>
   );
 };
@@ -363,8 +357,10 @@ const TAGS_LIST_PADDING_HORIZONTAL = 20;
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   foldableContainer: {
+    height: FOLDABLE_HEADER_HEIGHT,
     position: 'absolute',
     zIndex: 1,
     backgroundColor: colors.white,

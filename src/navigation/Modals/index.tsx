@@ -14,6 +14,7 @@ const StackModals = () => {
       screenOptions={{
         headerShown: false,
         animation: 'none',
+        presentation: 'transparentModal',
       }}
     >
       <Modals.Screen

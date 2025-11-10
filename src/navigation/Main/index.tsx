@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { DoctorDetails } from '#screens/DoctorDetails';
 import { Notifications } from '#screens/Notifications';
@@ -13,7 +13,7 @@ import { FavoritesStack } from './Favorites';
 import { TabStack } from './Tab';
 import { MainParamList, MainRoutes } from './types';
 
-const Stack = createStackNavigator<MainParamList>();
+const Stack = createNativeStackNavigator<MainParamList>();
 
 export const MainStack = () => {
   return (

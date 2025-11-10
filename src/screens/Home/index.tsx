@@ -97,6 +97,7 @@ export const Home: React.FC<
           }}
         />
       }
+      showsVerticalScrollIndicator={false}
       style={styles.container}
     >
       <SafeAreaView

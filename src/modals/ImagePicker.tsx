@@ -72,7 +72,7 @@ export const ImagePicker: React.FC<
     <ModalWrapper
       contentContainerStyle={styles.modalContentContainer}
       visible={modal.visible}
-      setVisible={modal.setVisible}
+      onClose={modal.close}
     >
       <TextXL
         style={styles.title}

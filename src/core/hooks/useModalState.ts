@@ -2,15 +2,18 @@ import { useEffect, useState } from 'react';
 
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-const useModal = (initial = true) => {
+import { delay } from '../utils';
+
+const useModal = (initial = true, shouldWaitForModalAnimation = true) => {
   const [state, setState] = useState(initial);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
-  const _setState = (value: boolean) => {
+  const _setState = async (value: boolean) => {
     setState(value);
 
     if (!value) {
+      shouldWaitForModalAnimation && (await delay(250));
       navigation.canGoBack() && navigation.goBack();
     }
   };
