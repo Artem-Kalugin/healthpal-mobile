@@ -38,7 +38,7 @@ export enum EnumSelectModalLayout {
 
 export type SelectModalParams<T> = {
   title: string;
-  defaultValue?: any;
+  defaultValue?: unknown;
   checkedExtractor: (
     item: T,
     currentItem: T | undefined,
@@ -62,6 +62,8 @@ export type ModalsParamList = {
     confirmButtonProps: UIActionModalButton;
     declineButtonProps?: UIActionModalButton;
   };
+  // ParamList cannot be generic per route, so the item type is erased here and
+  // restored by a cast at the call site (`as SelectModalParams<T>`)
   [ModalsRoutes.Select]: SelectModalParams<any>;
   [ModalsRoutes.DateTimePicker]: {
     pickerProps: DatePicker['props'];

@@ -16,7 +16,6 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { CompositeScreenProps } from '@react-navigation/native';
-import { FlashListRef } from '@shopify/flash-list';
 
 import { DoctorCard } from '#components/domain/Doctor/Card';
 import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
@@ -47,7 +46,7 @@ import {
 import { reactSync } from '../../core/utils';
 import { FOLDABLE_HEADER_HEIGHT, SortOptions, SortOptionsDTO } from './config';
 
-const AnimatedFlashList = Animated.createAnimatedComponent(
+const AnimatedFlatList = Animated.createAnimatedComponent(
   FlatList<BEDoctorResponseDto>,
 );
 const fakeAllCategory = {
@@ -83,7 +82,7 @@ export const Search: React.FC<
   });
   const categoriesScrollRef =
     useRef<FlatList<BEDoctorCategoryResponseDto>>(null);
-  const doctorsListRef = useRef<FlashListRef<BEDoctorResponseDto[]>>(null);
+  const doctorsListRef = useRef<FlatList<BEDoctorResponseDto>>(null);
   const foldProgress = useSharedValue(1);
   const previousScrollPositionRef = useRef(0);
   const isCategoriesInitalyScrolled = useRef(false);
@@ -295,8 +294,7 @@ export const Search: React.FC<
           </View>
         </Animated.View>
       </View>
-      <AnimatedFlashList
-        //@ts-expect-error
+      <AnimatedFlatList
         ref={doctorsListRef}
         automaticallyAdjustContentInsets={true}
         contentContainerStyle={styles.cardsListContent}

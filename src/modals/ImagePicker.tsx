@@ -27,7 +27,7 @@ export const ImagePicker: React.FC<
   const pickImage = async () => {
     const permission = await PermissionManager.request(GalleryPermission);
 
-    if (!permission) {
+    if (!permission.allowed) {
       return;
     }
 
@@ -49,7 +49,7 @@ export const ImagePicker: React.FC<
   const takePhoto = async () => {
     const permission = await PermissionManager.request(CameraPermission);
 
-    if (!permission) {
+    if (!permission.allowed) {
       return;
     }
 

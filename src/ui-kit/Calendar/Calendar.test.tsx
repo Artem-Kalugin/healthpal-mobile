@@ -8,6 +8,9 @@ import { Calendar } from './index';
 import * as utils from './utils';
 
 jest.mock('react-native-calendars', () => ({ Calendar: jest.fn(() => null) }));
+
+const CalendarMock = _Calendar as unknown as jest.Mock;
+
 describe('Calendar (integration)', () => {
   const defaultProps = {
     initialAnchorDate: { dateString: '2025-01-01' },
@@ -26,8 +29,7 @@ describe('Calendar (integration)', () => {
   it('корректно передает все пропсы в react-native-calendars', () => {
     render(<Calendar {...defaultProps} />);
 
-    //@ts-expect-error
-    const calendarProps = _Calendar.mock.calls[0][0];
+    const calendarProps = CalendarMock.mock.calls[0][0];
 
     expect(calendarProps.initialDate).toBe(
       defaultProps.initialAnchorDate.dateString,
@@ -41,8 +43,7 @@ describe('Calendar (integration)', () => {
 
     render(<Calendar {...defaultProps} />);
 
-    //@ts-expect-error
-    const args = _Calendar.mock.calls[0][0];
+    const args = CalendarMock.mock.calls[0][0];
 
     act(() => args.onPressArrowLeft());
     act(() => args.onPressArrowRight());
@@ -58,8 +59,7 @@ describe('Calendar (integration)', () => {
 
     expect(defaultProps.onViewableMonthChange).toHaveBeenCalledTimes(1);
 
-    //@ts-expect-error
-    const args = _Calendar.mock.calls[0][0];
+    const args = CalendarMock.mock.calls[0][0];
 
     act(() => args.onPressArrowLeft());
 
@@ -73,8 +73,7 @@ describe('Calendar (integration)', () => {
 
     render(<Calendar {...defaultProps} />);
 
-    //@ts-expect-error
-    const args = _Calendar.mock.calls[0][0];
+    const args = CalendarMock.mock.calls[0][0];
 
     act(() => args.dayComponent(fakeDay));
 
@@ -94,8 +93,7 @@ describe('Calendar (integration)', () => {
         minDate="2025-01-01"
       />,
     );
-    //@ts-expect-error
-    expect(_Calendar.mock.calls[0][0].disableArrowLeft).toBe(true);
+    expect(CalendarMock.mock.calls[0][0].disableArrowLeft).toBe(true);
   });
 
   it('отключает правую стрелку, если anchorDate >= maxDate', () => {
@@ -106,8 +104,7 @@ describe('Calendar (integration)', () => {
         maxDate="2025-12-31"
       />,
     );
-    //@ts-expect-error
-    expect(_Calendar.mock.calls[0][0].disableArrowRight).toBe(true);
+    expect(CalendarMock.mock.calls[0][0].disableArrowRight).toBe(true);
   });
 
   it('On Press срабатывает при нажатии на день', () => {
@@ -118,8 +115,7 @@ describe('Calendar (integration)', () => {
         maxDate="2025-12-31"
       />,
     );
-    //@ts-expect-error
-    const args = _Calendar.mock.calls[0][0];
+    const args = CalendarMock.mock.calls[0][0];
 
     const fakeDay = { date: { dateString: '2025-01-11' } };
 

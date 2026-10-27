@@ -160,7 +160,7 @@ export const DoctorDetails: React.FC<
             </TextXL>
             <View style={styles.scheduleDays}>
               {Object.keys(doctorScheduleQuery.data).map(
-                //@ts-expect-error
+                //@ts-expect-error Object.keys returns string[], backend guarantees all keys of DoctorScheduleResponseDto (1-7)
                 (dayId: keyof typeof MapWeekDayToName) => (
                   <View
                     key={dayId}

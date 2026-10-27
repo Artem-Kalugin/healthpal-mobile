@@ -99,8 +99,10 @@ export const ProfileEditing: React.FC<
     }
 
     for (const userProperty in user) {
-      //@ts-expect-error
-      form.setValue(userProperty, user[userProperty]);
+      // for...in keys are typed as string, all form fields are present in user
+      const key = userProperty as keyof UpdateUserDto;
+
+      form.setValue(key, user[key]);
     }
   }, [userQuery.data]);
 
@@ -182,7 +184,7 @@ export const ProfileEditing: React.FC<
         defaultValue: form.getValues('gender'),
         onSelectionEnd: item => {
           Keyboard.dismiss();
-          //@ts-expect-error
+          //@ts-expect-error empty string is the intentional 'not selected' value caught by @IsNotEmpty, form is typed as Gender
           form.setValue('gender', item || '');
           item && form.clearErrors('gender');
         },

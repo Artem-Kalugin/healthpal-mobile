@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 
+import { MaskedTextInputRef } from 'react-native-advanced-input-mask';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Animated from 'react-native-reanimated';
 
@@ -51,7 +52,7 @@ export const SignUp: React.FC<
   const dispatch = useDispatch();
 
   const surnameInputRef = useRef<TextInput>(null);
-  const phoneInputRef = useRef<TextInput>(null);
+  const phoneInputRef = useRef<MaskedTextInputRef>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
   const { form, getFormInputProps } = useAppForm(CreateUserDto);

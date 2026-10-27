@@ -8,15 +8,15 @@ jest.mock('#store', () => ({
   useSelector: jest.fn(),
 }));
 
-jest.mock('expo-image', () => ({
-  Image: jest.fn(({ source, ...props }) => (
-    //@ts-expect-error
-    <mock-image
-      {...props}
-      source={source}
-    />
-  )),
-}));
+jest.mock('expo-image', () => {
+  const { createElement } = jest.requireActual('react');
+
+  return {
+    Image: jest.fn(({ source, ...props }) =>
+      createElement('mock-image', { ...props, source }),
+    ),
+  };
+});
 
 describe('Image component', () => {
   const OLD_ENV = process.env;

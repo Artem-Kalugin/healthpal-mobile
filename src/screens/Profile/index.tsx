@@ -117,7 +117,7 @@ export const Profile: React.FC<
               children: 'Да, выйти',
               onPress: async (navigation, modal) => {
                 await modal.close();
-                logOut(store);
+                await logOut(store);
               },
             },
             declineButtonProps: {

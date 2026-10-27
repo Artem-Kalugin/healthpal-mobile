@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { colors } from '#config';
 
@@ -11,13 +11,8 @@ export const ButtonTestIds = {
   text: 'Button_Text',
 };
 
-export type IButtonTypeStyles = {
-  default: any;
-  disabled: any;
-};
-
 export const ButtonTextComponents: {
-  [key in ButtonSize]: React.FC<IText>;
+  [key in ButtonSize]: React.FC<Partial<IText>>;
 } = {
   regular: (props: Partial<IText>) => (
     <TextBase
@@ -58,20 +53,17 @@ const getButtonStyle = (
   weight = '600',
   borderColor = backgroundColor,
 ) => {
-  return StyleSheet.create({
-    // eslint-disable-next-line react-native/no-unused-styles
-    style: {
-      color,
-      weight,
-      borderColor,
-      borderWidth: borderColor !== backgroundColor ? 1 : 0,
-      backgroundColor,
-    } as TextStyle,
-  }).style;
+  return {
+    color,
+    weight,
+    borderColor,
+    borderWidth: borderColor !== backgroundColor ? 1 : 0,
+    backgroundColor,
+  } as ButtonStyleScheme['default'];
 };
 
 type ButtonStyleScheme = {
-  default: any;
+  default: TextStyle & { color: string };
 };
 
 type ButtonAppearanceScheme = {

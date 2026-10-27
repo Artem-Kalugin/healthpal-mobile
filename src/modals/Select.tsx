@@ -12,11 +12,11 @@ import useModal from '#hooks/useModalState';
 const Select: React.FC<ModalsScreenProps<ModalsRoutes.Select>> = props => {
   const modal = useModal(true);
 
-  const [selectedItem, setSelectedItem] = useState<any[] | undefined>(
+  const [selectedItem, setSelectedItem] = useState<unknown>(
     props.route.params.defaultValue,
   );
 
-  const onSelect = (item: any, index: number) => {
+  const onSelect = (item: unknown, index: number) => {
     if (props.route.params.checkedExtractor(item, selectedItem, index)) {
       setSelectedItem(undefined);
     } else {

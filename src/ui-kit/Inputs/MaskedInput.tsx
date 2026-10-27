@@ -25,7 +25,7 @@ import { InputLabel } from './InputLabel';
 
 export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
-type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
+export type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   errors?: string[];
   mask: string;
   onChange: (masked: string, unmasked: string) => void;

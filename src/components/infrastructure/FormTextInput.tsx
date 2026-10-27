@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BlurEvent } from 'react-native';
 
 import {
   Control,
@@ -12,10 +13,11 @@ import {
 } from 'react-hook-form';
 
 import { ITextInput, TextInput } from '#ui-kit';
-import { MaskedInput } from '#ui-kit/Inputs/MaskedInput';
+import { IMaskedInput, MaskedInput } from '#ui-kit/Inputs/MaskedInput';
 
-interface FormTextInputProps<T extends FieldValues>
-  extends Omit<Partial<ITextInput>, 'value' | 'onChange' | 'outlineType'> {
+type InputOmittedProps = 'value' | 'onChange' | 'outlineType';
+
+interface FormTextInputBaseProps<T extends FieldValues> {
   name: Path<T>;
   formState: FormState<T>;
   trigger: UseFormTrigger<T>;
@@ -23,19 +25,27 @@ interface FormTextInputProps<T extends FieldValues>
   transformValue?: (value: string) => string;
   clearErrors: UseFormClearErrors<T>;
   control: Control<T>;
-  type?: 'phone' | 'default';
-  mask?: string;
 }
+
+type DefaultInputProps = Omit<Partial<ITextInput>, InputOmittedProps> & {
+  type?: 'default';
+};
+
+type PhoneInputProps = Omit<Partial<IMaskedInput>, InputOmittedProps> & {
+  type: 'phone';
+  mask?: string;
+};
+
+type FormTextInputProps<T extends FieldValues> = FormTextInputBaseProps<T> &
+  (DefaultInputProps | PhoneInputProps);
 
 export function FormTextInput<T extends FieldValues>({
   name,
   control,
   formState,
-  mask,
   clearErrors,
   setValue,
   transformValue = val => val,
-  type = 'default',
   trigger,
   ...externalProps
 }: FormTextInputProps<T>) {
@@ -56,14 +66,14 @@ export function FormTextInput<T extends FieldValues>({
             : undefined,
           outlineType: fieldState.invalid ? ('error' as const) : undefined,
           value: transformValue(value) ?? '',
-          onBlur: () => {
+          onBlur: (e?: BlurEvent) => {
             onBlur();
-            externalProps.onBlur && externalProps?.onBlur();
+            e && externalProps.onBlur && externalProps.onBlur(e);
             setIsFocused(false);
             fieldState.isTouched && trigger(name);
           },
           onErase: () => {
-            //@ts-expect-error
+            //@ts-expect-error react-hook-form can't resolve PathValue for generic T, '' is not assignable
             setValue(name, '', {
               shouldValidate: false,
               shouldDirty: false,
@@ -76,19 +86,22 @@ export function FormTextInput<T extends FieldValues>({
           },
         };
 
-        if (type === 'phone') {
+        if (externalProps.type === 'phone') {
+          const { type, mask, ...phoneProps } = externalProps;
+
           return (
-            //@ts-expect-error
             <MaskedInput
               mask={mask}
               onChange={(val, unmasked) => {
                 onChange(val);
               }}
               {...baseInputProps}
-              {...externalProps}
+              {...phoneProps}
             />
           );
         }
+
+        const { type, ...textProps } = externalProps;
 
         return (
           <TextInput
@@ -96,7 +109,7 @@ export function FormTextInput<T extends FieldValues>({
               onChange(val);
             }}
             {...baseInputProps}
-            {...externalProps}
+            {...textProps}
           />
         );
       }}

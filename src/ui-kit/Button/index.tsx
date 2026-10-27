@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-unused-styles */
 import React, { FC, ReactNode } from 'react';
 import {
   StyleProp,
@@ -55,9 +54,8 @@ export const Button: FC<Partial<IButton>> = ({
 
   const content =
     typeof children === 'string' ? (
-      //@ts-expect-error
       <_Text
-        color={color || typeStyle?.color!}
+        color={color || typeStyle.color}
         textAlign="center"
       >
         {children}
@@ -96,10 +94,6 @@ export const Button: FC<Partial<IButton>> = ({
 
 const getStyles = ({ fullwidth }: Pick<IButton, 'fullwidth' | 'disabled'>) =>
   StyleSheet.create({
-    flex: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     container: {
       width: fullwidth ? '100%' : 'auto',
       flexDirection: 'row',
@@ -110,11 +104,6 @@ const getStyles = ({ fullwidth }: Pick<IButton, 'fullwidth' | 'disabled'>) =>
       gap: 8,
       borderWidth: 1,
       borderRadius: 60,
-    },
-    contentContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 8,
     },
     activityIndicator: {
       minHeight: 20,

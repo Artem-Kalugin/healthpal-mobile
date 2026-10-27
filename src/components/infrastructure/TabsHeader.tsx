@@ -44,7 +44,7 @@ export const HeaderTabs = <T extends unknown>({
   activeItem,
   onPress = () => {},
   onLongPress = () => {},
-  valueExtractor = (item: any) =>
+  valueExtractor = (item: T) =>
     typeof item === 'string' ? item : JSON.stringify(item),
   style,
 }: IHeaderTabs<T>) => {
