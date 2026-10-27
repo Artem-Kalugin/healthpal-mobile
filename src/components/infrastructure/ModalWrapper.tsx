@@ -164,7 +164,7 @@ const getStyles = (insetsBottom: number) =>
       justifyContent: 'flex-end',
       zIndex: 100,
     },
-    // eslint-disable-next-line react-native/no-color-literals
+    // eslint-disable-next-line react-native/no-color-literals -- backdrop color is exclusive to ModalWrapper, not shared in the palette
     backdrop: {
       zIndex: 0,
       backgroundColor: '#00000099',

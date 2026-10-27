@@ -118,4 +118,11 @@ module.exports = defineConfig([
       ],
     },
   },
+
+  {
+    files: ['src/core/services/Logger.ts'],
+    rules: {
+      'no-console': off,
+    },
+  },
 ]);

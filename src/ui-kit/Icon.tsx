@@ -53,7 +53,7 @@ import star from '#assets/icons/star.svg';
 import userEdit from '#assets/icons/user-edit.svg';
 import user from '#assets/icons/user.svg';
 
-// eslint-disable-next-line boundaries/element-types
+// eslint-disable-next-line boundaries/element-types -- intentional ui-kit -> core import: we want to see missing-icon errors during launch, safe
 import Logger from '#services/Logger';
 
 import { colors } from '#config';

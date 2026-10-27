@@ -42,3 +42,6 @@ generated
 .clineignore
 .coice
 .claude
+
+# agent docs
+/agents

@@ -34,7 +34,7 @@ export type RootScreenProps<RouteName extends AppRoutes> = StackScreenProps<
 
 declare global {
   namespace ReactNavigation {
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type -- declaration merging required by React Navigation (global RootParamList), cannot be a type alias
     interface RootParamList extends AppParamList {}
   }
 }

@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-color-literals */
+/* eslint-disable react-native/no-color-literals -- unique splash artwork colors, not part of the palette */
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 

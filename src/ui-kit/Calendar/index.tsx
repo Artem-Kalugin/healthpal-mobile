@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-sort-props */
 import React, {
   PropsWithChildren,
   useCallback,
@@ -98,10 +97,10 @@ export const Calendar = ({
         displayLoadingIndicator={loading}
         firstDay={1}
         initialDate={anchorDate.dateString}
+        maxDate={maxDate}
+        minDate={minDate}
         //@ts-expect-error broken internal lib typings, type requires structure but code requires slug
         theme={normalizeDefaultStyles}
-        minDate={minDate}
-        maxDate={maxDate}
         onDayPress={setSelectedDate}
         onMonthChange={setAnchorDate}
         onPressArrowLeft={subtractMonth}
