@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-export function formatNotificationDate(timestamp: string): string {
+export const formatNotificationDate = (timestamp: string): string => {
   const date = dayjs(timestamp);
   const now = dayjs();
 
@@ -13,4 +13,4 @@ export function formatNotificationDate(timestamp: string): string {
   }
 
   return date.format('D MMMM');
-}
+};

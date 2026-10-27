@@ -30,7 +30,11 @@ import {
   SCREEN_WIDTH,
 } from '#config';
 
-export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
+export const FakeSplashScreenOverlay = ({
+  isLoading,
+}: {
+  isLoading: boolean;
+}) => {
   const animationProgress = useSharedValue(0);
 
   const onInit = async () => {
@@ -214,7 +218,7 @@ export function FakeSplashScreenOverlay({ isLoading }: { isLoading: boolean }) {
       </View>
     </Animated.View>
   );
-}
+};
 
 const GAPS = 12;
 const CARD_ASPECT_RATIO = (SCREEN_WIDTH * 1.5) / SCREEN_HEIGHT;

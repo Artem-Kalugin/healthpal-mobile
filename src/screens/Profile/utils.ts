@@ -1,4 +1,4 @@
-export function formatPhone(phone: string): string {
+export const formatPhone = (phone: string): string => {
   const digits = phone.replace(/\D/g, '');
 
   if (digits.length !== 11 || digits[0] !== '7') {
@@ -9,4 +9,4 @@ export function formatPhone(phone: string): string {
   if (!match) return phone;
 
   return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
-}
+};

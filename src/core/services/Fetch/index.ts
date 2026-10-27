@@ -1,4 +1,4 @@
-import { FetchArgs } from '#api/types';
+import type { FetchArgs } from '#api/types';
 
 import Logger from '#services/Logger';
 

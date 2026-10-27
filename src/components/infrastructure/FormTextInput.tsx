@@ -63,7 +63,7 @@ export function FormTextInput<T extends FieldValues>({
             fieldState.isTouched && trigger(name);
           },
           onErase: () => {
-            //@ts-expect-errors
+            //@ts-expect-error
             setValue(name, '', {
               shouldValidate: false,
               shouldDirty: false,

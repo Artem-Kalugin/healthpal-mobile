@@ -1,6 +1,6 @@
 import { BEValidationError } from './types';
 
-export function __checkBEValidationError(error: unknown) {
+export const __checkBEValidationError = (error: unknown) => {
   if (
     !(
       error &&
@@ -26,7 +26,7 @@ export function __checkBEValidationError(error: unknown) {
   }
 
   return true;
-}
+};
 
 export function isBEValidationError<T extends object>(
   error: unknown,

@@ -58,10 +58,7 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
 
   const isLoading = addDoctorMeta.isLoading || removeDoctorMeta.isLoading;
 
-  const handlePress = async () => {
-    if (isLoading) {
-      return;
-    }
+  const handleToggleFavorite = async () => {
     const payload = { path: { medicalCenterId } };
     try {
       if (isInFavorite) {
@@ -76,11 +73,19 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     } catch {}
   };
 
+  const onPress = async () => {
+    if (isLoading) {
+      return;
+    }
+
+    await handleToggleFavorite();
+  };
+
   return (
     <TouchableOpacity
       hitSlop={hitSlop}
       style={[StyleSheet.flatten(style), isLoading && styles.active]}
-      onPress={handlePress}
+      onPress={onPress}
     >
       <Icon
         color={colors.white}
