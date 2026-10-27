@@ -5,19 +5,19 @@ import { renderHook, waitFor } from '@testing-library/react-native';
 
 import { TokenService } from '#services/Token';
 
+import { useAppData } from './useAppData';
 import useAppLifecycle from './useAppLifecycle';
-import { usePrefetchApp } from './usePrefetchApp';
 
 jest.mock('react-native-bootsplash');
 jest.mock('#services/Token');
-jest.mock('./usePrefetchApp');
+jest.mock('./useAppData');
 
 describe('useAppLifecycle', () => {
   const mockPrefetchApp = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (usePrefetchApp as jest.Mock).mockReturnValue({
+    (useAppData as jest.Mock).mockReturnValue({
       prefetchApp: mockPrefetchApp,
     });
     mockPrefetchApp.mockResolvedValue(undefined);

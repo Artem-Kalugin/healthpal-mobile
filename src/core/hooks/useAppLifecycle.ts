@@ -4,11 +4,11 @@ import BootSplash from 'react-native-bootsplash';
 
 import { TokenService } from '#services/Token';
 
-import { usePrefetchApp } from './usePrefetchApp';
+import { useAppData } from './useAppData';
 
 const useAppLifecycle = () => {
   const [inited, setInited] = useState(false);
-  const { prefetchApp } = usePrefetchApp();
+  const { prefetchApp } = useAppData();
 
   const onAppStart = async () => {
     try {

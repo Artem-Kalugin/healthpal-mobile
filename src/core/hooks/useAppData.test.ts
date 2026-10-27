@@ -17,7 +17,7 @@ import {
   mockAccessToken,
   mockRefreshToken,
 } from '../../../__tests__/config/fixtures/tokens';
-import { usePrefetchApp } from './usePrefetchApp';
+import { useAppData } from './useAppData';
 
 jest.mock('#services/Location');
 jest.mock('#api/Doctor');
@@ -35,7 +35,7 @@ const mockToken: TokenDecoded = {
   registrationComplete: true,
 };
 
-describe('usePrefetchApp', () => {
+describe('useAppData', () => {
   const mockPrefetchFn = jest.fn().mockResolvedValue(undefined);
 
   afterEach(() => {
@@ -53,7 +53,7 @@ describe('usePrefetchApp', () => {
   });
 
   it('возвращает функцию prefetchApp и флаг isPrefetching', () => {
-    const { result } = renderHook(() => usePrefetchApp());
+    const { result } = renderHook(() => useAppData());
 
     expect(result.current).toHaveProperty('prefetchApp');
     expect(result.current).toHaveProperty('isPrefetching');
@@ -62,7 +62,7 @@ describe('usePrefetchApp', () => {
   });
 
   it('isPrefetching инитится как false, становится true во время загрузки и false после завершения', async () => {
-    const { result } = renderHook(() => usePrefetchApp());
+    const { result } = renderHook(() => useAppData());
 
     expect(result.current.isPrefetching).toBe(false);
 
@@ -84,7 +84,7 @@ describe('usePrefetchApp', () => {
   it('успешно завершается для неавторизованного пользователя', async () => {
     store.dispatch(RuntimeActions.setToken(undefined));
 
-    const { result } = renderHook(() => usePrefetchApp());
+    const { result } = renderHook(() => useAppData());
 
     await act(async () => {
       await expect(result.current.prefetchApp()).resolves.not.toThrow();
@@ -100,7 +100,7 @@ describe('usePrefetchApp', () => {
       coords: { latitude: 55.7558, longitude: 37.6173 },
     });
 
-    const { result } = renderHook(() => usePrefetchApp());
+    const { result } = renderHook(() => useAppData());
 
     await act(async () => {
       await expect(result.current.prefetchApp()).resolves.not.toThrow();
@@ -116,7 +116,7 @@ describe('usePrefetchApp', () => {
       new Error('Location not available'),
     );
 
-    const { result } = renderHook(() => usePrefetchApp());
+    const { result } = renderHook(() => useAppData());
 
     await act(async () => {
       await expect(result.current.prefetchApp()).resolves.not.toThrow();
@@ -128,7 +128,7 @@ describe('usePrefetchApp', () => {
   it('успешно завершается когда нужно показать онбординг', async () => {
     store.dispatch(AppActions.setShouldShowOnboarding(true));
 
-    const { result } = renderHook(() => usePrefetchApp());
+    const { result } = renderHook(() => useAppData());
 
     await act(async () => {
       await expect(result.current.prefetchApp()).resolves.not.toThrow();
@@ -138,7 +138,7 @@ describe('usePrefetchApp', () => {
   });
 
   it('можно вызвать prefetchApp несколько раз', async () => {
-    const { result } = renderHook(() => usePrefetchApp());
+    const { result } = renderHook(() => useAppData());
 
     await act(async () => {
       await result.current.prefetchApp();

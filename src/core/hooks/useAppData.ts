@@ -15,7 +15,7 @@ const prefetchConfig = {
   ifOlderThan: 600,
 };
 
-export const usePrefetchApp = () => {
+export const useAppData = () => {
   const [isPrefetching, setIsPrefetching] = useState(false);
 
   const prefetchDoctorCategories = DoctorAPI.usePrefetch(

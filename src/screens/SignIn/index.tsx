@@ -30,9 +30,9 @@ import { TokenService } from '#services/Token';
 
 import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
 
+import { useAppData } from '#hooks/useAppData';
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
-import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
@@ -45,7 +45,7 @@ export const SignIn: React.FC<
 > = props => {
   const dispatch = useDispatch();
 
-  const { prefetchApp, isPrefetching } = usePrefetchApp();
+  const { prefetchApp, isPrefetching } = useAppData();
   const passwordInputRef = useRef<TextInput>(null);
 
   const { form, getFormInputProps } = useAppForm(LoginDto, {

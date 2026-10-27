@@ -39,9 +39,9 @@ import {
 } from '#config';
 import { MapGenderToLabel } from '#config/locale';
 
+import { useAppData } from '#hooks/useAppData';
 import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
-import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
 import { reactSync } from '#utils';
 
@@ -58,7 +58,7 @@ export const ProfileEditing: React.FC<
   const surnameInputRef = useRef<_TextInput>(null);
   const nicknameInputRef = useRef<_TextInput>(null);
 
-  const { prefetchApp, isPrefetching } = usePrefetchApp();
+  const { prefetchApp, isPrefetching } = useAppData();
 
   const token = useSelector(storage => storage.runtime.token);
 
