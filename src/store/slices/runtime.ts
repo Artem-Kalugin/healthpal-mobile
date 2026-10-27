@@ -25,5 +25,5 @@ const runtimeSlice = createSlice({
   },
 });
 
-export default runtimeSlice.reducer;
+export const runtimeReducer = runtimeSlice.reducer;
 export const RuntimeActions = runtimeSlice.actions;

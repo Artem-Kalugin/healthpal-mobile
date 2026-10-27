@@ -11,7 +11,8 @@ import { Image } from 'expo-image';
 
 import { Rating, TextBase, TextSmall } from '#ui-kit';
 
-import { BORDER_RADIUS_ROUNDED, colors, Images } from '#config';
+import { BORDER_RADIUS_ROUNDED, Images } from '#config';
+import { colors } from '#config/colors';
 
 type IDoctorCard = {
   onPress?: () => void;

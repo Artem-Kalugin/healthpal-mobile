@@ -18,7 +18,8 @@ import Animated, {
 
 import { TextBase } from '#ui-kit';
 
-import { BORDER_RADIUS_ROUNDED, colors, hitSlop, SCREEN_WIDTH } from '#config';
+import { BORDER_RADIUS_ROUNDED, hitSlop, SCREEN_WIDTH } from '#config';
+import { colors } from '#config/colors';
 
 export interface IHeaderTabs<T extends unknown> {
   data: T[];

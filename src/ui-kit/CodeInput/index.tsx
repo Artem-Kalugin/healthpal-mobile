@@ -19,7 +19,8 @@ import Animated, {
 
 import { TextXL } from '#ui-kit/Text';
 
-import { colors, withCustomAnimation } from '#config';
+import { withCustomAnimation } from '#config';
+import { colors } from '#config/colors';
 
 import { CodeInputTestIds } from './config';
 

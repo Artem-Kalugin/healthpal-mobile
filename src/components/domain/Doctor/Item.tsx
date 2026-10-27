@@ -9,7 +9,7 @@ import {
 
 import { Icon, Image, TextBase, TextSmall, TextXS } from '#ui-kit';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 import { MapDoctorCategoryToLabel } from '#config/locale';
 
 import { BEDoctorResponseDto } from '#generated/__entities';

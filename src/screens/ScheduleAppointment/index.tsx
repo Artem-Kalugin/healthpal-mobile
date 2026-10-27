@@ -7,8 +7,8 @@ import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
-import ListExtender from '#components/infrastructure/ListExtender';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
+import { ListExtender } from '#components/infrastructure/ListExtender';
 
 import { Button, Calendar, Loader, TextSmall, TextXL } from '#ui-kit';
 import { toDateString } from '#ui-kit/Calendar/utils';
@@ -21,14 +21,16 @@ import {
   useCreateAppointmentMutation,
   useRescheduleAppointmentMutation,
 } from '#api/Appointments';
-import DoctorAPI, {
+import {
+  DoctorAPI,
   useGetDoctorTimeSlotsQuery,
   useGetDoctorTimeSlotsRangeQuery,
 } from '#api/Doctor';
 
-import { colors, headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
+import { headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
+import { colors } from '#config/colors';
 
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { useDispatch } from '#store';
 
@@ -169,8 +171,8 @@ export const ScheduleAppointment: React.FC<
     }
   }, [availableTimeSlotsQuery.fulfilledTimeStamp]);
 
-  useBEErrorHandler(bookAppointmentMeta);
-  useBEErrorHandler(rescheduleAppointmentMeta);
+  useErrorHandler(bookAppointmentMeta);
+  useErrorHandler(rescheduleAppointmentMeta);
 
   const content =
     !selectedDate || !anchorDate ? (

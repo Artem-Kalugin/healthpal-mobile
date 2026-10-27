@@ -22,7 +22,8 @@ import {
 
 import { Icon, IconNames } from '#ui-kit';
 
-import { colors, tabbarShadow, withCustomAnimation } from '#config';
+import { tabbarShadow, withCustomAnimation } from '#config';
+import { colors } from '#config/colors';
 
 export type NavigatorBottomTabRouteConfig = {
   iconName: IconNames;

@@ -9,7 +9,7 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 import { reduceAnimationValue } from './utils';
 

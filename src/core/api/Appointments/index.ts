@@ -3,7 +3,7 @@ import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
 
 import { RequestsAppointment as Requests, TagsAppointmentAPI } from './types';
 
-const AppointmentAPI = RtkAppApi.injectEndpoints({
+export const AppointmentAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     appointments: build.infiniteQuery<
@@ -62,5 +62,3 @@ export const {
   useRescheduleAppointmentMutation,
   useCancelAppointmentMutation,
 } = AppointmentAPI;
-
-export default AppointmentAPI;

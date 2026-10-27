@@ -19,9 +19,9 @@ import { CompositeScreenProps } from '@react-navigation/native';
 
 import { DoctorCard } from '#components/domain/Doctor/Card';
 import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
-import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
+import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Icon, Loader, TextBase, TextInput, TextSmall } from '#ui-kit';
 import { Tag } from '#ui-kit/Tag';
@@ -32,11 +32,12 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useSearchDoctorsInfiniteQuery } from '#api/Doctor';
 
-import { colors, headerShadow } from '#config';
+import { headerShadow } from '#config';
+import { colors } from '#config/colors';
 import { MapDoctorCategoryToLabel } from '#config/locale';
 
-import useDebouncedState from '#hooks/useDebouncedState';
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useDebouncedState } from '#hooks/useDebouncedState';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { reactSync } from '#utils';
 
@@ -141,7 +142,7 @@ export const Search: React.FC<
     ],
   }));
 
-  useBEErrorHandler(searchQuery);
+  useErrorHandler(searchQuery);
 
   const listData =
     (searchQuery.data?.pages
@@ -195,7 +196,7 @@ export const Search: React.FC<
 
   return (
     <View style={styles.flex}>
-      <TapKeyboardDissmissArea />
+      <TapKeyboardDismissArea />
       <HeaderWithThreeSections
         containerStyle={styles.headerContainer}
         subtitle={props.route.params.title}

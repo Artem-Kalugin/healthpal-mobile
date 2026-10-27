@@ -1,7 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import { BORDER_RADIUS_ROUNDED, colors } from '#config';
+import { BORDER_RADIUS_ROUNDED } from '#config';
+import { colors } from '#config/colors';
 
 import { Icon, IconNames, IIcon } from './Icon';
 import { TextSmall } from './Text';

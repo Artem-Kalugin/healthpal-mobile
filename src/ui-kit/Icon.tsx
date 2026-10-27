@@ -54,9 +54,9 @@ import userEdit from '#assets/icons/user-edit.svg';
 import user from '#assets/icons/user.svg';
 
 // eslint-disable-next-line boundaries/element-types -- intentional ui-kit -> core import: we want to see missing-icon errors during launch, safe
-import Logger from '#services/Logger';
+import { Logger } from '#services/Logger';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 const IconFiles = {
   /* PLOP_INJECT_KEY */

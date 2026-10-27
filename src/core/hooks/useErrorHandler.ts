@@ -7,10 +7,10 @@ import { toast } from 'react-hot-toast/headless';
 import { BEError } from '#api/types';
 import { isBEValidationError } from '#api/utils';
 
-import Haptics from '#services/Haptics';
-import Logger from '#services/Logger';
+import { Haptics } from '#services/Haptics';
+import { Logger } from '#services/Logger';
 
-const useBEErrorHandler = <T extends object>(
+export const useErrorHandler = <T extends object>(
   meta: { error?: BEError | SerializedError },
   form?: UseFormReturn<T, any, T>,
 ) => {
@@ -47,5 +47,3 @@ const useBEErrorHandler = <T extends object>(
     }
   }, [meta.error, form]);
 };
-
-export default useBEErrorHandler;

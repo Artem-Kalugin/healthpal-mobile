@@ -5,7 +5,7 @@ import Animated, { FadeOut } from 'react-native-reanimated';
 
 import { TextXS } from '#ui-kit/Text';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 import { DayProps, DayTextColors } from './config';
 

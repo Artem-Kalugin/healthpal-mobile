@@ -11,7 +11,8 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useOnboardingQuery } from '#api/Onboarding';
 
-import { colors, SAFE_ZONE_BOTTOM } from '#config';
+import { SAFE_ZONE_BOTTOM } from '#config';
+import { colors } from '#config/colors';
 
 export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
   const onboardingQuery = useOnboardingQuery(null);

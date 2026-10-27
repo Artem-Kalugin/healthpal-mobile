@@ -9,7 +9,7 @@ import {
 
 import { Icon } from '#ui-kit/Icon';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 import { CheckboxTestIds } from './config';
 

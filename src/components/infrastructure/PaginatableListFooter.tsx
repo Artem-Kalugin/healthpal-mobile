@@ -3,9 +3,9 @@ import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import { Loader, TextSmall } from '#ui-kit';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
-import ListExtender from './ListExtender';
+import { ListExtender } from './ListExtender';
 
 interface IPaginatableListFooter {
   enabled?: boolean;

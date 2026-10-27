@@ -25,7 +25,7 @@ import { useDoctorCategoriesQuery } from '#api/Doctor';
 
 import { BORDER_RADIUS_ROUNDED } from '#config';
 
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { BEAppointmentResponseDto } from '#generated/__entities';
 
@@ -99,7 +99,7 @@ export const Appointments: React.FC<
     setIsRefreshing(false);
   }, [appointmentsQuery.fulfilledTimeStamp]);
 
-  useBEErrorHandler(cancelAppointmentMetadata);
+  useErrorHandler(cancelAppointmentMetadata);
 
   return (
     <FlatList

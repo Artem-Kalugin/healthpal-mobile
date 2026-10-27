@@ -2,13 +2,14 @@ import React from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 
 import { NotifcationItem } from '#components/domain/Notification/Item';
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 
 import { TextBase, TextSmall } from '#ui-kit';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
-import { colors, headerShadow } from '#config';
+import { headerShadow } from '#config';
+import { colors } from '#config/colors';
 
 import { notifications } from './config';
 import { formatNotificationDate } from './utils';

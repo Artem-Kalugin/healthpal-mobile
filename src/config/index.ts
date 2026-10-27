@@ -114,5 +114,3 @@ export enum NotificationTypes {
   'PASSWORD_CHANGED',
   'NEW_LOG_IN',
 }
-
-export * from './colors';

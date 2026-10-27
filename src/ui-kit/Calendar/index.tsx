@@ -9,7 +9,8 @@ import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { Calendar as _Calendar, DateData } from 'react-native-calendars';
 import Animated from 'react-native-reanimated';
 
-import { colors, layoutAnimation, shadow } from '#config';
+import { layoutAnimation, shadow } from '#config';
+import { colors } from '#config/colors';
 
 import { DayProps, normalizeDefaultStyles } from './config';
 import { CalendarDay } from './Day';

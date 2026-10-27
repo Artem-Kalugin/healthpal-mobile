@@ -3,7 +3,7 @@ import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
 
 import { RequestsDoctor as Requests } from './types';
 
-const DoctorAPI = RtkAppApi.injectEndpoints({
+export const DoctorAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     doctorCategories: build.query<
@@ -119,5 +119,3 @@ export const {
   useGetDoctorTimeSlotsRangeQuery,
   useGetDoctorScheduleQuery,
 } = DoctorAPI;
-
-export default DoctorAPI;

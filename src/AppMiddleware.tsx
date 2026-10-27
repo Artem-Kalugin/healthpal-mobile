@@ -4,11 +4,15 @@ import * as SystemUI from 'expo-system-ui';
 
 import { FakeSplashScreenOverlay } from '#components/infrastructure/FakeSplashScreenOverlay';
 
-import RootStack from '#navigation';
+import { AppStack as RootStack } from '#navigation';
 
-import useAppLifecycle from '#hooks/useAppLifecycle';
+import { useAppLifecycle } from '#hooks/useAppLifecycle';
 
-const AppMiddleware = ({ navigationReady }: { navigationReady: boolean }) => {
+export const AppMiddleware = ({
+  navigationReady,
+}: {
+  navigationReady: boolean;
+}) => {
   const [showSplashScreenAnimation, setShowSplashScreeAnimation] =
     useState(true);
   const { isReadyToRender } = useAppLifecycle();
@@ -37,5 +41,3 @@ const AppMiddleware = ({ navigationReady }: { navigationReady: boolean }) => {
     </>
   );
 };
-
-export default AppMiddleware;

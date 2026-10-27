@@ -13,7 +13,8 @@ import {
   useRemoveMedicalCenterMutation,
 } from '#api/Favorites';
 
-import { colors, hitSlop } from '#config';
+import { hitSlop } from '#config';
+import { colors } from '#config/colors';
 
 import { useDispatch, useSelector } from '#store';
 import {

@@ -2,10 +2,10 @@ import { act } from 'react';
 
 import { renderHook } from '@testing-library/react-native';
 
-import DoctorAPI from '#api/Doctor';
-import MedicalCentersAPI from '#api/MedicalCenters';
-import OnboardingAPI from '#api/Onboarding';
-import UserAPI from '#api/User';
+import { DoctorAPI } from '#api/Doctor';
+import { MedicalCentersAPI } from '#api/MedicalCenters';
+import { OnboardingAPI } from '#api/Onboarding';
+import { UserAPI } from '#api/User';
 
 import { LocationService } from '#services/Location';
 

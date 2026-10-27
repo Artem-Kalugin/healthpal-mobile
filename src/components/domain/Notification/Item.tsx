@@ -5,7 +5,8 @@ import dayjs from 'dayjs';
 
 import { Icon, IconNames, TextBase, TextSmall } from '#ui-kit';
 
-import { BORDER_RADIUS_ROUNDED, colors, NotificationTypes } from '#config';
+import { BORDER_RADIUS_ROUNDED, NotificationTypes } from '#config';
+import { colors } from '#config/colors';
 
 type Item = {
   type: NotificationTypes;

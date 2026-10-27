@@ -10,13 +10,13 @@ import { AuthStack } from './Auth';
 import { AuthRoutes } from './Auth/types';
 import { DEFAULT_STACK_OPTIONS } from './config';
 import { MainStack } from './Main';
-import StackModals from './Modals';
+import { StackModals } from './Modals';
 import { PasswordRecoveryStack } from './PasswordRecovery';
 import { AppParamList, AppRoutes } from './types';
 
 const App = createNativeStackNavigator<AppParamList>();
 
-const AppStack = () => {
+export const AppStack = () => {
   const appState = useSelector(store => store.app);
   const runtimeState = useSelector(store => store.runtime);
 
@@ -82,5 +82,3 @@ const AppStack = () => {
     </App.Navigator>
   );
 };
-
-export default AppStack;

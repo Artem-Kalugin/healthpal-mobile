@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { TextXS } from '#ui-kit/Text';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 export interface IInputErrorBlock {
   errors: string[];

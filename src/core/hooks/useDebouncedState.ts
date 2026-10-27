@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { debounce } from 'lodash';
 
-const useDebouncedState = <T>(
+export const useDebouncedState = <T>(
   param: T,
   debounceTimer = 250,
 ): [T, SetState<T>, T, SetState<T>] => {
@@ -24,5 +24,3 @@ const useDebouncedState = <T>(
 
   return [value, setValue, debouncedValue, setDebouncedValue];
 };
-
-export default useDebouncedState;

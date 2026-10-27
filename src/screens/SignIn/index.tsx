@@ -14,7 +14,7 @@ import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
 import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
+import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 import { Brand } from '#ui-kit/Brand';
@@ -28,11 +28,12 @@ import { LoginDto } from '#api/Auth/dto/LoginDto';
 
 import { TokenService } from '#services/Token';
 
-import { colors, hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
+import { hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
+import { colors } from '#config/colors';
 
 import { useAppData } from '#hooks/useAppData';
-import useAppForm from '#hooks/useAppForm';
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useAppForm } from '#hooks/useAppForm';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
@@ -92,7 +93,7 @@ export const SignIn: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
-  useBEErrorHandler(loginMetadata, form);
+  useErrorHandler(loginMetadata, form);
 
   return (
     <SafeAreaView
@@ -106,7 +107,7 @@ export const SignIn: React.FC<
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.body}>
-          <TapKeyboardDissmissArea />
+          <TapKeyboardDismissArea />
 
           <Brand />
 

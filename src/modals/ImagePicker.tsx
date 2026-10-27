@@ -3,26 +3,26 @@ import { StyleSheet, View } from 'react-native';
 
 import * as ImagePickerExpo from 'expo-image-picker';
 
-import ModalWrapper from '#components/infrastructure/ModalWrapper';
+import { ModalWrapper } from '#components/infrastructure/ModalWrapper';
 
 import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
-import { PermissionManager } from '#services/Permissions';
 import {
   CameraPermission,
   GalleryPermission,
-} from '#services/Permissions/config';
+  PermissionManager,
+} from '#services/Permissions';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
-import useModal from '#hooks/useModalState';
+import { useModalState } from '#hooks/useModalState';
 
 export const ImagePicker: React.FC<
   ModalsScreenProps<ModalsRoutes.ImagePicker>
 > = props => {
-  const modal = useModal(true);
+  const modal = useModalState(true);
 
   const pickImage = async () => {
     const permission = await PermissionManager.request(GalleryPermission);

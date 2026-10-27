@@ -3,7 +3,7 @@ import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
 
 import { RequestsMedicalCenters as Requests } from './types';
 
-const MedicalCentersAPI = RtkAppApi.injectEndpoints({
+export const MedicalCentersAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     medicalCenters: build.query<
@@ -38,5 +38,3 @@ export const {
   useFavoriteMedicalCentersInfiniteQuery,
   useLazyMedicalCentersQuery,
 } = MedicalCentersAPI;
-
-export default MedicalCentersAPI;

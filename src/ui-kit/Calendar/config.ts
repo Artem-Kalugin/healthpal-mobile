@@ -1,7 +1,7 @@
 import { DayProps as _DayProps } from 'react-native-calendars/src/calendar/day';
 import { DateData, DayState } from 'react-native-calendars/src/types';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 export type DayProps = Omit<_DayProps, 'date'> & {
   date: DateData;

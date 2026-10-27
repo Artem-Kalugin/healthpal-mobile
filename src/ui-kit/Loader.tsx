@@ -5,7 +5,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import { colors, IS_IOS } from '#config';
+import { IS_IOS } from '#config';
+import { colors } from '#config/colors';
 
 const ACTIVITY_INDICATOR_IOS_DEFAULT_COLOR = '#999999';
 

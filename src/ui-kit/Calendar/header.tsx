@@ -7,7 +7,8 @@ import { Icon } from '#ui-kit/Icon';
 import { Loader } from '#ui-kit/Loader';
 import { TextSmall, TextXS } from '#ui-kit/Text';
 
-import { colors, hitSlopSmall } from '#config';
+import { hitSlopSmall } from '#config';
+import { colors } from '#config/colors';
 
 import { CalendarHeaderTestIds, CalendarMonthNames } from './config';
 

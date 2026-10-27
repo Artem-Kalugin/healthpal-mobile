@@ -7,7 +7,7 @@ import {
   TextStyle,
 } from 'react-native';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 export interface IText {
   weight: keyof ReturnType<typeof generateFontNameMap>;

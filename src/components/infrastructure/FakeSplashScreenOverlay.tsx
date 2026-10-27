@@ -22,13 +22,13 @@ import { setStatusBarHidden } from 'expo-status-bar';
 import { Brand, Loader } from '#ui-kit';
 
 import {
-  colors,
   Images,
   IS_IOS,
   layoutAnimation,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
 } from '#config';
+import { colors } from '#config/colors';
 
 export const FakeSplashScreenOverlay = ({
   isLoading,

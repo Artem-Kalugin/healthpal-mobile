@@ -29,7 +29,7 @@ export interface IHeaderSegmented {
   containerStyle: StyleProp<ViewStyle>;
 }
 
-const HeaderWithThreeSections: React.FC<Partial<IHeaderSegmented>> = ({
+const HeaderWithThreeSectionsBase: React.FC<Partial<IHeaderSegmented>> = ({
   title = 'Header',
   subtitle,
   titleTextAlign = 'left',
@@ -129,4 +129,4 @@ const getStyles = ({
     },
   });
 
-export default React.memo(HeaderWithThreeSections);
+export const HeaderWithThreeSections = React.memo(HeaderWithThreeSectionsBase);

@@ -18,7 +18,7 @@ const FavoritesRemovedSlice = createSlice({
   },
 });
 
-export default FavoritesRemovedSlice.reducer;
+export const favoritesRemovedReducer = FavoritesRemovedSlice.reducer;
 export const FavoritesRemovedActions = FavoritesRemovedSlice.actions;
 export const FavoritesRemovedSelectors =
   FavoritesRemoved.getSelectors<RootState>(state => state.favoritesRemoved);

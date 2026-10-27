@@ -8,7 +8,7 @@ import { ModalsParamList, ModalsRoutes } from './types';
 
 const Modals = createStackNavigator<ModalsParamList>();
 
-const StackModals = () => {
+export const StackModals = () => {
   return (
     <Modals.Navigator
       screenOptions={{
@@ -36,5 +36,3 @@ const StackModals = () => {
     </Modals.Navigator>
   );
 };
-
-export default StackModals;

@@ -15,7 +15,8 @@ import Animated, {
 import { Loader } from '#ui-kit/Loader';
 import { TextSmall } from '#ui-kit/Text';
 
-import { BORDER_RADIUS_ROUNDED, colors, withCustomAnimation } from '#config';
+import { BORDER_RADIUS_ROUNDED, withCustomAnimation } from '#config';
+import { colors } from '#config/colors';
 
 import { TagTestIds } from './config';
 

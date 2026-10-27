@@ -1,14 +1,14 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { act, renderHook } from '@testing-library/react-native';
 
-import useModal from './useModalState';
+import { useModalState } from './useModalState';
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: jest.fn(),
   useIsFocused: jest.fn(),
 }));
 
-describe('useModal', () => {
+describe('useModalState', () => {
   let mockNavigation: {
     goBack: jest.Mock;
     canGoBack: jest.Mock;
@@ -32,14 +32,14 @@ describe('useModal', () => {
 
   describe('Initialization', () => {
     it('должно инициализироваться открытым (true)', () => {
-      const { result } = renderHook(() => useModal());
+      const { result } = renderHook(() => useModalState());
 
       expect(result.current.visible).toBe(true);
     });
 
     it('должно инициализироваться с переданным значением (false) + !isFocused', () => {
       (useIsFocused as jest.Mock).mockReturnValue(false);
-      const { result } = renderHook(() => useModal(false));
+      const { result } = renderHook(() => useModalState(false));
 
       expect(result.current.visible).toBe(false);
     });
@@ -47,7 +47,7 @@ describe('useModal', () => {
 
   describe('open()', () => {
     it('должно открываться', () => {
-      const { result } = renderHook(() => useModal(false));
+      const { result } = renderHook(() => useModalState(false));
 
       act(() => {
         result.current.open();
@@ -59,7 +59,7 @@ describe('useModal', () => {
 
   describe('close()', () => {
     it('должно закрываться', async () => {
-      const { result } = renderHook(() => useModal(true));
+      const { result } = renderHook(() => useModalState(true));
 
       await act(async () => {
         await result.current.close();
@@ -70,7 +70,7 @@ describe('useModal', () => {
 
     it('должно вызывать goBack() когда canGoBack', async () => {
       mockNavigation.canGoBack.mockReturnValue(true);
-      const { result } = renderHook(() => useModal(true));
+      const { result } = renderHook(() => useModalState(true));
 
       await act(async () => {
         await result.current.close();
@@ -82,7 +82,7 @@ describe('useModal', () => {
 
     it('не должно вызывать goBack() когда !canGoBack', async () => {
       mockNavigation.canGoBack.mockReturnValue(false);
-      const { result } = renderHook(() => useModal(true));
+      const { result } = renderHook(() => useModalState(true));
 
       await act(async () => {
         await result.current.close();
@@ -95,7 +95,7 @@ describe('useModal', () => {
 
   describe('closeWithoutGoBack()', () => {
     it('должно закрывать', () => {
-      const { result } = renderHook(() => useModal(true));
+      const { result } = renderHook(() => useModalState(true));
 
       act(() => {
         result.current.closeWithoutGoBack();
@@ -106,7 +106,7 @@ describe('useModal', () => {
 
     it('не должно вызывать goBack() даже если canGoBack', () => {
       mockNavigation.canGoBack.mockReturnValue(true);
-      const { result } = renderHook(() => useModal(true));
+      const { result } = renderHook(() => useModalState(true));
 
       act(() => {
         result.current.closeWithoutGoBack();
@@ -118,7 +118,7 @@ describe('useModal', () => {
 
   describe('setVisible()', () => {
     it('должен вести себя как setState', async () => {
-      const { result } = renderHook(() => useModal(false));
+      const { result } = renderHook(() => useModalState(false));
 
       await act(async () => {
         await result.current.setVisible(true);
@@ -138,7 +138,7 @@ describe('useModal', () => {
 
   describe('isFocused', () => {
     it('должен синхронизировать состояние', () => {
-      const { result, rerender } = renderHook(() => useModal(true));
+      const { result, rerender } = renderHook(() => useModalState(true));
 
       expect(result.current.visible).toBe(true);
 
@@ -156,7 +156,7 @@ describe('useModal', () => {
   describe('Должен поддерживать чейнинг', () => {
     it('ModalA -> ModalB -> назад к ModalA', () => {
       (useIsFocused as jest.Mock).mockReturnValue(true);
-      const { result, rerender } = renderHook(() => useModal(true));
+      const { result, rerender } = renderHook(() => useModalState(true));
 
       expect(result.current.visible).toBe(true);
 
@@ -177,7 +177,7 @@ describe('useModal', () => {
 
   describe('Edge cases', () => {
     it('должен корректно обрабатывать быстрые изменения', () => {
-      const { result } = renderHook(() => useModal(false));
+      const { result } = renderHook(() => useModalState(false));
 
       act(() => {
         result.current.open();

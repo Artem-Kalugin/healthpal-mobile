@@ -12,7 +12,8 @@ import { Toast, useToaster } from 'react-hot-toast/headless';
 
 import { Text } from '#ui-kit';
 
-import { colors, withCustomAnimation } from '#config';
+import { withCustomAnimation } from '#config';
+import { colors } from '#config/colors';
 
 const ToastItem = ({
   t,
@@ -66,7 +67,7 @@ const offset = {
   opened: TOASTS_OFFSET,
 };
 
-const ToastProvider = () => {
+export const ToastProvider = () => {
   const { toasts, handlers } = useToaster();
   return (
     <KeyboardStickyView
@@ -118,5 +119,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default ToastProvider;

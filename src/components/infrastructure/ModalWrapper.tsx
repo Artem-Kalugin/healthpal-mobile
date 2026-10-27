@@ -24,9 +24,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon } from '#ui-kit';
 
-import { colors, hitSlopBig, SCREEN_HEIGHT, SCREEN_WIDTH } from '#config';
+import { hitSlopBig, SCREEN_HEIGHT, SCREEN_WIDTH } from '#config';
+import { colors } from '#config/colors';
 
-import FocusAwareStatusBar from './FocusAwareStatusBar';
+import { FocusAwareStatusBar } from './FocusAwareStatusBar';
 
 const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
@@ -41,7 +42,7 @@ export interface IModalWrapper {
   contentContainerStyle: StyleProp<ViewStyle>;
 }
 
-const ModalWrapper: React.FC<Partial<IModalWrapper>> = ({
+const ModalWrapperBase: React.FC<Partial<IModalWrapper>> = ({
   visible = true,
   onClose = () => {},
   isClosable = true,
@@ -215,4 +216,4 @@ const getStyles = (insetsBottom: number) =>
     },
   });
 
-export default React.memo(ModalWrapper);
+export const ModalWrapper = React.memo(ModalWrapperBase);

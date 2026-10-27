@@ -6,9 +6,9 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { toast } from 'react-hot-toast/headless';
 
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 import { useTimer } from '#components/infrastructure/providers/OTPTimer';
-import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
+import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import {
   Brand,
@@ -26,9 +26,10 @@ import {
 
 import { useVerifyCodeMutation, useVerifyPhoneMutation } from '#api/Auth';
 
-import { colors, layoutAnimation, SAFE_ZONE_BOTTOM } from '#config';
+import { layoutAnimation, SAFE_ZONE_BOTTOM } from '#config';
+import { colors } from '#config/colors';
 
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 export const PasswordRecoveryCodeInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryCodeInput>
@@ -90,7 +91,7 @@ export const PasswordRecoveryCodeInput: React.FC<
     );
   };
 
-  useBEErrorHandler(verifyPhoneMetadata);
+  useErrorHandler(verifyPhoneMetadata);
 
   return (
     <View style={styles.container}>
@@ -104,7 +105,7 @@ export const PasswordRecoveryCodeInput: React.FC<
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.body}>
-          <TapKeyboardDissmissArea />
+          <TapKeyboardDismissArea />
 
           <Brand />
 

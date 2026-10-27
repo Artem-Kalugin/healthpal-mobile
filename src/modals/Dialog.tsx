@@ -4,19 +4,19 @@ import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import ModalWrapper from '#components/infrastructure/ModalWrapper';
+import { ModalWrapper } from '#components/infrastructure/ModalWrapper';
 
 import { Button, Text } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 import { AppParamList } from '#navigation/types';
 
-import useModal from '#hooks/useModalState';
+import { useModalState } from '#hooks/useModalState';
 
 export const Dialog: React.FC<ModalsScreenProps<ModalsRoutes.Dialog>> = ({
   route,
 }) => {
-  const modal = useModal(true);
+  const modal = useModalState(true);
   const navigation = useNavigation();
 
   return (

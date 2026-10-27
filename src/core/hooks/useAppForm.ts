@@ -4,9 +4,9 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { ClassConstructor } from 'class-transformer';
 import { DefaultValues, useForm } from 'react-hook-form';
 
-import Haptics from '#services/Haptics';
+import { Haptics } from '#services/Haptics';
 
-const useAppForm = <T extends Record<string, any>>(
+export const useAppForm = <T extends Record<string, any>>(
   validator: ClassConstructor<T>,
   defaultValues?: DefaultValues<T>,
 ) => {
@@ -36,5 +36,3 @@ const useAppForm = <T extends Record<string, any>>(
 
   return { form, getFormInputProps };
 };
-
-export default useAppForm;

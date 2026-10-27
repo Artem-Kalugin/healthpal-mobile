@@ -5,7 +5,8 @@ import { SvgXml } from 'react-native-svg';
 
 import { TextXS } from '#ui-kit';
 
-import { ActiveOpacities, MapDoctorCategoryToColor, shadow } from '#config';
+import { ActiveOpacities, shadow } from '#config';
+import { MapDoctorCategoryToColor } from '#config/colors';
 import { MapDoctorCategoryToLabel } from '#config/locale';
 
 import { BEDoctorCategoryResponseDto } from '#generated/__entities';

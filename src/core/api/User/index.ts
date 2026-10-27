@@ -2,7 +2,7 @@ import { RtkAppApi } from '#api';
 
 import { RequestsUser as Requests, TagsUserAPI } from './types';
 
-const UserAPI = RtkAppApi.injectEndpoints({
+export const UserAPI = RtkAppApi.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     getCurrent: build.query<
@@ -55,5 +55,3 @@ export const {
   useGetCurrentQuery: useGetCurrentUserQuery,
   useUpdateCurrentMutation: useUpdateCurrentMutation,
 } = UserAPI;
-
-export default UserAPI;

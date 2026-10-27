@@ -18,8 +18,10 @@ jest.mock('react-native', () => ({
 }));
 
 jest.mock('#services/Logger', () => ({
-  custom: jest.fn(),
-  error: jest.fn(),
+  Logger: {
+    custom: jest.fn(),
+    error: jest.fn(),
+  },
 }));
 
 jest.mock('react-hot-toast/headless', () => ({

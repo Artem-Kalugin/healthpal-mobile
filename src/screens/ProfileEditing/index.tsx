@@ -14,8 +14,8 @@ import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
 import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
-import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
+import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Button, Icon, Image, TextBase } from '#ui-kit';
 import ButtonGoBack from '#ui-kit/ButtonGoBack';
@@ -33,15 +33,15 @@ import { TokenService } from '#services/Token';
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
-  colors,
   Images,
   SAFE_ZONE_BOTTOM,
 } from '#config';
+import { colors } from '#config/colors';
 import { MapGenderToLabel } from '#config/locale';
 
 import { useAppData } from '#hooks/useAppData';
-import useAppForm from '#hooks/useAppForm';
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useAppForm } from '#hooks/useAppForm';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { reactSync } from '#utils';
 
@@ -191,7 +191,7 @@ export const ProfileEditing: React.FC<
       } as SelectModalParams<Gender>,
     });
   };
-  useBEErrorHandler(targetMetadata);
+  useErrorHandler(targetMetadata);
 
   return (
     <View style={styles.container}>
@@ -201,7 +201,7 @@ export const ProfileEditing: React.FC<
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <TapKeyboardDissmissArea />
+        <TapKeyboardDismissArea />
         <HeaderWithThreeSections
           leftElement={<ButtonGoBack onPress={goBack} />}
           paddingHorizontal={0}

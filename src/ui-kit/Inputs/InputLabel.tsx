@@ -9,7 +9,8 @@ import Animated, {
 
 import { primaryFontNameMap } from '#ui-kit/Text';
 
-import { colors, withCustomAnimation } from '#config';
+import { withCustomAnimation } from '#config';
+import { colors } from '#config/colors';
 
 const LABEL_TRANSLATE_Y = -12;
 

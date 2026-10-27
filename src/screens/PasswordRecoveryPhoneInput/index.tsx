@@ -5,9 +5,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { toast } from 'react-hot-toast/headless';
 
 import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 import { useTimer } from '#components/infrastructure/providers/OTPTimer';
-import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
+import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
@@ -19,10 +19,11 @@ import {
 import { useVerifyPhoneMutation } from '#api/Auth';
 import { RequestOtpDto } from '#api/Auth/dto/RequestOtpDto';
 
-import { colors, SAFE_ZONE_BOTTOM } from '#config';
+import { SAFE_ZONE_BOTTOM } from '#config';
+import { colors } from '#config/colors';
 
-import useAppForm from '#hooks/useAppForm';
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useAppForm } from '#hooks/useAppForm';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 export const PasswordRecoveryPhoneInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryPhoneInput>
@@ -66,7 +67,7 @@ export const PasswordRecoveryPhoneInput: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
-  useBEErrorHandler(verifyPhoneMetadata, form);
+  useErrorHandler(verifyPhoneMetadata, form);
 
   return (
     <View style={styles.container}>
@@ -80,7 +81,7 @@ export const PasswordRecoveryPhoneInput: React.FC<
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.body}>
-          <TapKeyboardDissmissArea />
+          <TapKeyboardDismissArea />
 
           <Brand />
 

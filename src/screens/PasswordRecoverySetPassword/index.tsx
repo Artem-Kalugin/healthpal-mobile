@@ -13,8 +13,8 @@ import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
 import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
-import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
+import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
@@ -31,11 +31,12 @@ import { ResetPasswordDto } from '#api/Auth/dto/ResetPasswordDto';
 
 import { TokenService } from '#services/Token';
 
-import { colors, SAFE_ZONE_BOTTOM } from '#config';
+import { SAFE_ZONE_BOTTOM } from '#config';
+import { colors } from '#config/colors';
 
 import { useAppData } from '#hooks/useAppData';
-import useAppForm from '#hooks/useAppForm';
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useAppForm } from '#hooks/useAppForm';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
@@ -100,7 +101,7 @@ export const PasswordRecoverySetPassword: React.FC<
     toast('Некоторые поля содержат ошибки');
   });
 
-  useBEErrorHandler(resetPasswordMetadata, form);
+  useErrorHandler(resetPasswordMetadata, form);
 
   return (
     <View style={styles.container}>
@@ -114,7 +115,7 @@ export const PasswordRecoverySetPassword: React.FC<
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.body}>
-          <TapKeyboardDissmissArea />
+          <TapKeyboardDismissArea />
 
           <Brand />
 

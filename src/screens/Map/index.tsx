@@ -28,7 +28,7 @@ import { useLazyMedicalCentersQuery } from '#api/MedicalCenters';
 
 import { shadow } from '#config';
 
-import useBEErrorHandler from '#hooks/useErrorHandler';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { reactSync } from '#utils';
 
@@ -169,7 +169,7 @@ export const Map: React.FC<
     onInit();
   }, []);
 
-  useBEErrorHandler(meta);
+  useErrorHandler(meta);
 
   const Markers = useMemo(() => {
     return medicalCentersSorted?.map(el => (

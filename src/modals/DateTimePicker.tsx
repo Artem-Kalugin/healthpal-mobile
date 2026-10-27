@@ -3,18 +3,18 @@ import { StyleSheet } from 'react-native';
 
 import DatePicker from 'react-native-date-picker';
 
-import ModalWrapper from '#components/infrastructure/ModalWrapper';
+import { ModalWrapper } from '#components/infrastructure/ModalWrapper';
 
 import { Button, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
-import useModal from '#hooks/useModalState';
+import { useModalState } from '#hooks/useModalState';
 
 export const DateTimePicker: React.FC<
   ModalsScreenProps<ModalsRoutes.DateTimePicker>
 > = props => {
-  const modal = useModal(true);
+  const modal = useModalState(true);
   const [date, setDate] = useState(props.route.params.pickerProps.date);
 
   return (

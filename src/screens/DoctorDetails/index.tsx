@@ -12,8 +12,8 @@ import { toast } from 'react-hot-toast/headless';
 import { DoctorDetailsCard } from '#components/domain/Doctor/DetailsCard';
 import { DoctorFavoriteButton } from '#components/domain/Doctor/FavoriteButton';
 import { ReviewItem } from '#components/domain/Review/Item';
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
-import ListExtender from '#components/infrastructure/ListExtender';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
+import { ListExtender } from '#components/infrastructure/ListExtender';
 
 import {
   Button,
@@ -28,7 +28,8 @@ import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
 import { useGetDoctorQuery, useGetDoctorScheduleQuery } from '#api/Doctor';
 
-import { colors, headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
+import { headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
+import { colors } from '#config/colors';
 
 import { MapWeekDayToName } from './config';
 

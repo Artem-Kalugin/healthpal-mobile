@@ -14,7 +14,7 @@ import { enableFreeze } from 'react-native-screens';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
-import App from './src/App';
+import { App } from './src/App';
 
 dayjs.locale('ru');
 dayjs.extend(duration);

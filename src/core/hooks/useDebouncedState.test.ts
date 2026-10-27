@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 
-import useDebouncedState from './useDebouncedState';
+import { useDebouncedState } from './useDebouncedState';
 
 describe('useDebouncedState', () => {
   it('должен синхронно обновлять value и async debouncedValue', async () => {

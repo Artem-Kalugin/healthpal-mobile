@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 interface IDivider extends PropsWithChildren {
   style?: StyleProp<ViewStyle>;

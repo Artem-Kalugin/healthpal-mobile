@@ -18,7 +18,7 @@ const FavoritesAddedSlice = createSlice({
   },
 });
 
-export default FavoritesAddedSlice.reducer;
+export const favoritesAddedReducer = FavoritesAddedSlice.reducer;
 export const FavoritesAddedActions = FavoritesAddedSlice.actions;
 export const FavoritesAddedSelectors =
   FavoritesAddedAdapter.getSelectors<RootState>(state => state.favoritesAdded);

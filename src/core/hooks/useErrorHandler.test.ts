@@ -4,16 +4,16 @@ import { toast } from 'react-hot-toast/headless';
 import { LoginDto } from '#api/Auth/dto/LoginDto';
 import { BEError } from '#api/types';
 
-import Haptics from '#services/Haptics';
+import { Haptics } from '#services/Haptics';
 
-import useAppForm from './useAppForm';
-import useBEErrorHandler from './useErrorHandler';
+import { useAppForm } from './useAppForm';
+import { useErrorHandler } from './useErrorHandler';
 
 jest.mock('react-hot-toast/headless');
 jest.mock('#services/Haptics');
 jest.mock('#services/Logger');
 
-describe('useBEErrorHandler', () => {
+describe('useErrorHandler', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -21,7 +21,7 @@ describe('useBEErrorHandler', () => {
   it('должен ничего не делать если ошибки нет', () => {
     const meta = { error: undefined };
 
-    renderHook(() => useBEErrorHandler(meta));
+    renderHook(() => useErrorHandler(meta));
 
     expect(Haptics.impactError).not.toHaveBeenCalled();
   });
@@ -33,7 +33,7 @@ describe('useBEErrorHandler', () => {
       },
     };
 
-    renderHook(() => useBEErrorHandler(meta));
+    renderHook(() => useErrorHandler(meta));
 
     expect(Haptics.impactError).toHaveBeenCalledTimes(1);
   });
@@ -54,7 +54,7 @@ describe('useBEErrorHandler', () => {
       },
     };
 
-    renderHook(() => useBEErrorHandler(meta, formResult.current.form));
+    renderHook(() => useErrorHandler(meta, formResult.current.form));
 
     expect(setErrorSpy).toHaveBeenCalledWith('phone', {
       message: 'Неверный телефон',
@@ -74,7 +74,7 @@ describe('useBEErrorHandler', () => {
       },
     };
 
-    renderHook(() => useBEErrorHandler(meta));
+    renderHook(() => useErrorHandler(meta));
 
     expect(toast.error).toHaveBeenCalledWith('Что-то пошло не так');
   });
@@ -92,14 +92,14 @@ describe('useBEErrorHandler', () => {
       },
     };
 
-    renderHook(() => useBEErrorHandler(meta, formResult.current.form));
+    renderHook(() => useErrorHandler(meta, formResult.current.form));
 
     expect(toast.error).not.toHaveBeenCalled();
   });
 
   it('должен реагировать на изменение ошибки', () => {
     const meta: { error?: BEError } = {};
-    const { rerender } = renderHook(() => useBEErrorHandler(meta));
+    const { rerender } = renderHook(() => useErrorHandler(meta));
 
     expect(Haptics.impactError).not.toHaveBeenCalled();
 
@@ -117,7 +117,7 @@ describe('useBEErrorHandler', () => {
       },
     };
 
-    renderHook(() => useBEErrorHandler(meta));
+    renderHook(() => useErrorHandler(meta));
 
     expect(toast.error).not.toHaveBeenCalled();
   });

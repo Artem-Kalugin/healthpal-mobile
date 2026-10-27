@@ -4,7 +4,7 @@ import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import { REHYDRATE } from 'redux-persist';
 
 import { FetchService } from '#services/Fetch';
-import Logger from '#services/Logger';
+import { Logger } from '#services/Logger';
 import { TokenService } from '#services/Token';
 
 import { delay } from '#utils';

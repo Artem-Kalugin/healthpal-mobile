@@ -10,7 +10,7 @@ const consoleStyles = {
   success: 'color: PaleGreen;',
 };
 
-class Logger {
+export class Logger {
   static __log(color: string, stylePrefixedText: string, data: unknown[]) {
     if (__DEV__) {
       const now = new Date();
@@ -69,5 +69,3 @@ class Logger {
     this.__log(consoleStyles.default, text, data);
   }
 }
-
-export default Logger;

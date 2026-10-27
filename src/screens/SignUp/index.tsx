@@ -15,7 +15,7 @@ import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
 import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
+import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 
@@ -28,15 +28,15 @@ import { CreateUserDto } from '#api/Auth/dto/CreateUserDto';
 import { TokenService } from '#services/Token';
 
 import {
-  colors,
   hitSlop,
   SAFE_ZONE_BOTTOM,
   SCREEN_HEIGHT,
   STATUS_BAR_HEIGHT,
 } from '#config';
+import { colors } from '#config/colors';
 
-import useAppForm from '#hooks/useAppForm';
-import useErrorHandler from '#hooks/useErrorHandler';
+import { useAppForm } from '#hooks/useAppForm';
+import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { reactSync } from '#utils';
 
@@ -107,7 +107,7 @@ export const SignUp: React.FC<
       style={styles.container}
     >
       <View style={styles.body}>
-        <TapKeyboardDissmissArea />
+        <TapKeyboardDismissArea />
 
         <Brand />
 

@@ -15,7 +15,7 @@ import { RtkAppApi } from '#api';
 
 import { TokenService } from '#services/Token';
 
-import reducers from './slices';
+import { rootReducer } from './slices';
 
 export const storage = createMMKV();
 const reduxStorage: Storage = {
@@ -39,7 +39,7 @@ const persistConfig = {
   blacklist: ['runtime'],
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,

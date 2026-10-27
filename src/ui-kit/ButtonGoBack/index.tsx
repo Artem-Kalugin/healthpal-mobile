@@ -5,7 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Icon } from '#ui-kit/Icon';
 
-import { colors, hitSlopBig } from '#config';
+import { hitSlopBig } from '#config';
+import { colors } from '#config/colors';
 
 import { ButtonGoBackTestIds } from './config';
 

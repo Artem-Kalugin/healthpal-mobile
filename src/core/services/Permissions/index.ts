@@ -11,7 +11,7 @@ import {
 
 import { toast } from 'react-hot-toast/headless';
 
-import Logger from '#services/Logger';
+import { Logger } from '#services/Logger';
 
 import { permissionsAlertsConfigs } from './config';
 import { PermissionRequestConfig, RequestedPermission } from './types';
@@ -31,6 +31,12 @@ type RequestPermissionResult = {
   originalStatus: PermissionStatus;
   requestStatus: PermissionStatus;
 };
+export {
+  CameraPermission,
+  GalleryPermission,
+  LocationPermission,
+} from './config';
+
 export class PermissionManager {
   private static async showBlockedAlert(
     config: PermissionRequestConfig,

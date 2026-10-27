@@ -14,7 +14,8 @@ import { Divider, TextSmall } from '#ui-kit';
 import { MainRoutes } from '#navigation/Main/types';
 import { AppRoutes } from '#navigation/types';
 
-import { colors, shadow } from '#config';
+import { shadow } from '#config';
+import { colors } from '#config/colors';
 
 import { BEAppointmentResponseDto } from '#generated/__entities';
 

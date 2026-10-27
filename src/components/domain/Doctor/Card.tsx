@@ -3,7 +3,8 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { Divider, Icon, Image, TextBase, TextSmall, TextXS } from '#ui-kit';
 
-import { colors, shadow } from '#config';
+import { shadow } from '#config';
+import { colors } from '#config/colors';
 import { MapDoctorCategoryToDoctorLabel } from '#config/locale';
 
 import { BEDoctorResponseDto } from '#generated/__entities';

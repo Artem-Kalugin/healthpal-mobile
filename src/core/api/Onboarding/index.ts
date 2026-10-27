@@ -2,7 +2,7 @@ import { RtkAppApi } from '#api';
 
 import { RequestsOnboarding as Requests } from './types';
 
-const OnboardingAPI = RtkAppApi.injectEndpoints({
+export const OnboardingAPI = RtkAppApi.injectEndpoints({
   endpoints: build => ({
     onboarding: build.query<
       Requests['onboarding']['response'],
@@ -17,5 +17,3 @@ const OnboardingAPI = RtkAppApi.injectEndpoints({
 });
 
 export const { useOnboardingQuery } = OnboardingAPI;
-
-export default OnboardingAPI;

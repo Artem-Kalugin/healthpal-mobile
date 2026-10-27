@@ -6,7 +6,7 @@ import { TokenService } from '#services/Token';
 
 import { useAppData } from './useAppData';
 
-const useAppLifecycle = () => {
+export const useAppLifecycle = () => {
   const [inited, setInited] = useState(false);
   const { prefetchApp } = useAppData();
 
@@ -28,5 +28,3 @@ const useAppLifecycle = () => {
 
   return { isReadyToRender: inited };
 };
-
-export default useAppLifecycle;

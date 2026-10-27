@@ -4,7 +4,10 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { delay } from '#utils';
 
-const useModal = (initial = true, shouldWaitForModalAnimation = true) => {
+export const useModalState = (
+  initial = true,
+  shouldWaitForModalAnimation = true,
+) => {
   const [state, setState] = useState(initial);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -31,6 +34,4 @@ const useModal = (initial = true, shouldWaitForModalAnimation = true) => {
   };
 };
 
-export type ModalController = ReturnType<typeof useModal>;
-
-export default useModal;
+export type ModalController = ReturnType<typeof useModalState>;

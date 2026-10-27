@@ -1,6 +1,6 @@
 import * as HapticsExpo from 'expo-haptics';
 
-class Haptics {
+export class Haptics {
   static impactLight() {
     HapticsExpo.impactAsync(HapticsExpo.ImpactFeedbackStyle.Light);
   }
@@ -33,5 +33,3 @@ class Haptics {
     HapticsExpo.notificationAsync(HapticsExpo.NotificationFeedbackType.Warning);
   }
 }
-
-export default Haptics;

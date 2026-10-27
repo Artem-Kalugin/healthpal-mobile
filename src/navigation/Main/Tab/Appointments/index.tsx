@@ -3,12 +3,12 @@ import { StyleSheet, View } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 import { NavigatorHeaderTabs } from '#components/infrastructure/NavigatorHeaderTabs';
 
-import { Appointments } from '#screens/Appointments';
+import { Appointments } from '#screens';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 import { AppointmentsParamList, AppointmentsRoutes, TabsConfig } from './types';
 

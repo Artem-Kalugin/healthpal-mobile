@@ -9,7 +9,8 @@ import {
 
 import { Divider, Icon, Image, Rating, TextSmall, TextXS } from '#ui-kit';
 
-import { BORDER_RADIUS_ROUNDED, colors, shadow } from '#config';
+import { BORDER_RADIUS_ROUNDED, shadow } from '#config';
+import { colors } from '#config/colors';
 import { MapMedicalCenterTypeToLabel } from '#config/locale';
 
 import { BEMedicalCenterResponseDto } from '#generated/__entities';

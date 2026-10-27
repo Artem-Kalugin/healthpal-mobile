@@ -34,10 +34,10 @@ import { LocationService } from '#services/Location';
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
-  colors,
   shadow,
   STATUS_BAR_HEIGHT,
 } from '#config';
+import { colors } from '#config/colors';
 
 import { slides } from './config';
 

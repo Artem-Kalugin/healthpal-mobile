@@ -2,7 +2,7 @@ import { ViewStyle } from 'react-native';
 
 import { IText, TextBase, TextSmall, TextXS } from '#ui-kit/Text';
 
-import { colors } from '#config';
+import { colors } from '#config/colors';
 
 import { ButtonAppearance, ButtonAppearanceScheme, ButtonSize } from './types';
 import { getButtonStyle } from './utils';

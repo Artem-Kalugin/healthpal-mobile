@@ -10,7 +10,7 @@ import {
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
+import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 
 import {
   Divider,
@@ -33,11 +33,11 @@ import { useGetCurrentUserQuery } from '#api/User';
 
 import {
   BORDER_RADIUS_ROUNDED,
-  colors,
   hitSlop,
   Images,
   SAFE_ZONE_BOTTOM,
 } from '#config';
+import { colors } from '#config/colors';
 
 import { store } from '#store';
 

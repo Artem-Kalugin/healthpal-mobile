@@ -9,15 +9,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import FocusAwareStatusBar from '#components/infrastructure/FocusAwareStatusBar';
+import { FocusAwareStatusBar } from '#components/infrastructure/FocusAwareStatusBar';
 import { OTPTimerProvider } from '#components/infrastructure/providers/OTPTimer';
-import ToastProvider from '#components/infrastructure/providers/Toaster';
+import { ToastProvider } from '#components/infrastructure/providers/Toaster';
 
 import { persistor, store } from '#store';
 
-import AppMiddleware from './AppMiddleware';
+import { AppMiddleware } from './AppMiddleware';
 
-export default function App() {
+export const App = () => {
   const [navigationReady, setNavigationReady] = useState(false);
 
   return (
@@ -48,4 +48,4 @@ export default function App() {
       </PersistGate>
     </Provider>
   );
-}
+};

@@ -4,9 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { NavigatorBottomTabs } from '#components/infrastructure/NavigatorBottomTabs';
 
-import { Profile } from '#screens';
-import { Home } from '#screens/Home';
-import { Map } from '#screens/Map';
+import { Home, Map, Profile } from '#screens';
 
 import { AppointmentsStack } from './Appointments';
 import { TabParamList, TabRoutes, TabsConfig } from './types';

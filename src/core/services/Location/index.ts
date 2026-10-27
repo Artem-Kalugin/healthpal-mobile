@@ -1,8 +1,7 @@
 import * as Location from 'expo-location';
 
-import Logger from '#services/Logger';
-import { PermissionManager } from '#services/Permissions';
-import { LocationPermission } from '#services/Permissions/config';
+import { Logger } from '#services/Logger';
+import { LocationPermission, PermissionManager } from '#services/Permissions';
 
 import { store } from '#store';
 import { AppActions } from '#store/slices/app';

@@ -19,7 +19,8 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { Icon } from '#ui-kit/Icon';
 import { primaryFontNameMap } from '#ui-kit/Text';
 
-import { colors, IS_IOS, PHONE_MASK } from '#config';
+import { IS_IOS, PHONE_MASK } from '#config';
+import { colors } from '#config/colors';
 
 import { InputErrorBlock } from './InputErrorBlock';
 import { InputLabel } from './InputLabel';

@@ -1,6 +1,6 @@
 import type { FetchArgs } from '#api/types';
 
-import Logger from '#services/Logger';
+import { Logger } from '#services/Logger';
 
 import {
   bodyInterceptor,

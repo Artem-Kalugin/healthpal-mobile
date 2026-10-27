@@ -2,10 +2,12 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { DoctorDetails } from '#screens/DoctorDetails';
-import { Notifications } from '#screens/Notifications';
-import { ScheduleAppointment } from '#screens/ScheduleAppointment';
-import { Search } from '#screens/Search';
+import {
+  DoctorDetails,
+  Notifications,
+  ScheduleAppointment,
+  Search,
+} from '#screens';
 
 import { DEFAULT_STACK_OPTIONS } from '#navigation/config';
 
