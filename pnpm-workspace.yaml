@@ -1,0 +1,8 @@
+allowBuilds:
+  unrs-resolver: true
+  react-native-mmkv: false
+  react-native-nitro-modules: false
+  sharp: false
+publicHoistPattern:
+  - "*eslint-plugin-react*"
+  - "*eslint-plugin-react-native*"
