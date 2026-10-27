@@ -7,7 +7,7 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { toast } from 'react-hot-toast/headless';
 
 import HeaderWithThreeSections from '#components/infrastructure/HeaderWithThreeSections';
-import { useTimer } from '#components/infrastructure/providers/OTPTimer/use-timer';
+import { useTimer } from '#components/infrastructure/providers/OTPTimer';
 import TapKeyboardDissmissArea from '#components/infrastructure/TapKeyboardDismissArea';
 
 import {

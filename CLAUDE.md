@@ -20,7 +20,7 @@ Code structure and dependency rules live in skills: read `architecture-unit` (mo
 
 ## Agent docs
 
-`agents/` holds documentation for the agent about current statuses and plans. Explore if user references.
+`agents/` is an untracked owner folder (gitignored); treat it as your project memory: handoffs, plans, debt lists, rejected proposals (`agents/rejected.md`, don't re-offer them without a strong reason). Explore if user references.
 
 ## Commands
 
@@ -29,7 +29,7 @@ Code structure and dependency rules live in skills: read `architecture-unit` (mo
 - `pnpm exec plop` — generators for adding icons/images (inject via `/* PLOP_INJECT_* */` markers); prefer over hand-editing.
 - Native changes (deps, `app.config.ts`/`app.json`, env vars) need `pnpm ios:new` / `pnpm android:new`; JS changes don't.
 - Commits follow conventional commits (commitlint).
-- Tests are jest (`jest-expo`), colocated as `*.test.ts(x)`; run with `pnpm test`.
+- Tests are jest (`jest-expo`), colocated as `*.test.ts(x)`; run once with `pnpm exec jest --coverage=false --watchAll=false` (`pnpm test` is watch mode).
 
 ## Code style
 

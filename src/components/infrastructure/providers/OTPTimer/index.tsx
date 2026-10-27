@@ -5,25 +5,11 @@ import BackgroundTimer from 'react-native-background-timer';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
+import { OTPTimer } from './context';
+
+export { useTimer } from './context';
+
 dayjs.extend(duration);
-
-type TimerContext = {
-  value: string;
-  valueRaw: number;
-  start: (duration?: number) => void;
-  stop: () => void;
-};
-
-export const OTPTimer = React.createContext<TimerContext>({
-  value: '00:00',
-  valueRaw: 0,
-  start: () => {
-    throw new Error('OTPTimerProvider not mounted');
-  },
-  stop: () => {
-    throw new Error('OTPTimerProvider not mounted');
-  },
-});
 
 const OTP_TIMER_DURATION = 60;
 
