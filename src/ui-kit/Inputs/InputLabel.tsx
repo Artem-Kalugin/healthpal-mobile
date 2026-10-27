@@ -7,9 +7,9 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { colors, withCustomAnimation } from '#config';
+import { primaryFontNameMap } from '#ui-kit/Text';
 
-import { primaryFontNameMap } from '../Text';
+import { colors, withCustomAnimation } from '#config';
 
 const LABEL_TRANSLATE_Y = -12;
 

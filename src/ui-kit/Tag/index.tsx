@@ -12,10 +12,11 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
+import { Loader } from '#ui-kit/Loader';
+import { TextSmall } from '#ui-kit/Text';
+
 import { BORDER_RADIUS_ROUNDED, colors, withCustomAnimation } from '#config';
 
-import { Loader } from '../Loader';
-import { TextSmall } from '../Text';
 import { TagTestIds } from './config';
 
 interface ITag {

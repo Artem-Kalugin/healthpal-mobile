@@ -10,7 +10,7 @@ import {
 import { TokenService } from './index';
 
 jest.mock('expo-secure-store');
-jest.mock('../Logger');
+jest.mock('#services/Logger');
 
 const decodedPayload = {
   userId: 'b28a1578-60f0-4dda-8071-a02fd7999861',

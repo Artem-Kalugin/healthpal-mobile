@@ -7,9 +7,10 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { Icon } from '#ui-kit/Icon';
+
 import { colors } from '#config';
 
-import { Icon } from '../Icon';
 import { CheckboxTestIds } from './config';
 
 interface ICheckboxBig {

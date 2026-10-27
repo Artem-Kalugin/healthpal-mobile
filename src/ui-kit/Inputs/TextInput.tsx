@@ -13,10 +13,11 @@ import {
 
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
+import { Icon } from '#ui-kit/Icon';
+import { primaryFontNameMap } from '#ui-kit/Text';
+
 import { colors, IS_IOS } from '#config';
 
-import { Icon } from '../Icon';
-import { primaryFontNameMap } from '../Text';
 import { InputErrorBlock } from './InputErrorBlock';
 import { InputLabel } from './InputLabel';
 

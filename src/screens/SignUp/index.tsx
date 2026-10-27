@@ -38,10 +38,10 @@ import {
 import useAppForm from '#hooks/useAppForm';
 import useErrorHandler from '#hooks/useErrorHandler';
 
+import { reactSync } from '#utils';
+
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
-
-import { reactSync } from '../../core/utils';
 
 export const SignUp: React.FC<
   CompositeScreenProps<

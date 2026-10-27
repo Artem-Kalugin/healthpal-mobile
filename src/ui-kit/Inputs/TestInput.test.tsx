@@ -3,7 +3,8 @@ import { TextInput as RNTextInput } from 'react-native';
 
 import { fireEvent, render } from '@testing-library/react-native';
 
-import { Icon } from '../Icon';
+import { Icon } from '#ui-kit/Icon';
+
 import { TextInput } from './TextInput';
 
 describe('TextInput', () => {

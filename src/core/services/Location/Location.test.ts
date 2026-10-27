@@ -1,11 +1,12 @@
 import * as Location from 'expo-location';
 
+import { PermissionManager } from '#services/Permissions';
+
 import { store } from '#store';
 
 import { LocationService } from '.';
-import { PermissionManager } from '../Permissions';
 
-jest.mock('../Permissions');
+jest.mock('#services/Permissions');
 jest.mock('#store', () => ({
   store: {
     dispatch: jest.fn(),

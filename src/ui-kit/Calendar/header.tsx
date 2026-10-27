@@ -3,12 +3,12 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { CalendarHeaderProps } from 'react-native-calendars/src/calendar/header';
 
+import { Icon } from '#ui-kit/Icon';
 import { Loader } from '#ui-kit/Loader';
+import { TextSmall, TextXS } from '#ui-kit/Text';
 
 import { colors, hitSlopSmall } from '#config';
 
-import { Icon } from '../Icon';
-import { TextSmall, TextXS } from '../Text';
 import { CalendarHeaderTestIds, CalendarMonthNames } from './config';
 
 export const CalendarHeader = ({

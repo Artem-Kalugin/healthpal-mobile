@@ -19,7 +19,7 @@ process.env = { ...OLD_ENV, EXPO_PUBLIC_API_URL: 'test' };
 
 jest.mock('#services/Logger');
 jest.mock('#services/Fetch');
-jest.mock('../utils', () => ({
+jest.mock('#utils', () => ({
   delay: () => Promise.resolve(),
 }));
 

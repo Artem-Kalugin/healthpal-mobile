@@ -43,11 +43,11 @@ import useAppForm from '#hooks/useAppForm';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 import { usePrefetchApp } from '#hooks/usePrefetchApp';
 
+import { reactSync } from '#utils';
+
 import { store, useSelector } from '#store';
 
 import { Gender } from '#generated/schema';
-
-import { reactSync } from '../../core/utils';
 
 const MINIMAL_BIRTHDAY_YEAR = new Date();
 MINIMAL_BIRTHDAY_YEAR.setFullYear(new Date().getFullYear() - 18);

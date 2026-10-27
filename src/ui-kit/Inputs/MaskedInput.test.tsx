@@ -2,7 +2,8 @@ import React from 'react';
 
 import { fireEvent, render } from '@testing-library/react-native';
 
-import { Icon } from '../Icon';
+import { Icon } from '#ui-kit/Icon';
+
 import { MaskedInput } from './MaskedInput';
 
 describe('MaskedInput', () => {

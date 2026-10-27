@@ -26,7 +26,6 @@ module.exports = (() => {
       '#hooks': path.resolve(projectRoot, 'src/core/hooks'),
       '#utils': path.resolve(projectRoot, 'src/core/utils'),
       '#services': path.resolve(projectRoot, 'src/core/services'),
-      '#styles': path.resolve(projectRoot, 'src/styles'),
       '#assets': path.resolve(projectRoot, 'src/assets'),
       '#store': path.resolve(projectRoot, 'src/store'),
       '#config': path.resolve(projectRoot, 'src/config'),

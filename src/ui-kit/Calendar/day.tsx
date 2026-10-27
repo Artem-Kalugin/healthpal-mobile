@@ -3,9 +3,10 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import Animated, { FadeOut } from 'react-native-reanimated';
 
+import { TextXS } from '#ui-kit/Text';
+
 import { colors } from '#config';
 
-import { TextXS } from '../Text';
 import { DayProps, DayTextColors } from './config';
 
 const _CalendarDay = ({

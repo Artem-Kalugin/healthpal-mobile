@@ -17,9 +17,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { TextXL } from '#ui-kit/Text';
+
 import { colors, withCustomAnimation } from '#config';
 
-import { TextXL } from '../Text';
 import { CodeInputTestIds } from './config';
 
 interface ICodeInput extends TextInputProps {

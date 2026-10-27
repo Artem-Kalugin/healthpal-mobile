@@ -7,10 +7,11 @@ import { FetchService } from '#services/Fetch';
 import Logger from '#services/Logger';
 import { TokenService } from '#services/Token';
 
+import { delay } from '#utils';
+
 import { RootState } from '#store';
 import { TokenDecoded } from '#store/slices/runtime';
 
-import { delay } from '../utils';
 import { TagsAppointmentAPI } from './Appointments/types';
 import { BEError, FetchArgs } from './types';
 import { TagsUserAPI } from './User/types';

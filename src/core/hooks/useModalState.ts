@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-import { delay } from '../utils';
+import { delay } from '#utils';
 
 const useModal = (initial = true, shouldWaitForModalAnimation = true) => {
   const [state, setState] = useState(initial);

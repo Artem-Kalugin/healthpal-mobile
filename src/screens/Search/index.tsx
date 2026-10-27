@@ -38,12 +38,13 @@ import { MapDoctorCategoryToLabel } from '#config/locale';
 import useDebouncedState from '#hooks/useDebouncedState';
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
+import { reactSync } from '#utils';
+
 import {
   BEDoctorCategoryResponseDto,
   BEDoctorResponseDto,
 } from '#generated/__entities';
 
-import { reactSync } from '../../core/utils';
 import { FOLDABLE_HEADER_HEIGHT, SortOptions, SortOptionsDTO } from './config';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(

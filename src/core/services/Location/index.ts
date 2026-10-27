@@ -1,12 +1,11 @@
 import * as Location from 'expo-location';
 
 import Logger from '#services/Logger';
+import { PermissionManager } from '#services/Permissions';
+import { LocationPermission } from '#services/Permissions/config';
 
 import { store } from '#store';
 import { AppActions } from '#store/slices/app';
-
-import { PermissionManager } from '../Permissions';
-import { LocationPermission } from '../Permissions/config';
 
 export class LocationService {
   static async getCurrentLocation() {

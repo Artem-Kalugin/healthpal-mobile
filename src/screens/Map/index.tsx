@@ -30,9 +30,10 @@ import { shadow } from '#config';
 
 import useBEErrorHandler from '#hooks/useErrorHandler';
 
+import { reactSync } from '#utils';
+
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
 
-import { reactSync } from '../../core/utils';
 import {
   CENTER_ON_MARKER_DISTANCE_THRESHOLD,
   getSortedMedicalCentersByDistance,

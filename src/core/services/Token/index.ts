@@ -2,10 +2,10 @@ import type { Store } from '@reduxjs/toolkit';
 import * as SecureStore from 'expo-secure-store';
 import { jwtDecode } from 'jwt-decode';
 
+import Logger from '#services/Logger';
+
 import type { RootState } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
-
-import Logger from '../Logger';
 
 enum TokenType {
   access = 'access',

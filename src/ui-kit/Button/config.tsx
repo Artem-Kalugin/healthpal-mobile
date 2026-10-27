@@ -1,9 +1,10 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
+import { IText, TextBase, TextSmall, TextXS } from '#ui-kit/Text';
+
 import { colors } from '#config';
 
 import { ButtonAppearance, ButtonSize, ButtonType } from '.';
-import { IText, TextBase, TextSmall, TextXS } from '../Text';
 
 export const ButtonTestIds = {
   root: 'Button',

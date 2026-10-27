@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { RtkAppApi } from '../../core/api/index';
+import { RtkAppApi } from '#api';
+
 import app from './app';
 import favoritesAdded from './favoritesAdded';
 import favoritesRemoved from './favoritesRemoved';

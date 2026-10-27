@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { colors } from '#config';
+import { TextXS } from '#ui-kit/Text';
 
-import { TextXS } from '../Text';
+import { colors } from '#config';
 
 export interface IInputErrorBlock {
   errors: string[];
