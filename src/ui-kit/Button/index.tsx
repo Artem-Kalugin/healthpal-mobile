@@ -15,10 +15,7 @@ import {
   ButtonTextComponents,
   MapButtonStyles,
 } from './config';
-
-export type ButtonSize = 'regular' | 'small' | 'extra-small';
-export type ButtonAppearance = 'filled' | 'outlined' | 'text-only';
-export type ButtonType = 'primary' | 'secondary';
+import { ButtonAppearance, ButtonSize, ButtonType } from './types';
 
 export interface IButton {
   type: ButtonType;

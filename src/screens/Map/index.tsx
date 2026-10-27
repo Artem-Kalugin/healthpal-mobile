@@ -34,10 +34,8 @@ import { reactSync } from '#utils';
 
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
 
-import {
-  CENTER_ON_MARKER_DISTANCE_THRESHOLD,
-  getSortedMedicalCentersByDistance,
-} from './config';
+import { CENTER_ON_MARKER_DISTANCE_THRESHOLD } from './config';
+import { getSortedMedicalCentersByDistance } from './utils';
 
 const initCoordinates = {
   lat: 55.7558,

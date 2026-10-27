@@ -1,31 +1,10 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 
 import { Image as ExpoImage } from 'expo-image';
 
 import { useSelector } from '#store';
 
-type ExpoImageProps = ExpoImage['props'];
-
-type ApiImage = {
-  image: string;
-  thumbhash: string;
-};
-
-type ImageWithSourceFromApi = {
-  source: ApiImage;
-};
-
-type ImageWithUnknownSource = {
-  source: ApiImage | ExpoImageProps['source'];
-};
-
-type ImageWithPossibleApiSource = (
-  | ImageWithSourceFromApi
-  | ImageWithUnknownSource
-) &
-  ExpoImageProps & {
-    imageRef?: RefObject<ExpoImage | null>;
-  };
+import { ApiImage, ImageWithPossibleApiSource } from './types';
 
 export const Image: React.FC<ImageWithPossibleApiSource> = ({
   imageRef,

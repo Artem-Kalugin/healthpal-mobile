@@ -1,10 +1,11 @@
-import { TextStyle, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 
 import { IText, TextBase, TextSmall, TextXS } from '#ui-kit/Text';
 
 import { colors } from '#config';
 
-import { ButtonAppearance, ButtonSize, ButtonType } from '.';
+import { ButtonAppearance, ButtonAppearanceScheme, ButtonSize } from './types';
+import { getButtonStyle } from './utils';
 
 export const ButtonTestIds = {
   root: 'Button',
@@ -46,29 +47,6 @@ export const ButtonSizeStyles: { [key in ButtonSize]: ViewStyle } = {
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
-};
-
-const getButtonStyle = (
-  color: string,
-  backgroundColor = 'transparent',
-  weight = '600',
-  borderColor = backgroundColor,
-) => {
-  return {
-    color,
-    weight,
-    borderColor,
-    borderWidth: borderColor !== backgroundColor ? 1 : 0,
-    backgroundColor,
-  } as ButtonStyleScheme['default'];
-};
-
-type ButtonStyleScheme = {
-  default: TextStyle & { color: string };
-};
-
-type ButtonAppearanceScheme = {
-  [key in ButtonType]: ButtonStyleScheme;
 };
 
 const FilledButtonStyles: ButtonAppearanceScheme = {
