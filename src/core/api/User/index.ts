@@ -32,11 +32,12 @@ const UserAPI = RtkAppApi.injectEndpoints({
         });
 
         if (args.data?.avatar) {
+          // @ts-expect-error React Native FormData accepts a { uri, type, name } file object, but its typings only know the DOM `string | Blob`
           formData.append('avatar', {
             uri: args.data?.avatar,
             type: 'image/jpeg',
             name: 'avatar.jpg',
-          } as any);
+          });
         }
 
         return {

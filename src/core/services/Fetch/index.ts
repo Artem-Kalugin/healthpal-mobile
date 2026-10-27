@@ -12,13 +12,14 @@ import {
   pathInterceptor,
   urlInterceptor,
 } from './interceptors';
+import type { FetchResult } from './types';
 
 export class FetchService {
   static query = async (
     { url, method = 'GET', data, params, path }: FetchArgs,
     baseUrl: string,
     Authorization?: string,
-  ) => {
+  ): Promise<FetchResult> => {
     let urlSaved: string;
     let status: number;
 
@@ -71,8 +72,19 @@ export class FetchService {
           timestamp: new Date().toISOString(),
         },
       };
-    } catch (err: any) {
+    } catch (err) {
       Logger.requestError('FetchService.query error', err);
+
+      return {
+        ok: false,
+        status: undefined,
+        data: null,
+        internal: true,
+        message: err instanceof Error ? err.message : String(err),
+        meta: {
+          timestamp: new Date().toISOString(),
+        },
+      };
     }
   };
 }

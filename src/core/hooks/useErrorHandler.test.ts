@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react-native';
 import { toast } from 'react-hot-toast/headless';
 
 import { LoginDto } from '#api/Auth/dto/LoginDto';
+import { BEError } from '#api/types';
 
 import Haptics from '#services/Haptics';
 
@@ -18,7 +19,7 @@ describe('useBEErrorHandler', () => {
   });
 
   it('должен ничего не делать если ошибки нет', () => {
-    const meta = { error: null };
+    const meta = { error: undefined };
 
     renderHook(() => useBEErrorHandler(meta));
 
@@ -97,18 +98,13 @@ describe('useBEErrorHandler', () => {
   });
 
   it('должен реагировать на изменение ошибки', () => {
-    const meta = { error: null };
-    //@ts-expect-error
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { rerender } = renderHook(({ meta }) => useBEErrorHandler(meta), {
-      initialProps: { meta },
-    });
+    const meta: { error?: BEError } = {};
+    const { rerender } = renderHook(() => useBEErrorHandler(meta));
 
     expect(Haptics.impactError).not.toHaveBeenCalled();
 
-    //@ts-expect-error
     meta.error = { data: { message: 'Новая ошибка' } };
-    rerender({ meta });
+    rerender(undefined);
 
     expect(Haptics.impactError).toHaveBeenCalledTimes(1);
     expect(toast.error).toHaveBeenCalledWith('Новая ошибка');

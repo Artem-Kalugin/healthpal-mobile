@@ -68,7 +68,7 @@ describe('headersInterceptor', () => {
 
 describe('connectionInterceptor', () => {
   test('должен throw когда нет интернета', async () => {
-    //@ts-expect-error
+    //@ts-expect-error cast not better here
     jest.spyOn(NetInfo, 'fetch').mockResolvedValue({ isConnected: false });
 
     await expect(connectionInterceptor()).rejects.toThrow(

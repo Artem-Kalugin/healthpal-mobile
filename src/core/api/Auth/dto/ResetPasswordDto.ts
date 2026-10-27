@@ -13,7 +13,7 @@ import {
 class PasswordsMatchConstraint implements ValidatorConstraintInterface {
   validate(confirmPassword: string, args: ValidationArguments): boolean {
     const { object } = args;
-    return confirmPassword === (object as any).password;
+    return confirmPassword === (object as ResetPasswordDto).password;
   }
 
   defaultMessage(): string {

@@ -1,6 +1,6 @@
 import type { InterceptorContext } from './types';
 
-const getFormDataContentType = (data: any): string => {
+const getFormDataContentType = (data: unknown): string => {
   return data instanceof FormData ? 'multipart/form-data' : 'application/json';
 };
 

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import type { SerializedError } from '@reduxjs/toolkit';
 import { UseFormReturn } from 'react-hook-form';
 import { toast } from 'react-hot-toast/headless';
 
@@ -10,31 +11,27 @@ import Haptics from '#services/Haptics';
 import Logger from '#services/Logger';
 
 const useBEErrorHandler = <T extends object>(
-  meta: unknown,
+  meta: { error?: BEError | SerializedError },
   form?: UseFormReturn<T, any, T>,
 ) => {
   useEffect(() => {
-    //@ts-expect-error
-
     const error = meta?.error;
-    if (!error) return;
+    if (!error || !('data' in error)) return;
 
     Haptics.impactError();
 
-    Logger.requestError('error', error?.data);
+    Logger.requestError('error', error.data);
 
-    const beError = error as BEError;
-
-    const errorData = beError?.data;
+    const errorData = error.data;
 
     if (!errorData) return;
 
-    if (form && isBEValidationError<T>(beError)) {
-      for (const field in beError.data.validation) {
+    if (form && isBEValidationError<T>(error)) {
+      for (const field in error.data.validation) {
         form.setError(
-          //@ts-expect-error
+          //@ts-expect-error react-hook-form cannot resolve Path<T> for generic T, `field` is Extract<keyof T, string>
           field,
-          { message: beError.data.validation[field][0] },
+          { message: error.data.validation[field][0] },
         );
       }
 
@@ -48,7 +45,6 @@ const useBEErrorHandler = <T extends object>(
     ) {
       toast.error(errorData.message);
     }
-    //@ts-expect-error
   }, [meta.error, form]);
 };
 

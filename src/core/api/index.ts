@@ -43,7 +43,7 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
 
   refreshState.lastRefreshResult = (async () => {
     try {
-      const response = (await FetchService.query(
+      const response = await FetchService.query(
         {
           url: '/auth/refresh',
           method: 'post',
@@ -54,7 +54,7 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
         },
         process.env.EXPO_PUBLIC_API_URL,
         undefined,
-      ))!;
+      );
 
       if (!response.ok) {
         throw {};
@@ -72,7 +72,6 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
   return refreshState.lastRefreshResult;
 };
 
-//@ts-expect-error
 export const apiBaseQuery: BaseQueryFn<FetchArgs, unknown, BEError> = async (
   args: FetchArgs,
   api: BaseQueryApi,
@@ -86,58 +85,54 @@ export const apiBaseQuery: BaseQueryFn<FetchArgs, unknown, BEError> = async (
 
   let accessToken = runtimeToken?.accessToken;
 
-  try {
-    if (refreshState.refreshingToken === accessToken) {
-      const refreshResult = await refreshState.lastRefreshResult;
+  if (refreshState.refreshingToken === accessToken) {
+    const refreshResult = await refreshState.lastRefreshResult;
 
-      if (refreshResult) {
-        return apiBaseQuery(args, api, extraOptions);
-      } else {
-        await logOut(api);
-
-        return {
-          error: {
-            meta: {
-              loggedOut: true,
-            },
-          },
-        };
-      }
+    if (refreshResult) {
+      return apiBaseQuery(args, api, extraOptions);
     }
 
-    const req = await FetchService.query(
-      {
-        url,
-        method,
-        data,
-        params,
-        path,
-      },
-      process.env.EXPO_PUBLIC_API_URL,
-      `Bearer ${accessToken}`,
-    );
+    await logOut(api);
 
-    if (!req?.ok) {
-      throw req;
-    }
     return {
-      data: req.data,
-      meta: req.meta,
+      error: {
+        meta: {
+          loggedOut: true,
+        },
+      },
     };
-  } catch (error) {
-    const errorStatus =
-      error && typeof error === 'object' && 'status' in error
-        ? error.status
-        : undefined;
+  }
 
-    if (errorStatus === 401 && runtimeToken) {
+  const req = await FetchService.query(
+    {
+      url,
+      method,
+      data,
+      params,
+      path,
+    },
+    process.env.EXPO_PUBLIC_API_URL,
+    `Bearer ${accessToken}`,
+  );
+
+  if (req.internal) {
+    return { error: { internal: true } };
+  }
+
+  if (!req.ok) {
+    if (req.status === 401 && runtimeToken) {
       refresh(api, runtimeToken);
 
-      return await apiBaseQuery(args, api, extraOptions);
+      return apiBaseQuery(args, api, extraOptions);
     }
 
-    return { error };
+    return { error: { status: req.status, data: req.data } };
   }
+
+  return {
+    data: req.data,
+    meta: req.meta,
+  };
 };
 
 const baseQuery = retry(
@@ -151,8 +146,7 @@ const baseQuery = retry(
         [422, 403, 401, 409, 404, 500, 400].includes(
           result.error?.status as number,
         )) ||
-        //@ts-expect-error
-        ('meta' in result.error && result.error.meta?.loggedOut))
+        result.error.meta?.loggedOut)
     ) {
       retry.fail(result.error);
     }
@@ -168,7 +162,7 @@ const RtkAppApi = createApi({
   endpoints: () => ({}),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
-      //@ts-expect-error
+      //@ts-expect-error RTK types extractRehydrationInfo action as UnknownAction, redux-persist REHYDRATE payload is untyped
       return action?.payload?.[reducerPath];
     }
   },

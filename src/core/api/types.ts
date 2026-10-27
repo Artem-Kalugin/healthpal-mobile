@@ -1,6 +1,9 @@
 export type BEError = {
-  data: unknown;
+  data?: unknown;
   status?: number;
+  meta?: { loggedOut?: boolean };
+  // the request never got a response (no connection, timeout)
+  internal?: boolean;
 };
 
 export type BEValidationError<T extends object> = {
@@ -16,7 +19,7 @@ export type BEValidationScheme<T extends object> = Record<
 export type FetchArgs = {
   url: string;
   method?: string;
-  data?: any;
+  data?: unknown;
   params?: Record<string, string | number | boolean | null | undefined>;
   path?: Record<string, string | number>;
 };
