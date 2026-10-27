@@ -21,7 +21,7 @@ const grantedLikeStatuses: PermissionStatus[] = [
   RESULTS.LIMITED,
 ];
 
-type SilentPermissionResult = {
+type CheckPermissionResult = {
   allowed: boolean;
   originalStatus: PermissionStatus;
 };
@@ -36,7 +36,6 @@ export class PermissionManager {
     config: PermissionRequestConfig,
   ): Promise<void> {
     const alert = config.blockedAlert;
-    if (!alert) return;
 
     Alert.alert(
       alert.title ?? 'Разрешение',
@@ -52,15 +51,22 @@ export class PermissionManager {
     );
   }
 
-  static async _request(
+  private static resolveConfig(
+    permission: RequestedPermission,
+    config?: PermissionRequestConfig,
+  ): PermissionRequestConfig | null {
+    const resolved = config ?? permissionsAlertsConfigs.get(permission);
+    if (!resolved) {
+      Logger.error('No permission alert config specified');
+      return null;
+    }
+    return resolved;
+  }
+
+  private static async _check(
     permission: Permission,
     config: PermissionRequestConfig,
-    silent: boolean,
-  ): Promise<{
-    allowed: boolean;
-    originalStatus: PermissionStatus;
-    requestStatus?: PermissionStatus;
-  }> {
+  ): Promise<CheckPermissionResult> {
     Logger.custom('permission', '---CHECK---PERMISSION---', permission);
     const status = await check(permission);
 
@@ -75,14 +81,23 @@ export class PermissionManager {
       return { allowed: true, originalStatus: status };
     }
 
-    if (silent) {
-      Logger.custom('permission', 'silent mode, returning', status);
-      return { allowed: false, originalStatus: status };
+    return { allowed: false, originalStatus: status };
+  }
+
+  private static async _request(
+    permission: Permission,
+    config: PermissionRequestConfig,
+  ): Promise<RequestPermissionResult> {
+    const checkResult = await this._check(permission, config);
+    const { originalStatus } = checkResult;
+
+    if (checkResult.allowed || originalStatus === RESULTS.UNAVAILABLE) {
+      return { ...checkResult, requestStatus: originalStatus };
     }
 
-    if (status === RESULTS.BLOCKED && Platform.OS === 'ios') {
-      config.blockedAlert && (await this.showBlockedAlert(config));
-      return { allowed: false, originalStatus: status };
+    if (originalStatus === RESULTS.BLOCKED && Platform.OS === 'ios') {
+      await this.showBlockedAlert(config);
+      return { allowed: false, originalStatus, requestStatus: originalStatus };
     }
 
     const result = await request(permission);
@@ -90,53 +105,71 @@ export class PermissionManager {
     Logger.custom('permission', 'status after request', result);
 
     if (grantedLikeStatuses.includes(result)) {
-      return { allowed: true, originalStatus: status, requestStatus: result };
+      return { allowed: true, originalStatus, requestStatus: result };
     }
 
     if (result === RESULTS.BLOCKED && Platform.OS === 'android') {
-      config.blockedAlert && (await this.showBlockedAlert(config));
+      await this.showBlockedAlert(config);
     }
 
     if (result === RESULTS.DENIED) {
       config.toastForDeniedPermission && toast(config.toastForDeniedPermission);
     }
 
-    return { allowed: false, originalStatus: status, requestStatus: result };
+    return { allowed: false, originalStatus, requestStatus: result };
   }
 
-  static async request(
+  static async check(
     permission: RequestedPermission,
-    silent: true,
     config?: PermissionRequestConfig,
-  ): Promise<SilentPermissionResult>;
-
-  static async request(
-    permission: RequestedPermission,
-    silent?: false,
-    config?: PermissionRequestConfig,
-  ): Promise<RequestPermissionResult>;
-
-  static async request(
-    permission: RequestedPermission,
-    silent: boolean = false,
-    config?: PermissionRequestConfig,
-  ) {
+  ): Promise<CheckPermissionResult> {
     if (permission.length === 0) {
       return { allowed: true, originalStatus: RESULTS.GRANTED };
     }
 
     if (permission.length === 1) {
-      const alertConfig = config ?? permissionsAlertsConfigs.get(permission);
-
+      const alertConfig = this.resolveConfig(permission, config);
       if (!alertConfig) {
-        Logger.error('No permission alert config specified');
         return { allowed: false, originalStatus: RESULTS.DENIED };
       }
 
-      return this._request(permission[0], alertConfig, silent);
+      return this._check(permission[0], alertConfig);
+    }
+
+    Logger.error('add multi permission check feature :)');
+    return { allowed: false, originalStatus: RESULTS.DENIED };
+  }
+
+  static async request(
+    permission: RequestedPermission,
+    config?: PermissionRequestConfig,
+  ): Promise<RequestPermissionResult> {
+    if (permission.length === 0) {
+      return {
+        allowed: true,
+        originalStatus: RESULTS.GRANTED,
+        requestStatus: RESULTS.GRANTED,
+      };
+    }
+
+    if (permission.length === 1) {
+      const alertConfig = this.resolveConfig(permission, config);
+      if (!alertConfig) {
+        return {
+          allowed: false,
+          originalStatus: RESULTS.DENIED,
+          requestStatus: RESULTS.DENIED,
+        };
+      }
+
+      return this._request(permission[0], alertConfig);
     }
 
     Logger.error('add multi permission request feature :)');
-    return { allowed: false, originalStatus: RESULTS.DENIED };
+    return {
+      allowed: false,
+      originalStatus: RESULTS.DENIED,
+      requestStatus: RESULTS.DENIED,
+    };
   }
 }

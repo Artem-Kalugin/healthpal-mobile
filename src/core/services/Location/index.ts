@@ -13,19 +13,16 @@ export class LocationService {
     try {
       const isSilent = store.getState().app.isUserBlockedLocationPermission;
 
-      const permission = await PermissionManager.request(
-        LocationPermission,
-        //@ts-expect-error
-        isSilent,
-      );
+      const permission = isSilent
+        ? await PermissionManager.check(LocationPermission)
+        : await PermissionManager.request(LocationPermission);
 
-      if (
-        (isSilent ||
-          [permission.originalStatus, permission.requestStatus].includes(
-            'blocked',
-          )) &&
-        !permission.allowed
-      ) {
+      const statuses =
+        'requestStatus' in permission
+          ? [permission.originalStatus, permission.requestStatus]
+          : [permission.originalStatus];
+
+      if ((isSilent || statuses.includes('blocked')) && !permission.allowed) {
         store.dispatch(AppActions.setIsUserBlockedLocationPermission(true));
         return;
       }

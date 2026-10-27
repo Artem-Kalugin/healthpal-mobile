@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import { setUpTests } from 'react-native-reanimated';
 
 //TODO: replace when https://github.com/mrousavy/react-native-mmkv/issues/945 fixed
@@ -43,11 +42,11 @@ jest.mock('react-native-bootsplash', () => {
 });
 
 jest.mock('react-native-mmkv', () => {
-  const { createMockMMKV } = require('./mocks/mockMMKV');
+  const { createMockMMKV } =
+    jest.requireActual<typeof import('./mocks/mockMMKV')>('./mocks/mockMMKV');
   return {
     createMMKV: () => createMockMMKV(),
   };
 });
 
 setUpTests();
-jest.mock('react-native-svg', () => require('react-native-reanimated/mock'));

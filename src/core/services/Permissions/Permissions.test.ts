@@ -54,6 +54,7 @@ describe('PermissionManager', () => {
       expect(result).toEqual({
         allowed: true,
         originalStatus: RESULTS.GRANTED,
+        requestStatus: RESULTS.GRANTED,
       });
     });
 
@@ -70,7 +71,6 @@ describe('PermissionManager', () => {
 
       const result = await PermissionManager.request(
         [mockPermission],
-        false,
         mockConfig,
       );
 
@@ -84,7 +84,6 @@ describe('PermissionManager', () => {
 
       const result = await PermissionManager.request(
         [mockPermission],
-        false,
         mockConfig,
       );
 
@@ -98,7 +97,6 @@ describe('PermissionManager', () => {
 
       const result = await PermissionManager.request(
         [mockPermission],
-        false,
         mockConfig,
       );
 
@@ -112,7 +110,6 @@ describe('PermissionManager', () => {
 
       const result = await PermissionManager.request(
         [mockPermission],
-        false,
         mockConfig,
       );
 
@@ -126,7 +123,6 @@ describe('PermissionManager', () => {
 
       const result = await PermissionManager.request(
         [mockPermission],
-        false,
         mockConfig,
       );
 
@@ -143,7 +139,6 @@ describe('PermissionManager', () => {
 
       const result = await PermissionManager.request(
         [mockPermission],
-        false,
         mockConfig,
       );
 
@@ -159,7 +154,6 @@ describe('PermissionManager', () => {
 
       const result = await PermissionManager.request(
         [mockPermission],
-        false,
         mockConfig,
       );
 
@@ -168,13 +162,12 @@ describe('PermissionManager', () => {
     });
   });
 
-  describe('silent режим', () => {
+  describe('check (без запроса разрешения)', () => {
     it('DENIED - не должен запрашивать разрешение', async () => {
       (check as jest.Mock).mockResolvedValue(RESULTS.DENIED);
 
-      const result = await PermissionManager.request(
+      const result = await PermissionManager.check(
         [mockPermission],
-        true, // silent
         mockConfig,
       );
 
@@ -185,9 +178,8 @@ describe('PermissionManager', () => {
     it('GRANTED - должен вернуть allowed: true', async () => {
       (check as jest.Mock).mockResolvedValue(RESULTS.GRANTED);
 
-      const result = await PermissionManager.request(
+      const result = await PermissionManager.check(
         [mockPermission],
-        true,
         mockConfig,
       );
 
@@ -207,27 +199,12 @@ describe('PermissionManager', () => {
 
         const result = await PermissionManager.request(
           [mockPermission],
-          false,
           mockConfig,
         );
 
         expect(result.allowed).toBe(false);
         expect(alertSpy).toHaveBeenCalled();
         expect(request).not.toHaveBeenCalled();
-      });
-
-      it('BLOCKED - не должен показывать alert если blockedAlert не задан', async () => {
-        (check as jest.Mock).mockResolvedValue(RESULTS.BLOCKED);
-        const configWithoutAlert = { ...mockConfig, blockedAlert: undefined };
-        const alertSpy = jest.spyOn(Alert, 'alert');
-
-        await PermissionManager.request(
-          [mockPermission],
-          false,
-          configWithoutAlert as any,
-        );
-
-        expect(alertSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -243,7 +220,6 @@ describe('PermissionManager', () => {
 
         const result = await PermissionManager.request(
           [mockPermission],
-          false,
           mockConfig,
         );
 
@@ -258,7 +234,7 @@ describe('PermissionManager', () => {
     it('должен показать toast для UNAVAILABLE если задан', async () => {
       (check as jest.Mock).mockResolvedValue(RESULTS.UNAVAILABLE);
 
-      await PermissionManager.request([mockPermission], false, mockConfig);
+      await PermissionManager.request([mockPermission], mockConfig);
 
       expect(toast).toHaveBeenCalledWith(
         mockConfig.toastForUnavailablePermission,
@@ -269,7 +245,7 @@ describe('PermissionManager', () => {
       (check as jest.Mock).mockResolvedValue(RESULTS.DENIED);
       (request as jest.Mock).mockResolvedValue(RESULTS.DENIED);
 
-      await PermissionManager.request([mockPermission], false, mockConfig);
+      await PermissionManager.request([mockPermission], mockConfig);
 
       expect(toast).toHaveBeenCalledWith(mockConfig.toastForDeniedPermission);
     });
@@ -280,7 +256,7 @@ describe('PermissionManager', () => {
         blockedAlert: { title: 'Test', message: 'Test' },
       };
 
-      await PermissionManager.request([mockPermission], false, minimalConfig);
+      await PermissionManager.request([mockPermission], minimalConfig);
 
       expect(toast).not.toHaveBeenCalled();
     });
