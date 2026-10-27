@@ -143,13 +143,11 @@ describe('useModal', () => {
       expect(result.current.visible).toBe(true);
 
       (useIsFocused as jest.Mock).mockReturnValue(false);
-      //@ts-expect-error
-      rerender();
+      rerender(undefined);
 
       expect(result.current.visible).toBe(false);
       (useIsFocused as jest.Mock).mockReturnValue(true);
-      //@ts-expect-error
-      rerender();
+      rerender(undefined);
 
       expect(result.current.visible).toBe(true);
     });
@@ -168,13 +166,11 @@ describe('useModal', () => {
       expect(mockNavigation.goBack).not.toHaveBeenCalled();
 
       (useIsFocused as jest.Mock).mockReturnValue(false);
-      //@ts-expect-error
-      rerender();
+      rerender(undefined);
       expect(result.current.visible).toBe(false);
 
       (useIsFocused as jest.Mock).mockReturnValue(true);
-      //@ts-expect-error
-      rerender();
+      rerender(undefined);
       expect(result.current.visible).toBe(true);
     });
   });

@@ -41,7 +41,7 @@ describe('TokenService', () => {
 
     it('вызывает load, если токены отсутствуют', async () => {
       const loadSpy = jest
-        .spyOn(TokenService as any, 'load')
+        .spyOn(TokenService, 'load')
         .mockResolvedValue(decodedToken);
 
       const token = await TokenService.get();

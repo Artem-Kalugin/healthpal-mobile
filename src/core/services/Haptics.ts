@@ -25,16 +25,12 @@ class Haptics {
     HapticsExpo.notificationAsync(HapticsExpo.NotificationFeedbackType.Error);
   }
 
-  static impactSuccress() {
+  static impactSuccess() {
     HapticsExpo.notificationAsync(HapticsExpo.NotificationFeedbackType.Success);
   }
 
   static notificationWarning() {
     HapticsExpo.notificationAsync(HapticsExpo.NotificationFeedbackType.Warning);
-  }
-
-  static notificationError() {
-    HapticsExpo.notificationAsync(HapticsExpo.NotificationFeedbackType.Error);
   }
 }
 

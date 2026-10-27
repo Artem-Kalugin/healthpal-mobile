@@ -8,8 +8,8 @@ import {
 
 import { createMMKV } from 'react-native-mmkv';
 
-import { Action, configureStore, Middleware } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore, Storage } from 'redux-persist';
 
 import { RtkAppApi } from '#api';
 
@@ -23,7 +23,6 @@ const reduxStorage: Storage = {
     storage.set(key, value);
     return Promise.resolve(true);
   },
-  //@ts-expect-error
   getItem: key => {
     const value = storage.getString(key) || null;
     return Promise.resolve(value);
@@ -41,30 +40,6 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
-const loggerMiddleware: Middleware = store => next => _action => {
-  const action = _action as unknown as Action<any>;
-  // if (
-  //   !action.type.startsWith('api') &&
-  //   !action.type.startsWith('persist/REHYDRATE')
-  // ) {
-  //   // eslint-disable-next-line no-console
-  //   console.log('⚡️Action:', action.type);
-
-  //   //@ts-expect-error
-  //   if (action.payload !== undefined) {
-  //     // eslint-disable-next-line no-console
-  //     console.log(
-  //       '📦Payload:',
-  //       //@ts-expect-error
-  //       action.payload,
-  //     );
-  //   }
-  // }
-
-  const result = next(action);
-
-  return result;
-};
 
 export const store = configureStore({
   reducer: persistedReducer,
@@ -72,9 +47,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    })
-      .concat(RtkAppApi.middleware)
-      .concat(loggerMiddleware),
+    }).concat(RtkAppApi.middleware),
 });
 TokenService.injectStore(store);
 export const persistor = persistStore(store);

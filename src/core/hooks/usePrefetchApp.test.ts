@@ -11,8 +11,12 @@ import { LocationService } from '#services/Location';
 
 import { store } from '#store';
 import { AppActions } from '#store/slices/app';
-import { RuntimeActions } from '#store/slices/runtime';
+import { RuntimeActions, TokenDecoded } from '#store/slices/runtime';
 
+import {
+  mockAccessToken,
+  mockRefreshToken,
+} from '../../../__tests__/config/fixtures/tokens';
 import { usePrefetchApp } from './usePrefetchApp';
 
 jest.mock('#services/Location');
@@ -23,6 +27,13 @@ jest.mock('#api/User');
 jest.mock('../utils', () => ({
   delay: jest.fn().mockResolvedValue(undefined),
 }));
+
+const mockToken: TokenDecoded = {
+  accessToken: mockAccessToken,
+  refreshToken: mockRefreshToken,
+  userId: '123',
+  registrationComplete: true,
+};
 
 describe('usePrefetchApp', () => {
   const mockPrefetchFn = jest.fn().mockResolvedValue(undefined);
@@ -55,7 +66,7 @@ describe('usePrefetchApp', () => {
 
     expect(result.current.isPrefetching).toBe(false);
 
-    let prefetchPromise: Promise<any>;
+    let prefetchPromise: ReturnType<typeof result.current.prefetchApp>;
 
     act(() => {
       prefetchPromise = result.current.prefetchApp();
@@ -83,8 +94,7 @@ describe('usePrefetchApp', () => {
   });
 
   it('успешно завершается для авторизованного пользователя', async () => {
-    //@ts-expect-error
-    store.dispatch(RuntimeActions.setToken({ registrationComplete: true }));
+    store.dispatch(RuntimeActions.setToken(mockToken));
 
     (LocationService.getCurrentLocation as jest.Mock).mockResolvedValue({
       coords: { latitude: 55.7558, longitude: 37.6173 },
@@ -100,8 +110,7 @@ describe('usePrefetchApp', () => {
   });
 
   it('успешно завершается даже если геолокация недоступна', async () => {
-    //@ts-expect-error
-    store.dispatch(RuntimeActions.setToken({ registrationComplete: true }));
+    store.dispatch(RuntimeActions.setToken(mockToken));
 
     (LocationService.getCurrentLocation as jest.Mock).mockRejectedValue(
       new Error('Location not available'),
