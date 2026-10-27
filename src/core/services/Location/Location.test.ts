@@ -1,7 +1,5 @@
 import * as Location from 'expo-location';
 
-import Logger from '#services/Logger';
-
 import { store } from '#store';
 
 import { LocationService } from '.';
