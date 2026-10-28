@@ -10,8 +10,10 @@ import {
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
-import { ServerImage } from '#components/infrastructure/ServerImage';
+import {
+  HeaderWithThreeSections,
+  ServerImage,
+} from '#components/infrastructure';
 
 import { Divider, Icon, TextBase, TextLarge, TextSmall } from '#ui-kit';
 import { IconNames } from '#ui-kit/Icon';

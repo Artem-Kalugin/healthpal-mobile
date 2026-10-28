@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import * as ImagePickerExpo from 'expo-image-picker';
 
-import { ModalWrapper } from '#components/infrastructure/ModalWrapper';
+import { ModalWrapper } from '#components/infrastructure';
 
 import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 

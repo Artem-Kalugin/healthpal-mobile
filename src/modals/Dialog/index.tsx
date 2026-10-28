@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { ModalWrapper } from '#components/infrastructure/ModalWrapper';
+import { ModalWrapper } from '#components/infrastructure';
 
 import { Button, Text } from '#ui-kit';
 

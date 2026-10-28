@@ -1,4 +1,4 @@
-import { NavigatorBottomTabRouteConfig } from '#components/infrastructure/NavigatorBottomTabs';
+import { NavigatorBottomTabRouteConfig } from '#components/infrastructure';
 
 import { TabRoutes } from './types';
 

@@ -14,8 +14,10 @@ import Animated from 'react-native-reanimated';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
+import {
+  FormTextInput,
+  TapKeyboardDismissArea,
+} from '#components/infrastructure';
 
 import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 

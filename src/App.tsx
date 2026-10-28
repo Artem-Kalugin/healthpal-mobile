@@ -9,7 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { FocusAwareStatusBar } from '#components/infrastructure/FocusAwareStatusBar';
+import { FocusAwareStatusBar } from '#components/infrastructure';
 import { OTPTimerProvider } from '#components/infrastructure/providers/OTPTimer';
 import { ToastProvider } from '#components/infrastructure/providers/Toaster';
 

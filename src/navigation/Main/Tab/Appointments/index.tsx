@@ -3,8 +3,10 @@ import { StyleSheet, View } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
-import { NavigatorHeaderTabs } from '#components/infrastructure/NavigatorHeaderTabs';
+import {
+  HeaderWithThreeSections,
+  NavigatorHeaderTabs,
+} from '#components/infrastructure';
 
 import { Appointments } from '#screens';
 

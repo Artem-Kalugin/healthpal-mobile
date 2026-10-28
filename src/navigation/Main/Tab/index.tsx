@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { NavigatorBottomTabs } from '#components/infrastructure/NavigatorBottomTabs';
+import { NavigatorBottomTabs } from '#components/infrastructure';
 
 import { Home, Map, Profile } from '#screens';
 

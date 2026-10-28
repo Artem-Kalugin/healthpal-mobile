@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import DatePicker from 'react-native-date-picker';
 
-import { ModalWrapper } from '#components/infrastructure/ModalWrapper';
+import { ModalWrapper } from '#components/infrastructure';
 
 import { Button, TextXL } from '#ui-kit';
 

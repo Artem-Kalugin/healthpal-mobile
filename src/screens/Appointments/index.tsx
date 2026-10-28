@@ -6,8 +6,10 @@ import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
 import { AppointmentCard } from '#components/domain/appointment/Card';
-import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
-import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
+import {
+  EmptyListWarning,
+  PaginatableListFooter,
+} from '#components/infrastructure';
 
 import { Button, Icon, Loader, TextBase } from '#ui-kit';
 

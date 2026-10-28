@@ -13,10 +13,12 @@ import { StackActions } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
-import { ServerImage } from '#components/infrastructure/ServerImage';
-import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
+import {
+  FormTextInput,
+  HeaderWithThreeSections,
+  ServerImage,
+  TapKeyboardDismissArea,
+} from '#components/infrastructure';
 
 import { Button, Icon, TextBase } from '#ui-kit';
 import { ButtonGoBack } from '#ui-kit/ButtonGoBack';

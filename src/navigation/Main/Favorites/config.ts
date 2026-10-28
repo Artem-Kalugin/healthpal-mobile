@@ -1,4 +1,4 @@
-import { NavigatorHeaderTabRouteConfig } from '#components/infrastructure/NavigatorHeaderTabs';
+import { NavigatorHeaderTabRouteConfig } from '#components/infrastructure';
 
 import { FavoritesRoutes } from './types';
 

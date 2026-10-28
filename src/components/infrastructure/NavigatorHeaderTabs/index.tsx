@@ -7,7 +7,11 @@ import {
   TabNavigationState,
 } from '@react-navigation/native';
 
-import { HeaderTabs, IHeaderTabs, RefHeaderTab } from './TabsHeader';
+import {
+  HeaderTabs,
+  IHeaderTabs,
+  RefHeaderTab,
+} from '#components/infrastructure/TabsHeader';
 
 export type NavigatorHeaderTabRouteConfig = { label: string };
 type NavigatorTabsConfig = Record<string, NavigatorHeaderTabRouteConfig>;

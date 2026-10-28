@@ -5,8 +5,10 @@ import { CompositeScreenProps } from '@react-navigation/native';
 
 import { DoctorCard } from '#components/domain/doctor/Card';
 import { MedicalCenterCard } from '#components/domain/medical-center/Card';
-import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
-import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
+import {
+  EmptyListWarning,
+  PaginatableListFooter,
+} from '#components/infrastructure';
 
 import { Loader } from '#ui-kit';
 

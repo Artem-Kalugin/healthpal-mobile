@@ -22,12 +22,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { FocusAwareStatusBar } from '#components/infrastructure/FocusAwareStatusBar';
+
 import { Icon } from '#ui-kit';
 
 import { hitSlopBig, SCREEN_HEIGHT, SCREEN_WIDTH } from '#config';
 import { colors } from '#config/colors';
-
-import { FocusAwareStatusBar } from './FocusAwareStatusBar';
 
 const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);

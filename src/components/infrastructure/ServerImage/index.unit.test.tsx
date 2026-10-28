@@ -2,7 +2,7 @@ import { render } from '@testing-library/react-native';
 
 import { useSelector } from '#store';
 
-import { ServerImage } from './ServerImage';
+import { ServerImage } from '.';
 
 jest.mock('#store', () => ({
   useSelector: jest.fn(),

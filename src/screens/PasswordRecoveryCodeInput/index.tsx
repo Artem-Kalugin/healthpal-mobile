@@ -6,9 +6,11 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { toast } from 'react-hot-toast/headless';
 
-import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
+import {
+  HeaderWithThreeSections,
+  TapKeyboardDismissArea,
+} from '#components/infrastructure';
 import { useTimer } from '#components/infrastructure/providers/OTPTimer';
-import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Brand, CodeInput, Loader, TextSmall, TextXL } from '#ui-kit';
 import { OTP_CELL_COUNT } from '#ui-kit/CodeInput';

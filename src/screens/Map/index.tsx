@@ -16,7 +16,7 @@ import { debounce } from 'lodash';
 
 import { MedicalCenterCard } from '#components/domain/medical-center/Card';
 import { MedicalCenterMarker } from '#components/domain/medical-center/Marker';
-import { BlinkAnimator } from '#components/infrastructure/BlinkAnimator';
+import { BlinkAnimator } from '#components/infrastructure';
 
 import { Icon, TextInput } from '#ui-kit';
 

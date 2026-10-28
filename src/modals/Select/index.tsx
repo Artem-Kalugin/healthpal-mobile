@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { ModalWrapper } from '#components/infrastructure/ModalWrapper';
+import { ModalWrapper } from '#components/infrastructure';
 
 import { Button, Checkbox, TextXL } from '#ui-kit';
 

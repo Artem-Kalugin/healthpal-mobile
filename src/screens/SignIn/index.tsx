@@ -13,8 +13,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
+import {
+  FormTextInput,
+  TapKeyboardDismissArea,
+} from '#components/infrastructure';
 
 import { Button, Icon, TextSmall, TextXL } from '#ui-kit';
 import { Brand } from '#ui-kit/Brand';

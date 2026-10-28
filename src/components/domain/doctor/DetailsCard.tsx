@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { ServerImage } from '#components/infrastructure/ServerImage';
+import { ServerImage } from '#components/infrastructure';
 
 import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
 

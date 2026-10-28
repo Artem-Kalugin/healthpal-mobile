@@ -16,8 +16,10 @@ import Animated, {
 
 import { CompositeScreenProps } from '@react-navigation/native';
 
-import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
-import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
+import {
+  HeaderWithThreeSections,
+  TapKeyboardDismissArea,
+} from '#components/infrastructure';
 
 import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 

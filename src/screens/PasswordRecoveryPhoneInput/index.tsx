@@ -4,10 +4,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 import { toast } from 'react-hot-toast/headless';
 
-import { FormTextInput } from '#components/infrastructure/FormTextInput';
-import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
+import {
+  FormTextInput,
+  HeaderWithThreeSections,
+  TapKeyboardDismissArea,
+} from '#components/infrastructure';
 import { useTimer } from '#components/infrastructure/providers/OTPTimer';
-import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Brand, Button, Icon, TextSmall, TextXL } from '#ui-kit';
 

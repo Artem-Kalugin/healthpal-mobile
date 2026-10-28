@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 
-import { ServerImage } from '#components/infrastructure/ServerImage';
+import { ServerImage } from '#components/infrastructure';
 
 import { Button, Loader, Swiper, TextLarge, TextSmall } from '#ui-kit';
 import { ISwiperRef } from '#ui-kit/Swiper';
