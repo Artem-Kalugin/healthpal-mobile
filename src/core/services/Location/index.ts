@@ -3,13 +3,28 @@ import * as Location from 'expo-location';
 import { Logger } from '#services/Logger';
 import { LocationPermission, PermissionManager } from '#services/Permissions';
 
-import { store } from '#store';
-import { AppActions } from '#store/slices/app';
+type LocationStorePort = {
+  getIsBlocked: () => boolean;
+  setIsBlocked: (value: boolean) => void;
+};
+
+let storeInstance: LocationStorePort | null = null;
 
 export class LocationService {
+  static injectStore(port: LocationStorePort) {
+    storeInstance = port;
+  }
+
+  private static getStore() {
+    if (!storeInstance) {
+      throw new Error('Store not initialized in LocationService');
+    }
+    return storeInstance;
+  }
+
   static async getCurrentLocation() {
     try {
-      const isSilent = store.getState().app.isUserBlockedLocationPermission;
+      const isSilent = this.getStore().getIsBlocked();
 
       const permission = isSilent
         ? await PermissionManager.check(LocationPermission)
@@ -21,11 +36,11 @@ export class LocationService {
           : [permission.originalStatus];
 
       if ((isSilent || statuses.includes('blocked')) && !permission.allowed) {
-        store.dispatch(AppActions.setIsUserBlockedLocationPermission(true));
+        this.getStore().setIsBlocked(true);
         return;
       }
 
-      store.dispatch(AppActions.setIsUserBlockedLocationPermission(false));
+      this.getStore().setIsBlocked(false);
 
       const perf = performance.now();
 

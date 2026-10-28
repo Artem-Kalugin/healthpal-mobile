@@ -13,9 +13,12 @@ import { persistReducer, persistStore, Storage } from 'redux-persist';
 
 import { RtkAppApi } from '#api';
 
+import { LocationService } from '#services/Location';
 import { TokenService } from '#services/Token';
 
 import { rootReducer } from './slices';
+import { AppActions } from './slices/app';
+import { RuntimeActions } from './slices/runtime';
 
 export const storage = createMMKV();
 const reduxStorage: Storage = {
@@ -49,7 +52,18 @@ export const store = configureStore({
       immutableCheck: false,
     }).concat(RtkAppApi.middleware),
 });
-TokenService.injectStore(store);
+TokenService.injectStore({
+  getToken: () => store.getState().runtime.token,
+  setToken: token => {
+    store.dispatch(RuntimeActions.setToken(token));
+  },
+});
+LocationService.injectStore({
+  getIsBlocked: () => store.getState().app.isUserBlockedLocationPermission,
+  setIsBlocked: value => {
+    store.dispatch(AppActions.setIsUserBlockedLocationPermission(value));
+  },
+});
 export const persistor = persistStore(store);
 
 export const clearPersistor = async () => {

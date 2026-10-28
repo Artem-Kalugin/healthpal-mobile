@@ -1,7 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 
-import { store } from '#store';
-import { RuntimeActions, TokenDecoded } from '#store/slices/runtime';
+import type { TokenDecoded } from '#store/slices/runtime';
 
 import {
   mockAccessToken,
@@ -25,14 +24,22 @@ const decodedToken: TokenDecoded = {
 };
 
 describe('TokenService', () => {
+  let storedToken: TokenDecoded | undefined;
+
   beforeEach(() => {
-    store.dispatch(RuntimeActions.reset());
+    storedToken = undefined;
+    TokenService.injectStore({
+      getToken: () => storedToken,
+      setToken: token => {
+        storedToken = token;
+      },
+    });
     jest.clearAllMocks();
   });
 
   describe('get', () => {
     it('возвращает токены из store, если они уже есть', async () => {
-      store.dispatch(RuntimeActions.setToken(decodedToken));
+      storedToken = decodedToken;
 
       const token = await TokenService.get();
 
@@ -62,7 +69,7 @@ describe('TokenService', () => {
       const token = await TokenService.load();
 
       expect(token).toMatchObject(decodedToken);
-      expect(store.getState().runtime.token).toMatchObject(decodedToken);
+      expect(storedToken).toMatchObject(decodedToken);
     });
 
     it('возвращает undefined, если нет токенов в SecureStore', async () => {
@@ -92,7 +99,7 @@ describe('TokenService', () => {
         mockRefreshToken,
       );
       expect(token).toMatchObject(decodedToken);
-      expect(store.getState().runtime.token).toMatchObject(decodedToken);
+      expect(storedToken).toMatchObject(decodedToken);
     });
   });
 
@@ -104,7 +111,7 @@ describe('TokenService', () => {
 
       expect(SecureStore.deleteItemAsync).toHaveBeenCalledWith('access');
       expect(SecureStore.deleteItemAsync).toHaveBeenCalledWith('refresh');
-      expect(store.getState().runtime.token).toBeUndefined();
+      expect(storedToken).toBeUndefined();
     });
   });
 });

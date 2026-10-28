@@ -1,11 +1,9 @@
-import type { Store } from '@reduxjs/toolkit';
 import * as SecureStore from 'expo-secure-store';
 import { jwtDecode } from 'jwt-decode';
 
 import { Logger } from '#services/Logger';
 
-import type { RootState } from '#store';
-import { RuntimeActions } from '#store/slices/runtime';
+import type { TokenDecoded } from '#store/slices/runtime';
 
 enum TokenType {
   access = 'access',
@@ -17,11 +15,16 @@ type TokenPayload = {
   registrationComplete: boolean;
 };
 
-let storeInstance: Store<RootState> | null = null;
+type TokenStorePort = {
+  getToken: () => TokenDecoded | undefined;
+  setToken: (token: TokenDecoded | undefined) => void;
+};
+
+let storeInstance: TokenStorePort | null = null;
 
 export class TokenService {
-  static injectStore(store: Store<RootState>) {
-    storeInstance = store;
+  static injectStore(port: TokenStorePort) {
+    storeInstance = port;
   }
 
   private static getStore() {
@@ -32,7 +35,7 @@ export class TokenService {
   }
 
   static async get() {
-    const tokensState = this.getStore().getState().runtime.token;
+    const tokensState = this.getStore().getToken();
 
     if (!tokensState) {
       return this.load();
@@ -56,9 +59,9 @@ export class TokenService {
           refreshToken,
         };
 
-        this.getStore().dispatch(RuntimeActions.setToken(tokenDecoded));
+        this.getStore().setToken(tokenDecoded);
 
-        return this.getStore().getState().runtime.token;
+        return this.getStore().getToken();
       }
 
       return undefined;
@@ -89,7 +92,7 @@ export class TokenService {
         userId: decoded.id,
       };
 
-      this.getStore().dispatch(RuntimeActions.setToken(tokenDecoded));
+      this.getStore().setToken(tokenDecoded);
 
       return this.get();
     } catch (e) {
@@ -102,7 +105,7 @@ export class TokenService {
       await SecureStore.deleteItemAsync(TokenType.access);
       await SecureStore.deleteItemAsync(TokenType.refresh);
 
-      this.getStore().dispatch(RuntimeActions.setToken(undefined));
+      this.getStore().setToken(undefined);
     } catch (e) {
       Logger.error('[SECURE-STORE] error while deleting token', e);
     }

@@ -2,32 +2,23 @@ import * as Location from 'expo-location';
 
 import { PermissionManager } from '#services/Permissions';
 
-import { store } from '#store';
-
 import { LocationService } from '.';
 
 jest.mock('#services/Permissions');
-jest.mock('#store', () => ({
-  store: {
-    dispatch: jest.fn(),
-    getState: jest.fn(),
-  },
-}));
 jest.mock('expo-location');
 jest.mock('#services/Logger');
 
 describe('LocationService', () => {
-  const dispatch = store.dispatch as jest.Mock;
-  const getState = store.getState as jest.Mock;
+  const getIsBlocked = jest.fn();
+  const setIsBlocked = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
+    LocationService.injectStore({ getIsBlocked, setIsBlocked });
   });
 
-  it('диспатчит true и не вызывает getLastKnownPositionAsync, когда permission blocked', async () => {
-    getState.mockReturnValue({
-      app: { isUserBlockedLocationPermission: false },
-    });
+  it('ставит blocked=true и не вызывает getLastKnownPositionAsync, когда permission blocked', async () => {
+    getIsBlocked.mockReturnValue(false);
     (PermissionManager.request as jest.Mock).mockResolvedValue({
       originalStatus: 'blocked',
       requestStatus: 'blocked',
@@ -36,21 +27,14 @@ describe('LocationService', () => {
 
     await LocationService.getCurrentLocation();
 
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'app/setIsUserBlockedLocationPermission',
-        payload: true,
-      }),
-    );
+    expect(setIsBlocked).toHaveBeenCalledTimes(1);
+    expect(setIsBlocked).toHaveBeenCalledWith(true);
     expect(Location.getLastKnownPositionAsync).not.toHaveBeenCalled();
   });
 
-  it('возвращает местоположение и диспатчит false, когда permission allowed', async () => {
+  it('возвращает местоположение и ставит blocked=false, когда permission allowed', async () => {
     const mockLocation = { coords: { latitude: 1, longitude: 2 } };
-    getState.mockReturnValue({
-      app: { isUserBlockedLocationPermission: false },
-    });
+    getIsBlocked.mockReturnValue(false);
     (PermissionManager.request as jest.Mock).mockResolvedValue({
       originalStatus: 'granted',
       requestStatus: 'granted',
@@ -63,13 +47,8 @@ describe('LocationService', () => {
     const res = await LocationService.getCurrentLocation();
 
     expect(res).toBe(mockLocation);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'app/setIsUserBlockedLocationPermission',
-        payload: false,
-      }),
-    );
+    expect(setIsBlocked).toHaveBeenCalledTimes(1);
+    expect(setIsBlocked).toHaveBeenCalledWith(false);
     expect(Location.getLastKnownPositionAsync).toHaveBeenCalledTimes(1);
   });
 });
