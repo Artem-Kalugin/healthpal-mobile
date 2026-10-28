@@ -4,11 +4,12 @@ import type { SerializedError } from '@reduxjs/toolkit';
 import { UseFormReturn } from 'react-hook-form';
 import { toast } from 'react-hot-toast/headless';
 
-import { BEError } from '#api/types';
-import { isBEValidationError } from '#api/utils';
+import type { BEError } from '#api/types';
 
 import { Haptics } from '#services/Haptics';
 import { Logger } from '#services/Logger';
+
+import { isBEValidationError } from '#utils';
 
 export const useErrorHandler = <T extends object>(
   meta: { error?: BEError | SerializedError },

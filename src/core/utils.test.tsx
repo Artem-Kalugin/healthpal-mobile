@@ -1,4 +1,4 @@
-import { __checkBEValidationError } from './utils';
+import { __checkBEValidationError } from '#utils';
 
 describe('__checkBEValidationError', () => {
   test('false для null/undefined', () => {

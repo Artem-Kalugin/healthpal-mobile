@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import { RootState } from '#store';
+import type { RootState } from '#store';
 
 const FavoritesRemoved = createEntityAdapter<{
   id: string;
