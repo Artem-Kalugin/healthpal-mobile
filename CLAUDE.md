@@ -47,6 +47,7 @@ Follow the surrounding code; the patterns below are the ones to keep. Existing d
 - `react-hooks/exhaustive-deps` is off on purpose (known compromise); the planned fix is `useEffectEvent`. Keep dependency arrays correct by hand.
 - No `any`, `@ts-ignore` or `eslint-disable` in new code without a stated reason.
 - `@ts-expect-error` is allowed only with a description, and only when mobile is not responsible for the code (e.g. backend missed a contract for an entity, a library does not provide its types).
+- `getStyles` is a reserved function literal for dynamic styles inside ui-components. Do not treat as utility func - it's special.
 
 ## Conventions and tooling
 

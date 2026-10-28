@@ -1,9 +1,4 @@
-import type { InterceptorContext } from './types';
-
-export interface UrlInterceptorResult {
-  urlObj: URL;
-  urlString: string;
-}
+import type { InterceptorContext, UrlInterceptorResult } from './types';
 
 export const urlInterceptor = (
   context: InterceptorContext,

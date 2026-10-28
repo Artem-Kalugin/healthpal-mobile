@@ -20,14 +20,14 @@ module.exports = plop => {
       return [
         {
           type: 'append',
-          path: 'src/ui-kit/Icon.tsx',
+          path: 'src/ui-kit/Icon/config.ts',
           pattern: '/* PLOP_INJECT_IMPORT */',
           template:
             "import {{camelCase name}} from '#assets/icons/{{kebabCase name}}.svg';",
         },
         {
           type: 'append',
-          path: 'src/ui-kit/Icon.tsx',
+          path: 'src/ui-kit/Icon/config.ts',
           pattern: '/* PLOP_INJECT_KEY */',
           template: `  {{camelCase name}}: { component: {{camelCase name}}${data.color && data.color.trim() ? `, fill: ${data.color.startsWith('colors') ? data.color : `'${data.color}'`}` : ''} },`,
         },

@@ -8,9 +8,10 @@ import {
 } from 'react-native';
 
 import { colors } from '#config/colors';
+import { primaryFontNameMap, secondaryFontNameMap } from '#config/fonts';
 
 export interface IText {
-  weight: keyof ReturnType<typeof generateFontNameMap>;
+  weight: keyof typeof primaryFontNameMap;
   fontType: 'primary' | 'secondary';
   size: number;
   lineHeight: TextStyle['lineHeight'];
@@ -66,25 +67,8 @@ const _Text: React.FC<Partial<IText>> = ({
   );
 };
 
-export const generateFontNameMap = (baseFontName = 'Inter18pt') => {
-  return {
-    '900': `${baseFontName}-Black`,
-    '800': `${baseFontName}-ExtraBold`,
-    '700': `${baseFontName}-Bold`,
-    '600': `${baseFontName}-SemiBold`,
-    '500': `${baseFontName}-Medium`,
-    '400': `${baseFontName}-Regular`,
-    '300': `${baseFontName}-Light`,
-    '200': `${baseFontName}-ExtraLight`,
-    '100': `${baseFontName}-Thin`,
-  };
-};
-
-export const primaryFontNameMap = generateFontNameMap();
-const secondaryFontNameMap = generateFontNameMap('Poppins');
-
 const fontTypeMaps: {
-  [key in IText['fontType']]: ReturnType<typeof generateFontNameMap>;
+  [key in IText['fontType']]: typeof primaryFontNameMap;
 } = {
   primary: primaryFontNameMap,
   secondary: secondaryFontNameMap,

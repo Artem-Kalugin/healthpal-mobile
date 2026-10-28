@@ -3,14 +3,19 @@ import {
   StyleProp,
   StyleSheet,
   TextStyle,
+  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { TextSmall, TextXL } from '#ui-kit';
-import { ButtonGoBack } from '#ui-kit/ButtonGoBack';
+import { useNavigation } from '@react-navigation/native';
+
+import { Icon, TextSmall, TextXL } from '#ui-kit';
+
+import { hitSlopBig } from '#config';
+import { colors } from '#config/colors';
 
 export interface IHeaderSegmented {
   title: text;
@@ -33,7 +38,7 @@ const HeaderWithThreeSectionsBase: React.FC<Partial<IHeaderSegmented>> = ({
   title = 'Header',
   subtitle,
   titleTextAlign = 'left',
-  leftElement = <ButtonGoBack />,
+  leftElement,
   rightElement = null,
   centerElement = null,
 
@@ -43,6 +48,7 @@ const HeaderWithThreeSectionsBase: React.FC<Partial<IHeaderSegmented>> = ({
   containerStyle,
 }) => {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
 
   const styles = getStyles({
     paddingTop: insets.top + paddingTop,
@@ -53,7 +59,21 @@ const HeaderWithThreeSectionsBase: React.FC<Partial<IHeaderSegmented>> = ({
   return (
     <View style={[styles.wrapper, containerStyle]}>
       <View style={styles.iconContainer}>
-        <View style={styles.leftSide}>{leftElement}</View>
+        <View style={styles.leftSide}>
+          {leftElement === undefined ? (
+            <TouchableOpacity
+              hitSlop={hitSlopBig}
+              onPress={navigation.goBack}
+            >
+              <Icon
+                color={colors.grayscale['900']}
+                name="arrowLeft"
+              />
+            </TouchableOpacity>
+          ) : (
+            leftElement
+          )}
+        </View>
       </View>
 
       <View style={styles.centerSide}>

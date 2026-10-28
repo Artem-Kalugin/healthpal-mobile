@@ -4,6 +4,5 @@ export { paramsInterceptor } from './params';
 export { pathInterceptor } from './path';
 export { headersInterceptor } from './headers';
 export { fetchWithTimeout } from './timeout';
-export type { InterceptorContext } from './types';
+export type { InterceptorContext, UrlInterceptorResult } from './types';
 export { urlInterceptor } from './url';
-export type { UrlInterceptorResult } from './url';

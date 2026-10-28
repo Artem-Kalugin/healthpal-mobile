@@ -21,7 +21,6 @@ import {
 } from '#components/infrastructure';
 
 import { Button, Icon, TextBase } from '#ui-kit';
-import { ButtonGoBack } from '#ui-kit/ButtonGoBack';
 
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
@@ -36,6 +35,7 @@ import { TokenService } from '#services/Token';
 import {
   ActiveOpacities,
   BORDER_RADIUS_ROUNDED,
+  hitSlopBig,
   Images,
   SAFE_ZONE_BOTTOM,
 } from '#config';
@@ -206,7 +206,17 @@ export const ProfileEditing: React.FC<
       >
         <TapKeyboardDismissArea />
         <HeaderWithThreeSections
-          leftElement={<ButtonGoBack onPress={goBack} />}
+          leftElement={
+            <TouchableOpacity
+              hitSlop={hitSlopBig}
+              onPress={goBack}
+            >
+              <Icon
+                color={colors.grayscale['900']}
+                name="arrowLeft"
+              />
+            </TouchableOpacity>
+          }
           paddingHorizontal={0}
           title={
             token?.registrationComplete

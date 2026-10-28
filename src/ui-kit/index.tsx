@@ -1,6 +1,5 @@
 export { Brand } from './Brand';
 export { Button } from './Button';
-export { ButtonGoBack } from './ButtonGoBack';
 export { Calendar } from './Calendar';
 export { Checkbox } from './Checkbox';
 export { CodeInput } from './CodeInput';
@@ -12,6 +11,5 @@ export { TextInput } from './inputs/TextInput';
 export { Loader } from './Loader';
 export { Rating } from './Rating';
 export { StatisticsFact } from './StatisticsFact';
-export { Swiper } from './Swiper';
 export { Tag } from './Tag';
 export { Text, TextBase, TextLarge, TextSmall, TextXL, TextXS } from './Text';

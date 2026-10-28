@@ -1,4 +1,4 @@
-import { Permission } from 'react-native-permissions';
+import { Permission, PermissionStatus } from 'react-native-permissions';
 
 export interface PermissionRequestConfig {
   toastForUnavailablePermission?: string;
@@ -10,3 +10,14 @@ export interface PermissionRequestConfig {
 }
 
 export type RequestedPermission = Permission[];
+
+export type CheckPermissionResult = {
+  allowed: boolean;
+  originalStatus: PermissionStatus;
+};
+
+export type RequestPermissionResult = {
+  allowed: boolean;
+  originalStatus: PermissionStatus;
+  requestStatus: PermissionStatus;
+};

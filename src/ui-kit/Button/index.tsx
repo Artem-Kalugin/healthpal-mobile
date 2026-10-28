@@ -1,11 +1,5 @@
-import React, { FC, ReactNode } from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { Loader } from '#ui-kit/Loader';
 
@@ -15,21 +9,9 @@ import {
   ButtonTextComponents,
   MapButtonStyles,
 } from './config';
-import { ButtonAppearance, ButtonSize, ButtonType } from './types';
+import { IButton } from './types';
 
-export interface IButton {
-  type: ButtonType;
-  size: ButtonSize;
-  appearance: ButtonAppearance;
-  fullwidth: boolean;
-  isLoading: boolean;
-  disabled: boolean;
-  color: string;
-  onPress: () => void;
-  children: ReactNode;
-  testIdConfig: typeof ButtonTestIds;
-  style: StyleProp<ViewStyle>;
-}
+export type { IButton } from './types';
 
 export const Button: FC<Partial<IButton>> = ({
   children = 'Button',

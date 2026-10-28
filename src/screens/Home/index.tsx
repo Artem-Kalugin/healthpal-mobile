@@ -17,9 +17,10 @@ import { toast } from 'react-hot-toast/headless';
 
 import { DoctorsCategoryThumbnail } from '#components/domain/doctor-category/Thumbnail';
 import { MedicalCenterCard } from '#components/domain/medical-center/Card';
+import { Swiper } from '#components/infrastructure';
+import { ISwiperRef } from '#components/infrastructure/Swiper';
 
-import { Icon, Swiper, TextBase, TextInput, TextSmall } from '#ui-kit';
-import { ISwiperRef } from '#ui-kit/Swiper';
+import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';

@@ -12,5 +12,6 @@ export { NavigatorHeaderTabs } from './NavigatorHeaderTabs';
 export type { NavigatorHeaderTabRouteConfig } from './NavigatorHeaderTabs';
 export { PaginatableListFooter } from './PaginatableListFooter';
 export { ServerImage } from './ServerImage';
+export { Swiper } from './Swiper';
 export { HeaderTabs } from './TabsHeader';
 export { TapKeyboardDismissArea } from './TapKeyboardDismissArea';

@@ -9,3 +9,8 @@ export interface InterceptorContext {
   path?: Record<string, string | number>;
   headers: Record<string, string>;
 }
+
+export interface UrlInterceptorResult {
+  urlObj: URL;
+  urlString: string;
+}

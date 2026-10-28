@@ -14,23 +14,18 @@ import { toast } from 'react-hot-toast/headless';
 import { Logger } from '#services/Logger';
 
 import { permissionsAlertsConfigs } from './config';
-import { PermissionRequestConfig, RequestedPermission } from './types';
+import {
+  CheckPermissionResult,
+  PermissionRequestConfig,
+  RequestedPermission,
+  RequestPermissionResult,
+} from './types';
 
 const grantedLikeStatuses: PermissionStatus[] = [
   RESULTS.GRANTED,
   RESULTS.LIMITED,
 ];
 
-type CheckPermissionResult = {
-  allowed: boolean;
-  originalStatus: PermissionStatus;
-};
-
-type RequestPermissionResult = {
-  allowed: boolean;
-  originalStatus: PermissionStatus;
-  requestStatus: PermissionStatus;
-};
 export {
   CameraPermission,
   GalleryPermission,

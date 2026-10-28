@@ -19,10 +19,10 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { Icon } from '#ui-kit/Icon';
 import { InputErrorBlock } from '#ui-kit/inputs/shared/InputErrorBlock';
 import { InputLabel } from '#ui-kit/inputs/shared/InputLabel';
-import { primaryFontNameMap } from '#ui-kit/Text';
 
 import { IS_IOS, PHONE_MASK } from '#config';
 import { colors } from '#config/colors';
+import { primaryFontNameMap } from '#config/fonts';
 
 export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 
