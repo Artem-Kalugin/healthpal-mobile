@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { DoctorFavoriteButton } from '#components/domain/doctor/FavoriteButton';
 import { ServerImage } from '#components/infrastructure';
 
 import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
@@ -10,8 +11,6 @@ import { colors } from '#config/colors';
 import { MapDoctorCategoryToDoctorLabel } from '#config/locale';
 
 import { BEDoctorResponseDto } from '#generated/__entities';
-
-import { DoctorFavoriteButton } from './FavoriteButton';
 
 type IDoctorCard = {
   item: BEDoctorResponseDto;

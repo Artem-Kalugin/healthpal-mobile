@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 
-import { NotifcationItem } from '#components/domain/notification/Item';
+import { NotificationItem } from '#components/domain/notification/Item';
 import { HeaderWithThreeSections } from '#components/infrastructure';
 
 import { TextBase, TextSmall } from '#ui-kit';
@@ -34,7 +34,7 @@ export const Notifications: React.FC<
             </TextSmall>
           </View>
         }
-        renderItem={({ item }) => <NotifcationItem item={item} />}
+        renderItem={({ item }) => <NotificationItem item={item} />}
         renderSectionFooter={() => <View style={styles.sectionFooterSpacer} />}
         renderSectionHeader={({ section }) => (
           <TextBase

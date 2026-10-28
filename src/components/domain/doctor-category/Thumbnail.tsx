@@ -11,12 +11,12 @@ import { MapDoctorCategoryToLabel } from '#config/locale';
 
 import { BEDoctorCategoryResponseDto } from '#generated/__entities';
 
-type IDoctorsCategoryThumbnail = {
+type IDoctorCategoryThumbnail = {
   item: BEDoctorCategoryResponseDto;
   onPress: () => void;
 };
 
-export const DoctorsCategoryThumbnail: React.FC<IDoctorsCategoryThumbnail> = ({
+export const DoctorCategoryThumbnail: React.FC<IDoctorCategoryThumbnail> = ({
   item,
   onPress,
 }) => {

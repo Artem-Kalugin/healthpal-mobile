@@ -26,17 +26,15 @@ import {
   FavoritesRemovedSelectors,
 } from '#store/slices/favoritesRemoved';
 
-type FavoriteButtonProps = {
+type IMedicalCenterFavoriteButton = {
   medicalCenterId: string;
   isFavoriteOnBackend?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
-  medicalCenterId,
-  isFavoriteOnBackend = false,
-  style,
-}) => {
+export const MedicalCenterFavoriteButton: React.FC<
+  IMedicalCenterFavoriteButton
+> = ({ medicalCenterId, isFavoriteOnBackend = false, style }) => {
   const dispatch = useDispatch();
 
   const isAddedToFavorites = useSelector(store =>

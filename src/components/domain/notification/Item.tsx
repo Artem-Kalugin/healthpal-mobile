@@ -9,14 +9,14 @@ import { IconNames } from '#ui-kit/Icon';
 import { BORDER_RADIUS_ROUNDED, NotificationTypes } from '#config';
 import { colors } from '#config/colors';
 
-type Item = {
+type INotification = {
   type: NotificationTypes;
   timestamp: string;
   title: string;
   text: string;
 };
-type IDoctorCard = {
-  item: Item;
+type INotificationItem = {
+  item: INotification;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -40,7 +40,10 @@ const MapNotificationTypeToIconNames: {
   [NotificationTypes.PASSWORD_CHANGED]: 'lockSlash',
 };
 
-export const NotifcationItem: React.FC<IDoctorCard> = ({ item, style }) => {
+export const NotificationItem: React.FC<INotificationItem> = ({
+  item,
+  style,
+}) => {
   return (
     <View style={[styles.container, StyleSheet.flatten(style)]}>
       <View

@@ -1,50 +1,13 @@
-import React, { useEffect } from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs';
-import {
-  NavigationHelpers,
-  ParamListBase,
-  TabNavigationState,
-} from '@react-navigation/native';
-
-import { Icon } from '#ui-kit';
-import { IconNames } from '#ui-kit/Icon';
-
-import { tabbarShadow, withCustomAnimation } from '#config';
+import { tabbarShadow } from '#config';
 import { colors } from '#config/colors';
 
-export type NavigatorBottomTabRouteConfig = {
-  iconName: IconNames;
-  activeIconName: IconNames;
-};
-type NavigatorTabsConfig = Record<string, NavigatorBottomTabRouteConfig>;
-
-export interface IBottomTabs {
-  state: TabNavigationState<ParamListBase>;
-  config: NavigatorTabsConfig;
-  navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
-  style?: StyleProp<ViewStyle>;
-}
-
-export interface IBottomTab {
-  item: NavigatorBottomTabRouteConfig;
-  isActive: boolean;
-  onPress?: (item: NavigatorBottomTabRouteConfig) => void;
-  onLongPress?: (item: NavigatorBottomTabRouteConfig) => void;
-}
+import { BottomTab } from './components/BottomTab';
+import { IBottomTabs, NavigatorBottomTabRouteConfig } from './types';
 
 export const NavigatorBottomTabs = ({
   state,
@@ -101,65 +64,6 @@ export const NavigatorBottomTabs = ({
   );
 };
 
-const BottomTab: React.FC<IBottomTab> = ({
-  item,
-  isActive,
-  onPress,
-  onLongPress,
-}) => {
-  const animationProgress = useSharedValue(0);
-
-  useEffect(() => {
-    animationProgress.value = withCustomAnimation(+!!isActive);
-  }, [isActive]);
-
-  const rContainer = useAnimatedStyle(
-    () => ({
-      transform: [
-        {
-          scale: animationProgress.value,
-        },
-      ],
-    }),
-    [],
-  );
-
-  const rActiveIconContainer = useAnimatedStyle(
-    () => ({
-      opacity: animationProgress.value,
-    }),
-    [],
-  );
-
-  const rIconContainer = useAnimatedStyle(
-    () => ({
-      opacity: 1 - animationProgress.value,
-    }),
-    [],
-  );
-
-  return (
-    <TouchableOpacity
-      activeOpacity={0.5}
-      style={styles.tabWrapper}
-      onLongPress={() => onLongPress && onLongPress(item)}
-      onPress={() => onPress && onPress(item)}
-    >
-      <View style={styles.tabContainer}>
-        <Animated.View style={[styles.tabAbsoluteLayer, rIconContainer]}>
-          <Icon name={item.iconName} />
-        </Animated.View>
-
-        <Animated.View style={[styles.tabAbsoluteLayer, rActiveIconContainer]}>
-          <Icon name={item.activeIconName} />
-        </Animated.View>
-
-        <Animated.View style={[styles.tabIconWrapper, rContainer]} />
-      </View>
-    </TouchableOpacity>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -168,26 +72,5 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     backgroundColor: colors.white,
-  },
-  tabWrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tabAbsoluteLayer: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tabContainer: {
-    width: 48,
-    aspectRatio: 1,
-  },
-  tabIconWrapper: {
-    width: 48,
-    aspectRatio: 1,
-    zIndex: -1,
-    borderRadius: 48,
-    backgroundColor: colors.grayscale['200'],
   },
 });

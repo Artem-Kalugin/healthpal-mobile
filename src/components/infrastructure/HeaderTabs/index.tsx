@@ -1,6 +1,5 @@
 import React, { RefObject, useImperativeHandle, useRef } from 'react';
 import {
-  LayoutChangeEvent,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -9,17 +8,15 @@ import {
 } from 'react-native';
 
 import Animated, {
-  interpolateColor,
-  SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
-import { TextBase } from '#ui-kit';
-
 import { BORDER_RADIUS_ROUNDED, hitSlop, SCREEN_WIDTH } from '#config';
 import { colors } from '#config/colors';
+
+import { HeaderTab } from './components/HeaderTab';
 
 export interface IHeaderTabs<T extends unknown> {
   data: T[];
@@ -37,7 +34,6 @@ export type RefHeaderTab<T> = {
 
 const TRACK_ADDITIONAL_WIDTH = 16;
 const CONTAINER_GAP = 40;
-const AnimatedText = Animated.createAnimatedComponent(TextBase);
 
 export const HeaderTabs = <T extends unknown>({
   data,
@@ -139,36 +135,6 @@ export const HeaderTabs = <T extends unknown>({
         <Animated.View style={[styles.track, rTrackStyle]} />
       </Animated.View>
     </View>
-  );
-};
-
-const HeaderTab = ({
-  children,
-  index,
-  activeItemIndex,
-  onLayout,
-}: {
-  children: string;
-  index: number;
-  activeItemIndex: SharedValue<number>;
-  onLayout: (event: LayoutChangeEvent) => void;
-}) => {
-  const rTextStyle = useAnimatedStyle(() => ({
-    color: interpolateColor(
-      Math.abs(activeItemIndex.value - index),
-      [0, 1],
-      [colors.main.midnightBlue, colors.grayscale['400']],
-    ),
-  }));
-
-  return (
-    <AnimatedText
-      style={rTextStyle}
-      weight="600"
-      onLayout={onLayout}
-    >
-      {children}
-    </AnimatedText>
   );
 };
 

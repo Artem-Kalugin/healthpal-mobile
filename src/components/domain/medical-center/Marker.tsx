@@ -33,7 +33,8 @@ export const MedicalCenterMarker = React.memo(
   (props, nextProps) => {
     return (
       props.item.lat === nextProps.item.lat &&
-      props.item.lon === nextProps.item.lon
+      props.item.lon === nextProps.item.lon &&
+      props.onPress === nextProps.onPress
     );
   },
 );

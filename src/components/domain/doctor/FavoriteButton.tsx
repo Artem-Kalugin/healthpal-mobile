@@ -22,13 +22,13 @@ import {
   FavoritesRemovedSelectors,
 } from '#store/slices/favoritesRemoved';
 
-type FavoriteButtonProps = {
+type IDoctorFavoriteButton = {
   doctorId: string;
   isFavoriteOnBackend?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-export const DoctorFavoriteButton: React.FC<FavoriteButtonProps> = ({
+export const DoctorFavoriteButton: React.FC<IDoctorFavoriteButton> = ({
   doctorId,
   isFavoriteOnBackend = false,
   style,

@@ -1,64 +1,11 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
 
-import { Toast, useToaster } from 'react-hot-toast/headless';
+import { useToaster } from 'react-hot-toast/headless';
 
-import { Text } from '#ui-kit';
-
-import { withCustomAnimation } from '#config';
-import { colors } from '#config/colors';
-
-const ToastItem = ({
-  t,
-  updateHeight,
-  offset,
-}: {
-  t: Toast;
-  updateHeight: (height: number) => void;
-  offset: number;
-}) => {
-  const fadeAnim = useSharedValue(0.5);
-  const posAnim = useSharedValue(100);
-
-  useEffect(() => {
-    fadeAnim.value = withCustomAnimation(t.visible ? 1 : 0);
-  }, [t.visible]);
-
-  useEffect(() => {
-    posAnim.value = withCustomAnimation(-offset);
-  }, [offset, t.visible]);
-
-  const rStyle = useAnimatedStyle(() => ({
-    zIndex: +t.visible * 100,
-    opacity: fadeAnim.value,
-    transform: [
-      {
-        translateY: posAnim.value,
-      },
-    ],
-  }));
-
-  return (
-    <Animated.View style={[styles.toastWrapper, rStyle]}>
-      <View
-        key={t.id}
-        style={styles.toast}
-        onLayout={event => updateHeight(event.nativeEvent.layout.height)}
-      >
-        {typeof t.message === 'string' && (
-          <Text style={styles.toastText}>{t.message}</Text>
-        )}
-      </View>
-    </Animated.View>
-  );
-};
+import { ToastItem } from './components/ToastItem';
 
 const TOASTS_OFFSET = 100;
 
@@ -95,27 +42,5 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: TOASTS_OFFSET,
     left: 0,
-  },
-  toastWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    left: 0,
-  },
-  toast: {
-    flexDirection: 'row',
-    flexShrink: 1,
-    alignItems: 'center',
-    marginHorizontal: 16,
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    borderRadius: 4,
-    backgroundColor: colors.grayscale['700'],
-  },
-  toastText: {
-    color: colors.grayscale['50'],
-    textAlign: 'center',
   },
 });

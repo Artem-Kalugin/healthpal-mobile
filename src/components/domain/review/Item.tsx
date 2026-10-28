@@ -14,12 +14,12 @@ import { Rating, TextBase, TextSmall } from '#ui-kit';
 import { BORDER_RADIUS_ROUNDED, Images } from '#config';
 import { colors } from '#config/colors';
 
-type IDoctorCard = {
+type IReviewItem = {
   onPress?: () => void;
   style: StyleProp<ViewStyle>;
 };
 
-export const ReviewItem: React.FC<Partial<IDoctorCard>> = ({
+export const ReviewItem: React.FC<Partial<IReviewItem>> = ({
   onPress = undefined,
   style,
 }) => {

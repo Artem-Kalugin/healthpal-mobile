@@ -7,6 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { MedicalCenterFavoriteButton } from '#components/domain/medical-center/FavoriteButton';
 import { ServerImage } from '#components/infrastructure';
 
 import { Divider, Icon, Rating, TextSmall, TextXS } from '#ui-kit';
@@ -16,8 +17,6 @@ import { colors } from '#config/colors';
 import { MapMedicalCenterTypeToLabel } from '#config/locale';
 
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
-
-import { FavoriteButton } from './FavoriteButton';
 
 type IMedicalCenterCard = {
   item: BEMedicalCenterResponseDto;
@@ -36,7 +35,7 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
       style={[styles.container, StyleSheet.flatten(style), shadow]}
       onPress={onPress}
     >
-      <FavoriteButton
+      <MedicalCenterFavoriteButton
         isFavoriteOnBackend={item.isFavorite}
         medicalCenterId={item.id}
         style={styles.favoriteButton}
