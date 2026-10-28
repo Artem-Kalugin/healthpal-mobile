@@ -2,17 +2,14 @@ import type { FetchArgs } from '#api/types';
 
 import { Logger } from '#services/Logger';
 
-import {
-  bodyInterceptor,
-  connectionInterceptor,
-  fetchWithTimeout,
-  headersInterceptor,
-  InterceptorContext,
-  paramsInterceptor,
-  pathInterceptor,
-  urlInterceptor,
-} from './interceptors';
-import type { FetchResult } from './types';
+import { bodyInterceptor } from './interceptors/Body';
+import { connectionInterceptor } from './interceptors/Connection';
+import { headersInterceptor } from './interceptors/Headers';
+import { paramsInterceptor } from './interceptors/Params';
+import { pathInterceptor } from './interceptors/Path';
+import { urlInterceptor } from './interceptors/Url';
+import type { FetchResult, InterceptorContext } from './types';
+import { fetchWithTimeout } from './utils';
 
 export class FetchService {
   static query = async (

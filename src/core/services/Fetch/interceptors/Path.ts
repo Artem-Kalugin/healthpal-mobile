@@ -1,4 +1,4 @@
-import type { InterceptorContext } from './types';
+import type { InterceptorContext } from '../types';
 
 const getUrlWithPathParams = (
   url: string,

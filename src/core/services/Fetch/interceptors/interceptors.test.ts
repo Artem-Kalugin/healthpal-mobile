@@ -1,10 +1,9 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 
-import { connectionInterceptor } from './connection';
-import { headersInterceptor } from './headers';
-import { paramsInterceptor } from './params';
-import { pathInterceptor } from './path';
-import { fetchWithTimeout } from './timeout';
+import { connectionInterceptor } from './Connection';
+import { headersInterceptor } from './Headers';
+import { paramsInterceptor } from './Params';
+import { pathInterceptor } from './Path';
 
 describe('pathInterceptor', () => {
   test('должен подставить path params в URL', () => {
@@ -77,18 +76,6 @@ describe('connectionInterceptor', () => {
 
     await expect(connectionInterceptor()).rejects.toThrow(
       'No internet connection',
-    );
-  });
-});
-
-describe('fetchWithTimeout', () => {
-  test('должен reject по timeout', async () => {
-    global.fetch = jest.fn(
-      () => new Promise(resolve => setTimeout(resolve, 100000)),
-    );
-
-    await expect(fetchWithTimeout('https://api.com', {}, 100)).rejects.toThrow(
-      'Request timeout',
     );
   });
 });

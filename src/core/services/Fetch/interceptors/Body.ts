@@ -1,4 +1,4 @@
-import type { InterceptorContext } from './types';
+import type { InterceptorContext } from '../types';
 
 export const bodyInterceptor = (
   context: InterceptorContext,

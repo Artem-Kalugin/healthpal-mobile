@@ -1,3 +1,5 @@
+import type { FetchArgs } from '#api/types';
+
 type FetchMeta = { timestamp: string };
 
 export type FetchResponse = {
@@ -21,3 +23,13 @@ export type FetchInternalFailure = {
 };
 
 export type FetchResult = FetchResponse | FetchInternalFailure;
+
+export interface InterceptorContext {
+  url: string;
+  method: string;
+  baseUrl: string;
+  data?: FetchArgs['data'];
+  params?: FetchArgs['params'];
+  path?: Record<string, string | number>;
+  headers: Record<string, string>;
+}

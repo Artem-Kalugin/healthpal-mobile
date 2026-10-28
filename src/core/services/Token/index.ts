@@ -3,22 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 
 import { Logger } from '#services/Logger';
 
-import type { TokenDecoded } from '#store/slices/runtime';
-
-enum TokenType {
-  access = 'access',
-  refresh = 'refresh',
-}
-
-type TokenPayload = {
-  id: string;
-  registrationComplete: boolean;
-};
-
-type TokenStorePort = {
-  getToken: () => TokenDecoded | undefined;
-  setToken: (token: TokenDecoded | undefined) => void;
-};
+import { TokenPayload, TokenStorePort, TokenType } from './types';
 
 let storeInstance: TokenStorePort | null = null;
 

@@ -24,9 +24,4 @@ export type FetchArgs = {
   path?: Record<string, string | number>;
 };
 
-export type PaginationType = {
-  page: number;
-  count: number;
-  lastPage: number;
-  size: number;
-};
+export type Page = { size: number; page: number; count: number };

@@ -1,4 +1,4 @@
-import type { InterceptorContext } from './types';
+import type { InterceptorContext } from '../types';
 
 export const paramsInterceptor = (
   context: Pick<InterceptorContext, 'params'>,

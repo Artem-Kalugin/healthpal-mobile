@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 
-import type { InterceptorContext } from './types';
+import type { InterceptorContext } from '../types';
 
 export const connectionInterceptor = async (
   contex?: InterceptorContext,

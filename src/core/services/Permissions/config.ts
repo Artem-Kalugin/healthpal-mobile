@@ -47,8 +47,8 @@ export const LocationPermissionConfig = {
 export const permissionsAlertsConfigs = new Map<
   RequestedPermission,
   PermissionRequestConfig
->();
-
-permissionsAlertsConfigs.set(CameraPermission, CameraPermissionConfig);
-permissionsAlertsConfigs.set(GalleryPermission, GalleryPermissionConfig);
-permissionsAlertsConfigs.set(LocationPermission, LocationPermissionConfig);
+>([
+  [CameraPermission, CameraPermissionConfig],
+  [GalleryPermission, GalleryPermissionConfig],
+  [LocationPermission, LocationPermissionConfig],
+]);

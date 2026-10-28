@@ -1,4 +1,4 @@
-type Page = { size: number; page: number; count: number };
+import type { Page } from './types';
 
 export const PaginationConfig = {
   initialPageParam: 1,

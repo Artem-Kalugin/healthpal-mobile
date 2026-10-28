@@ -35,6 +35,34 @@ export const refreshState = {
     | undefined,
 };
 
+const fetchNewTokens = async (tokenToRefresh: TokenDecoded) => {
+  try {
+    const response = await FetchService.query(
+      {
+        url: '/auth/refresh',
+        method: 'post',
+        data: {
+          refreshToken: tokenToRefresh.refreshToken,
+          userId: tokenToRefresh.userId,
+        },
+      },
+      process.env.EXPO_PUBLIC_API_URL,
+      undefined,
+    );
+
+    if (!response.ok) {
+      throw {};
+    }
+
+    await TokenService.save(response.data);
+
+    return response.data;
+  } catch (err) {
+    Logger.error('Token refresh failed', err);
+    return undefined;
+  }
+};
+
 const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
   if (refreshState.refreshingToken === tokenToRefresh.accessToken) {
     return refreshState.lastRefreshResult;
@@ -42,33 +70,7 @@ const refresh = (api: BaseQueryApi, tokenToRefresh: TokenDecoded) => {
 
   refreshState.refreshingToken = tokenToRefresh.accessToken;
 
-  refreshState.lastRefreshResult = (async () => {
-    try {
-      const response = await FetchService.query(
-        {
-          url: '/auth/refresh',
-          method: 'post',
-          data: {
-            refreshToken: tokenToRefresh.refreshToken,
-            userId: tokenToRefresh.userId,
-          },
-        },
-        process.env.EXPO_PUBLIC_API_URL,
-        undefined,
-      );
-
-      if (!response.ok) {
-        throw {};
-      }
-
-      await TokenService.save(response.data);
-
-      return response.data;
-    } catch (err) {
-      Logger.error('Token refresh failed', err);
-      return undefined;
-    }
-  })();
+  refreshState.lastRefreshResult = fetchNewTokens(tokenToRefresh);
 
   return refreshState.lastRefreshResult;
 };
