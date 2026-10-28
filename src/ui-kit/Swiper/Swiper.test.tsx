@@ -5,7 +5,7 @@ import { cleanup, render, waitFor } from '@testing-library/react-native';
 
 import { Text } from '#ui-kit/Text';
 
-import Swiper, { ISwiperRef } from './index';
+import { ISwiperRef, Swiper } from './index';
 
 describe('Swiper', () => {
   const mockData = [

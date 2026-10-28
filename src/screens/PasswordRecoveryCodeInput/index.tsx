@@ -10,14 +10,8 @@ import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithTh
 import { useTimer } from '#components/infrastructure/providers/OTPTimer';
 import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
-import {
-  Brand,
-  CodeInput,
-  Loader,
-  OTP_CELL_COUNT,
-  TextSmall,
-  TextXL,
-} from '#ui-kit';
+import { Brand, CodeInput, Loader, TextSmall, TextXL } from '#ui-kit';
+import { OTP_CELL_COUNT } from '#ui-kit/CodeInput';
 
 import {
   PasswordRecoveryRoutes,

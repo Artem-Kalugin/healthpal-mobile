@@ -1,25 +1,6 @@
 import { runOnJS, SharedValue, withSpring } from 'react-native-reanimated';
 
-export const reduceAnimationValue = (value: number, threshold: number) => {
-  'worklet';
-  const reducedMultiplicity = value % threshold;
-
-  const reducedNegativeAxis =
-    reducedMultiplicity < 0
-      ? threshold + reducedMultiplicity
-      : reducedMultiplicity;
-
-  return reducedNegativeAxis;
-};
-
-export const toAbsCeil = (
-  conditionalValue: number,
-  value = conditionalValue,
-) => {
-  'worklet';
-
-  return conditionalValue < -1 ? Math.floor(value) : Math.ceil(value);
-};
+import { reduceAnimationValue, toAbsCeil } from './shared/utils';
 
 const PAGINATION_THRESHOLD = 0.1;
 const PAGINATION_ANIMATION_CONFIG = {

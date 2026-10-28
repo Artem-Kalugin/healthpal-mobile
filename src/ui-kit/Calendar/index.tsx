@@ -12,9 +12,9 @@ import Animated from 'react-native-reanimated';
 import { layoutAnimation, shadow } from '#config';
 import { colors } from '#config/colors';
 
-import { DayProps, normalizeDefaultStyles } from './config';
-import { CalendarDay } from './Day';
-import { CalendarHeader } from './Header';
+import { CalendarDay, DayProps } from './components/Day';
+import { CalendarHeader } from './components/Header';
+import { normalizeDefaultStyles } from './config';
 import {
   changeAnchorDate,
   dateToYYYYMM,
@@ -118,3 +118,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.grayscale['50'],
   },
 });
+export { toDateString } from './utils';

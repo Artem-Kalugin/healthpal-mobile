@@ -10,7 +10,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { TextSmall, TextXL } from '#ui-kit';
-import ButtonGoBack from '#ui-kit/ButtonGoBack';
+import { ButtonGoBack } from '#ui-kit/ButtonGoBack';
 
 export interface IHeaderSegmented {
   title: text;

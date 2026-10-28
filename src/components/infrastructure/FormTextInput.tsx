@@ -12,8 +12,9 @@ import {
   UseFormTrigger,
 } from 'react-hook-form';
 
-import { ITextInput, TextInput } from '#ui-kit';
-import { IMaskedInput, MaskedInput } from '#ui-kit/Inputs/MaskedInput';
+import { MaskedInput, TextInput } from '#ui-kit';
+import { IMaskedInput } from '#ui-kit/inputs/MaskedInput';
+import { ITextInput } from '#ui-kit/inputs/TextInput';
 
 type InputOmittedProps = 'value' | 'onChange' | 'outlineType';
 

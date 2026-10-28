@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import { DateTimePicker, Dialog, ImagePicker } from '#modals';
-import Select from '#modals/Select';
+import { DateTimePicker, Dialog, ImagePicker, Select } from '#modals';
 
 import { ModalsParamList, ModalsRoutes } from './types';
 

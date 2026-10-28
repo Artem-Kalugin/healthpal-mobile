@@ -12,15 +12,8 @@ import { toast } from 'react-hot-toast/headless';
 
 import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 
-import {
-  Divider,
-  Icon,
-  IconNames,
-  Image,
-  TextBase,
-  TextLarge,
-  TextSmall,
-} from '#ui-kit';
+import { Divider, Icon, Image, TextBase, TextLarge, TextSmall } from '#ui-kit';
+import { IconNames } from '#ui-kit/Icon';
 
 import { FavoritesRoutes } from '#navigation/Main/Favorites/types';
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';

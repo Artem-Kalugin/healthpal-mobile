@@ -11,7 +11,7 @@ import Animated, {
 
 import { colors } from '#config/colors';
 
-import { reduceAnimationValue } from './utils';
+import { reduceAnimationValue } from '../shared/utils';
 
 interface IPaginationDot {
   index?: number;
@@ -22,7 +22,7 @@ interface IPaginationDot {
   widthInterpolation?: [number, number];
 }
 
-const PaginationDot: React.FC<IPaginationDot> = ({
+export const PaginationDot: React.FC<IPaginationDot> = ({
   index = 0,
   translation,
   slideSize,
@@ -74,5 +74,3 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
 });
-
-export default PaginationDot;

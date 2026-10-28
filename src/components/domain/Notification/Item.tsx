@@ -3,7 +3,8 @@ import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import dayjs from 'dayjs';
 
-import { Icon, IconNames, TextBase, TextSmall } from '#ui-kit';
+import { Icon, TextBase, TextSmall } from '#ui-kit';
+import { IconNames } from '#ui-kit/Icon';
 
 import { BORDER_RADIUS_ROUNDED, NotificationTypes } from '#config';
 import { colors } from '#config/colors';

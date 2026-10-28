@@ -18,8 +18,8 @@ import { toast } from 'react-hot-toast/headless';
 import { DoctorsCategoryThumbnail } from '#components/domain/DoctorsCategory/Thumbnail';
 import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
 
-import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
-import Swiper, { ISwiperRef } from '#ui-kit/Swiper';
+import { Icon, Swiper, TextBase, TextInput, TextSmall } from '#ui-kit';
+import { ISwiperRef } from '#ui-kit/Swiper';
 
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';

@@ -20,7 +20,8 @@ import {
   TabNavigationState,
 } from '@react-navigation/native';
 
-import { Icon, IconNames } from '#ui-kit';
+import { Icon } from '#ui-kit';
+import { IconNames } from '#ui-kit/Icon';
 
 import { tabbarShadow, withCustomAnimation } from '#config';
 import { colors } from '#config/colors';

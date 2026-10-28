@@ -1,21 +1,19 @@
-import React, { createRef } from 'react';
-import { TextInput as RNTextInput } from 'react-native';
+import React from 'react';
 
 import { fireEvent, render } from '@testing-library/react-native';
 
 import { Icon } from '#ui-kit/Icon';
 
-import { TextInput } from './TextInput';
+import { MaskedInput } from './index';
 
-describe('TextInput', () => {
+describe('MaskedInput', () => {
   beforeAll(() => {
     jest.clearAllMocks();
   });
-  const inputRef = createRef<RNTextInput>();
 
   const renderComponent = (props = {}) =>
     render(
-      <TextInput
+      <MaskedInput
         errors={['Error 1']}
         IconLeft={
           <Icon
@@ -24,7 +22,6 @@ describe('TextInput', () => {
           />
         }
         IconRight={null}
-        inputRef={inputRef}
         label="Test Label"
         placeholder="Type here"
         testID="text-input"
@@ -174,7 +171,7 @@ describe('TextInput', () => {
       const eraseButton = getByTestId('erase-button');
       fireEvent.press(eraseButton);
 
-      expect(onChangeMock).toHaveBeenCalledWith('');
+      expect(onChangeMock).toHaveBeenCalledWith('', '');
       expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
 
@@ -192,7 +189,7 @@ describe('TextInput', () => {
       const eraseButton = getByTestId('erase-button');
       fireEvent.press(eraseButton);
 
-      expect(onEraseMock).toHaveBeenCalledWith('');
+      expect(onEraseMock).toHaveBeenCalledWith('', '');
       expect(onChangeMock).not.toHaveBeenCalled();
     });
 
@@ -209,7 +206,7 @@ describe('TextInput', () => {
       const eraseButton = getByTestId('erase-button');
       fireEvent.press(eraseButton);
 
-      expect(onChangeMock).toHaveBeenCalledWith('');
+      expect(onChangeMock).toHaveBeenCalledWith('', '');
     });
   });
 
@@ -296,7 +293,7 @@ describe('TextInput', () => {
 
       const eraseButton = getByTestId('erase-button');
       fireEvent.press(eraseButton);
-      expect(onChangeMock).toHaveBeenCalledWith('');
+      expect(onChangeMock).toHaveBeenCalledWith('', '');
 
       fireEvent(textInput, 'blur');
       expect(onBlurMock).toHaveBeenCalledTimes(1);
@@ -304,9 +301,8 @@ describe('TextInput', () => {
 
     it('Кнопка очистки работает корректно при смене showEraseOnlyIfFocused', () => {
       const { getByTestId, queryByTestId, rerender } = render(
-        <TextInput
+        <MaskedInput
           IconRight={null}
-          inputRef={inputRef}
           showEraseOnlyIfFocused={true}
           testID="text-input"
           value="hello"
@@ -317,9 +313,8 @@ describe('TextInput', () => {
       expect(queryByTestId('erase-button')).toBeNull();
 
       rerender(
-        <TextInput
+        <MaskedInput
           IconRight={null}
-          inputRef={inputRef}
           showEraseOnlyIfFocused={false}
           testID="text-input"
           value="hello"

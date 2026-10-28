@@ -1,3 +1,4 @@
-export * from './Dialog';
-export * from './DateTimePicker';
-export * from './ImagePicker';
+export { DateTimePicker } from './DateTimePicker';
+export { Dialog } from './Dialog';
+export { ImagePicker } from './ImagePicker';
+export { Select } from './Select';

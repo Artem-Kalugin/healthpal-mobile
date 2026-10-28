@@ -9,7 +9,9 @@ import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
 import { useModalState } from '#hooks/useModalState';
 
-const Select: React.FC<ModalsScreenProps<ModalsRoutes.Select>> = props => {
+export const Select: React.FC<
+  ModalsScreenProps<ModalsRoutes.Select>
+> = props => {
   const modal = useModalState(true);
 
   const [selectedItem, setSelectedItem] = useState<unknown>(
@@ -95,5 +97,3 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
   },
 });
-
-export default Select;

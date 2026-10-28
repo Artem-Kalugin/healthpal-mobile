@@ -16,8 +16,8 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import PaginationDot from './PaginationDot';
-import SlideContainer from './SlideContainer';
+import { PaginationDot } from './components/PaginationDot';
+import { SlideContainer } from './components/SlideContainer';
 import { paginate } from './utils';
 
 export interface ISwiperRef {
@@ -42,7 +42,7 @@ export interface ISwiper<ItemT> {
   paginationContainerStyle?: StyleProp<ViewStyle>;
 }
 
-const Swiper = <T extends unknown>({
+export const Swiper = <T extends unknown>({
   swiperRef,
   paginationShouldOverlay = false,
   contentContainerStyle = {},
@@ -217,5 +217,3 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
   },
 });
-
-export default Swiper;

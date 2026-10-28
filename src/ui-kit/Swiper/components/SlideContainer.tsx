@@ -6,7 +6,7 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
-import { reduceAnimationValue } from './utils';
+import { reduceAnimationValue } from '../shared/utils';
 
 interface ISlideContainer {
   index?: number;
@@ -18,7 +18,7 @@ interface ISlideContainer {
   containerStyle: ViewStyle;
 }
 
-const SlideContainer: React.FC<ISlideContainer> = ({
+export const SlideContainer: React.FC<ISlideContainer> = ({
   index = 1,
   onLayout = undefined,
   children = undefined,
@@ -53,5 +53,3 @@ const SlideContainer: React.FC<ISlideContainer> = ({
     </Animated.View>
   );
 };
-
-export default SlideContainer;

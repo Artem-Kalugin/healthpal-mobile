@@ -6,7 +6,7 @@ import { fireEvent, render } from '@testing-library/react-native';
 import { Icon } from '#ui-kit/Icon';
 
 import { ButtonGoBackTestIds } from './config';
-import ButtonGoBack from './index';
+import { ButtonGoBack } from './index';
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: jest.fn(),

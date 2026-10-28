@@ -18,7 +18,7 @@ import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithTh
 import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
 import { Button, Icon, Image, TextBase } from '#ui-kit';
-import ButtonGoBack from '#ui-kit/ButtonGoBack';
+import { ButtonGoBack } from '#ui-kit/ButtonGoBack';
 
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';

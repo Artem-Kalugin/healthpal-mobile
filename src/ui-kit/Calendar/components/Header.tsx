@@ -10,7 +10,26 @@ import { TextSmall, TextXS } from '#ui-kit/Text';
 import { hitSlopSmall } from '#config';
 import { colors } from '#config/colors';
 
-import { CalendarHeaderTestIds, CalendarMonthNames } from './config';
+export const CalendarHeaderTestIds = {
+  arrowLeft: 'CalendarHeader_arrowLeft',
+  arrowRight: 'CalendarHeader_arrowRight',
+  loader: 'CalendarHeader_loader',
+};
+
+export const CalendarMonthNames = [
+  'Январь',
+  'Февраль',
+  'Март',
+  'Апрель',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Август',
+  'Сентябрь',
+  'Октябрь',
+  'Ноябрь',
+  'Декабрь',
+];
 
 export const CalendarHeader = ({
   displayLoadingIndicator,

@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import { colors } from '#config/colors';
+import { Icon } from '#ui-kit/Icon';
+import { TextXL } from '#ui-kit/Text';
 
-import { Icon } from './Icon';
-import { TextXL } from './Text';
+import { colors } from '#config/colors';
 
 interface IBrand extends PropsWithChildren {
   theme?: 'dark' | 'light';

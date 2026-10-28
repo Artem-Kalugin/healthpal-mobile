@@ -16,7 +16,7 @@ export interface IButtonGoBack {
   testIdConfig: typeof ButtonGoBackTestIds;
 }
 
-const ButtonGoBack: React.FC<Partial<IButtonGoBack>> = ({
+export const ButtonGoBack: React.FC<Partial<IButtonGoBack>> = ({
   onPress = undefined,
   style,
   testIdConfig = ButtonGoBackTestIds,
@@ -37,5 +37,3 @@ const ButtonGoBack: React.FC<Partial<IButtonGoBack>> = ({
     </TouchableOpacity>
   );
 };
-
-export default ButtonGoBack;

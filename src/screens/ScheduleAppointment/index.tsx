@@ -11,7 +11,7 @@ import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithTh
 import { ListExtender } from '#components/infrastructure/ListExtender';
 
 import { Button, Calendar, Loader, TextSmall, TextXL } from '#ui-kit';
-import { toDateString } from '#ui-kit/Calendar/utils';
+import { toDateString } from '#ui-kit/Calendar';
 
 import { AppointmentsRoutes } from '#navigation/Main/Tab/Appointments/types';
 import { TabRoutes } from '#navigation/Main/Tab/types';

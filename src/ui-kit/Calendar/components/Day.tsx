@@ -3,11 +3,23 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import Animated, { FadeOut } from 'react-native-reanimated';
 
+import { DayProps as _DayProps } from 'react-native-calendars/src/calendar/day';
+import { DateData, DayState } from 'react-native-calendars/src/types';
+
 import { TextXS } from '#ui-kit/Text';
 
 import { colors } from '#config/colors';
 
-import { DayProps, DayTextColors } from './config';
+export type DayProps = Omit<_DayProps, 'date'> & {
+  date: DateData;
+};
+
+export const DayTextColors: Partial<{ [x in DayState | 'outlined']: string }> =
+  {
+    selected: colors.white,
+    disabled: colors.grayscale['300'],
+    outlined: colors.grayscale['900'],
+  };
 
 const _CalendarDay = ({
   onPress,

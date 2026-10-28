@@ -22,7 +22,9 @@ import { TextXL } from '#ui-kit/Text';
 import { withCustomAnimation } from '#config';
 import { colors } from '#config/colors';
 
-import { CodeInputTestIds } from './config';
+import { CodeInputTestIds, OTP_CELL_COUNT } from './config';
+
+export { OTP_CELL_COUNT };
 
 interface ICodeInput extends TextInputProps {
   value: string;
@@ -41,7 +43,6 @@ interface ICodeCell {
   testIdsConfig: typeof CodeInputTestIds;
 }
 
-export const OTP_CELL_COUNT = 5;
 export const CodeInput: React.FC<ICodeInput> = ({
   value,
   setValue,

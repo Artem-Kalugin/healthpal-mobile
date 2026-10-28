@@ -2,8 +2,11 @@ import React from 'react';
 
 import { fireEvent, render } from '@testing-library/react-native';
 
-import { CalendarHeaderTestIds, CalendarMonthNames } from './config';
-import { CalendarHeader } from './Header';
+import {
+  CalendarHeader,
+  CalendarHeaderTestIds,
+  CalendarMonthNames,
+} from './Header';
 
 describe('CalendarHeader', () => {
   const month = new Date('2025-11-01');
