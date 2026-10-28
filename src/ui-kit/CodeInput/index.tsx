@@ -1,27 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleProp, StyleSheet, TextInputProps, ViewStyle } from 'react-native';
 
 import {
   CodeField,
-  Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import Animated, {
-  interpolate,
-  interpolateColor,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated';
 
-import { TextXL } from '#ui-kit/Text';
-
-import { withCustomAnimation } from '#config';
-import { colors } from '#config/colors';
-
+import { CodeInputCell } from './components/CodeInputCell';
 import { CodeInputTestIds, OTP_CELL_COUNT } from './config';
 
 export { OTP_CELL_COUNT };
@@ -32,15 +18,6 @@ interface ICodeInput extends TextInputProps {
   setValue: (e: string) => void;
   style?: StyleProp<ViewStyle>;
   testIdsConfig?: typeof CodeInputTestIds;
-}
-
-interface ICodeCell {
-  symbol: string;
-  isFocused: boolean;
-  isError: boolean | undefined;
-  index: number;
-  getCellOnLayoutHandler: ReturnType<typeof useClearByFocusCell>['1'];
-  testIdsConfig: typeof CodeInputTestIds;
 }
 
 export const CodeInput: React.FC<ICodeInput> = ({
@@ -67,12 +44,11 @@ export const CodeInput: React.FC<ICodeInput> = ({
       renderCell={({ index, symbol, isFocused }) => (
         <CodeInputCell
           key={index}
-          getCellOnLayoutHandler={getCellOnLayoutHandler}
-          index={index}
           isError={isError}
           isFocused={isFocused}
           symbol={symbol}
-          testIdsConfig={testIdsConfig}
+          testId={testIdsConfig.cellText}
+          onLayout={getCellOnLayoutHandler(index)}
         />
       )}
       rootStyle={[styles.codeFieldRoot, StyleSheet.flatten(style)]}
@@ -87,114 +63,8 @@ export const CodeInput: React.FC<ICodeInput> = ({
   );
 };
 
-export const CodeInputCell: React.FC<ICodeCell> = ({
-  symbol,
-  isFocused,
-  isError,
-  index,
-  getCellOnLayoutHandler,
-  testIdsConfig,
-}) => {
-  const cellHasValue = !!symbol;
-
-  const focusAnimationProgress = useSharedValue(0);
-  const errorAnimationProgress = useSharedValue(0);
-  const shakeAnimationProgress = useSharedValue(0.5);
-
-  useEffect(() => {
-    focusAnimationProgress.value = withCustomAnimation(+!!isFocused);
-  }, [isFocused]);
-
-  useEffect(() => {
-    if (isError) {
-      shakeAnimationProgress.value = withSequence(
-        withRepeat(
-          withSequence(
-            withTiming(1, {
-              duration: 50,
-            }),
-            withTiming(0, {
-              duration: 50,
-            }),
-          ),
-          2,
-          true,
-        ),
-        withCustomAnimation(0.5),
-      );
-    }
-
-    errorAnimationProgress.value = withCustomAnimation(+!!isError);
-  }, [isError]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    const borderColorDependingOnFocus = interpolateColor(
-      focusAnimationProgress.value,
-      [0, 1],
-      [colors.grayscale['300'], colors.grayscale['700']],
-    );
-    const backgroundColorDependingOnFocusAndValue = interpolateColor(
-      +cellHasValue || focusAnimationProgress.value,
-      [0, 1],
-      [colors.grayscale['50'], colors.grayscale['200']],
-    );
-
-    return {
-      transform: [
-        {
-          translateX: interpolate(
-            shakeAnimationProgress.value,
-            [0, 1],
-            [-5, 5],
-          ),
-        },
-      ],
-      backgroundColor:
-        errorAnimationProgress.value !== 0
-          ? interpolateColor(
-              errorAnimationProgress.value,
-              [0, 1],
-              [backgroundColorDependingOnFocusAndValue, colors.grayscale['50']],
-            )
-          : backgroundColorDependingOnFocusAndValue,
-      borderColor:
-        errorAnimationProgress.value !== 0
-          ? interpolateColor(
-              errorAnimationProgress.value,
-              [0, 1],
-              [borderColorDependingOnFocus, colors.error.normal],
-            )
-          : borderColorDependingOnFocus,
-    };
-  });
-  return (
-    <Animated.View style={[styles.cell, animatedStyle]}>
-      <TextXL
-        key={index}
-        size={28}
-        testId={testIdsConfig.cellText}
-        textAlign="center"
-        weight="700"
-        onLayout={getCellOnLayoutHandler(index)}
-      >
-        {symbol || (isFocused ? <Cursor /> : null)}
-      </TextXL>
-    </Animated.View>
-  );
-};
-
 const styles = StyleSheet.create({
   codeFieldRoot: {
     justifyContent: 'space-between',
-  },
-  cell: {
-    flex: 1,
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 8,
-    paddingTop: 1.5,
-    borderWidth: 1,
-    borderRadius: 8,
   },
 });

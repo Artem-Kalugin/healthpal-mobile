@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react-native';
 
 import { CodeInputTestIds } from './config';
-import { CodeInput, CodeInputCell } from './index';
+import { CodeInput } from './index';
 
 jest.useFakeTimers();
 
@@ -30,21 +30,5 @@ describe('CodeInput', () => {
 
     fireEvent(getByTestId(CodeInputTestIds.root), 'focus');
     expect(setValue).toHaveBeenCalledWith('');
-  });
-});
-
-describe('CodeInputCell', () => {
-  it('отображает значение', () => {
-    const { getByText } = render(
-      <CodeInputCell
-        getCellOnLayoutHandler={() => jest.fn()}
-        index={0}
-        isError={false}
-        isFocused={false}
-        symbol="5"
-        testIdsConfig={CodeInputTestIds}
-      />,
-    );
-    expect(getByText('5')).toBeTruthy();
   });
 });

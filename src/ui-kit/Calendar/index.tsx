@@ -81,7 +81,7 @@ export const Calendar = ({
         onPress={dayProps.onPress}
       />
     ),
-    [activeDates, selectedDate],
+    [activeDates, selectedDate, outlinedDate],
   );
 
   return (
