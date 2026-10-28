@@ -10,7 +10,8 @@ import { Favorites } from '#screens';
 
 import { colors } from '#config/colors';
 
-import { FavoritesParamList, FavoritesRoutes, TabsConfig } from './types';
+import { TabsConfig } from './config';
+import { FavoritesParamList, FavoritesRoutes } from './types';
 
 const Tabs = createMaterialTopTabNavigator<FavoritesParamList>();
 

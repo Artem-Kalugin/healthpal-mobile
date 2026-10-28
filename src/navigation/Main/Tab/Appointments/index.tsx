@@ -10,7 +10,8 @@ import { Appointments } from '#screens';
 
 import { colors } from '#config/colors';
 
-import { AppointmentsParamList, AppointmentsRoutes, TabsConfig } from './types';
+import { TabsConfig } from './config';
+import { AppointmentsParamList, AppointmentsRoutes } from './types';
 
 const Tabs = createMaterialTopTabNavigator<AppointmentsParamList>();
 

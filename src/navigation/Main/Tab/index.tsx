@@ -7,7 +7,8 @@ import { NavigatorBottomTabs } from '#components/infrastructure/NavigatorBottomT
 import { Home, Map, Profile } from '#screens';
 
 import { AppointmentsStack } from './Appointments';
-import { TabParamList, TabRoutes, TabsConfig } from './types';
+import { TabsConfig } from './config';
+import { TabParamList, TabRoutes } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
