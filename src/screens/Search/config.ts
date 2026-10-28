@@ -1,4 +1,4 @@
-import { RequestsDoctor } from '#api/Doctor/types';
+import type { RequestsDoctor } from '#api/Doctor/types';
 
 import {
   PathsDoctorsSearchGetParametersQueryOrder,

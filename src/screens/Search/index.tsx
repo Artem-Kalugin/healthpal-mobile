@@ -1,5 +1,4 @@
-/* eslint-disable max-lines */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Keyboard,
@@ -17,14 +16,10 @@ import Animated, {
 
 import { CompositeScreenProps } from '@react-navigation/native';
 
-import { DoctorCard } from '#components/domain/Doctor/Card';
-import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
 import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
-import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
 import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
-import { Icon, Loader, TextBase, TextInput, TextSmall } from '#ui-kit';
-import { Tag } from '#ui-kit/Tag';
+import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
@@ -34,7 +29,6 @@ import { useSearchDoctorsInfiniteQuery } from '#api/Doctor';
 
 import { headerShadow } from '#config';
 import { colors } from '#config/colors';
-import { MapDoctorCategoryToLabel } from '#config/locale';
 
 import { useDebouncedState } from '#hooks/useDebouncedState';
 import { useErrorHandler } from '#hooks/useErrorHandler';
@@ -46,11 +40,10 @@ import {
   BEDoctorResponseDto,
 } from '#generated/__entities';
 
+import { CategoriesList } from './components/CategoriesList';
+import { DoctorsList } from './components/DoctorsList';
 import { FOLDABLE_HEADER_HEIGHT, SortOptions, SortOptionsDTO } from './config';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(
-  FlatList<BEDoctorResponseDto>,
-);
 const fakeAllCategory = {
   id: undefined,
   type: undefined,
@@ -82,12 +75,9 @@ export const Search: React.FC<
       ...SortOptionsDTO[sort],
     },
   });
-  const categoriesScrollRef =
-    useRef<FlatList<BEDoctorCategoryResponseDto>>(null);
   const doctorsListRef = useRef<FlatList<BEDoctorResponseDto>>(null);
   const foldProgress = useSharedValue(1);
-  const previousScrollPositionRef = useRef(0);
-  const isCategoriesInitalyScrolled = useRef(false);
+  const previousScrollPosition = useSharedValue(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const resetListPosition = async () => {
@@ -98,27 +88,6 @@ export const Search: React.FC<
     });
   };
 
-  const scrollNavbarToCategory = async (
-    item: BEDoctorCategoryResponseDto,
-    initial = false,
-  ) => {
-    await reactSync();
-
-    if (initial) {
-      if (isCategoriesInitalyScrolled.current) {
-        return;
-      } else {
-        isCategoriesInitalyScrolled.current = true;
-      }
-    }
-
-    categoriesScrollRef.current?.scrollToItem({
-      item,
-      viewPosition: 0.5,
-      animated: !initial,
-    });
-  };
-
   const handler = useAnimatedScrollHandler({
     onScroll: event => {
       const nextProgressValueByOffset = +(
@@ -126,13 +95,13 @@ export const Search: React.FC<
       );
 
       const nextProgressValueByVelocity =
-        event.contentOffset.y - previousScrollPositionRef.current < 0 ? 1 : 0;
+        event.contentOffset.y - previousScrollPosition.value < 0 ? 1 : 0;
 
       foldProgress.value = withTiming(
         nextProgressValueByVelocity || nextProgressValueByOffset,
       );
 
-      previousScrollPositionRef.current = event.contentOffset.y;
+      previousScrollPosition.value = event.contentOffset.y;
     },
   });
 
@@ -142,6 +111,10 @@ export const Search: React.FC<
     ],
   }));
 
+  const onSelectCategory = (item: BEDoctorCategoryResponseDto) => {
+    !searchQuery.isFetching && setActiveCategory(item);
+  };
+
   useErrorHandler(searchQuery);
 
   const listData =
@@ -149,22 +122,22 @@ export const Search: React.FC<
       .map(el => el.data)
       .flat() as unknown as BEDoctorResponseDto[]) || [];
 
-  const renderDoctorCard = useCallback(
-    ({ item }: { item: BEDoctorResponseDto }) => (
-      <View style={styles.cardWrapper}>
-        <DoctorCard
-          item={item}
-          onPress={() =>
-            props.navigation.navigate(MainRoutes.DoctorDetails, {
-              defaultItem: item,
-              id: item.id,
-            })
-          }
-        />
-      </View>
-    ),
-    [],
-  );
+  const onDoctorPress = (item: BEDoctorResponseDto) =>
+    props.navigation.navigate(MainRoutes.DoctorDetails, {
+      defaultItem: item,
+      id: item.id,
+    });
+
+  const onEndReached = () =>
+    !searchQuery.isFetching &&
+    searchQuery.hasNextPage &&
+    searchQuery.fetchNextPage();
+
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await searchQuery.refetch();
+    setIsRefreshing(false);
+  };
 
   useEffect(() => {
     if (!isRendered.current) {
@@ -179,10 +152,6 @@ export const Search: React.FC<
       return;
     }
 
-    if (searchQuery.fulfilledTimeStamp) {
-      setIsRefreshing(false);
-    }
-
     if (isQueryChangingSource.current) {
       resetListPosition();
       isQueryChangingSource.current = false;
@@ -191,7 +160,6 @@ export const Search: React.FC<
 
   useEffect(() => {
     isRendered.current = true;
-    scrollNavbarToCategory(activeCategory);
   }, []);
 
   return (
@@ -223,33 +191,11 @@ export const Search: React.FC<
               onSubmitEditing={Keyboard.dismiss}
             />
           </View>
-          <FlatList
-            ref={categoriesScrollRef}
-            horizontal
-            contentContainerStyle={styles.tagsListContent}
+          <CategoriesList
+            activeCategory={activeCategory}
             data={[fakeAllCategory, ...props.route.params.availableCategories]}
-            renderItem={({ item }) => (
-              <View style={styles.tagWrapper}>
-                <Tag
-                  key={item.id}
-                  active={item.type === activeCategory?.type}
-                  isLoading={
-                    activeCategory === item &&
-                    (searchQuery.isLoading || searchQuery.isFetching)
-                  }
-                  value={
-                    item.type ? MapDoctorCategoryToLabel[item.type] : 'Все'
-                  }
-                  onPress={() => {
-                    !searchQuery.isFetching && setActiveCategory(item);
-                    scrollNavbarToCategory(item);
-                  }}
-                />
-              </View>
-            )}
-            showsHorizontalScrollIndicator={false}
-            style={styles.tagsList}
-            keyExtractor={item => item.id}
+            isLoading={searchQuery.isLoading || searchQuery.isFetching}
+            onSelect={onSelectCategory}
           />
 
           <View style={styles.sectionHeader}>
@@ -296,64 +242,24 @@ export const Search: React.FC<
           </View>
         </Animated.View>
       </View>
-      <AnimatedFlatList
+      <DoctorsList
         ref={doctorsListRef}
-        automaticallyAdjustContentInsets={true}
-        contentContainerStyle={styles.cardsListContent}
-        contentInsetAdjustmentBehavior="always"
         data={listData}
-        initialNumToRender={5}
-        keyboardShouldPersistTaps="never"
-        ListEmptyComponent={
-          searchQuery.isLoading ? (
-            <Loader size="large" />
-          ) : (
-            <EmptyListWarning
-              subtitle="Попробуйте изменить параметры поиска"
-              title="Ничего не нашли"
-            />
-          )
-        }
-        ListFooterComponent={
-          <PaginatableListFooter
-            enabled={!!listData.length && !isRefreshing}
-            message="Кажется, мы отобразили всех врачей"
-            showLoader={
-              searchQuery.isFetching && !isQueryChangingSource.current
-            }
-            showMessage={!searchQuery.hasNextPage}
-          />
-        }
-        ListHeaderComponent={
-          <View
-            style={{
-              paddingTop: FOLDABLE_HEADER_HEIGHT + 8,
-            }}
-          />
-        }
-        progressViewOffset={FOLDABLE_HEADER_HEIGHT + 8}
-        refreshing={isRefreshing}
-        renderItem={renderDoctorCard}
-        style={styles.cardsList}
-        keyExtractor={item => item.id}
-        onEndReached={() =>
-          !searchQuery.isFetching &&
-          searchQuery.hasNextPage &&
-          searchQuery.fetchNextPage()
-        }
-        onEndReachedThreshold={1}
-        onRefresh={() => {
-          setIsRefreshing(true);
-          searchQuery.refetch();
-        }}
+        hasNextPage={searchQuery.hasNextPage}
+        headerHeight={FOLDABLE_HEADER_HEIGHT}
+        isChangingSource={isQueryChangingSource.current}
+        isFetching={searchQuery.isFetching}
+        isLoading={searchQuery.isLoading}
+        isRefreshing={isRefreshing}
+        onDoctorPress={onDoctorPress}
+        onEndReached={onEndReached}
+        onRefresh={onRefresh}
         onScroll={handler}
-        onScrollBeginDrag={() => Keyboard.dismiss()}
       />
     </View>
   );
 };
 
-const TAGS_LIST_PADDING_HORIZONTAL = 20;
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
@@ -380,16 +286,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     backgroundColor: colors.grayscale['100'],
   },
-  tagWrapper: {
-    //for some reason flash list dont have gap so we need to implement padding hack with wrapper + container style, TODO: back to gap when fixed
-    paddingHorizontal: 4,
-  },
-  tagsList: {
-    marginBottom: 26,
-  },
-  tagsListContent: {
-    paddingHorizontal: TAGS_LIST_PADDING_HORIZONTAL,
-  },
   sectionHeader: {
     flex: 1,
     flexDirection: 'row',
@@ -397,17 +293,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     paddingHorizontal: 24,
   },
-  cardsList: {
-    flex: 1,
-  },
-  cardsListContent: {
-    flexGrow: 1,
-  },
-  cardWrapper: {
-    paddingTop: 8,
-    paddingHorizontal: 24,
-  },
-
   sortButton: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,4 +1,4 @@
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 
 import { connectionInterceptor } from './connection';
 import { headersInterceptor } from './headers';
@@ -68,8 +68,12 @@ describe('headersInterceptor', () => {
 
 describe('connectionInterceptor', () => {
   test('должен throw когда нет интернета', async () => {
-    //@ts-expect-error cast not better here
-    jest.spyOn(NetInfo, 'fetch').mockResolvedValue({ isConnected: false });
+    jest.spyOn(NetInfo, 'fetch').mockResolvedValue({
+      type: NetInfoStateType.none,
+      isConnected: false,
+      isInternetReachable: false,
+      details: null,
+    });
 
     await expect(connectionInterceptor()).rejects.toThrow(
       'No internet connection',

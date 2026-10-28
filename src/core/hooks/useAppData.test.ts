@@ -1,6 +1,10 @@
 import { act } from 'react';
 
 import { renderHook } from '@testing-library/react-native';
+import {
+  mockAccessToken,
+  mockRefreshToken,
+} from '#tests/config/fixtures/tokens';
 
 import { DoctorAPI } from '#api/Doctor';
 import { MedicalCentersAPI } from '#api/MedicalCenters';
@@ -13,10 +17,6 @@ import { store } from '#store';
 import { AppActions } from '#store/slices/app';
 import { RuntimeActions, TokenDecoded } from '#store/slices/runtime';
 
-import {
-  mockAccessToken,
-  mockRefreshToken,
-} from '../../../__tests__/config/fixtures/tokens';
 import { useAppData } from './useAppData';
 
 jest.mock('#services/Location');

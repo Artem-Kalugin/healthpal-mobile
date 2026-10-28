@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-// eslint-disable-next-line boundaries/element-types -- approved exception: API image needs token-aware ServerImage, see agents/not-a-debt.md
 import { ServerImage } from '#components/infrastructure/ServerImage';
 
 import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';

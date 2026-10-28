@@ -1,11 +1,11 @@
+import {
+  mockAccessToken,
+  mockRefreshToken,
+} from '#tests/config/fixtures/tokens';
 import * as SecureStore from 'expo-secure-store';
 
 import type { TokenDecoded } from '#store/slices/runtime';
 
-import {
-  mockAccessToken,
-  mockRefreshToken,
-} from '../../../../__tests__/config/fixtures/tokens';
 import { TokenService } from './index';
 
 jest.mock('expo-secure-store');

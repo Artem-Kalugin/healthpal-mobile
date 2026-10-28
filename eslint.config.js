@@ -89,6 +89,7 @@ module.exports = defineConfig([
                 'global',
                 'navigation',
                 'components/domain',
+                'components/infrastructure',
                 'ui-kit',
                 'core',
               ],
@@ -111,7 +112,13 @@ module.exports = defineConfig([
             },
             {
               from: 'navigation',
-              allow: ['global', 'view', 'components/infrastructure'],
+              allow: [
+                'global',
+                'core',
+                'ui-kit',
+                'view',
+                'components/infrastructure',
+              ],
             },
           ],
         },

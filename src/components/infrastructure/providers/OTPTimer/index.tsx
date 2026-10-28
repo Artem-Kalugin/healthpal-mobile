@@ -5,13 +5,12 @@ import BackgroundTimer from 'react-native-background-timer';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
+import { OTP_TIMER_DURATION } from './config';
 import { OTPTimer } from './context';
 
 export { useTimer } from './context';
 
 dayjs.extend(duration);
-
-const OTP_TIMER_DURATION = 60;
 
 export const OTPTimerProvider: React.FC<{ children: ReactNode }> = ({
   children,

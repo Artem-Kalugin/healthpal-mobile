@@ -1,4 +1,10 @@
 import type { BaseQueryApi } from '@reduxjs/toolkit/query';
+import {
+  mockAccessToken,
+  mockAccessToken2,
+  mockRefreshToken,
+  mockRefreshToken2,
+} from '#tests/config/fixtures/tokens';
 
 import { apiBaseQuery, refreshState, RtkAppApi } from '#api';
 
@@ -6,13 +12,6 @@ import { FetchService } from '#services/Fetch';
 
 import { store } from '#store';
 import { RuntimeActions } from '#store/slices/runtime';
-
-import {
-  mockAccessToken,
-  mockAccessToken2,
-  mockRefreshToken,
-  mockRefreshToken2,
-} from '../../../__tests__/config/fixtures/tokens';
 
 const OLD_ENV = process.env;
 process.env = { ...OLD_ENV, EXPO_PUBLIC_API_URL: 'test' };

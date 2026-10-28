@@ -26,7 +26,8 @@
       "#services/*": ["./src/core/services/*"],
       "#assets/*": ["./src/assets/*"],
       "#store/*": ["./src/store/*"],
-      "#config/*": ["./src/config/*"]
+      "#config/*": ["./src/config/*"],
+      "#tests/*": ["./__tests__/*"]
     },
   }
 }
