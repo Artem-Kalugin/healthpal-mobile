@@ -9,9 +9,9 @@ import {
 
 import { toast } from 'react-hot-toast/headless';
 
-import { DoctorDetailsCard } from '#components/domain/Doctor/DetailsCard';
-import { DoctorFavoriteButton } from '#components/domain/Doctor/FavoriteButton';
-import { ReviewItem } from '#components/domain/Review/Item';
+import { DoctorDetailsCard } from '#components/domain/doctor/DetailsCard';
+import { DoctorFavoriteButton } from '#components/domain/doctor/FavoriteButton';
+import { ReviewItem } from '#components/domain/review/Item';
 import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 import { ListExtender } from '#components/infrastructure/ListExtender';
 

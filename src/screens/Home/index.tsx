@@ -15,8 +15,8 @@ import { Image } from 'expo-image';
 import chunk from 'lodash/chunk';
 import { toast } from 'react-hot-toast/headless';
 
-import { DoctorsCategoryThumbnail } from '#components/domain/DoctorsCategory/Thumbnail';
-import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
+import { DoctorsCategoryThumbnail } from '#components/domain/doctor-category/Thumbnail';
+import { MedicalCenterCard } from '#components/domain/medical-center/Card';
 
 import { Icon, Swiper, TextBase, TextInput, TextSmall } from '#ui-kit';
 import { ISwiperRef } from '#ui-kit/Swiper';

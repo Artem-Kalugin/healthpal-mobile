@@ -3,7 +3,7 @@ import { FlatList, Keyboard, StyleSheet, View } from 'react-native';
 
 import Animated from 'react-native-reanimated';
 
-import { DoctorCard } from '#components/domain/Doctor/Card';
+import { DoctorCard } from '#components/domain/doctor/Card';
 import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
 import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
 

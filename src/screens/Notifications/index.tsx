@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 
-import { NotifcationItem } from '#components/domain/Notification/Item';
+import { NotifcationItem } from '#components/domain/notification/Item';
 import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
 
 import { TextBase, TextSmall } from '#ui-kit';

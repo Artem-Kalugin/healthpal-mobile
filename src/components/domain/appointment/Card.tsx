@@ -8,7 +8,7 @@ import {
 
 import dayjs from 'dayjs';
 
-import { DoctorItem } from '#components/domain/Doctor/Item';
+import { DoctorItem } from '#components/domain/doctor/Item';
 
 import { Divider, TextSmall } from '#ui-kit';
 

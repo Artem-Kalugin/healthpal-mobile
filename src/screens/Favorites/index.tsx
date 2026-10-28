@@ -3,8 +3,8 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import { CompositeScreenProps } from '@react-navigation/native';
 
-import { DoctorCard } from '#components/domain/Doctor/Card';
-import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
+import { DoctorCard } from '#components/domain/doctor/Card';
+import { MedicalCenterCard } from '#components/domain/medical-center/Card';
 import { EmptyListWarning } from '#components/infrastructure/EmptyListWarning';
 import { PaginatableListFooter } from '#components/infrastructure/PaginatableListFooter';
 

@@ -14,8 +14,8 @@ import { FlashList } from '@shopify/flash-list';
 import { distance, point as turfPoint } from '@turf/turf';
 import { debounce } from 'lodash';
 
-import { MedicalCenterCard } from '#components/domain/MedicalCenter/Card';
-import { MedicalCenterMarker } from '#components/domain/MedicalCenter/Marker';
+import { MedicalCenterCard } from '#components/domain/medical-center/Card';
+import { MedicalCenterMarker } from '#components/domain/medical-center/Marker';
 import { BlinkAnimator } from '#components/infrastructure/BlinkAnimator';
 
 import { Icon, TextInput } from '#ui-kit';
