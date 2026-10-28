@@ -12,13 +12,16 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
   runOnJS,
+  SharedValue,
   useDerivedValue,
   useSharedValue,
+  withSpring,
 } from 'react-native-reanimated';
 
 import { PaginationDot } from './components/PaginationDot';
 import { SlideContainer } from './components/SlideContainer';
-import { paginate } from './utils';
+import { PAGINATION_ANIMATION_CONFIG, PAGINATION_THRESHOLD } from './config';
+import { reduceAnimationValue, toAbsCeil } from './shared/utils';
 
 export interface ISwiperRef {
   swipe: (value: number) => void;
@@ -41,6 +44,46 @@ export interface ISwiper<ItemT> {
   paginationShouldOverlay?: boolean;
   paginationContainerStyle?: StyleProp<ViewStyle>;
 }
+
+const paginate = (
+  translation: SharedValue<number>,
+  translateX: number,
+  activeSlide: SharedValue<number>,
+  slideSize: SharedValue<number>,
+  slideSequenceSize: SharedValue<number>,
+  slidesAmount: number,
+  onSlideChange?: (value: number) => void,
+) => {
+  'worklet';
+  const direction = toAbsCeil(translateX, translateX / slideSize.value);
+
+  const nextToCurrentSlide = activeSlide.value + direction;
+
+  const shouldChangeSlide =
+    Math.abs(translateX) > slideSize.value * PAGINATION_THRESHOLD;
+
+  const targetSlide = shouldChangeSlide
+    ? nextToCurrentSlide
+    : activeSlide.value;
+
+  translation.value = withSpring(
+    targetSlide * slideSize.value,
+    PAGINATION_ANIMATION_CONFIG,
+    finished => {
+      if (finished) {
+        translation.value = translation.value % slideSequenceSize.value;
+        activeSlide.value = activeSlide.value
+          ? activeSlide.value % slidesAmount
+          : 0;
+      }
+    },
+  );
+
+  onSlideChange &&
+    runOnJS(onSlideChange)(reduceAnimationValue(-targetSlide, slidesAmount));
+
+  activeSlide.value = targetSlide;
+};
 
 export const Swiper = <T extends unknown>({
   swiperRef,
