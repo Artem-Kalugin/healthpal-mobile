@@ -16,6 +16,7 @@ import {
   AppointmentsScreenProps,
 } from '#navigation/Main/Tab/Appointments/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
+import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import {
   useAppointmentsInfiniteQuery,
@@ -38,7 +39,10 @@ import {
 export const Appointments: React.FC<
   CompositeScreenProps<
     AppointmentsScreenProps<AppointmentsRoutes>,
-    MainScreenProps<MainRoutes>
+    CompositeScreenProps<
+      MainScreenProps<MainRoutes>,
+      RootScreenProps<AppRoutes>
+    >
   >
 > = props => {
   const appointmentsQuery = useAppointmentsInfiniteQuery({
@@ -85,6 +89,16 @@ export const Appointments: React.FC<
         doctorId: item.doctorId,
       });
     } catch {}
+  };
+
+  const onDoctorPress = (item: BEAppointmentResponseDto) => {
+    props.navigation.navigate(AppRoutes.StackMain, {
+      screen: MainRoutes.DoctorDetails,
+      params: {
+        id: item.doctor.id,
+        defaultItem: item.doctor,
+      },
+    });
   };
 
   const onReview = async (item: BEAppointmentResponseDto) => {
@@ -212,6 +226,7 @@ export const Appointments: React.FC<
               )
             }
             item={item}
+            onDoctorPress={() => onDoctorPress(item)}
           />
         </View>
       )}

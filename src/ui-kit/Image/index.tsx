@@ -2,38 +2,11 @@ import React from 'react';
 
 import { Image as ExpoImage } from 'expo-image';
 
-import { useSelector } from '#store';
+import { IImage } from './types';
 
-import { ApiImage, ImageWithPossibleApiSource } from './types';
-
-export const Image: React.FC<ImageWithPossibleApiSource> = ({
-  imageRef,
-  source,
-  placeholder,
-  ...props
-}) => {
-  const token = useSelector(store => store.runtime.token?.accessToken);
-  const isApiImage =
-    source && typeof source === 'object' && 'thumbhash' in source;
-
-  return (
-    <ExpoImage
-      ref={imageRef}
-      placeholder={
-        isApiImage ? { thumbhash: (source as ApiImage).thumbhash } : placeholder
-      }
-      {...props}
-      source={
-        isApiImage
-          ? {
-              uri: `${process.env.EXPO_PUBLIC_API_URL + (source as ApiImage).image}`,
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          : source
-      }
-      transition={isApiImage ? 250 : props.transition}
-    />
-  );
-};
+export const Image: React.FC<IImage> = ({ imageRef, ...props }) => (
+  <ExpoImage
+    ref={imageRef}
+    {...props}
+  />
+);

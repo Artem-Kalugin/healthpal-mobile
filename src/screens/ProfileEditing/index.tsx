@@ -15,9 +15,10 @@ import { toast } from 'react-hot-toast/headless';
 
 import { FormTextInput } from '#components/infrastructure/FormTextInput';
 import { HeaderWithThreeSections } from '#components/infrastructure/HeaderWithThreeSections';
+import { ServerImage } from '#components/infrastructure/ServerImage';
 import { TapKeyboardDismissArea } from '#components/infrastructure/TapKeyboardDismissArea';
 
-import { Button, Icon, Image, TextBase } from '#ui-kit';
+import { Button, Icon, TextBase } from '#ui-kit';
 import { ButtonGoBack } from '#ui-kit/ButtonGoBack';
 
 import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
@@ -227,7 +228,7 @@ export const ProfileEditing: React.FC<
               })
             }
           >
-            <Image
+            <ServerImage
               contentFit="contain"
               source={avatar || userQuery.data?.avatar || Images.profileCircle}
               style={styles.avatarImage}

@@ -6,24 +6,21 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
-import { Divider, TextSmall } from '#ui-kit';
+import { DoctorItem } from '#components/domain/Doctor/Item';
 
-import { MainRoutes } from '#navigation/Main/types';
-import { AppRoutes } from '#navigation/types';
+import { Divider, TextSmall } from '#ui-kit';
 
 import { shadow } from '#config';
 import { colors } from '#config/colors';
 
 import { BEAppointmentResponseDto } from '#generated/__entities';
 
-import { DoctorItem } from '../Doctor/Item';
-
 type IAppointmentCard = {
   item: BEAppointmentResponseDto;
   onPress?: () => void;
+  onDoctorPress?: () => void;
   Footer?: ReactNode;
   style?: StyleProp<ViewStyle>;
 };
@@ -31,21 +28,10 @@ type IAppointmentCard = {
 export const AppointmentCard: React.FC<IAppointmentCard> = ({
   item,
   onPress = undefined,
+  onDoctorPress = undefined,
   Footer,
   style,
 }) => {
-  const navigation = useNavigation();
-
-  const onDoctorItemPress = () => {
-    navigation.navigate(AppRoutes.StackMain, {
-      screen: MainRoutes.DoctorDetails,
-      params: {
-        id: item.doctor.id,
-        defaultItem: item.doctor,
-      },
-    });
-  };
-
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -62,7 +48,7 @@ export const AppointmentCard: React.FC<IAppointmentCard> = ({
       <Divider />
       <DoctorItem
         item={item.doctor}
-        onPress={onDoctorItemPress}
+        onPress={onDoctorPress}
       />
       {!!Footer && <Divider />}
       {Footer}

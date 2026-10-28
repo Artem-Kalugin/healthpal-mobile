@@ -1,7 +1,10 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { Divider, Icon, Image, TextBase, TextSmall, TextXS } from '#ui-kit';
+// eslint-disable-next-line boundaries/element-types -- approved exception: API image needs token-aware ServerImage, see agents/not-a-debt.md
+import { ServerImage } from '#components/infrastructure/ServerImage';
+
+import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
 
 import { shadow } from '#config';
 import { colors } from '#config/colors';
@@ -26,7 +29,7 @@ export const DoctorCard: React.FC<IDoctorCard> = ({
       style={[styles.container, shadow]}
       onPress={onPress}
     >
-      <Image
+      <ServerImage
         source={item?.image}
         style={styles.image}
       />

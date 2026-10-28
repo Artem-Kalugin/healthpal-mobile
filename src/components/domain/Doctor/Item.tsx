@@ -7,7 +7,10 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { Icon, Image, TextBase, TextSmall, TextXS } from '#ui-kit';
+// eslint-disable-next-line boundaries/element-types -- approved exception: API image needs token-aware ServerImage, see agents/not-a-debt.md
+import { ServerImage } from '#components/infrastructure/ServerImage';
+
+import { Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
 
 import { colors } from '#config/colors';
 import { MapDoctorCategoryToLabel } from '#config/locale';
@@ -31,7 +34,7 @@ export const DoctorItem: React.FC<Partial<IDoctorItem>> = ({
       style={[styles.container, StyleSheet.flatten(style)]}
       onPress={onPress}
     >
-      <Image
+      <ServerImage
         source={item?.image}
         style={styles.image}
       />

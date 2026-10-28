@@ -7,7 +7,10 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { Divider, Icon, Image, Rating, TextSmall, TextXS } from '#ui-kit';
+// eslint-disable-next-line boundaries/element-types -- approved exception: API image needs token-aware ServerImage, see agents/not-a-debt.md
+import { ServerImage } from '#components/infrastructure/ServerImage';
+
+import { Divider, Icon, Rating, TextSmall, TextXS } from '#ui-kit';
 
 import { BORDER_RADIUS_ROUNDED, shadow } from '#config';
 import { colors } from '#config/colors';
@@ -39,7 +42,7 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
         medicalCenterId={item.id}
         style={styles.favoriteButton}
       />
-      <Image
+      <ServerImage
         cachePolicy="memory"
         source={item?.image}
         style={styles.image}
