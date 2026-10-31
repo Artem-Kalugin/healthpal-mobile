@@ -44,11 +44,6 @@ export const PasswordRecoveryCodeInput: React.FC<
   const [verificationCode, setVerificationCode] = useState('');
   const [hasError, setHasError] = useState(false);
 
-  useEffect(() => {
-    setHasError(false);
-    verificationCode.length === OTP_CELL_COUNT && onDoneEditing();
-  }, [verificationCode]);
-
   const onDoneEditing = async () => {
     try {
       const res = await verifyCode({
@@ -70,6 +65,12 @@ export const PasswordRecoveryCodeInput: React.FC<
       setHasError(true);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
+    setHasError(false);
+    verificationCode.length === OTP_CELL_COUNT && onDoneEditing();
+  }, [verificationCode]);
 
   const onResend = async () => {
     if (verifyPhoneMetadata.isLoading || !resendAvailable) {

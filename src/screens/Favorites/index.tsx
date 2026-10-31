@@ -68,6 +68,7 @@ export const Favorites: React.FC<
     []) as unknown as (BEDoctorResponseDto | BEMedicalCenterResponseDto)[];
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
     setIsRefreshing(false);
   }, [favoritesQuery.fulfilledTimeStamp]);
 

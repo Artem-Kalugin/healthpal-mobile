@@ -117,7 +117,7 @@ export const PasswordRecoveryPhoneInput: React.FC<
                   keyboardType="phone-pad"
                   label={t('passwordRecoveryPhoneInput.phone.label')}
                   type="phone"
-                  onSubmitEditing={submitForm}
+                  onSubmitEditing={() => submitForm()}
                   {...getFormInputProps('phone')}
                 />
               </View>

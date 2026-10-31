@@ -3,6 +3,7 @@ allowBuilds:
   react-native-mmkv: false
   react-native-nitro-modules: false
   sharp: true
+  '@parcel/watcher': false
 publicHoistPattern:
   - "*eslint-plugin-react*"
   - "*eslint-plugin-react-native*"

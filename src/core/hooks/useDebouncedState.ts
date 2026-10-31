@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { debounce } from 'lodash';
 
@@ -9,8 +9,8 @@ export const useDebouncedState = <T>(
   const [value, setValue] = useState(param);
   const [debouncedValue, setDebouncedValue] = useState(param);
 
-  const debouncedSet = useCallback(
-    debounce(setDebouncedValue, debounceTimer),
+  const debouncedSet = useMemo(
+    () => debounce(setDebouncedValue, debounceTimer),
     [],
   );
 

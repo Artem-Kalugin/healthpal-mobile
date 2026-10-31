@@ -37,19 +37,6 @@ export const FakeSplashScreenOverlay = ({
 }) => {
   const animationProgress = useSharedValue(0);
 
-  const onInit = async () => {
-    startAnimation();
-  };
-
-  useEffect(() => {
-    onInit();
-
-    return () => {
-      cancelAnimation(animationProgress);
-      setStatusBarHidden(false);
-    };
-  }, []);
-
   const startAnimation = () => {
     const endlessAnimation = withRepeat(
       withSequence(
@@ -70,6 +57,19 @@ export const FakeSplashScreenOverlay = ({
 
     animationProgress.value = withSequence(startingAnimation, endlessAnimation);
   };
+
+  const onInit = async () => {
+    startAnimation();
+  };
+
+  useEffect(() => {
+    onInit();
+
+    return () => {
+      cancelAnimation(animationProgress);
+      setStatusBarHidden(false);
+    };
+  }, []);
 
   const rCard = useAnimatedStyle(() => ({
     transform: [
@@ -224,7 +224,7 @@ const GAPS = 12;
 const CARD_ASPECT_RATIO = (SCREEN_WIDTH * 1.5) / SCREEN_HEIGHT;
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     gap: 36,
   },
   anchorCenterLayer: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     overflow: 'visible',
     justifyContent: 'center',
     alignItems: 'center',

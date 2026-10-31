@@ -10,6 +10,8 @@ HealthPal: app for booking doctor appointments and browsing medical centers. Rea
 
 Do not write or change code without my explicit approval. If you are not sure whether approval was given, ask again.
 
+Exception: autofix (`eslint --fix`, prettier formatting) is always allowed, do not ask for explicit permission.
+
 ## Simulator and builds
 
 Never interact with the simulator/emulator or run builds (`pnpm ios*`, `pnpm android*`, `expo run`, `xcodebuild`, `gradlew`, etc.) without my explicit confirmation.

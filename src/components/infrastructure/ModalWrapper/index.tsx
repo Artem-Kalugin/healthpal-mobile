@@ -99,11 +99,7 @@ const ModalWrapperBase: React.FC<Partial<IModalWrapper>> = ({
 
   return (
     <View style={[styles.modal, StyleSheet.flatten(style)]}>
-      <FocusAwareStatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="light-content"
-      />
+      <FocusAwareStatusBar barStyle="light-content" />
 
       <Animated.View style={[styles.modal, rTranslation]}>
         <AnimatedTouchableOpacity

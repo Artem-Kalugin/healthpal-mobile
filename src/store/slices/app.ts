@@ -8,6 +8,8 @@ const initialState = {
   // undefined follows the device language
   language: undefined as Language | undefined,
   region: undefined as Region | undefined,
+  // timestamp (ms) when the OTP resend cooldown ends, survives app restarts
+  otpTimerEndsAt: null as number | null,
 };
 
 const appSlice = createSlice({
@@ -25,6 +27,9 @@ const appSlice = createSlice({
     },
     setRegion(state, action: PayloadAction<Region | undefined>) {
       state.region = action.payload;
+    },
+    setOtpTimerEndsAt(state, action: PayloadAction<number | null>) {
+      state.otpTimerEndsAt = action.payload;
     },
     reset: () => initialState,
   },

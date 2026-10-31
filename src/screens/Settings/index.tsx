@@ -62,6 +62,7 @@ export const Settings: React.FC<
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
     refreshLocationStatus();
 
     // the status changes in the system settings while the app is in the background

@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import {
   Keyboard,
   StyleSheet,
-  TextInput,
+  TextInputInstance,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -54,7 +54,7 @@ export const PasswordRecoverySetPassword: React.FC<
 > = props => {
   const { t } = useTranslation();
 
-  const confirmPasswordInputRef = useRef<TextInput>(null);
+  const confirmPasswordInputRef = useRef<TextInputInstance>(null);
 
   const dispatch = useDispatch();
 
@@ -180,7 +180,7 @@ export const PasswordRecoverySetPassword: React.FC<
                   label={t('passwordRecoverySetPassword.confirmPassword.label')}
                   returnKeyType="done"
                   secureTextEntry={enableSecureConfirmPassword}
-                  onSubmitEditing={submitForm}
+                  onSubmitEditing={() => submitForm()}
                   {...getFormInputProps('confirmPassword')}
                 />
               </View>

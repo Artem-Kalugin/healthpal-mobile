@@ -21,7 +21,7 @@ type IBlinkAnimator = {
 };
 
 export const BlinkAnimator: React.FC<
-  Partial<IBlinkAnimator & Animated.View['props']>
+  Partial<IBlinkAnimator & React.ComponentProps<typeof Animated.View>>
 > = ({ delayAnimationBy = 0, startAnimation, style, children, ...rest }) => {
   const blinkAnimationProgress = useSharedValue(1);
 

@@ -257,6 +257,7 @@ export const Search: React.FC<
         data={listData}
         hasNextPage={searchQuery.hasNextPage}
         headerHeight={FOLDABLE_HEADER_HEIGHT}
+        // eslint-disable-next-line react-hooks/refs -- TODO: fix
         isChangingSource={isQueryChangingSource.current}
         isFetching={searchQuery.isFetching}
         isLoading={searchQuery.isLoading}

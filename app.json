@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "platforms": ["ios", "android"],
     "ios": {
       "config": {
         "usesNonExemptEncryption": false
@@ -28,7 +28,6 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
       ],
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.healthpal"
     },
@@ -43,7 +42,15 @@
           }
         }
       ],
-      ["react-native-bootsplash", { "assetsDir": "./src/assets/bootsplash" }],
+      [
+        "react-native-bootsplash",
+        {
+          "logo": "./src/assets/bootsplash-source/logo.png",
+          "logoWidth": 100,
+          "background": "#352261",
+          "assetsOutput": "./src/assets/bootsplash"
+        }
+      ],
       [
         "react-native-permissions",
         {

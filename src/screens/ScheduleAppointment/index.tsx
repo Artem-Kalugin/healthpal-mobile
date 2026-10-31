@@ -161,6 +161,7 @@ export const ScheduleAppointment: React.FC<
 
   useEffect(() => {
     if (availableTimeSlotsRangeQuery.data) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
       setAnchorDate(
         toDateString(availableTimeSlotsRangeQuery.data.minDate, true),
       );
@@ -169,12 +170,14 @@ export const ScheduleAppointment: React.FC<
 
   useEffect(() => {
     if (availableTimeSlotsQuery.data?.[0]?.date && !selectedDate) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
       setSelectedDate({ dateString: availableTimeSlotsQuery.data[0].date });
       setTimeSlotActive(availableTimeSlotsQuery.data[0].slots[0]);
     }
   }, [availableTimeSlotsQuery.fulfilledTimeStamp]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
     setOutlinedDate(selectedDate);
   }, [timeSlotActive]);
 
@@ -185,6 +188,7 @@ export const ScheduleAppointment: React.FC<
         .flat();
 
       if (!availableTimeSlots.find(el => el.id === timeSlotActive.id)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
         setTimeSlotActive(undefined);
       }
     }

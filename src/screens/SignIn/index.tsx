@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import {
   Keyboard,
   StyleSheet,
-  TextInput,
+  TextInputInstance,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -53,7 +53,7 @@ export const SignIn: React.FC<
   const { t } = useTranslation();
 
   const { prefetchApp, isPrefetching } = useAppData();
-  const passwordInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInputInstance>(null);
 
   const { form, getFormInputProps } = useAppForm(loginSchema, {
     phone: '+',
@@ -159,7 +159,7 @@ export const SignIn: React.FC<
                   label={t('signIn.password.label')}
                   returnKeyType="done"
                   secureTextEntry={enableSecurePassword}
-                  onSubmitEditing={submitForm}
+                  onSubmitEditing={() => submitForm()}
                   {...getFormInputProps('password')}
                 />
               </View>

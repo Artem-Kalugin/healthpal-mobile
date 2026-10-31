@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  TextInput as _TextInput,
   Keyboard,
   StyleSheet,
+  TextInputInstance,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -64,8 +64,8 @@ export const ProfileEditing: React.FC<
   const { t } = useTranslation();
   const { formatDate } = useFormatters();
 
-  const surnameInputRef = useRef<_TextInput>(null);
-  const nicknameInputRef = useRef<_TextInput>(null);
+  const surnameInputRef = useRef<TextInputInstance>(null);
+  const nicknameInputRef = useRef<TextInputInstance>(null);
 
   const { prefetchApp, isPrefetching } = useAppData();
 
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   avatarImage: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: BORDER_RADIUS_ROUNDED,
   },
   profileImageEditIcon: {

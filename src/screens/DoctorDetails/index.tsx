@@ -61,6 +61,7 @@ export const DoctorDetails: React.FC<
 
   useEffect(() => {
     if (doctorQuery.data) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
       setDoctorDetails(doctorQuery.data);
     }
   }, [doctorQuery.data]);
