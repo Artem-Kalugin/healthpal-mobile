@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 HealthPal: app for booking doctor appointments and browsing medical centers. React Native 0.81 + Expo 54, TypeScript (strict), iOS and Android. Package manager is **pnpm** (enforced by `preinstall`).
 
+## International by default
+
+The app may look Russian at the moment, but it must look international. Russian artefacts are considered errors: there are no Russian defaults. Do not treat a Russian phone number (`+7`, RU format, RU placeholder, RU region) as the default or fallback anywhere (masks, placeholders, examples, tests, mocks, region/locale fallbacks). When you meet one, flag it as an artefact instead of building on it.
+
 ## Approval
 
 Do not write or change code without my explicit approval. If you are not sure whether approval was given, ask again.

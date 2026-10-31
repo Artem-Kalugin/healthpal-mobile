@@ -29,7 +29,7 @@ import { useLoginMutation } from '#api/Auth';
 
 import { TokenService } from '#services/Token';
 
-import { hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
+import { hitSlop, SAFE_ZONE_BOTTOM } from '#config';
 import { colors } from '#config/colors';
 
 import { useTranslation } from '#i18n';
@@ -56,8 +56,8 @@ export const SignIn: React.FC<
   const passwordInputRef = useRef<TextInputInstance>(null);
 
   const { form, getFormInputProps } = useAppForm(loginSchema, {
-    phone: '+',
-    password: '123123aa',
+    phone: '',
+    password: '',
   });
 
   const [login, loginMetadata] = useLoginMutation();
@@ -107,7 +107,6 @@ export const SignIn: React.FC<
       style={styles.container}
     >
       <KeyboardAwareScrollView
-        bottomOffset={SCREEN_HEIGHT * 0.8}
         contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -137,7 +136,7 @@ export const SignIn: React.FC<
                       size={20}
                     />
                   }
-                  keyboardType="phone-pad"
+                  keyboardType="decimal-pad"
                   label={t('signIn.phone.label')}
                   type="phone"
                   onSubmitEditing={() => passwordInputRef.current?.focus()}

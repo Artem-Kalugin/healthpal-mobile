@@ -212,7 +212,6 @@ export const ProfileEditing: React.FC<
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
-        bottomOffset={300}
         contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}

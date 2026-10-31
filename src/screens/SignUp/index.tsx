@@ -63,7 +63,7 @@ export const SignUp: React.FC<
   const passwordInputRef = useRef<TextInputInstance>(null);
 
   const { form, getFormInputProps } = useAppForm(createUserSchema, {
-    phone: '+',
+    phone: '',
   });
 
   const [register, registerMetadata] = useRegisterMutation();
@@ -109,7 +109,6 @@ export const SignUp: React.FC<
 
   return (
     <KeyboardAwareScrollView
-      bottomOffset={120}
       contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
@@ -161,7 +160,7 @@ export const SignUp: React.FC<
                   />
                 }
                 inputRef={phoneInputRef}
-                keyboardType="phone-pad"
+                keyboardType="decimal-pad"
                 label={t('signUp.phone.label')}
                 type="phone"
                 onSubmitEditing={() => passwordInputRef.current?.focus()}

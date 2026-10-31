@@ -4,6 +4,7 @@ import {
   FocusEvent,
   StyleProp,
   StyleSheet,
+  Text,
   TextInputProps,
   TouchableOpacity,
   View,
@@ -41,6 +42,7 @@ export type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   outlineType: ITextInputOutline;
   disabled: boolean;
   showEraseOnlyIfFocused: boolean;
+  keepPlaceholderOnFocus: boolean;
   androidFixScrollMultiline: boolean;
   label: string;
   onErase?: () => void;
@@ -59,6 +61,7 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
   size = 'default',
   label = '',
   showEraseOnlyIfFocused = true,
+  keepPlaceholderOnFocus = false,
   androidFixScrollMultiline = false,
   enablesReturnKeyAutomatically = false,
   IconRight,
@@ -80,12 +83,16 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
 }) => {
   const _multiline = multiline || (!IS_IOS && androidFixScrollMultiline);
   const [isFocused, setIsFocused] = useState(autoFocus);
+  const [tailState, setTailState] = useState({ formatted: '', tail: '' });
   const styles = getStyles({
     outlineType: outlineType ? outlineType : isFocused ? 'focused' : 'default',
     label,
+    size,
     disabled,
     multiline: _multiline,
   });
+
+  const showTailPlaceholder = !_multiline && !!value && !!tailState.tail;
 
   const showEraseIcon =
     !IconRight &&
@@ -160,11 +167,33 @@ export const MaskedInput: React.FC<Partial<IMaskedInput>> = ({
             textContentType="oneTimeCode"
             value={value}
             onBlur={_onBlur}
-            onChangeText={onChange}
+            onChangeText={(...args) => {
+              setTailState({ formatted: args[0], tail: args[2] });
+              // forward exactly what the native module sends
+              (onChange as (...a: typeof args) => void)(...args);
+            }}
             onFocus={_onFocus}
             {...props}
-            placeholder={!isFocused ? props.placeholder : ''}
+            placeholder={
+              !isFocused || keepPlaceholderOnFocus ? props.placeholder : ''
+            }
           />
+
+          {/* must stay after MaskedTextInput: the native decorator looks up the TextInput as its previous sibling */}
+          {showTailPlaceholder && (
+            <View
+              pointerEvents="none"
+              style={styles.tailContainer}
+            >
+              <Text
+                numberOfLines={1}
+                style={styles.tailText}
+              >
+                <Text style={styles.tailEntered}>{tailState.formatted}</Text>
+                {tailState.tail}
+              </Text>
+            </View>
+          )}
         </View>
 
         <Animated.View
@@ -191,11 +220,13 @@ const borderColors = {
 const getStyles = ({
   outlineType,
   label,
+  size,
   disabled,
   multiline,
 }: {
   outlineType: ITextInputOutline;
   label: string;
+  size: IMaskedInput['size'];
   disabled: boolean;
   multiline: IMaskedInput['multiline'];
 }) =>
@@ -231,6 +262,24 @@ const getStyles = ({
       minHeight: multiline ? 40 : 'auto',
       paddingTop: label ? 12 : 2,
       paddingBottom: 0,
+    },
+    // mirrors the input metrics so the tail continues the typed text
+    tailContainer: {
+      justifyContent: 'center',
+      position: 'absolute',
+      top: 0,
+      right: 8,
+      bottom: 0,
+      left: 8,
+      paddingTop: size === 'small' ? (label ? 12 : 2) : label ? 18 : 0,
+    },
+    tailText: {
+      color: colors.grayscale['400'],
+      fontSize: 15,
+      fontFamily: primaryFontNameMap[400],
+    },
+    tailEntered: {
+      color: colors.transparent,
     },
     iconContainer: {
       justifyContent: 'center',

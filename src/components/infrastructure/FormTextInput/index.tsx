@@ -3,21 +3,17 @@ import { BlurEvent } from 'react-native';
 
 import { AFFINITY_CALCULATION_STRATEGY } from 'react-native-advanced-input-mask';
 
-import { getLocales } from 'expo-localization';
 import { Controller, FieldValues } from 'react-hook-form';
 
 import { MaskedInput, TextInput } from '#ui-kit';
 
-import { decodeLabel, resolveRegion, useTranslation } from '#i18n';
-
-import { useSelector } from '#store';
-
-import { PHONE_FALLBACK_MASK } from '#generated/phoneMasks';
+import { decodeLabel, useTranslation } from '#i18n';
 
 import {
   PHONE_AFFINITY_FORMAT,
   PHONE_ALLOWED_KEYS,
-  PHONE_PLACEHOLDER_BY_REGION,
+  PHONE_PLACEHOLDER,
+  PHONE_PRIMARY_MASK,
 } from './config';
 import { FormTextInputProps } from './types';
 
@@ -33,11 +29,6 @@ export function FormTextInput<T extends FieldValues>({
 }: FormTextInputProps<T>) {
   const [isFocused, setIsFocused] = useState(false);
   const { t } = useTranslation();
-  const savedRegion = useSelector(state => state.app.region);
-  const region = resolveRegion(
-    savedRegion,
-    getLocales().map(locale => locale.languageCode),
-  );
 
   return (
     <Controller
@@ -87,22 +78,32 @@ export function FormTextInput<T extends FieldValues>({
         if (externalProps.type === 'phone') {
           const {
             type,
-            mask = PHONE_FALLBACK_MASK,
+            mask = PHONE_PRIMARY_MASK,
             ...phoneProps
           } = externalProps;
 
           return (
             <MaskedInput
+              keepPlaceholderOnFocus
               affinityCalculationStrategy={AFFINITY_CALCULATION_STRATEGY.PREFIX}
               affinityFormat={PHONE_AFFINITY_FORMAT}
               allowedKeys={PHONE_ALLOWED_KEYS}
               mask={mask}
-              placeholder={PHONE_PLACEHOLDER_BY_REGION[region]}
-              onChange={(val, unmasked) => {
+              placeholder={PHONE_PLACEHOLDER}
+              onChange={val => {
                 onChange(val);
               }}
               {...baseInputProps}
               {...phoneProps}
+              // typing must start with '+', otherwise no format can win the affinity against the primary mask
+              onBlur={e => {
+                baseInputProps.onBlur(e);
+                value === '+' && onChange('');
+              }}
+              onFocus={() => {
+                baseInputProps.onFocus();
+                !value && onChange('+');
+              }}
             />
           );
         }
