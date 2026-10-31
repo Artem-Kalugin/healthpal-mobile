@@ -12,6 +12,9 @@ import { useAppData } from './useAppData';
 import { useAppLifecycle } from './useAppLifecycle';
 
 jest.mock('react-native-bootsplash');
+jest.mock('react-native-yamap-plus', () => ({
+  YamapInstance: { setLocale: jest.fn().mockResolvedValue(undefined) },
+}));
 jest.mock('#services/Token');
 jest.mock('./useAppData');
 jest.mock('expo-localization');

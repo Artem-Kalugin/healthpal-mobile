@@ -164,9 +164,9 @@ importers:
       react-native-worklets:
         specifier: 0.13.1
         version: 0.13.1(@babel/core@7.28.5(supports-color@10.2.2))(@react-native/metro-config@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(supports-color@10.2.2))(react-native@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(@react-native/metro-config@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(supports-color@10.2.2))(@types/react@19.3.0)(react@19.3.0)(supports-color@10.2.2))(react@19.3.0)(supports-color@10.2.2)
-      react-native-yamap:
-        specifier: ^4.8.3
-        version: 4.8.3(react-native@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(@react-native/metro-config@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(supports-color@10.2.2))(@types/react@19.3.0)(react@19.3.0)(supports-color@10.2.2))(react@19.3.0)
+      react-native-yamap-plus:
+        specifier: 6.12.0
+        version: 6.12.0(react-native@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(@react-native/metro-config@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(supports-color@10.2.2))(@types/react@19.3.0)(react@19.3.0)(supports-color@10.2.2))(react@19.3.0)
       react-redux:
         specifier: ^9.2.0
         version: 9.2.0(@types/react@19.3.0)(react@19.3.0)(redux@5.0.1)
@@ -6085,8 +6085,8 @@ packages:
       react: '*'
       react-native: 0.86 - 0.88
 
-  react-native-yamap@4.8.3:
-    resolution: {integrity: sha512-bSF5e80XBQK/lfOVfMtf2itMg4GlGEMJGNkFkMvSzMTBMJXulcJIFQlgTBjmyWrTtJQMdITR9tCM4qWdafxOIQ==}
+  react-native-yamap-plus@6.12.0:
+    resolution: {integrity: sha512-1RX24GHrGHgtVDor1ZnZ55WoiYjQ/Rvjuba5AXRc6ckSbkv7C8h2fn1cUSrm869OIsQSdHOQN0ruTz38ENp91w==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -14864,7 +14864,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-native-yamap@4.8.3(react-native@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(@react-native/metro-config@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(supports-color@10.2.2))(@types/react@19.3.0)(react@19.3.0)(supports-color@10.2.2))(react@19.3.0):
+  react-native-yamap-plus@6.12.0(react-native@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(@react-native/metro-config@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(supports-color@10.2.2))(@types/react@19.3.0)(react@19.3.0)(supports-color@10.2.2))(react@19.3.0):
     dependencies:
       react: 19.3.0
       react-native: 0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(@react-native/metro-config@0.88.1(@babel/core@7.28.5(supports-color@10.2.2))(supports-color@10.2.2))(@types/react@19.3.0)(react@19.3.0)(supports-color@10.2.2)

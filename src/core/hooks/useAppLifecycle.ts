@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import BootSplash from 'react-native-bootsplash';
+import { YamapInstance } from 'react-native-yamap-plus';
 
 import dayjs from 'dayjs';
 import { useLocales } from 'expo-localization';
@@ -8,10 +9,17 @@ import { useLocales } from 'expo-localization';
 import { TokenService } from '#services/Token';
 
 import { changeLanguage, resolveLanguage } from '#i18n';
+import type { Language } from '#i18n/types';
 
 import { useSelector } from '#store';
 
 import { useAppData } from './useAppData';
+
+// iOS applies the MapKit locale only before the first map render: a language change takes effect after restart
+const MapLocales: Record<Language, string> = {
+  en: 'en_US',
+  ru: 'ru_RU',
+};
 
 export const useAppLifecycle = () => {
   const [inited, setInited] = useState(false);
@@ -32,16 +40,28 @@ export const useAppLifecycle = () => {
         ru: 'ru',
       }[language],
     );
+
+    return language;
   };
 
   useEffect(() => {
     applyLanguage();
   }, [savedLanguage, locales]);
 
+  const applyMapLocale = async (language: Language) => {
+    try {
+      await YamapInstance.setLocale(MapLocales[language]);
+    } catch {
+      // the map keeps the device locale; must not block the app start
+    }
+  };
+
   const onAppStart = async () => {
     try {
       await TokenService.load();
-      await applyLanguage();
+      const language = await applyLanguage();
+
+      await applyMapLocale(language);
 
       BootSplash.hide({ fade: true });
       await prefetchApp();

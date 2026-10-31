@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import YaMap, { Point } from 'react-native-yamap';
+import { Point, Yamap, YamapRef } from 'react-native-yamap-plus';
 
 import { CompositeScreenProps } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
@@ -57,7 +57,7 @@ export const Map: React.FC<
   const { t } = useTranslation();
 
   const doctorCategories = useDoctorCategoriesQuery(null);
-  const yamapRef = useRef<YaMap>(null);
+  const yamapRef = useRef<YamapRef>(null);
   const showMedicalCentersProgress = useSharedValue(0);
   const [triggerMedicalCentersQuery, meta] = useLazyMedicalCentersQuery();
   const [medicalCentersSorted, setMedicalCentersSorted] = useState<
@@ -125,7 +125,6 @@ export const Map: React.FC<
       {
         lon: lon,
         lat: lat,
-        zoom: 15,
       },
       15,
       0,
@@ -207,7 +206,7 @@ export const Map: React.FC<
           />
         </TouchableOpacity>
       </View>
-      <YaMap
+      <Yamap
         ref={yamapRef}
         followUser={false}
         initialRegion={initRegion}
@@ -215,7 +214,7 @@ export const Map: React.FC<
         onCameraPositionChange={hideMedicalCenters}
       >
         {Markers}
-      </YaMap>
+      </Yamap>
 
       <Animated.View style={[styles.clinicsAnchor, rMedicalCentersContainer]}>
         <FlashList
