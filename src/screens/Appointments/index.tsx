@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Keyboard, StyleSheet, View } from 'react-native';
 
 import { CompositeScreenProps } from '@react-navigation/native';
-import dayjs from 'dayjs';
 import { toast } from 'react-hot-toast/headless';
 
 import { AppointmentCard } from '#components/domain/appointment/Card';
@@ -28,15 +27,13 @@ import { useDoctorCategoriesQuery } from '#api/Doctor';
 
 import { BORDER_RADIUS_ROUNDED } from '#config';
 
+import { useFormatters, useTranslation } from '#i18n';
+
 import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { BEAppointmentResponseDto } from '#generated/__entities';
 
-import {
-  AppointmentListFooterComponentConfiguration,
-  AppointmentsEmptyListWarningConfiguration,
-  RequestPayload,
-} from './config';
+import { RequestPayload } from './config';
 
 export const Appointments: React.FC<
   CompositeScreenProps<
@@ -47,6 +44,9 @@ export const Appointments: React.FC<
     >
   >
 > = props => {
+  const { t } = useTranslation();
+  const { formatDate } = useFormatters();
+
   const appointmentsQuery = useAppointmentsInfiniteQuery({
     params: {
       ...RequestPayload[props.route.name],
@@ -71,7 +71,14 @@ export const Appointments: React.FC<
       }).unwrap();
 
       toast(
-        `Вы успешно отменили прием ${dayjs(item.date).format('DD MMMM')}, ${item.startTime.slice(0, 5)}`,
+        t('appointments.canceledToast', {
+          date: formatDate(item.date, {
+            day: 'numeric',
+            month: 'long',
+            timeZone: 'UTC',
+          }),
+          time: item.startTime.slice(0, 5),
+        }),
       );
     } catch {}
   };
@@ -105,9 +112,7 @@ export const Appointments: React.FC<
 
   const onReview = async (item: BEAppointmentResponseDto) => {
     try {
-      toast(
-        'Кажется, этого экрана не было в дизайне :( вы все еще можете просмотреть оставшуюся часть приложения',
-      );
+      toast(t('appointments.reviewSoon'));
     } catch {}
   };
 
@@ -140,19 +145,13 @@ export const Appointments: React.FC<
                       })
                     }
                   >
-                    <TextBase>К специалистам</TextBase>
+                    <TextBase>{t('appointments.toSpecialists')}</TextBase>
                     <Icon name="arrowRight" />
                   </Button>
                 )
               }
-              subtitle={
-                AppointmentsEmptyListWarningConfiguration[props.route.name]
-                  .subtitle
-              }
-              title={
-                AppointmentsEmptyListWarningConfiguration[props.route.name]
-                  .title
-              }
+              subtitle={t(`appointments.${props.route.name}.empty.subtitle`)}
+              title={t(`appointments.${props.route.name}.empty.title`)}
             />
           </>
         )
@@ -160,10 +159,7 @@ export const Appointments: React.FC<
       ListFooterComponent={
         <PaginatableListFooter
           enabled={!!listData.length && !isRefreshing}
-          message={
-            AppointmentListFooterComponentConfiguration[props.route.name]
-              .message
-          }
+          message={t(`appointments.${props.route.name}.endOfList`)}
           showLoader={appointmentsQuery.isFetching}
           showMessage={!appointmentsQuery.hasNextPage}
         />
@@ -188,14 +184,14 @@ export const Appointments: React.FC<
                         type="secondary"
                         onPress={() => onCancel(item)}
                       >
-                        Отмена
+                        {t('appointments.cancel')}
                       </Button>
                       <Button
                         size="small"
                         style={styles.cardFooterButton}
                         onPress={() => onReschedule(item)}
                       >
-                        Перенести
+                        {t('appointments.reschedule')}
                       </Button>
                     </>
                   )}
@@ -213,14 +209,14 @@ export const Appointments: React.FC<
                         type="secondary"
                         onPress={() => onNewAppointment(item)}
                       >
-                        Повторить
+                        {t('appointments.repeat')}
                       </Button>
                       <Button
                         size="small"
                         style={styles.cardFooterButton}
                         onPress={() => onReview(item)}
                       >
-                        Оставить отзыв
+                        {t('appointments.leaveReview')}
                       </Button>
                     </>
                   )}

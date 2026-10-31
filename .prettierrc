@@ -44,6 +44,8 @@
     "",
     "^#config",
     "",
+    "^#i18n",
+    "",
     "^#hooks",
     "",
     "^#utils",
@@ -59,5 +61,5 @@
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
 
-  "importOrderParserPlugins": ["typescript", "jsx", "tsx", "decorators-legacy"]
+  "importOrderParserPlugins": ["typescript", "jsx", "tsx"]
 }

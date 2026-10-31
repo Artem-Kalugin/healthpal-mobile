@@ -1,4 +1,5 @@
 import { RtkAppApi } from '#api';
+import { withRequestMeta } from '#api/withRequestMeta';
 
 import { RequestsUser as Requests, TagsUserAPI } from './types';
 
@@ -9,9 +10,10 @@ export const UserAPI = RtkAppApi.injectEndpoints({
       Requests['getCurrent']['response'],
       Requests['getCurrent']['args']
     >({
-      query: () => ({
+      query: args => ({
         url: '/users/me',
         method: 'get',
+        ...args,
       }),
       providesTags: [TagsUserAPI.User],
     }),
@@ -44,6 +46,7 @@ export const UserAPI = RtkAppApi.injectEndpoints({
           url: '/users/me',
           method: 'PATCH',
           data: formData,
+          meta: args.meta,
         };
       },
       invalidatesTags: [TagsUserAPI.User],
@@ -54,4 +57,4 @@ export const UserAPI = RtkAppApi.injectEndpoints({
 export const {
   useGetCurrentQuery: useGetCurrentUserQuery,
   useUpdateCurrentMutation: useUpdateCurrentMutation,
-} = UserAPI;
+} = withRequestMeta(UserAPI);

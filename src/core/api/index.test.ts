@@ -7,6 +7,7 @@ import {
 } from '#tests/config/fixtures/tokens';
 
 import { apiBaseQuery, refreshState, RtkAppApi } from '#api';
+import type { RequestMeta } from '#api/types';
 
 import { FetchService } from '#services/Fetch';
 
@@ -113,6 +114,57 @@ describe('apiBaseQuery token refresh', () => {
 
     expect(result.error).toEqual({ internal: true });
     expect(FetchService.query).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('RtkAppApi meta', () => {
+  const TestApi = RtkAppApi.injectEndpoints({
+    endpoints: build => ({
+      getTest: build.query<unknown, { meta: RequestMeta }>({
+        query: args => ({ url: '/test', ...args }),
+      }),
+    }),
+  });
+
+  const queryKeys = () => Object.keys(store.getState().api.queries);
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    store.dispatch(RtkAppApi.util.resetApiState());
+    (FetchService.query as jest.Mock).mockResolvedValue({
+      ok: true,
+      data: {},
+    });
+  });
+
+  test('должен передавать meta в FetchService', async () => {
+    const meta: RequestMeta = { language: 'ru', region: 'RU' };
+
+    await store.dispatch(TestApi.endpoints.getTest.initiate({ meta }));
+
+    expect(jest.mocked(FetchService.query).mock.calls[0][0]).toMatchObject({
+      meta,
+    });
+  });
+
+  test('смена региона и языка в meta должна давать новые ключи кэша', async () => {
+    await store.dispatch(
+      TestApi.endpoints.getTest.initiate({
+        meta: { language: 'ru', region: 'RU' },
+      }),
+    );
+    await store.dispatch(
+      TestApi.endpoints.getTest.initiate({
+        meta: { language: 'ru', region: 'EU' },
+      }),
+    );
+    await store.dispatch(
+      TestApi.endpoints.getTest.initiate({
+        meta: { language: 'en', region: 'EU' },
+      }),
+    );
+
+    expect(queryKeys()).toHaveLength(3);
   });
 });
 

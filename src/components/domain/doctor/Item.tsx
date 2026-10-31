@@ -12,7 +12,8 @@ import { ServerImage } from '#components/infrastructure';
 import { Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
 
 import { colors } from '#config/colors';
-import { MapDoctorCategoryToLabel } from '#config/locale';
+
+import { useTranslation } from '#i18n';
 
 import { BEDoctorResponseDto } from '#generated/__entities';
 
@@ -27,6 +28,8 @@ export const DoctorItem: React.FC<Partial<IDoctorItem>> = ({
   onPress,
   style,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -49,8 +52,7 @@ export const DoctorItem: React.FC<Partial<IDoctorItem>> = ({
           color={colors.grayscale['600']}
           weight="600"
         >
-          {item?.category?.type &&
-            MapDoctorCategoryToLabel[item?.category?.type]}
+          {item?.category?.type && t(`doctorCategory.${item.category.type}`)}
         </TextSmall>
         <View style={styles.locationContainer}>
           <Icon

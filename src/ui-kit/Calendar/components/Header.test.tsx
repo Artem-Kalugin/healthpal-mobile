@@ -2,11 +2,7 @@ import React from 'react';
 
 import { fireEvent, render } from '@testing-library/react-native';
 
-import {
-  CalendarHeader,
-  CalendarHeaderTestIds,
-  CalendarMonthNames,
-} from './Header';
+import { CalendarHeader, CalendarHeaderTestIds } from './Header';
 
 describe('CalendarHeader', () => {
   const month = new Date('2025-11-01');
@@ -29,15 +25,12 @@ describe('CalendarHeader', () => {
     it('отображает месяц и год', () => {
       const { getByText } = render(<CalendarHeader {...defaultProps} />);
 
-      const monthName = CalendarMonthNames[month.getMonth()];
-      const year = month.getFullYear();
-
-      expect(getByText(`${monthName} ${year}`)).toBeOnTheScreen();
+      expect(getByText('November 2025')).toBeOnTheScreen();
     });
 
     it('отображает все дни недели', () => {
       const { getByText } = render(<CalendarHeader {...defaultProps} />);
-      const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
       weekDays.forEach(day => {
         expect(getByText(day)).toBeOnTheScreen();

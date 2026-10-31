@@ -12,12 +12,16 @@ import { Favorites } from '#screens';
 
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { TabsConfig } from './config';
 import { FavoritesParamList, FavoritesRoutes } from './types';
 
 const Tabs = createMaterialTopTabNavigator<FavoritesParamList>();
 
 export const FavoritesStack = () => {
+  const { t } = useTranslation();
+
   return (
     <Tabs.Navigator
       initialRouteName={FavoritesRoutes.FavoriteDoctors}
@@ -26,7 +30,7 @@ export const FavoritesStack = () => {
           <View>
             <HeaderWithThreeSections
               containerStyle={styles.headerContainer}
-              title="Избранное"
+              title={t('favorites.title')}
               titleTextAlign="center"
             />
 

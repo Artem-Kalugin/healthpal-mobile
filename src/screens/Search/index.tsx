@@ -32,6 +32,8 @@ import { useSearchDoctorsInfiniteQuery } from '#api/Doctor';
 import { headerShadow } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { useDebouncedState } from '#hooks/useDebouncedState';
 import { useErrorHandler } from '#hooks/useErrorHandler';
 
@@ -57,6 +59,8 @@ export const Search: React.FC<
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const { t } = useTranslation();
+
   const isRendered = useRef(false);
   const isQueryChangingSource = useRef(false);
   const [sort, setSort] = useState(SortOptions.rating);
@@ -170,7 +174,7 @@ export const Search: React.FC<
       <HeaderWithThreeSections
         containerStyle={styles.headerContainer}
         subtitle={props.route.params.title}
-        title="Все специалисты"
+        title={t('search.title')}
         titleTextAlign="center"
       />
       <View>
@@ -182,7 +186,7 @@ export const Search: React.FC<
               autoFocus={props.route.params?.autoFocus}
               IconLeft={<Icon name="search" />}
               inputWrapperStyle={styles.searchBar}
-              placeholder="Поиск врача…"
+              placeholder={t('search.placeholder')}
               size="small"
               value={searchFor}
               onChange={setSearchFor}
@@ -201,9 +205,11 @@ export const Search: React.FC<
           />
 
           <View style={styles.sectionHeader}>
-            {!!searchQuery.data?.pages.at(-1)?.count && (
+            {!!searchQuery.data?.pages.at(-1)?.total && (
               <TextBase weight="700">
-                {searchQuery.data?.pages.at(-1)?.count} найдено
+                {t('search.found', {
+                  count: searchQuery.data?.pages.at(-1)?.total,
+                })}
               </TextBase>
             )}
             <TouchableOpacity
@@ -212,13 +218,15 @@ export const Search: React.FC<
                 props.navigation.navigate(AppRoutes.StackModals, {
                   screen: ModalsRoutes.Select,
                   params: {
-                    title: 'Выберите порядок сортировки',
+                    title: t('search.sort.title'),
                     data: Object.values(SortOptions),
                     keyExtractor: item => item,
                     checkedExtractor: (item, currentItem) =>
                       item === currentItem,
                     renderItem: item => (
-                      <TextBase weight="400">{item}</TextBase>
+                      <TextBase weight="400">
+                        {t(`search.sort.${item}`)}
+                      </TextBase>
                     ),
                     defaultValue: sort,
                     onSelectionEnd: item => {
@@ -238,7 +246,7 @@ export const Search: React.FC<
                 textAlign="right"
                 weight="500"
               >
-                {sort}
+                {t(`search.sort.${sort}`)}
               </TextSmall>
             </TouchableOpacity>
           </View>

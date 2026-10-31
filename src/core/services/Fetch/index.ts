@@ -13,7 +13,7 @@ import { fetchWithTimeout } from './utils';
 
 export class FetchService {
   static query = async (
-    { url, method = 'GET', data, params, path }: FetchArgs,
+    { url, method = 'GET', data, params, path, meta }: FetchArgs,
     baseUrl: string,
     Authorization?: string,
   ): Promise<FetchResult> => {
@@ -29,6 +29,7 @@ export class FetchService {
         params,
         path,
         headers: {},
+        ...meta,
       };
 
       await connectionInterceptor(context);

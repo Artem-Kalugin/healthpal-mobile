@@ -28,7 +28,7 @@ import { AppRoutes, RootScreenProps } from '#navigation/types';
 import { logOut } from '#api';
 import { useCompleteRegistationMutation } from '#api/Auth';
 import { useGetCurrentUserQuery, useUpdateCurrentMutation } from '#api/User';
-import { UpdateUserDto } from '#api/User/dto/UpdateUserDto';
+import type { UpdateUserDto } from '#api/User/dto/UpdateUserDto';
 
 import { TokenService } from '#services/Token';
 
@@ -40,7 +40,8 @@ import {
   SAFE_ZONE_BOTTOM,
 } from '#config';
 import { colors } from '#config/colors';
-import { MapGenderToLabel } from '#config/locale';
+
+import { useFormatters, useTranslation } from '#i18n';
 
 import { useAppData } from '#hooks/useAppData';
 import { useAppForm } from '#hooks/useAppForm';
@@ -52,12 +53,17 @@ import { store, useSelector } from '#store';
 
 import { Gender } from '#generated/schema';
 
+import { updateUserSchema } from './config';
+
 const MINIMAL_BIRTHDAY_YEAR = new Date();
 MINIMAL_BIRTHDAY_YEAR.setFullYear(new Date().getFullYear() - 18);
 
 export const ProfileEditing: React.FC<
   RootScreenProps<AppRoutes.ProfileEditing>
 > = props => {
+  const { t } = useTranslation();
+  const { formatDate } = useFormatters();
+
   const surnameInputRef = useRef<_TextInput>(null);
   const nicknameInputRef = useRef<_TextInput>(null);
 
@@ -76,9 +82,16 @@ export const ProfileEditing: React.FC<
     ? updateUser
     : completeRegistration;
 
+  const initialUser = props.route?.params?.user || userQuery.data;
+
   const { form, getFormInputProps } = useAppForm(
-    UpdateUserDto,
-    props.route?.params?.user || userQuery.data,
+    updateUserSchema,
+    initialUser && {
+      ...initialUser,
+      birthday: initialUser.birthday ?? undefined,
+      gender: initialUser.gender ?? undefined,
+      nickname: initialUser.nickname ?? undefined,
+    },
   );
 
   const [avatar, setAvatar] = useState<null | string>('');
@@ -105,7 +118,7 @@ export const ProfileEditing: React.FC<
       // for...in keys are typed as string, all form fields are present in user
       const key = userProperty as keyof UpdateUserDto;
 
-      form.setValue(key, user[key]);
+      form.setValue(key, user[key] ?? undefined);
     }
   }, [userQuery.data]);
 
@@ -135,14 +148,14 @@ export const ProfileEditing: React.FC<
       props.navigation.replace(AppRoutes.StackMain);
     } else {
       goBack();
-      toast('Данные успешно обновлены');
+      toast(t('profileEditing.updated'));
     }
   };
 
   const submitForm = form.handleSubmit(onSubmit, values => {
     Keyboard.dismiss();
 
-    toast('Некоторые поля содержат ошибки');
+    toast(t('common.formHasErrors'));
   });
 
   const openSelectBirthdayModal = async () => {
@@ -177,12 +190,12 @@ export const ProfileEditing: React.FC<
     props.navigation.navigate(AppRoutes.StackModals, {
       screen: ModalsRoutes.Select,
       params: {
-        title: 'Выберите пол',
+        title: t('profileEditing.selectGender'),
         data: Object.values(Gender),
         keyExtractor: item => item,
         checkedExtractor: (item, currentItem) => item === currentItem,
         renderItem: item => (
-          <TextBase weight="400">{MapGenderToLabel[item]}</TextBase>
+          <TextBase weight="400">{t(`gender.${item}`)}</TextBase>
         ),
         defaultValue: form.getValues('gender'),
         onSelectionEnd: item => {
@@ -194,7 +207,7 @@ export const ProfileEditing: React.FC<
       } as SelectModalParams<Gender>,
     });
   };
-  useErrorHandler(targetMetadata);
+  useErrorHandler(targetMetadata, form);
 
   return (
     <View style={styles.container}>
@@ -220,8 +233,8 @@ export const ProfileEditing: React.FC<
           paddingHorizontal={0}
           title={
             token?.registrationComplete
-              ? 'Изменение профиля'
-              : 'Заполните ваш профиль'
+              ? t('profileEditing.editTitle')
+              : t('profileEditing.completeTitle')
           }
         />
 
@@ -258,7 +271,7 @@ export const ProfileEditing: React.FC<
               autoCapitalize="words"
               containerStyle={styles.inputInRow}
               IconLeft={<Icon name="user" />}
-              label="Имя"
+              label={t('profileEditing.name')}
               onSubmitEditing={() => surnameInputRef.current?.focus()}
               {...getFormInputProps('name')}
             />
@@ -266,7 +279,7 @@ export const ProfileEditing: React.FC<
               autoCapitalize="words"
               containerStyle={styles.inputInRow}
               inputRef={surnameInputRef}
-              label="Фамилия"
+              label={t('profileEditing.surname')}
               onSubmitEditing={() => nicknameInputRef.current?.focus()}
               {...getFormInputProps('surname')}
             />
@@ -275,18 +288,18 @@ export const ProfileEditing: React.FC<
             autoCapitalize="words"
             containerStyle={styles.inputInRow}
             inputRef={nicknameInputRef}
-            label="Имя пользователя"
+            label={t('profileEditing.nickname')}
             submitBehavior="blurAndSubmit"
             {...getFormInputProps('nickname')}
           />
           <TouchableOpacity onPress={openSelectBirthdayModal}>
             <FormTextInput
               IconLeft={<Icon name="calendar" />}
-              label="День рождения"
+              label={t('profileEditing.birthday')}
               pointerEvents="none"
               submitBehavior="blurAndSubmit"
               transformValue={value =>
-                value ? dayjs(value).format('DD MMMM YYYY') : ''
+                value ? formatDate(dayjs(value).toDate()) : ''
               }
               {...getFormInputProps('birthday')}
             />
@@ -299,10 +312,10 @@ export const ProfileEditing: React.FC<
                   stroke={colors.grayscale['500']}
                 />
               }
-              label="Пол"
+              label={t('profileEditing.gender')}
               pointerEvents="none"
               transformValue={value =>
-                value ? MapGenderToLabel[value as Gender] : ''
+                value ? t(`gender.${value as Gender}`) : ''
               }
               {...getFormInputProps('gender')}
             />
@@ -313,7 +326,9 @@ export const ProfileEditing: React.FC<
             isLoading={targetMetadata.isLoading || isPrefetching}
             onPress={submitForm}
           >
-            {token?.registrationComplete ? 'Обновить' : 'Войти'}
+            {token?.registrationComplete
+              ? t('profileEditing.update')
+              : t('profileEditing.complete')}
           </Button>
         </View>
       </KeyboardAwareScrollView>

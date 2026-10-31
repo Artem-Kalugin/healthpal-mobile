@@ -5,6 +5,8 @@ import {
   RefHeaderTab,
 } from '#components/infrastructure/HeaderTabs';
 
+import { useTranslation } from '#i18n';
+
 import { ITabs, NavigatorHeaderTabRouteConfig } from './types';
 
 export const NavigatorHeaderTabs = ({
@@ -13,6 +15,7 @@ export const NavigatorHeaderTabs = ({
   navigation,
   style,
 }: ITabs) => {
+  const { t } = useTranslation();
   const customConfigArrayed = Object.values(config);
   const tabsRef = useRef<RefHeaderTab<unknown>>(null);
 
@@ -58,7 +61,7 @@ export const NavigatorHeaderTabs = ({
       tabRef={tabsRef}
       onLongPress={onLongPress}
       onPress={onPress}
-      valueExtractor={item => item.label}
+      valueExtractor={item => t(item.label)}
     />
   );
 };

@@ -7,6 +7,8 @@ import { setStatusBarHidden } from 'expo-status-bar';
 import '@formatjs/intl-locale/polyfill';
 import '@formatjs/intl-datetimeformat/polyfill';
 import '@formatjs/intl-datetimeformat/locale-data/ru';
+import '@formatjs/intl-datetimeformat/locale-data/en-150';
+import 'dayjs/locale/en-gb';
 import 'dayjs/locale/ru';
 
 import { enableFreeze } from 'react-native-screens';
@@ -16,7 +18,6 @@ import duration from 'dayjs/plugin/duration';
 
 import { App } from './src/App';
 
-dayjs.locale('ru');
 dayjs.extend(duration);
 
 YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);

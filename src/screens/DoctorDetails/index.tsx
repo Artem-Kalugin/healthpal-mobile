@@ -33,11 +33,15 @@ import { useGetDoctorQuery, useGetDoctorScheduleQuery } from '#api/Doctor';
 import { headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
 import { colors } from '#config/colors';
 
-import { MapWeekDayToName } from './config';
+import { useTranslation } from '#i18n';
+
+import { BEDoctorScheduleResponseDto } from '#generated/__entities';
 
 export const DoctorDetails: React.FC<
   MainScreenProps<MainRoutes.DoctorDetails>
 > = props => {
+  const { t } = useTranslation();
+
   const [doctorDetails, setDoctorDetails] = useState(
     props.route.params.defaultItem,
   );
@@ -90,12 +94,12 @@ export const DoctorDetails: React.FC<
         <View style={styles.statisicsContainer}>
           <StatisticsFact
             icon="patients"
-            label="Пациентов"
+            label={t('doctorDetails.patients')}
             value={doctorDetails!.patientsCount}
           />
           <StatisticsFact
             icon="medal"
-            label="Лет опыта"
+            label={t('doctorDetails.experience')}
             value={new Date().getFullYear() - doctorDetails?.practiceStartYear}
           />
           <StatisticsFact
@@ -103,12 +107,12 @@ export const DoctorDetails: React.FC<
             iconProps={{
               size: 24,
             }}
-            label="Оценка"
+            label={t('doctorDetails.rating')}
             value={+doctorDetails?.rating}
           />
           <StatisticsFact
             icon="comment"
-            label="Отзывов"
+            label={t('doctorDetails.reviews')}
             value={doctorDetails?.reviewsCount}
           />
         </View>
@@ -119,7 +123,7 @@ export const DoctorDetails: React.FC<
           color={colors.grayscale['800']}
           weight="700"
         >
-          О враче
+          {t('doctorDetails.about')}
         </TextXL>
         <Text>
           <TextSmall color={colors.grayscale['500']}>
@@ -135,7 +139,7 @@ export const DoctorDetails: React.FC<
                   textDecorationLine="underline"
                   onPress={() => setShouldCutDescription(old => !old)}
                 >
-                  показать еще
+                  {t('doctorDetails.showMore')}
                 </TextSmall>
               ) : (
                 <TextSmall
@@ -144,7 +148,7 @@ export const DoctorDetails: React.FC<
                   textDecorationLine="underline"
                   onPress={() => setShouldCutDescription(old => !old)}
                 >
-                  скрыть
+                  {t('doctorDetails.hide')}
                 </TextSmall>
               )
             ) : null}
@@ -159,18 +163,18 @@ export const DoctorDetails: React.FC<
               color={colors.grayscale['800']}
               weight="700"
             >
-              Расписание
+              {t('doctorDetails.schedule')}
             </TextXL>
             <View style={styles.scheduleDays}>
               {Object.keys(doctorScheduleQuery.data).map(
                 //@ts-expect-error Object.keys returns string[], backend guarantees all keys of DoctorScheduleResponseDto (1-7)
-                (dayId: keyof typeof MapWeekDayToName) => (
+                (dayId: keyof BEDoctorScheduleResponseDto) => (
                   <View
                     key={dayId}
                     style={styles.scheduleDay}
                   >
                     <Text style={styles.scheduleDayTitle}>
-                      {MapWeekDayToName[dayId]}
+                      {t(`weekDay.${dayId}`)}
                     </Text>
 
                     <View style={styles.scheduleRows}>
@@ -191,7 +195,7 @@ export const DoctorDetails: React.FC<
                           </View>
                         ))
                       ) : (
-                        <Text>Выходной</Text>
+                        <Text>{t('doctorDetails.dayOff')}</Text>
                       )}
                     </View>
                   </View>
@@ -205,20 +209,18 @@ export const DoctorDetails: React.FC<
                 color={colors.grayscale['800']}
                 weight="700"
               >
-                Отзывы
+                {t('doctorDetails.reviewsTitle')}
               </TextXL>
               <TouchableOpacity
                 onPress={() => {
-                  toast(
-                    'Этого экрана не было в дизайне :( но вы можете посмотреть остальную часть приложения :)',
-                  );
+                  toast(t('doctorDetails.allReviewsSoon'));
                 }}
               >
                 <TextSmall
                   color={colors.grayscale['500']}
                   weight="500"
                 >
-                  Все
+                  {t('common.all')}
                 </TextSmall>
               </TouchableOpacity>
             </View>
@@ -244,7 +246,7 @@ export const DoctorDetails: React.FC<
             />
           )
         }
-        title="Информация о враче"
+        title={t('doctorDetails.title')}
         titleTextAlign="center"
       />
       {content}
@@ -257,7 +259,7 @@ export const DoctorDetails: React.FC<
             })
           }
         >
-          Записаться на приём
+          {t('doctorDetails.book')}
         </Button>
       </View>
     </View>

@@ -1,8 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import type { Language, Region } from '#i18n/types';
+
 const initialState = {
   shouldShowOnboarding: true,
   isUserBlockedLocationPermission: false,
+  // undefined follows the device language
+  language: undefined as Language | undefined,
+  region: undefined as Region | undefined,
 };
 
 const appSlice = createSlice({
@@ -14,6 +19,12 @@ const appSlice = createSlice({
     },
     setIsUserBlockedLocationPermission(state, action: PayloadAction<boolean>) {
       state.isUserBlockedLocationPermission = action.payload;
+    },
+    setLanguage(state, action: PayloadAction<Language | undefined>) {
+      state.language = action.payload;
+    },
+    setRegion(state, action: PayloadAction<Region | undefined>) {
+      state.region = action.payload;
     },
     reset: () => initialState,
   },

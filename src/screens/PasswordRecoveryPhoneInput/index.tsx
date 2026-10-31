@@ -19,20 +19,25 @@ import {
 } from '#navigation/PasswordRecovery/types';
 
 import { useVerifyPhoneMutation } from '#api/Auth';
-import { RequestOtpDto } from '#api/Auth/dto/RequestOtpDto';
 
 import { SAFE_ZONE_BOTTOM } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { useAppForm } from '#hooks/useAppForm';
 import { useErrorHandler } from '#hooks/useErrorHandler';
+
+import { requestOtpSchema } from './config';
 
 export const PasswordRecoveryPhoneInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryPhoneInput>
 > = props => {
+  const { t } = useTranslation();
+
   const OTPTimerCtx = useTimer();
 
-  const { form, getFormInputProps } = useAppForm(RequestOtpDto);
+  const { form, getFormInputProps } = useAppForm(requestOtpSchema);
 
   const [verifyPhone, verifyPhoneMetadata] = useVerifyPhoneMutation();
 
@@ -51,9 +56,7 @@ export const PasswordRecoveryPhoneInput: React.FC<
 
     OTPTimerCtx.start(10);
 
-    toast(
-      `${res.smsDemoOnly} - код в демо, т.к. интеграция смс-провайдера платная`,
-    );
+    toast(t('common.smsDemo', { code: res.smsDemoOnly }));
 
     props.navigation.navigate(
       PasswordRecoveryRoutes.PasswordRecoveryCodeInput,
@@ -66,7 +69,7 @@ export const PasswordRecoveryPhoneInput: React.FC<
   const submitForm = form.handleSubmit(onSubmit, () => {
     Keyboard.dismiss();
 
-    toast('Некоторые поля содержат ошибки');
+    toast(t('common.formHasErrors'));
   });
 
   useErrorHandler(verifyPhoneMetadata, form);
@@ -93,10 +96,10 @@ export const PasswordRecoveryPhoneInput: React.FC<
                 color={colors.main.midnightBlue}
                 weight="600"
               >
-                Забыли пароль?
+                {t('passwordRecoveryPhoneInput.title')}
               </TextXL>
               <TextSmall textAlign="center">
-                Введите ваш номер телефона — мы отправим код подтверждения.
+                {t('passwordRecoveryPhoneInput.subtitle')}
               </TextSmall>
             </View>
 
@@ -110,9 +113,11 @@ export const PasswordRecoveryPhoneInput: React.FC<
                     />
                   }
                   keyboardType="decimal-pad"
-                  label="Номер телефона"
+                  label={t('passwordRecoveryPhoneInput.phone.label')}
                   maxLength={18}
-                  placeholder="Любой, смс в демо не придет"
+                  placeholder={t(
+                    'passwordRecoveryPhoneInput.phone.placeholder',
+                  )}
                   type="phone"
                   onSubmitEditing={submitForm}
                   {...getFormInputProps('phone')}
@@ -124,8 +129,10 @@ export const PasswordRecoveryPhoneInput: React.FC<
                 onPress={submitForm}
               >
                 {OTPTimerCtx.valueRaw
-                  ? `Доступно через ${OTPTimerCtx.value}`
-                  : 'Подтвердить'}
+                  ? t('passwordRecoveryPhoneInput.availableIn', {
+                      value: OTPTimerCtx.value,
+                    })
+                  : t('passwordRecoveryPhoneInput.submit')}
               </Button>
             </View>
           </View>

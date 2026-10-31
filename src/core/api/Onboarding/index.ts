@@ -1,4 +1,5 @@
 import { RtkAppApi } from '#api';
+import { withRequestMeta } from '#api/withRequestMeta';
 
 import { RequestsOnboarding as Requests } from './types';
 
@@ -8,12 +9,13 @@ export const OnboardingAPI = RtkAppApi.injectEndpoints({
       Requests['onboarding']['response'],
       Requests['onboarding']['args']
     >({
-      query: () => ({
+      query: args => ({
         url: '/onboarding/slides',
         method: 'get',
+        ...args,
       }),
     }),
   }),
 });
 
-export const { useOnboardingQuery } = OnboardingAPI;
+export const { useOnboardingQuery } = withRequestMeta(OnboardingAPI);

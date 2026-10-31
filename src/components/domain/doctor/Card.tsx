@@ -8,7 +8,8 @@ import { Divider, Icon, TextBase, TextSmall, TextXS } from '#ui-kit';
 
 import { shadow } from '#config';
 import { colors } from '#config/colors';
-import { MapDoctorCategoryToDoctorLabel } from '#config/locale';
+
+import { useTranslation } from '#i18n';
 
 import { BEDoctorResponseDto } from '#generated/__entities';
 
@@ -21,6 +22,8 @@ export const DoctorCard: React.FC<IDoctorCard> = ({
   item,
   onPress = undefined,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -48,7 +51,7 @@ export const DoctorCard: React.FC<IDoctorCard> = ({
         <Divider style={styles.divider} />
         <View style={styles.details}>
           <TextSmall weight="600">
-            {MapDoctorCategoryToDoctorLabel[item.category?.type]}
+            {item.category?.type && t(`doctorCategory.${item.category.type}`)}
           </TextSmall>
           <View style={styles.locationContainer}>
             <Icon

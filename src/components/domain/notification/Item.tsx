@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import dayjs from 'dayjs';
-
 import { Icon, TextBase, TextSmall } from '#ui-kit';
 import { IconNames } from '#ui-kit/Icon';
 
 import { BORDER_RADIUS_ROUNDED, NotificationTypes } from '#config';
 import { colors } from '#config/colors';
+
+import { useFormatters } from '#i18n';
 
 type INotification = {
   type: NotificationTypes;
@@ -44,6 +44,8 @@ export const NotificationItem: React.FC<INotificationItem> = ({
   item,
   style,
 }) => {
+  const { formatTime } = useFormatters();
+
   return (
     <View style={[styles.container, StyleSheet.flatten(style)]}>
       <View
@@ -72,7 +74,7 @@ export const NotificationItem: React.FC<INotificationItem> = ({
             color={colors.grayscale['500']}
             weight="400"
           >
-            {dayjs(item.timestamp).format('HH:mm')}
+            {formatTime(item.timestamp)}
           </TextSmall>
         </View>
         <TextSmall

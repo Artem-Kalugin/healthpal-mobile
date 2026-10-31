@@ -1,5 +1,7 @@
 import type { FetchArgs } from '#api/types';
 
+import type { Language, Region } from '#i18n/types';
+
 type FetchMeta = { timestamp: string };
 
 export type FetchResponse = {
@@ -32,4 +34,6 @@ export interface InterceptorContext {
   params?: FetchArgs['params'];
   path?: Record<string, string | number>;
   headers: Record<string, string>;
+  language?: Language;
+  region?: Region;
 }

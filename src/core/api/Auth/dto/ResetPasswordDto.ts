@@ -1,39 +1,33 @@
-import {
-  IsString,
-  Matches,
-  MaxLength,
-  MinLength,
-  Validate,
-  ValidationArguments,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-} from 'class-validator';
+import { z } from 'zod';
 
-@ValidatorConstraint({ name: 'PasswordsMatch', async: false })
-class PasswordsMatchConstraint implements ValidatorConstraintInterface {
-  validate(confirmPassword: string, args: ValidationArguments): boolean {
-    const { object } = args;
-    return confirmPassword === (object as ResetPasswordDto).password;
-  }
+export type ResetPasswordLabels = {
+  password: {
+    required: string;
+    minLength: string;
+    maxLength: string;
+    charset: string;
+  };
+  confirmPassword: { mismatch: string };
+};
 
-  defaultMessage(): string {
-    return 'Пароли не совпадают';
-  }
-}
+const PASSWORD_REGEX =
+  /^(?:(?=.*\p{Ll})(?=.*\p{Lu})|(?=.*\p{Ll})(?=.*\d)|(?=.*\p{Lu})(?=.*\d)).+$/u;
 
-export class ResetPasswordDto {
-  @IsString({ message: 'Пароль должен быть строкой' })
-  @MinLength(8, { message: 'Пароль должен содержать минимум 8 символов' })
-  @MaxLength(50, { message: 'Пароль не должен превышать 50 символов' })
-  @Matches(
-    /^(?:(?=.*\p{Ll})(?=.*\p{Lu})|(?=.*\p{Ll})(?=.*\d)|(?=.*\p{Lu})(?=.*\d)).+$/u,
-    {
-      message:
-        'Пароль должен содержать как минимум два типа символов: строчные, прописные или цифры',
-    },
-  )
-  password: string;
+export const createResetPasswordSchema = (labels: ResetPasswordLabels) =>
+  z
+    .object({
+      password: z
+        .string(labels.password.required)
+        .min(8, labels.password.minLength)
+        .max(50, labels.password.maxLength)
+        .regex(PASSWORD_REGEX, labels.password.charset),
+      confirmPassword: z.string(labels.confirmPassword.mismatch),
+    })
+    .refine(values => values.confirmPassword === values.password, {
+      path: ['confirmPassword'],
+      error: labels.confirmPassword.mismatch,
+    });
 
-  @Validate(PasswordsMatchConstraint)
-  confirmPassword: string;
-}
+export type ResetPasswordDto = z.infer<
+  ReturnType<typeof createResetPasswordSchema>
+>;

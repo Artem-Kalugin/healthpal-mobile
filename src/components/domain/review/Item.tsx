@@ -14,6 +14,8 @@ import { Rating, TextBase, TextSmall } from '#ui-kit';
 import { BORDER_RADIUS_ROUNDED, Images } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 type IReviewItem = {
   onPress?: () => void;
   style: StyleProp<ViewStyle>;
@@ -23,6 +25,8 @@ export const ReviewItem: React.FC<Partial<IReviewItem>> = ({
   onPress = undefined,
   style,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -40,15 +44,14 @@ export const ReviewItem: React.FC<Partial<IReviewItem>> = ({
             numberOfLines={1}
             weight="700"
           >
-            Иваныч
+            {t('review.mockAuthor')}
           </TextBase>
           <Rating value={5} />
         </View>
       </View>
 
       <TextSmall color={colors.grayscale['500']}>
-        Я единственный пользователь этого приложения, сейчас напишу это под
-        всеми врачами.
+        {t('review.mockText')}
       </TextSmall>
     </TouchableOpacity>
   );

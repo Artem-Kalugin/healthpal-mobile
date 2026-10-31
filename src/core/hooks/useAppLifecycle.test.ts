@@ -2,8 +2,11 @@
 import BootSplash from 'react-native-bootsplash';
 
 import { renderHook, waitFor } from '@testing-library/react-native';
+import { useLocales } from 'expo-localization';
 
 import { TokenService } from '#services/Token';
+
+import { getLanguage } from '#i18n';
 
 import { useAppData } from './useAppData';
 import { useAppLifecycle } from './useAppLifecycle';
@@ -11,6 +14,10 @@ import { useAppLifecycle } from './useAppLifecycle';
 jest.mock('react-native-bootsplash');
 jest.mock('#services/Token');
 jest.mock('./useAppData');
+jest.mock('expo-localization');
+
+const mockUseSelector = jest.fn();
+jest.mock('#store', () => ({ useSelector: () => mockUseSelector() }));
 
 describe('useAppLifecycle', () => {
   const mockPrefetchApp = jest.fn();
@@ -22,6 +29,8 @@ describe('useAppLifecycle', () => {
     });
     mockPrefetchApp.mockResolvedValue(undefined);
     (TokenService.load as jest.Mock).mockResolvedValue(undefined);
+    mockUseSelector.mockReturnValue(undefined);
+    (useLocales as jest.Mock).mockReturnValue([{ languageCode: 'en' }]);
   });
 
   it('должен вызываться единожды и соблюдать правильный порядок вызовов', async () => {
@@ -71,6 +80,27 @@ describe('useAppLifecycle', () => {
 
     await waitFor(() => {
       expect(BootSplash.hide).toHaveBeenCalled();
+    });
+  });
+
+  it('применяет сохранённый язык, а не язык устройства', async () => {
+    mockUseSelector.mockReturnValue('ru');
+    (useLocales as jest.Mock).mockReturnValue([{ languageCode: 'en' }]);
+
+    renderHook(() => useAppLifecycle());
+
+    await waitFor(() => {
+      expect(getLanguage()).toBe('ru');
+    });
+  });
+
+  it('следует языку устройства, если язык не сохранён', async () => {
+    (useLocales as jest.Mock).mockReturnValue([{ languageCode: 'ru' }]);
+
+    renderHook(() => useAppLifecycle());
+
+    await waitFor(() => {
+      expect(getLanguage()).toBe('ru');
     });
   });
 });

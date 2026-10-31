@@ -12,12 +12,16 @@ import { Appointments } from '#screens';
 
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { TabsConfig } from './config';
 import { AppointmentsParamList, AppointmentsRoutes } from './types';
 
 const Tabs = createMaterialTopTabNavigator<AppointmentsParamList>();
 
 export const AppointmentsStack = () => {
+  const { t } = useTranslation();
+
   return (
     <Tabs.Navigator
       initialRouteName={AppointmentsRoutes.FutureAppointments}
@@ -27,7 +31,7 @@ export const AppointmentsStack = () => {
             <HeaderWithThreeSections
               containerStyle={styles.headerContainer}
               leftElement={null}
-              title="Мои записи"
+              title={t('appointments.title')}
               titleTextAlign="center"
             />
 

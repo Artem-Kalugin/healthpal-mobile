@@ -6,9 +6,9 @@ export const TabsConfig: {
   [key in FavoritesRoutes]: NavigatorHeaderTabRouteConfig;
 } = {
   [FavoritesRoutes.FavoriteDoctors]: {
-    label: 'Врачи',
+    label: 'favorites.FavoriteDoctors.tab',
   },
   [FavoritesRoutes.FavoriteMedicalCenters]: {
-    label: 'Мед. центры',
+    label: 'favorites.FavoriteMedicalCenters.tab',
   },
 };

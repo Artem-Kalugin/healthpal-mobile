@@ -7,11 +7,14 @@ import { Button, Checkbox, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
+import { useTranslation } from '#i18n';
+
 import { useModalState } from '#hooks/useModalState';
 
 export const Select: React.FC<
   ModalsScreenProps<ModalsRoutes.Select>
 > = props => {
+  const { t } = useTranslation();
   const modal = useModalState(true);
 
   const [selectedItem, setSelectedItem] = useState<unknown>(
@@ -56,7 +59,7 @@ export const Select: React.FC<
       onClose={modal.close}
     >
       <TextXL weight="600">
-        {props.route.params.title || 'Выберите время'}
+        {props.route.params.title || t('select.defaultTitle')}
       </TextXL>
 
       <FlatList
@@ -75,7 +78,7 @@ export const Select: React.FC<
           props.route.params.onSelectionEnd(selectedItem);
         }}
       >
-        Сохранить
+        {t('select.save')}
       </Button>
     </ModalWrapper>
   );

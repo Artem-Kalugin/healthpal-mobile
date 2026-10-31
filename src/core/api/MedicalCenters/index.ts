@@ -1,5 +1,6 @@
 import { RtkAppApi } from '#api';
 import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
+import { withRequestMeta } from '#api/withRequestMeta';
 
 import { RequestsMedicalCenters as Requests } from './types';
 
@@ -30,11 +31,33 @@ export const MedicalCentersAPI = RtkAppApi.injectEndpoints({
         ...queryArg,
       }),
     }),
+    addFavoriteMedicalCenter: build.mutation<
+      Requests['addFavorite']['response'],
+      Requests['addFavorite']['args']
+    >({
+      query: args => ({
+        url: '/medical-centers/{id}/favorite',
+        method: 'post',
+        ...args,
+      }),
+    }),
+    removeFavoriteMedicalCenter: build.mutation<
+      Requests['removeFavorite']['response'],
+      Requests['removeFavorite']['args']
+    >({
+      query: args => ({
+        url: '/medical-centers/{id}/favorite',
+        method: 'delete',
+        ...args,
+      }),
+    }),
   }),
 });
 
 export const {
   useMedicalCentersQuery,
   useFavoriteMedicalCentersInfiniteQuery,
+  useAddFavoriteMedicalCenterMutation,
+  useRemoveFavoriteMedicalCenterMutation,
   useLazyMedicalCentersQuery,
-} = MedicalCentersAPI;
+} = withRequestMeta(MedicalCentersAPI);

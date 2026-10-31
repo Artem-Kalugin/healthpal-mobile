@@ -9,11 +9,14 @@ import { Button, TextXL } from '#ui-kit';
 
 import { ModalsRoutes, ModalsScreenProps } from '#navigation/Modals/types';
 
+import { useTranslation } from '#i18n';
+
 import { useModalState } from '#hooks/useModalState';
 
 export const DateTimePicker: React.FC<
   ModalsScreenProps<ModalsRoutes.DateTimePicker>
 > = props => {
+  const { t, i18n } = useTranslation();
   const modal = useModalState(true);
   const [date, setDate] = useState(props.route.params.pickerProps.date);
 
@@ -27,13 +30,13 @@ export const DateTimePicker: React.FC<
         style={styles.title}
         weight="600"
       >
-        {props.route.params.title || 'Выберите время'}
+        {props.route.params.title || t('dateTimePicker.defaultTitle')}
       </TextXL>
 
       <DatePicker
         {...props.route.params.pickerProps}
         date={date}
-        locale="ru"
+        locale={i18n.language}
         style={styles.dateTimePicker}
         onDateChange={setDate}
       />
@@ -45,7 +48,7 @@ export const DateTimePicker: React.FC<
           modal.close();
         }}
       >
-        Выбрать
+        {t('dateTimePicker.confirm')}
       </Button>
     </ModalWrapper>
   );

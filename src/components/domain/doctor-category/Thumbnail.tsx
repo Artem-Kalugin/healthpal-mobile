@@ -7,7 +7,8 @@ import { TextXS } from '#ui-kit';
 
 import { ActiveOpacities, shadow } from '#config';
 import { MapDoctorCategoryToColor } from '#config/colors';
-import { MapDoctorCategoryToLabel } from '#config/locale';
+
+import { useTranslation } from '#i18n';
 
 import { BEDoctorCategoryResponseDto } from '#generated/__entities';
 
@@ -20,6 +21,8 @@ export const DoctorCategoryThumbnail: React.FC<IDoctorCategoryThumbnail> = ({
   item,
   onPress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <TouchableOpacity
       activeOpacity={ActiveOpacities.HEAVY}
@@ -57,7 +60,7 @@ export const DoctorCategoryThumbnail: React.FC<IDoctorCategoryThumbnail> = ({
         style={styles.text}
         weight="700"
       >
-        {MapDoctorCategoryToLabel[item.type]}
+        {t(`doctorCategories.${item.type}`)}
       </TextXS>
     </TouchableOpacity>
   );

@@ -14,6 +14,7 @@ export enum MainRoutes {
   Favorites = 'MainFavorites',
   Search = 'MainSearch',
   Notifications = 'MainNotifications',
+  Settings = 'MainSettings',
   DoctorDetails = 'MainDoctorDetails',
   ScheduleAppointment = 'MainScheduleAppointment',
 }
@@ -32,6 +33,7 @@ export type MainParamList = {
     appointmentToResheduleId?: string;
   };
   [MainRoutes.Notifications]: undefined;
+  [MainRoutes.Settings]: undefined;
   [MainRoutes.Favorites]: NavigatorScreenParams<FavoritesParamList>;
   [MainRoutes.Tab]: NavigatorScreenParams<TabParamList>;
 };

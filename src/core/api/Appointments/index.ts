@@ -1,5 +1,6 @@
 import { RtkAppApi } from '#api';
 import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
+import { withRequestMeta } from '#api/withRequestMeta';
 
 import { RequestsAppointment as Requests, TagsAppointmentAPI } from './types';
 
@@ -61,4 +62,4 @@ export const {
   useCreateAppointmentMutation,
   useRescheduleAppointmentMutation,
   useCancelAppointmentMutation,
-} = AppointmentAPI;
+} = withRequestMeta(AppointmentAPI);

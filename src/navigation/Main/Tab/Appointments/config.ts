@@ -6,12 +6,12 @@ export const TabsConfig: {
   [key in AppointmentsRoutes]: NavigatorHeaderTabRouteConfig;
 } = {
   [AppointmentsRoutes.FutureAppointments]: {
-    label: 'Будут',
+    label: 'appointments.FutureAppointments.tab',
   },
   [AppointmentsRoutes.CompletedAppointments]: {
-    label: 'Прошли',
+    label: 'appointments.CompletedAppointments.tab',
   },
   [AppointmentsRoutes.CanceledAppointments]: {
-    label: 'Отменены',
+    label: 'appointments.CanceledAppointments.tab',
   },
 };

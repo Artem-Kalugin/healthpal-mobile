@@ -32,8 +32,6 @@
     "@reduxjs/toolkit": "^2.9.0",
     "@shopify/flash-list": "^2.1.0",
     "@turf/turf": "^7.2.0",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.2",
     "dayjs": "^1.11.18",
     "eslint-plugin-react-native": "^5.0.0",
     "expo": "54.0.13",
@@ -49,12 +47,14 @@
     "expo-secure-store": "~15.0.7",
     "expo-status-bar": "~3.0.8",
     "expo-system-ui": "~6.0.7",
+    "i18next": "^26.5.10",
     "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.65.0",
     "react-hot-toast": "^2.6.0",
+    "react-i18next": "^17.1.8",
     "react-native": "0.81.4",
     "react-native-advanced-input-mask": "^1.4.6",
     "react-native-background-timer": "^2.4.1",
@@ -75,7 +75,8 @@
     "react-native-worklets": "0.5.1",
     "react-native-yamap": "^4.8.3",
     "react-redux": "^9.2.0",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",

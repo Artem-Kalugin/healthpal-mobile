@@ -9,9 +9,9 @@ import {
 import { Icon } from '#ui-kit';
 
 import {
-  useAddMedicalCenterMutation,
-  useRemoveMedicalCenterMutation,
-} from '#api/Favorites';
+  useAddFavoriteMedicalCenterMutation,
+  useRemoveFavoriteMedicalCenterMutation,
+} from '#api/MedicalCenters';
 
 import { hitSlop } from '#config';
 import { colors } from '#config/colors';
@@ -51,14 +51,14 @@ export const MedicalCenterFavoriteButton: React.FC<
       : isFavoriteOnBackend;
 
   const [addMedicalCenterToFavorite, addDoctorMeta] =
-    useAddMedicalCenterMutation();
+    useAddFavoriteMedicalCenterMutation();
   const [removeMedicalCenterFromFavorite, removeDoctorMeta] =
-    useRemoveMedicalCenterMutation();
+    useRemoveFavoriteMedicalCenterMutation();
 
   const isLoading = addDoctorMeta.isLoading || removeDoctorMeta.isLoading;
 
   const handleToggleFavorite = async () => {
-    const payload = { path: { medicalCenterId } };
+    const payload = { path: { id: medicalCenterId } };
     try {
       if (isInFavorite) {
         await removeMedicalCenterFromFavorite(payload).unwrap();

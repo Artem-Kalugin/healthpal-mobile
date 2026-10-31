@@ -1,48 +1,45 @@
-import {
-  IsNotEmpty,
-  IsOptional,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { z } from 'zod';
 
 import { Gender } from '#generated/schema';
 
-export class UpdateUserDto {
-  @MaxLength(16, {
-    message: 'Имя не может быть длинее 16 символов',
-  })
-  @MinLength(2, {
-    message: 'Имя не может быть короче 2 символов',
-  })
-  @Matches(/^[А-Яа-яЁё]+(?:-[А-Яа-яЁё]+)*$/, {
-    message: 'Имя может содержать только буквы кириллицы и дефис внутри слова',
-  })
-  @IsNotEmpty({ message: 'Пожалуйста, введите имя' })
-  name: string;
+type NameLabels = {
+  required: string;
+  minLength: string;
+  maxLength: string;
+  format: string;
+};
 
-  @MaxLength(16, {
-    message: 'Фамилия не может быть длинее 16 символов',
-  })
-  @MinLength(2, {
-    message: 'Фамилия не может быть короче 2 символов',
-  })
-  @Matches(/^[А-Яа-яЁё]+(?:-[А-Яа-яЁё]+)*$/, {
-    message:
-      'Фамилия может содержать только буквы кириллицы и дефис внутри слова',
-  })
-  @IsNotEmpty({ message: 'Пожалуйста, введите фамилию' })
-  surname: string;
+export type UpdateUserLabels = {
+  name: NameLabels;
+  surname: NameLabels;
+  birthday: { required: string };
+  gender: { required: string };
+  nickname: { noSpaces: string };
+};
 
-  @IsNotEmpty({ message: 'Пожалуйста, выберите день рождения' })
-  birthday: string;
+/** Letters of any script, parts separated by a hyphen, an apostrophe or a space ("Anna-Maria", "O'Connor", "van der Berg"). */
+const NAME_PATTERN = /^\p{L}+(?:[-'’ ]\p{L}+)*$/u;
 
-  @IsNotEmpty({ message: 'Пожалуйста, выберите пол' })
-  gender: Gender;
+const createNameSchema = (labels: NameLabels) =>
+  z
+    .string(labels.required)
+    .min(1, labels.required)
+    .min(2, labels.minLength)
+    .max(16, labels.maxLength)
+    .regex(NAME_PATTERN, labels.format);
 
-  @IsOptional()
-  @Matches(/^[^\s]*$/, {
-    message: 'Имя пользователя не может содержать пробелов',
-  })
-  nickname?: string;
-}
+export const createUpdateUserSchema = (labels: UpdateUserLabels) =>
+  z.object({
+    name: createNameSchema(labels.name),
+    surname: createNameSchema(labels.surname),
+    birthday: z
+      .string(labels.birthday.required)
+      .min(1, labels.birthday.required),
+    gender: z.enum(Gender, labels.gender.required),
+    nickname: z
+      .string()
+      .regex(/^[^\s]*$/, labels.nickname.noSpaces)
+      .optional(),
+  });
+
+export type UpdateUserDto = z.infer<ReturnType<typeof createUpdateUserSchema>>;

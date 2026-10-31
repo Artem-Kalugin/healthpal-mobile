@@ -16,7 +16,10 @@ import { useOnboardingQuery } from '#api/Onboarding';
 import { SAFE_ZONE_BOTTOM } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
+  const { t } = useTranslation();
   const onboardingQuery = useOnboardingQuery(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
@@ -76,7 +79,11 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
             </Animated.View>
             <View style={styles.buttonContainer}>
               <Button onPress={onPressNext}>
-                {lastSlideIndex === activeSlideIndex ? 'Продолжить' : 'Далее'}
+                {t(
+                  lastSlideIndex === activeSlideIndex
+                    ? 'onboarding.continue'
+                    : 'onboarding.next',
+                )}
               </Button>
             </View>
           </View>

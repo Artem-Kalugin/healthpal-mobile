@@ -13,6 +13,8 @@ import { toast } from 'react-hot-toast/headless';
 
 import { Logger } from '#services/Logger';
 
+import { t } from '#i18n';
+
 import { permissionsAlertsConfigs } from './config';
 import {
   CheckPermissionResult,
@@ -39,12 +41,12 @@ export class PermissionManager {
     const alert = config.blockedAlert;
 
     Alert.alert(
-      alert.title ?? 'Разрешение',
-      alert.message ?? 'Для выдачи разрешения необходимо перейти в настройки',
+      t(alert.title ?? 'permissions.alertTitle'),
+      t(alert.message ?? 'permissions.blockedMessage'),
       [
-        { text: 'Отмена', style: 'cancel' },
+        { text: t('permissions.cancel'), style: 'cancel' },
         {
-          text: 'Открыть настройки',
+          text: t('permissions.openSettings'),
           onPress: () => openSettings().catch(() => {}),
         },
       ],
@@ -74,7 +76,7 @@ export class PermissionManager {
     Logger.custom('permission', 'status initial', status);
     if (status === RESULTS.UNAVAILABLE) {
       config.toastForUnavailablePermission &&
-        toast(config.toastForUnavailablePermission);
+        toast(t(config.toastForUnavailablePermission));
       return { allowed: false, originalStatus: status };
     }
 
@@ -114,7 +116,8 @@ export class PermissionManager {
     }
 
     if (result === RESULTS.DENIED) {
-      config.toastForDeniedPermission && toast(config.toastForDeniedPermission);
+      config.toastForDeniedPermission &&
+        toast(t(config.toastForDeniedPermission));
     }
 
     return { allowed: false, originalStatus, requestStatus: result };

@@ -25,11 +25,15 @@ import { useVerifyCodeMutation, useVerifyPhoneMutation } from '#api/Auth';
 import { layoutAnimation, SAFE_ZONE_BOTTOM } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { useErrorHandler } from '#hooks/useErrorHandler';
 
 export const PasswordRecoveryCodeInput: React.FC<
   PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoveryCodeInput>
 > = props => {
+  const { t } = useTranslation();
+
   const OTPTimerCtx = useTimer();
 
   const resendAvailable = !OTPTimerCtx.valueRaw;
@@ -72,7 +76,11 @@ export const PasswordRecoveryCodeInput: React.FC<
       return;
     }
 
-    toast(`Код был отправлен на телефон ${props.route.params.phone}`);
+    toast(
+      t('passwordRecoveryCodeInput.codeSent', {
+        phone: props.route.params.phone,
+      }),
+    );
 
     OTPTimerCtx.start(10);
 
@@ -82,9 +90,7 @@ export const PasswordRecoveryCodeInput: React.FC<
       },
     }).unwrap();
 
-    toast(
-      `${res.smsDemoOnly} - код в демо, т.к. интеграция смс-провайдера платная`,
-    );
+    toast(t('common.smsDemo', { code: res.smsDemoOnly }));
   };
 
   useErrorHandler(verifyPhoneMetadata);
@@ -111,10 +117,10 @@ export const PasswordRecoveryCodeInput: React.FC<
                 color={colors.main.midnightBlue}
                 weight="600"
               >
-                Подтверждение кода
+                {t('passwordRecoveryCodeInput.title')}
               </TextXL>
               <TextSmall textAlign="center">
-                Введите код, который мы отправили на ваш номер телефона.
+                {t('passwordRecoveryCodeInput.subtitle')}
               </TextSmall>
             </View>
 
@@ -138,7 +144,9 @@ export const PasswordRecoveryCodeInput: React.FC<
                     color={colors.grayscale[400]}
                     textAlign="center"
                   >
-                    Отправить снова можно будет через {OTPTimerCtx.value}
+                    {t('passwordRecoveryCodeInput.resendIn', {
+                      value: OTPTimerCtx.value,
+                    })}
                   </TextSmall>
                 </Animated.View>
               ) : (
@@ -150,7 +158,7 @@ export const PasswordRecoveryCodeInput: React.FC<
                 >
                   <Animated.View layout={layoutAnimation}>
                     <TextSmall textAlign="center">
-                      Не получили код?{' '}
+                      {t('passwordRecoveryCodeInput.noCode')}{' '}
                       <TextSmall
                         color={
                           verifyPhoneMetadata.isLoading
@@ -159,7 +167,7 @@ export const PasswordRecoveryCodeInput: React.FC<
                         }
                         onPress={onResend}
                       >
-                        Отправить снова
+                        {t('passwordRecoveryCodeInput.resend')}
                       </TextSmall>
                     </TextSmall>
                   </Animated.View>

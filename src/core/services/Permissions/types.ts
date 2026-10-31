@@ -1,11 +1,13 @@
 import { Permission, PermissionStatus } from 'react-native-permissions';
 
+import type { TranslationKey } from '#i18n/types';
+
 export interface PermissionRequestConfig {
-  toastForUnavailablePermission?: string;
-  toastForDeniedPermission?: string;
+  toastForUnavailablePermission?: TranslationKey;
+  toastForDeniedPermission?: TranslationKey;
   blockedAlert: {
-    title?: string;
-    message?: string;
+    title?: TranslationKey;
+    message?: TranslationKey;
   };
 }
 

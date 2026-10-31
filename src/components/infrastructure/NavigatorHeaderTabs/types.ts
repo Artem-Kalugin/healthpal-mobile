@@ -7,7 +7,9 @@ import {
 
 import { IHeaderTabs } from '#components/infrastructure/HeaderTabs';
 
-export type NavigatorHeaderTabRouteConfig = { label: string };
+import type { TranslationKey } from '#i18n/types';
+
+export type NavigatorHeaderTabRouteConfig = { label: TranslationKey };
 type NavigatorTabsConfig = Record<string, NavigatorHeaderTabRouteConfig>;
 
 export interface ITabs {

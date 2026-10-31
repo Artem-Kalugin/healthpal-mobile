@@ -4,6 +4,7 @@ import { DoctorAPI } from '#api/Doctor';
 import { MedicalCentersAPI } from '#api/MedicalCenters';
 import { OnboardingAPI } from '#api/Onboarding';
 import { UserAPI } from '#api/User';
+import { useRequestMeta } from '#api/withRequestMeta';
 
 import { LocationService } from '#services/Location';
 
@@ -17,6 +18,7 @@ const prefetchConfig = {
 
 export const useAppData = () => {
   const [isPrefetching, setIsPrefetching] = useState(false);
+  const meta = useRequestMeta();
 
   const prefetchDoctorCategories = DoctorAPI.usePrefetch(
     'doctorCategories',
@@ -38,10 +40,10 @@ export const useAppData = () => {
 
     const shouldShowOnboarding = storeState.app.shouldShowOnboarding;
     const requestToPrefetch = [
-      shouldShowOnboarding && prefetchOnboarding(null),
+      shouldShowOnboarding && prefetchOnboarding({ meta }),
       ...(storeState.runtime.token &&
       storeState.runtime.token.registrationComplete
-        ? [prefetchDoctorCategories(null), prefetchCurrentUser(null), ,]
+        ? [prefetchDoctorCategories({ meta }), prefetchCurrentUser({ meta }), ,]
         : []),
     ];
 
@@ -60,6 +62,7 @@ export const useAppData = () => {
                 lon: `${location.coords.longitude}`,
                 shouldTake5Only: true,
               },
+              meta,
             }),
           );
         }

@@ -7,7 +7,7 @@ export const PaginationConfig = {
     allPages: Page[],
     lastPageParam: number,
   ) => {
-    if (lastPage.page * lastPage.size > lastPage.count) {
+    if (!lastPage.hasMore) {
       return undefined;
     }
     return lastPageParam + 1;

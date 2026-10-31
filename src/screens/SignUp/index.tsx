@@ -25,7 +25,6 @@ import { AuthRoutes, AuthScreenProps } from '#navigation/Auth/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useRegisterMutation } from '#api/Auth';
-import { CreateUserDto } from '#api/Auth/dto/CreateUserDto';
 
 import { TokenService } from '#services/Token';
 
@@ -37,6 +36,8 @@ import {
 } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { useAppForm } from '#hooks/useAppForm';
 import { useErrorHandler } from '#hooks/useErrorHandler';
 
@@ -45,19 +46,23 @@ import { reactSync } from '#utils';
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
 
+import { createUserSchema } from './config';
+
 export const SignUp: React.FC<
   CompositeScreenProps<
     AuthScreenProps<AuthRoutes.SignUp>,
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
 
   const surnameInputRef = useRef<TextInput>(null);
   const phoneInputRef = useRef<MaskedTextInputRef>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const { form, getFormInputProps } = useAppForm(CreateUserDto);
+  const { form, getFormInputProps } = useAppForm(createUserSchema);
 
   const [register, registerMetadata] = useRegisterMutation();
 
@@ -95,7 +100,7 @@ export const SignUp: React.FC<
   const submitForm = form.handleSubmit(onSubmit, () => {
     Keyboard.dismiss();
 
-    toast('Некоторые поля содержат ошибки');
+    toast(t('common.formHasErrors'));
   });
 
   useErrorHandler(registerMetadata, form);
@@ -119,9 +124,9 @@ export const SignUp: React.FC<
               color={colors.main.midnightBlue}
               weight="600"
             >
-              Создать аккаунт
+              {t('signUp.title')}
             </TextXL>
-            <TextSmall>Мы здесь, чтобы помочь вам!</TextSmall>
+            <TextSmall>{t('signUp.subtitle')}</TextSmall>
           </Animated.View>
 
           <View style={styles.main}>
@@ -132,7 +137,7 @@ export const SignUp: React.FC<
                   autoCapitalize="words"
                   containerStyle={styles.inputInRow}
                   IconLeft={<Icon name="user" />}
-                  label="Имя"
+                  label={t('signUp.name.label')}
                   onSubmitEditing={() => surnameInputRef.current?.focus()}
                   {...getFormInputProps('name')}
                 />
@@ -140,7 +145,7 @@ export const SignUp: React.FC<
                   autoCapitalize="words"
                   containerStyle={styles.inputInRow}
                   inputRef={surnameInputRef}
-                  label="Фамилия"
+                  label={t('signUp.surname.label')}
                   onSubmitEditing={() => phoneInputRef.current?.focus()}
                   {...getFormInputProps('surname')}
                 />
@@ -155,9 +160,9 @@ export const SignUp: React.FC<
                 }
                 inputRef={phoneInputRef}
                 keyboardType="decimal-pad"
-                label="Номер телефона"
+                label={t('signUp.phone.label')}
                 maxLength={18}
-                placeholder="Любой, смс в демо не придет"
+                placeholder={t('signUp.phone.placeholder')}
                 type="phone"
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
                 {...getFormInputProps('phone')}
@@ -175,7 +180,7 @@ export const SignUp: React.FC<
                   </TouchableOpacity>
                 }
                 inputRef={passwordInputRef}
-                label="Пароль"
+                label={t('signUp.password.label')}
                 returnKeyType="done"
                 secureTextEntry={enableSecurePassword}
                 onSubmitEditing={submitForm}
@@ -186,7 +191,7 @@ export const SignUp: React.FC<
               isLoading={registerMetadata.isLoading}
               onPress={submitForm}
             >
-              Создать аккаунт
+              {t('signUp.submit')}
             </Button>
           </View>
         </View>
@@ -200,8 +205,10 @@ export const SignUp: React.FC<
           }}
         >
           <TextSmall textAlign="center">
-            Уже есть аккаунт?{' '}
-            <TextSmall color={colors.primary.normal}>Войти</TextSmall>
+            {t('signUp.hasAccount')}{' '}
+            <TextSmall color={colors.primary.normal}>
+              {t('signUp.signIn')}
+            </TextSmall>
           </TextSmall>
         </TouchableOpacity>
       </View>

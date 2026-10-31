@@ -28,6 +28,8 @@ import { useLazyMedicalCentersQuery } from '#api/MedicalCenters';
 
 import { shadow } from '#config';
 
+import { useTranslation } from '#i18n';
+
 import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { reactSync } from '#utils';
@@ -52,6 +54,8 @@ export const Map: React.FC<
     MainScreenProps<MainRoutes>
   >
 > = props => {
+  const { t } = useTranslation();
+
   const doctorCategories = useDoctorCategoriesQuery(null);
   const yamapRef = useRef<YaMap>(null);
   const showMedicalCentersProgress = useSharedValue(0);
@@ -195,7 +199,7 @@ export const Map: React.FC<
           <TextInput
             IconLeft={<Icon name="search" />}
             inputWrapperStyle={shadow}
-            placeholder="Поиск"
+            placeholder={t('map.searchPlaceholder')}
             pointerEvents="none"
             size="small"
             style={styles.searchBar}

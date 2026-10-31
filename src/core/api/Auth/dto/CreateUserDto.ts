@@ -1,30 +1,34 @@
-import { IsNotEmpty, Matches, MaxLength, MinLength } from 'class-validator';
+import { z } from 'zod';
 
-import { LoginDto } from './LoginDto';
+import { createLoginSchema, LoginLabels } from './LoginDto';
 
-export class CreateUserDto extends LoginDto {
-  @MaxLength(16, {
-    message: 'Имя не может быть длинее 16 символов',
-  })
-  @MinLength(2, {
-    message: 'Имя не может быть короче 2 символов',
-  })
-  @Matches(/^[А-Яа-яЁё]+(?:-[А-Яа-яЁё]+)*$/, {
-    message: 'Имя может содержать только буквы кириллицы и дефис внутри слова',
-  })
-  @IsNotEmpty({ message: 'Пожалуйста, введите имя' })
-  name: string;
+type NameLabels = {
+  required: string;
+  minLength: string;
+  maxLength: string;
+  format: string;
+};
 
-  @MaxLength(16, {
-    message: 'Фамилия не может быть длинее 16 символов',
-  })
-  @MinLength(2, {
-    message: 'Фамилия не может быть короче 2 символов',
-  })
-  @Matches(/^[А-Яа-яЁё]+(?:-[А-Яа-яЁё]+)*$/, {
-    message:
-      'Фамилия может содержать только буквы кириллицы и дефис внутри слова',
-  })
-  @IsNotEmpty({ message: 'Пожалуйста, введите фамилию' })
-  surname: string;
-}
+export type CreateUserLabels = LoginLabels & {
+  name: NameLabels;
+  surname: NameLabels;
+};
+
+/** Letters of any script, parts separated by a hyphen, an apostrophe or a space ("Anna-Maria", "O'Connor", "van der Berg"). */
+const NAME_PATTERN = /^\p{L}+(?:[-'’ ]\p{L}+)*$/u;
+
+const createNameSchema = (labels: NameLabels) =>
+  z
+    .string(labels.required)
+    .min(1, labels.required)
+    .min(2, labels.minLength)
+    .max(16, labels.maxLength)
+    .regex(NAME_PATTERN, labels.format);
+
+export const createCreateUserSchema = (labels: CreateUserLabels) =>
+  createLoginSchema(labels).extend({
+    name: createNameSchema(labels.name),
+    surname: createNameSchema(labels.surname),
+  });
+
+export type CreateUserDto = z.infer<ReturnType<typeof createCreateUserSchema>>;

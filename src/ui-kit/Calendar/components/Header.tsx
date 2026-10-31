@@ -10,26 +10,19 @@ import { TextSmall, TextXS } from '#ui-kit/Text';
 import { hitSlopSmall } from '#config';
 import { colors } from '#config/colors';
 
+import { useFormatters, useTranslation } from '#i18n';
+
 export const CalendarHeaderTestIds = {
   arrowLeft: 'CalendarHeader_arrowLeft',
   arrowRight: 'CalendarHeader_arrowRight',
   loader: 'CalendarHeader_loader',
 };
 
-export const CalendarMonthNames = [
-  'Январь',
-  'Февраль',
-  'Март',
-  'Апрель',
-  'Май',
-  'Июнь',
-  'Июль',
-  'Август',
-  'Сентябрь',
-  'Октябрь',
-  'Ноябрь',
-  'Декабрь',
-];
+const WeekDays = ['1', '2', '3', '4', '5', '6', '7'] as const;
+
+// ru returns a lowercase standalone month name
+const capitalize = (value: string) =>
+  value.charAt(0).toUpperCase() + value.slice(1);
 
 export const CalendarHeader = ({
   displayLoadingIndicator,
@@ -44,6 +37,8 @@ export const CalendarHeader = ({
   onPressArrowRight: () => void;
   testIdsConfig: typeof CalendarHeaderTestIds;
 }) => {
+  const { t } = useTranslation();
+  const { formatDate } = useFormatters();
   const displayableDate = new Date(month);
   return (
     <View style={styles.headerWrapper}>
@@ -53,7 +48,7 @@ export const CalendarHeader = ({
             color={colors.main.midnightBlue}
             weight="700"
           >
-            {CalendarMonthNames[displayableDate.getMonth()]}{' '}
+            {capitalize(formatDate(displayableDate, { month: 'long' }))}{' '}
             {displayableDate.getFullYear()}
           </TextSmall>
           {displayLoadingIndicator && <Loader testID={testIdsConfig.loader} />}
@@ -94,7 +89,7 @@ export const CalendarHeader = ({
         </View>
       </View>
       <View style={styles.weekDays}>
-        {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map(weekDay => (
+        {WeekDays.map(weekDay => (
           <View
             key={weekDay}
             style={styles.weekDayContainer}
@@ -103,7 +98,7 @@ export const CalendarHeader = ({
               color={colors.grayscale['600']}
               weight="600"
             >
-              {weekDay}
+              {t(`calendar.weekDays.${weekDay}`)}
             </TextXS>
           </View>
         ))}

@@ -29,12 +29,13 @@ import {
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useResetPasswordMutation } from '#api/Auth';
-import { ResetPasswordDto } from '#api/Auth/dto/ResetPasswordDto';
 
 import { TokenService } from '#services/Token';
 
 import { SAFE_ZONE_BOTTOM } from '#config';
 import { colors } from '#config/colors';
+
+import { useTranslation } from '#i18n';
 
 import { useAppData } from '#hooks/useAppData';
 import { useAppForm } from '#hooks/useAppForm';
@@ -43,12 +44,16 @@ import { useErrorHandler } from '#hooks/useErrorHandler';
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
 
+import { resetPasswordSchema } from './config';
+
 export const PasswordRecoverySetPassword: React.FC<
   CompositeScreenProps<
     PasswordRecoveryScreenProps<PasswordRecoveryRoutes.PasswordRecoverySetPassword>,
     RootScreenProps<AppRoutes>
   >
 > = props => {
+  const { t } = useTranslation();
+
   const confirmPasswordInputRef = useRef<TextInput>(null);
 
   const dispatch = useDispatch();
@@ -61,7 +66,7 @@ export const PasswordRecoverySetPassword: React.FC<
 
   const [resetPassowrd, resetPasswordMetadata] = useResetPasswordMutation();
 
-  const { form, getFormInputProps } = useAppForm(ResetPasswordDto);
+  const { form, getFormInputProps } = useAppForm(resetPasswordSchema);
 
   const onSubmit = async () => {
     Keyboard.dismiss();
@@ -79,7 +84,7 @@ export const PasswordRecoverySetPassword: React.FC<
 
     await TokenService.save(res);
 
-    toast('Пароль был успешно изменен');
+    toast(t('passwordRecoverySetPassword.success'));
 
     await prefetchApp();
 
@@ -100,7 +105,7 @@ export const PasswordRecoverySetPassword: React.FC<
   const submitForm = form.handleSubmit(onSubmit, () => {
     Keyboard.dismiss();
 
-    toast('Некоторые поля содержат ошибки');
+    toast(t('common.formHasErrors'));
   });
 
   useErrorHandler(resetPasswordMetadata, form);
@@ -127,10 +132,10 @@ export const PasswordRecoverySetPassword: React.FC<
                 color={colors.main.midnightBlue}
                 weight="600"
               >
-                Создайте новый пароль
+                {t('passwordRecoverySetPassword.title')}
               </TextXL>
               <TextSmall textAlign="center">
-                Ваш новый пароль должен отличаться от ранее использованных.
+                {t('passwordRecoverySetPassword.subtitle')}
               </TextSmall>
             </View>
 
@@ -148,7 +153,7 @@ export const PasswordRecoverySetPassword: React.FC<
                       />
                     </TouchableOpacity>
                   }
-                  label="Пароль"
+                  label={t('passwordRecoverySetPassword.password.label')}
                   returnKeyType="done"
                   secureTextEntry={enableSecurePassword}
                   onSubmitEditing={() =>
@@ -172,7 +177,7 @@ export const PasswordRecoverySetPassword: React.FC<
                     </TouchableOpacity>
                   }
                   inputRef={confirmPasswordInputRef}
-                  label="Подтвердите пароль"
+                  label={t('passwordRecoverySetPassword.confirmPassword.label')}
                   returnKeyType="done"
                   secureTextEntry={enableSecureConfirmPassword}
                   onSubmitEditing={submitForm}
@@ -183,7 +188,7 @@ export const PasswordRecoverySetPassword: React.FC<
                 isLoading={resetPasswordMetadata.isLoading || isPrefetching}
                 onPress={submitForm}
               >
-                Сменить пароль
+                {t('passwordRecoverySetPassword.submit')}
               </Button>
             </View>
           </View>

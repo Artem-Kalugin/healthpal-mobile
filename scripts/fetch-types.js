@@ -9,7 +9,8 @@ import ts from 'typescript';
 
 import { prettify } from './utils.js';
 
-const BE_API_DOCS_JSON_PATH = 'http://localhost:3000/api-json';
+const BE_API_DOCS_JSON_PATH =
+  'https://temptable-shantelle-cusped.ngrok-free.dev/api-json';
 
 const PARSED_SCHEMA_LOCAL_PATH = './generated/schema.ts';
 const __ENTITIES_LOCAL_PATH = './generated/__entities.ts';

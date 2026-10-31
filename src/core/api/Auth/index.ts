@@ -1,5 +1,6 @@
 import { RtkAppApi } from '#api';
 import { TagsUserAPI } from '#api/User/types';
+import { withRequestMeta } from '#api/withRequestMeta';
 
 import { RequestsAuth as Requests } from './types';
 
@@ -75,6 +76,7 @@ const AuthAPI = RtkAppApi.injectEndpoints({
           url: '/auth/complete-registration',
           method: 'post',
           data: formData,
+          meta: args.meta,
         };
       },
     }),
@@ -98,4 +100,4 @@ export const {
   useCompleteRegistationMutation,
   useResetPasswordMutation,
   useRegisterMutation,
-} = AuthAPI;
+} = withRequestMeta(AuthAPI);

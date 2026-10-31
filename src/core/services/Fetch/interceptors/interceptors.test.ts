@@ -42,24 +42,26 @@ describe('paramsInterceptor', () => {
   });
 });
 
+const requestContext = { language: 'ru' as const, region: 'RU' as const };
+
 describe('headersInterceptor', () => {
   test('должен установить multipart для FormData', () => {
     const formData = new FormData();
-    const context = { data: formData, headers: {} };
+    const context = { ...requestContext, data: formData, headers: {} };
 
     headersInterceptor(context);
 
-    expect(context.headers).toEqual({
+    expect(context.headers).toMatchObject({
       'Content-Type': 'multipart/form-data',
     });
   });
 
   test('должен установить JSON для объекта', () => {
-    const context = { data: { name: 'John' }, headers: {} };
+    const context = { ...requestContext, data: { name: 'John' }, headers: {} };
 
     headersInterceptor(context);
 
-    expect(context.headers).toEqual({
+    expect(context.headers).toMatchObject({
       'Content-Type': 'application/json',
     });
   });

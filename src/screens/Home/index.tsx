@@ -24,7 +24,6 @@ import { Icon, TextBase, TextInput, TextSmall } from '#ui-kit';
 
 import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
-import { ModalsRoutes, SelectModalParams } from '#navigation/Modals/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useDoctorCategoriesQuery } from '#api/Doctor';
@@ -40,6 +39,9 @@ import {
 } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
+import { RegionSelector } from './components/RegionSelector';
 import { slides } from './config';
 
 export const Home: React.FC<
@@ -51,6 +53,8 @@ export const Home: React.FC<
     >
   >
 > = props => {
+  const { t } = useTranslation();
+
   const [isUserDecidedLocationUsage, setIsUserDecidedLocationUsage] =
     useState(false);
   const [location, setLocation] =
@@ -106,33 +110,7 @@ export const Home: React.FC<
         style={styles.header}
       >
         <View style={styles.locationAndNotificationsWrapper}>
-          <View style={styles.locationContainer}>
-            <TextSmall color={colors.grayscale['500']}>Город</TextSmall>
-            <TouchableOpacity
-              style={styles.locationSelector}
-              onPress={() => {
-                props.navigation.navigate(AppRoutes.StackModals, {
-                  screen: ModalsRoutes.Select,
-                  params: {
-                    title: 'Выберите город',
-                    data: ['Москва', 'Тоже Москва'],
-                    keyExtractor: item => item,
-                    checkedExtractor: (item, currentItem) =>
-                      item === currentItem,
-                    renderItem: item => (
-                      <TextBase weight="400">{item}</TextBase>
-                    ),
-                    onSelectionEnd: () => {},
-                    defaultValue: 'Москва',
-                  } as SelectModalParams<string>,
-                });
-              }}
-            >
-              <Icon name="mapActive" />
-              <TextSmall weight="600">Москва</TextSmall>
-              <Icon name="chevronDown" />
-            </TouchableOpacity>
-          </View>
+          <RegionSelector />
 
           <TouchableOpacity
             style={styles.notificationsContainer}
@@ -155,7 +133,7 @@ export const Home: React.FC<
           <TextInput
             IconLeft={<Icon name="search" />}
             inputWrapperStyle={styles.searchBar}
-            placeholder="Поиск врача…"
+            placeholder={t('home.searchPlaceholder')}
             pointerEvents="none"
             size="small"
           />
@@ -190,7 +168,7 @@ export const Home: React.FC<
 
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <TextBase weight="700">Специализации</TextBase>
+          <TextBase weight="700">{t('home.specializations')}</TextBase>
           <TouchableOpacity
             disabled={!doctorCategories.data}
             onPress={() =>
@@ -203,7 +181,7 @@ export const Home: React.FC<
               color={colors.grayscale['500']}
               weight="500"
             >
-              Все
+              {t('common.all')}
             </TextSmall>
           </TouchableOpacity>
         </View>
@@ -236,19 +214,17 @@ export const Home: React.FC<
         <View style={styles.sectionHeader}>
           <TextBase weight="700">
             {isUserDecidedLocationUsage && location
-              ? 'Ближайшие медицинские центры'
-              : 'Медицинские центры'}
+              ? t('home.nearbyCenters')
+              : t('home.centers')}
           </TextBase>
           <TextSmall
             color={colors.grayscale['500']}
             weight="500"
             onPress={() => {
-              toast(
-                'Раздел “Все медицинские центры” появится в следующем обновлении :)',
-              );
+              toast(t('home.allCentersSoon'));
             }}
           >
-            Все
+            {t('common.all')}
           </TextSmall>
         </View>
         <FlatList
@@ -287,14 +263,6 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 24,
     gap: 14,
-  },
-  locationContainer: {
-    gap: 4,
-  },
-  locationSelector: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
   },
   notificationsContainer: {
     height: 34,

@@ -4,6 +4,8 @@ import { check, request, RESULTS } from 'react-native-permissions';
 
 import { toast } from 'react-hot-toast/headless';
 
+import { t } from '#i18n';
+
 import { PermissionManager } from '.';
 import { permissionsAlertsConfigs } from './config';
 import { PermissionRequestConfig } from './types';
@@ -35,11 +37,11 @@ jest.mock('./config', () => ({
 describe('PermissionManager', () => {
   const mockPermission = 'ios.permission.CAMERA';
   const mockConfig: PermissionRequestConfig = {
-    toastForUnavailablePermission: 'Unavailable message',
-    toastForDeniedPermission: 'Denied message',
+    toastForUnavailablePermission: 'permissions.unavailable',
+    toastForDeniedPermission: 'permissions.camera.denied',
     blockedAlert: {
-      title: 'Blocked title',
-      message: 'Blocked message',
+      title: 'permissions.blockedTitle',
+      message: 'permissions.blockedMessage',
     },
   };
 
@@ -238,9 +240,7 @@ describe('PermissionManager', () => {
 
       await PermissionManager.request([mockPermission], mockConfig);
 
-      expect(toast).toHaveBeenCalledWith(
-        mockConfig.toastForUnavailablePermission,
-      );
+      expect(toast).toHaveBeenCalledWith(t('permissions.unavailable'));
     });
 
     it('должен показать toast для DENIED после запроса если задан', async () => {
@@ -249,13 +249,16 @@ describe('PermissionManager', () => {
 
       await PermissionManager.request([mockPermission], mockConfig);
 
-      expect(toast).toHaveBeenCalledWith(mockConfig.toastForDeniedPermission);
+      expect(toast).toHaveBeenCalledWith(t('permissions.camera.denied'));
     });
 
     it('не должен показывать toast если не заданы', async () => {
       (check as jest.Mock).mockResolvedValue(RESULTS.UNAVAILABLE);
       const minimalConfig: PermissionRequestConfig = {
-        blockedAlert: { title: 'Test', message: 'Test' },
+        blockedAlert: {
+          title: 'permissions.blockedTitle',
+          message: 'permissions.blockedMessage',
+        },
       };
 
       await PermissionManager.request([mockPermission], minimalConfig);

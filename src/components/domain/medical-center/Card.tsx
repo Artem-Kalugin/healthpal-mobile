@@ -14,7 +14,8 @@ import { Divider, Icon, Rating, TextSmall, TextXS } from '#ui-kit';
 
 import { BORDER_RADIUS_ROUNDED, shadow } from '#config';
 import { colors } from '#config/colors';
-import { MapMedicalCenterTypeToLabel } from '#config/locale';
+
+import { useTranslation } from '#i18n';
 
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
 
@@ -29,6 +30,8 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
   item,
   onPress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -63,7 +66,7 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
             <TextXS color={colors.grayscale['500']}>{item?.address}</TextXS>
           </View>
           <View style={styles.ratingContainer}>
-            <Rating value={item.rating} />
+            {item.rating !== null && <Rating value={item.rating} />}
             <TextXS color={colors.grayscale['500']}>
               {item?.reviewsCount} отзывов
             </TextXS>
@@ -83,7 +86,7 @@ export const MedicalCenterCard: React.FC<IMedicalCenterCard> = ({
               <View style={styles.type}>
                 <Icon name="hospital" />
                 <TextXS color={colors.grayscale['500']}>
-                  {MapMedicalCenterTypeToLabel[item.type]}
+                  {t(`medicalCenterType.${item.type}`)}
                 </TextXS>
               </View>
             </View>

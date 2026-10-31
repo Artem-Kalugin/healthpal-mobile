@@ -8,7 +8,10 @@ import {
 
 import { Icon } from '#ui-kit';
 
-import { useAddDoctorMutation, useRemoveDoctorMutation } from '#api/Favorites';
+import {
+  useAddFavoriteDoctorMutation,
+  useRemoveFavoriteDoctorMutation,
+} from '#api/Doctor';
 
 import { hitSlop } from '#config';
 
@@ -48,9 +51,9 @@ export const DoctorFavoriteButton: React.FC<IDoctorFavoriteButton> = ({
       ? false
       : isFavoriteOnBackend;
 
-  const [addDoctorToFavorite, addDoctorMeta] = useAddDoctorMutation();
+  const [addDoctorToFavorite, addDoctorMeta] = useAddFavoriteDoctorMutation();
   const [removeDoctorFromFavorite, removeDoctorMeta] =
-    useRemoveDoctorMutation();
+    useRemoveFavoriteDoctorMutation();
 
   const isLoading = addDoctorMeta.isLoading || removeDoctorMeta.isLoading;
 
@@ -59,7 +62,7 @@ export const DoctorFavoriteButton: React.FC<IDoctorFavoriteButton> = ({
       return;
     }
 
-    const payload = { path: { doctorId } };
+    const payload = { path: { id: doctorId } };
     try {
       if (isInFavorite) {
         await removeDoctorFromFavorite(payload).unwrap();

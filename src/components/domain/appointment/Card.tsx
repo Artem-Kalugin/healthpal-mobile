@@ -6,8 +6,6 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import dayjs from 'dayjs';
-
 import { DoctorItem } from '#components/domain/doctor/Item';
 
 import { Divider, TextSmall } from '#ui-kit';
@@ -15,7 +13,16 @@ import { Divider, TextSmall } from '#ui-kit';
 import { shadow } from '#config';
 import { colors } from '#config/colors';
 
+import { useFormatters } from '#i18n';
+
 import { BEAppointmentResponseDto } from '#generated/__entities';
+
+// `date` is a calendar day without a time zone, so it must not be shifted by the device offset
+const DATE_FORMAT: Intl.DateTimeFormatOptions = {
+  day: 'numeric',
+  month: 'long',
+  timeZone: 'UTC',
+};
 
 type IAppointmentCard = {
   item: BEAppointmentResponseDto;
@@ -32,6 +39,8 @@ export const AppointmentCard: React.FC<IAppointmentCard> = ({
   Footer,
   style,
 }) => {
+  const { formatDate } = useFormatters();
+
   return (
     <TouchableOpacity
       disabled={!onPress}
@@ -42,7 +51,7 @@ export const AppointmentCard: React.FC<IAppointmentCard> = ({
         color={colors.grayscale['800']}
         weight="700"
       >
-        {dayjs(item.date).format('DD MMMM')}, {item.startTime.slice(0, 5)} -{' '}
+        {formatDate(item.date, DATE_FORMAT)}, {item.startTime.slice(0, 5)} -{' '}
         {item.endTime.slice(0, 5)}
       </TextSmall>
       <Divider />

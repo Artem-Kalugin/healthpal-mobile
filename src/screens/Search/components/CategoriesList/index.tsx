@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import { Tag } from '#ui-kit/Tag';
 
-import { MapDoctorCategoryToLabel } from '#config/locale';
+import { useTranslation } from '#i18n';
 
 import { reactSync } from '#utils';
 
@@ -22,6 +22,8 @@ export const CategoriesList: React.FC<ICategoriesList> = ({
   isLoading,
   onSelect,
 }) => {
+  const { t } = useTranslation();
+
   const listRef = useRef<FlatList<BEDoctorCategoryResponseDto>>(null);
 
   const scrollToCategory = async (item: BEDoctorCategoryResponseDto) => {
@@ -55,7 +57,9 @@ export const CategoriesList: React.FC<ICategoriesList> = ({
             key={item.id}
             active={item.type === activeCategory?.type}
             isLoading={activeCategory === item && isLoading}
-            value={item.type ? MapDoctorCategoryToLabel[item.type] : 'Все'}
+            value={
+              item.type ? t(`doctorCategories.${item.type}`) : t('common.all')
+            }
             onPress={() => onPress(item)}
           />
         </View>

@@ -1,16 +1,22 @@
 import dayjs from 'dayjs';
 
-export const formatNotificationDate = (timestamp: string): string => {
+import { t } from '#i18n';
+import type { IFormatters } from '#i18n/types';
+
+export const formatNotificationDate = (
+  timestamp: string,
+  formatDate: IFormatters['formatDate'],
+): string => {
   const date = dayjs(timestamp);
   const now = dayjs();
 
   if (date.isSame(now, 'day')) {
-    return 'сегодня';
+    return t('notifications.today');
   }
 
   if (date.isSame(now.subtract(1, 'day'), 'day')) {
-    return 'вчера';
+    return t('notifications.yesterday');
   }
 
-  return date.format('D MMMM');
+  return formatDate(timestamp, { day: 'numeric', month: 'long' });
 };

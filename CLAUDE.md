@@ -18,6 +18,8 @@ Never interact with the simulator/emulator or run builds (`pnpm ios*`, `pnpm and
 
 Code structure and dependency rules live in skills: read `architecture-unit` (module shape) and `architecture-layers` (layer imports, barrels) before creating or moving files or adding cross-module imports. Known deviations: `agents/architecture-debt.md`.
 
+I prefer collocation over formalism. If the domain of a piece of code is narrower than the layer it would have to live in by the current rules (e.g. a thin React adapter of a service pushed out to `core/hooks`), do not silently follow the rule and do not silently bend it: raise it as a topic for discussion and a possible change to the relevant skills.
+
 ## Agent docs
 
 `agents/` is an untracked owner folder (gitignored); treat it as your project memory: handoffs, plans, debt lists, rejected proposals (`agents/rejected.md`, don't re-offer them without a strong reason). Explore if user references.
@@ -36,7 +38,7 @@ Code structure and dependency rules live in skills: read `architecture-unit` (mo
 Follow the surrounding code; the patterns below are the ones to keep. Existing deviations are listed in `agents/architecture-debt.md` — don't copy them.
 
 - Branch on a variant with a lookup map (`ButtonSizeStyles[size]`), not an if/else chain or `switch` over an enum/union.
-- Arrow functions everywhere outside classes (classes are for `core/services` and class-validator DTOs in `core/api/*/dto`). No IIFE.
+- Arrow functions everywhere outside classes (classes are for `core/services`). No IIFE.
 - `function` only for generics (`<T,>` is awkward in `.tsx`) and named inner providers. Elsewhere don't write it; suggest it only if an arrow loses functionality.
 - Named exports only; `export default` just where a tool requires it (`*.config.*`).
 - Barrels re-export by name (`export { Button } from './Button'`); existing `export *` barrels are debt, don't repeat them.

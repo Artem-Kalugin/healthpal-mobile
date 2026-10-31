@@ -11,6 +11,8 @@ import {
 
 import { Loader } from '#ui-kit';
 
+import { useTranslation } from '#i18n';
+
 import { BEDoctorResponseDto } from '#generated/__entities';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
@@ -46,6 +48,8 @@ export const DoctorsList: React.FC<IDoctorsList> = ({
   onRefresh,
   onScroll,
 }) => {
+  const { t } = useTranslation();
+
   const renderDoctorCard = useCallback(
     ({ item }: { item: BEDoctorResponseDto }) => (
       <View style={styles.cardWrapper}>
@@ -72,15 +76,15 @@ export const DoctorsList: React.FC<IDoctorsList> = ({
           <Loader size="large" />
         ) : (
           <EmptyListWarning
-            subtitle="Попробуйте изменить параметры поиска"
-            title="Ничего не нашли"
+            subtitle={t('search.empty.subtitle')}
+            title={t('search.empty.title')}
           />
         )
       }
       ListFooterComponent={
         <PaginatableListFooter
           enabled={!!data.length && !isRefreshing}
-          message="Кажется, мы отобразили всех врачей"
+          message={t('search.endOfList')}
           showLoader={isFetching && !isChangingSource}
           showMessage={!hasNextPage}
         />

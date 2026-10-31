@@ -1,5 +1,6 @@
 import { RtkAppApi } from '#api';
 import { API_PAGINATION_PAGE_SIZE, PaginationConfig } from '#api/config';
+import { withRequestMeta } from '#api/withRequestMeta';
 
 import { RequestsDoctor as Requests } from './types';
 
@@ -10,9 +11,10 @@ export const DoctorAPI = RtkAppApi.injectEndpoints({
       Requests['getDoctorCategories']['response'],
       Requests['getDoctorCategories']['args']
     >({
-      query: () => ({
+      query: args => ({
         url: '/doctor-categories',
         method: 'get',
+        ...args,
       }),
     }),
     searchDoctors: build.infiniteQuery<
@@ -37,6 +39,26 @@ export const DoctorAPI = RtkAppApi.injectEndpoints({
         url: `/doctors/favorites?page=${pageParam}&size=${API_PAGINATION_PAGE_SIZE}`,
         method: 'get',
         ...queryArg,
+      }),
+    }),
+    addFavoriteDoctor: build.mutation<
+      Requests['addFavorite']['response'],
+      Requests['addFavorite']['args']
+    >({
+      query: args => ({
+        url: '/doctors/{id}/favorite',
+        method: 'post',
+        ...args,
+      }),
+    }),
+    removeFavoriteDoctor: build.mutation<
+      Requests['removeFavorite']['response'],
+      Requests['removeFavorite']['args']
+    >({
+      query: args => ({
+        url: '/doctors/{id}/favorite',
+        method: 'delete',
+        ...args,
       }),
     }),
     getDoctor: build.query<
@@ -114,8 +136,10 @@ export const {
   useDoctorCategoriesQuery,
   useSearchDoctorsInfiniteQuery,
   useFavoriteDoctorsInfiniteQuery,
+  useAddFavoriteDoctorMutation,
+  useRemoveFavoriteDoctorMutation,
   useGetDoctorQuery,
   useGetDoctorTimeSlotsQuery,
   useGetDoctorTimeSlotsRangeQuery,
   useGetDoctorScheduleQuery,
-} = DoctorAPI;
+} = withRequestMeta(DoctorAPI);

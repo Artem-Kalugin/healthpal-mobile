@@ -127,6 +127,14 @@ module.exports = defineConfig([
   },
 
   {
+    // translation catalogs are plain data and only grow with the screens
+    files: ['src/i18n/config/*.ts'],
+    rules: {
+      'max-lines': off,
+    },
+  },
+
+  {
     files: ['src/core/services/Logger/index.ts'],
     rules: {
       'no-console': off,

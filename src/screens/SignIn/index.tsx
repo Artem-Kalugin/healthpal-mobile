@@ -26,12 +26,13 @@ import { PasswordRecoveryRoutes } from '#navigation/PasswordRecovery/types';
 import { AppRoutes, RootScreenProps } from '#navigation/types';
 
 import { useLoginMutation } from '#api/Auth';
-import { LoginDto } from '#api/Auth/dto/LoginDto';
 
 import { TokenService } from '#services/Token';
 
 import { hitSlop, SAFE_ZONE_BOTTOM, SCREEN_HEIGHT } from '#config';
 import { colors } from '#config/colors';
+
+import { useTranslation } from '#i18n';
 
 import { useAppData } from '#hooks/useAppData';
 import { useAppForm } from '#hooks/useAppForm';
@@ -40,6 +41,8 @@ import { useErrorHandler } from '#hooks/useErrorHandler';
 import { useDispatch } from '#store';
 import { AppActions } from '#store/slices/app';
 
+import { loginSchema } from './config';
+
 export const SignIn: React.FC<
   CompositeScreenProps<
     AuthScreenProps<AuthRoutes.SignIn>,
@@ -47,11 +50,12 @@ export const SignIn: React.FC<
   >
 > = props => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { prefetchApp, isPrefetching } = useAppData();
   const passwordInputRef = useRef<TextInput>(null);
 
-  const { form, getFormInputProps } = useAppForm(LoginDto, {
+  const { form, getFormInputProps } = useAppForm(loginSchema, {
     phone: '+7 (888) 888-88-88',
     password: '123123aa',
   });
@@ -92,7 +96,7 @@ export const SignIn: React.FC<
   const submitForm = form.handleSubmit(onSubmit, () => {
     Keyboard.dismiss();
 
-    toast('Некоторые поля содержат ошибки');
+    toast(t('common.formHasErrors'));
   });
 
   useErrorHandler(loginMetadata, form);
@@ -119,9 +123,9 @@ export const SignIn: React.FC<
                 color={colors.main.midnightBlue}
                 weight="600"
               >
-                Привет, рады снова видеть!
+                {t('signIn.title')}
               </TextXL>
-              <TextSmall>Надеемся, у вас всё хорошо.</TextSmall>
+              <TextSmall>{t('signIn.subtitle')}</TextSmall>
             </View>
 
             <View>
@@ -134,9 +138,9 @@ export const SignIn: React.FC<
                     />
                   }
                   keyboardType="decimal-pad"
-                  label="Номер телефона"
+                  label={t('signIn.phone.label')}
                   maxLength={18}
-                  placeholder="Любой, смс в демо не придет"
+                  placeholder={t('signIn.phone.placeholder')}
                   type="phone"
                   onSubmitEditing={() => passwordInputRef.current?.focus()}
                   {...getFormInputProps('phone')}
@@ -154,7 +158,7 @@ export const SignIn: React.FC<
                     </TouchableOpacity>
                   }
                   inputRef={passwordInputRef}
-                  label="Пароль"
+                  label={t('signIn.password.label')}
                   returnKeyType="done"
                   secureTextEntry={enableSecurePassword}
                   onSubmitEditing={submitForm}
@@ -165,7 +169,7 @@ export const SignIn: React.FC<
                 isLoading={loginMetadata.isLoading || isPrefetching}
                 onPress={submitForm}
               >
-                Войти
+                {t('signIn.submit')}
               </Button>
             </View>
           </View>
@@ -184,7 +188,7 @@ export const SignIn: React.FC<
                 color={colors.primary.normal}
                 textAlign="center"
               >
-                Забыли пароль?
+                {t('signIn.forgotPassword')}
               </TextSmall>
             </TouchableOpacity>
             <TouchableOpacity
@@ -195,9 +199,9 @@ export const SignIn: React.FC<
               }}
             >
               <TextSmall textAlign="center">
-                Ещё нет аккаунта?{' '}
+                {t('signIn.signUpPrompt.question')}{' '}
                 <TextSmall color={colors.primary.normal}>
-                  Зарегистрироваться
+                  {t('signIn.signUpPrompt.action')}
                 </TextSmall>
               </TextSmall>
             </TouchableOpacity>

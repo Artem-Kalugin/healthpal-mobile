@@ -7,6 +7,7 @@ import {
   Notifications,
   ScheduleAppointment,
   Search,
+  Settings,
 } from '#screens';
 
 import { DEFAULT_STACK_OPTIONS } from '#navigation/config';
@@ -34,6 +35,10 @@ export const MainStack = () => {
       <Stack.Screen
         component={Notifications}
         name={MainRoutes.Notifications}
+      />
+      <Stack.Screen
+        component={Settings}
+        name={MainRoutes.Settings}
       />
       <Stack.Screen
         component={FavoritesStack}

@@ -26,12 +26,12 @@ import { useFavoriteMedicalCentersInfiniteQuery } from '#api/MedicalCenters';
 
 import { SCREEN_HEIGHT } from '#config';
 
+import { useTranslation } from '#i18n';
+
 import {
   BEDoctorResponseDto,
   BEMedicalCenterResponseDto,
 } from '#generated/__entities';
-
-import { FavoritesEmptyListWarnings, FavoritesListEnd } from './config';
 
 export const Favorites: React.FC<
   CompositeScreenProps<
@@ -39,6 +39,8 @@ export const Favorites: React.FC<
     MainScreenProps<MainRoutes>
   >
 > = props => {
+  const { t } = useTranslation();
+
   const availableCategoriesQuery = useDoctorCategoriesQuery(null);
   const doctorsQuery = useFavoriteDoctorsInfiniteQuery(
     {},
@@ -79,14 +81,15 @@ export const Favorites: React.FC<
         ) : (
           <EmptyListWarning
             style={styles.emptyWarningMessage}
-            {...FavoritesEmptyListWarnings[props.route.name]}
+            subtitle={t(`favorites.${props.route.name}.empty.subtitle`)}
+            title={t(`favorites.${props.route.name}.empty.title`)}
           />
         )
       }
       ListFooterComponent={
         <PaginatableListFooter
           enabled={!!listData.length && !isRefreshing}
-          message={FavoritesListEnd[props.route.name]}
+          message={t(`favorites.${props.route.name}.endOfList`)}
           showLoader={favoritesQuery.isFetching}
           showMessage={!favoritesQuery.hasNextPage}
         />

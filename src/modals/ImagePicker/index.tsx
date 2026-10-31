@@ -17,11 +17,14 @@ import {
 
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { useModalState } from '#hooks/useModalState';
 
 export const ImagePicker: React.FC<
   ModalsScreenProps<ModalsRoutes.ImagePicker>
 > = props => {
+  const { t } = useTranslation();
   const modal = useModalState(true);
 
   const pickImage = async () => {
@@ -78,7 +81,7 @@ export const ImagePicker: React.FC<
         style={styles.title}
         weight="600"
       >
-        Выберите изображение
+        {t('imagePicker.title')}
       </TextXL>
 
       <View style={styles.buttonsContainer}>
@@ -92,7 +95,7 @@ export const ImagePicker: React.FC<
             name="gallery"
             size={20}
           />
-          <TextSmall weight="500">Выбрать из галереи</TextSmall>
+          <TextSmall weight="500">{t('imagePicker.gallery')}</TextSmall>
         </Button>
         <Button
           appearance="outlined"
@@ -104,7 +107,7 @@ export const ImagePicker: React.FC<
             name="camera"
             size={20}
           />
-          <TextSmall weight="500">Сделать фотографию</TextSmall>
+          <TextSmall weight="500">{t('imagePicker.camera')}</TextSmall>
         </Button>
       </View>
     </ModalWrapper>

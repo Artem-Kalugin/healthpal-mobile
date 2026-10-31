@@ -62,16 +62,25 @@ type PickAvailableMethods<T extends Partial<Record<HttpMethods, any>>> = {
   ? keyof { [M in U extends HttpMethods ? U : never]: true }
   : never;
 
+type PickSuccessJson<R> = {
+  [S in keyof R]: `${S & (string | number)}` extends `2${string}`
+    ? R[S] extends { content: { 'application/json': infer J } }
+      ? J
+      : void
+    : never;
+}[keyof R];
+
 declare type PickApiData<
   T extends keyof paths,
   U extends keyof Omit<paths[T], 'parameters'>,
 > = {
-  response: paths[T][U]['responses']['200']['content']['application/json'];
+  response: PickSuccessJson<paths[T][U]['responses']>;
   args: ExcludeUndefined<
     ExcludeUnknown<{
       path: paths[T][U]['parameters']['path'];
       params?: paths[T][U]['parameters']['query'];
       data?: PickApiBody<T, U>;
+      meta?: import('#api/types').RequestMeta;
     }>
   > | null;
 };

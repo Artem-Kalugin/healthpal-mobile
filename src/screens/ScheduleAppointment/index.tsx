@@ -32,6 +32,8 @@ import {
 import { headerShadow, SAFE_ZONE_BOTTOM, tabbarShadow } from '#config';
 import { colors } from '#config/colors';
 
+import { useFormatters, useTranslation } from '#i18n';
+
 import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { useDispatch } from '#store';
@@ -40,9 +42,19 @@ import { BETimeSlotDto } from '#generated/__entities';
 
 const MAX_DAYS_IN_MONTH = 31;
 const MAX_OVERLAP_DAYS_IN_UI = 6;
+// `dateString` is a calendar day without a time zone, so it must not be shifted by the device offset
+const DATE_FORMAT: Intl.DateTimeFormatOptions = {
+  day: 'numeric',
+  month: 'long',
+  timeZone: 'UTC',
+};
+
 export const ScheduleAppointment: React.FC<
   MainScreenProps<MainRoutes.ScheduleAppointment>
 > = props => {
+  const { t } = useTranslation();
+  const { formatDate } = useFormatters();
+
   const isReschedule = !!props.route.params.appointmentToResheduleId;
   const dispatch = useDispatch();
   const availableTimeSlotsRangeQuery = useGetDoctorTimeSlotsRangeQuery({
@@ -98,12 +110,14 @@ export const ScheduleAppointment: React.FC<
       if (!isReschedule) {
         await bookAppointment({
           data: {
-            doctorId: props.route.params.doctorId,
-            timeSlotId: timeSlotSent.id,
+            timeSlotId: timeSlotSent.id!,
           },
         }).unwrap();
         toast(
-          `Вы успешно записались на прием ${dayjs(dateSent.dateString).format('DD MMMM')} в ${timeSlotActive?.startTime.slice(0, 5)}`,
+          t('scheduleAppointment.bookedToast', {
+            date: formatDate(dateSent.dateString!, DATE_FORMAT),
+            time: timeSlotSent.startTime!.slice(0, 5),
+          }),
         );
       }
 
@@ -117,7 +131,10 @@ export const ScheduleAppointment: React.FC<
           },
         }).unwrap();
         toast(
-          `Вы перенесли запись на ${dayjs(dateSent.dateString).format('DD MMMM')}, ${timeSlotActive?.startTime.slice(0, 5)}`,
+          t('scheduleAppointment.rescheduledToast', {
+            date: formatDate(dateSent.dateString!, DATE_FORMAT),
+            time: timeSlotSent.startTime!.slice(0, 5),
+          }),
         );
       }
 
@@ -189,7 +206,7 @@ export const ScheduleAppointment: React.FC<
           style={styles.calendarTitle}
           weight="600"
         >
-          Выберите дату
+          {t('scheduleAppointment.selectDate')}
         </TextXL>
         <Calendar
           activeDates={availableTimeSlotsQuery.data?.map(el => el.date) || []}
@@ -208,14 +225,16 @@ export const ScheduleAppointment: React.FC<
           onViewableMonthChange={setAnchorDate}
           setSelectedDate={setSelectedDate}
         />
+        <Animated.View layout={LinearTransition.easing(Easing.ease)}>
+          <TextXL
+            color={colors.main.midnightBlue}
+            style={styles.timeSlotsTitle}
+            weight="600"
+          >
+            {t('scheduleAppointment.selectTime')}
+          </TextXL>
+        </Animated.View>
 
-        <TextXL
-          color={colors.main.midnightBlue}
-          style={styles.timeSlotsTitle}
-          weight="600"
-        >
-          Выберите время
-        </TextXL>
         <Animated.FlatList
           columnWrapperStyle={styles.timeSlotColumn}
           contentContainerStyle={styles.timeSlotColumnContainer}
@@ -258,7 +277,11 @@ export const ScheduleAppointment: React.FC<
     <View style={styles.container}>
       <HeaderWithThreeSections
         containerStyle={[styles.headerContainer, headerShadow]}
-        title={isReschedule ? 'Перенести запись' : 'Запланировать прием'}
+        title={
+          isReschedule
+            ? t('scheduleAppointment.rescheduleTitle')
+            : t('scheduleAppointment.bookTitle')
+        }
         titleTextAlign="center"
       />
       {content}
@@ -273,7 +296,9 @@ export const ScheduleAppointment: React.FC<
           }
           onPress={onBookAppointment}
         >
-          {isReschedule ? 'Перенести' : 'Записаться на приём'}
+          {isReschedule
+            ? t('scheduleAppointment.reschedule')
+            : t('scheduleAppointment.book')}
         </Button>
       </View>
     </View>

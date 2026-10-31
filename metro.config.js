@@ -29,6 +29,7 @@ module.exports = (() => {
       '#assets': path.resolve(projectRoot, 'src/assets'),
       '#store': path.resolve(projectRoot, 'src/store'),
       '#config': path.resolve(projectRoot, 'src/config'),
+      '#i18n': path.resolve(projectRoot, 'src/i18n'),
       '#tests': path.resolve(projectRoot, '__tests__'),
     },
   };

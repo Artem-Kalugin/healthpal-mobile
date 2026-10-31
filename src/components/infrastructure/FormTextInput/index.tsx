@@ -5,6 +5,8 @@ import { Controller, FieldValues } from 'react-hook-form';
 
 import { MaskedInput, TextInput } from '#ui-kit';
 
+import { decodeLabel, useTranslation } from '#i18n';
+
 import { FormTextInputProps } from './types';
 
 export function FormTextInput<T extends FieldValues>({
@@ -18,19 +20,29 @@ export function FormTextInput<T extends FieldValues>({
   ...externalProps
 }: FormTextInputProps<T>) {
   const [isFocused, setIsFocused] = useState(false);
+  const { t } = useTranslation();
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { value, onChange, onBlur }, fieldState }) => {
         const baseInputProps = {
+          // RHF carries an `encodeLabel` string (client and server errors alike), translated here so a language change re-translates it
           errors: fieldState.invalid
-            ? isFocused ||
+            ? (isFocused ||
               !fieldState.isTouched ||
               !fieldState.isDirty ||
               !fieldState.error?.types
-              ? [fieldState.error?.message!]
-              : (Object.values(fieldState.error?.types) as string[])
+                ? [fieldState.error?.message!]
+                : (Object.values(fieldState.error?.types).flat() as string[])
+              ).map(label => {
+                const { key, options } = decodeLabel(label);
+
+                return t(key, {
+                  ...options,
+                  defaultValue: t('serverValidation.UNKNOWN'),
+                });
+              })
             : undefined,
           outlineType: fieldState.invalid ? ('error' as const) : undefined,
           value: transformValue(value) ?? '',

@@ -24,6 +24,10 @@ jest.mock('#api/Doctor');
 jest.mock('#api/MedicalCenters');
 jest.mock('#api/Onboarding');
 jest.mock('#api/User');
+jest.mock('#api/withRequestMeta', () => ({
+  ...jest.requireActual('#api/withRequestMeta'),
+  useRequestMeta: () => ({ language: 'ru', region: 'RU' }),
+}));
 jest.mock('#utils', () => ({
   delay: jest.fn().mockResolvedValue(undefined),
 }));

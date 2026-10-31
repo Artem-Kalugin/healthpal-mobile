@@ -1,5 +1,9 @@
 import { setUpTests } from 'react-native-reanimated';
 
+import { changeLanguage } from '#i18n';
+
+changeLanguage('en');
+
 //TODO: replace when https://github.com/mrousavy/react-native-mmkv/issues/945 fixed
 
 jest.mock('react-native-permissions', () => ({

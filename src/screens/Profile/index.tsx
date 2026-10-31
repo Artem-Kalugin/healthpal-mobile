@@ -35,6 +35,8 @@ import {
 } from '#config';
 import { colors } from '#config/colors';
 
+import { useTranslation } from '#i18n';
+
 import { store } from '#store';
 
 import { formatPhone } from './utils';
@@ -48,6 +50,8 @@ export const Profile: React.FC<
     >
   >
 > = props => {
+  const { t } = useTranslation();
+
   const userQuery = useGetCurrentUserQuery(null);
 
   const settingsItems: {
@@ -56,7 +60,7 @@ export const Profile: React.FC<
     onPress: () => void;
   }[] = [
     {
-      label: 'Редактировать профиль',
+      label: t('profile.menu.editProfile'),
       icon: 'userEdit',
       onPress: () =>
         props.navigation.navigate(AppRoutes.ProfileEditing, {
@@ -64,7 +68,7 @@ export const Profile: React.FC<
         }),
     },
     {
-      label: 'Избранное',
+      label: t('profile.menu.favorites'),
       icon: 'heart',
       onPress: () =>
         props.navigation.navigate(MainRoutes.Favorites, {
@@ -72,52 +76,43 @@ export const Profile: React.FC<
         }),
     },
     {
-      label: 'Уведомления',
+      label: t('profile.menu.notifications'),
       icon: 'notificationOutlined',
       onPress: () => props.navigation.navigate(MainRoutes.Notifications),
     },
     {
-      label: 'Настройки',
+      label: t('profile.menu.settings'),
       icon: 'settings',
-      onPress: () =>
-        toast(
-          'Упс, кажется этого экрана не было в дизайне, а я не придумал что в нем могло бы быть',
-        ),
+      onPress: () => props.navigation.navigate(MainRoutes.Settings),
     },
     {
-      label: 'Помощь и поддержка',
+      label: t('profile.menu.support'),
       icon: 'messageQuestion',
-      onPress: () =>
-        toast(
-          'Упс, кажется этого экрана не было в дизайне, но давайте сделаем вид что я открыл чат поддержки или ЧаВо',
-        ),
+      onPress: () => toast(t('profile.stubs.support')),
     },
     {
-      label: 'Условия использования',
+      label: t('profile.menu.terms'),
       icon: 'sequritySafe',
-      onPress: () =>
-        toast(
-          'Упс, кажется этого экрана не было в дизайне, но давайте сделаем вид что я открыл WebView с ссылкой на privacy или отобразил HTML content с помощью react-native-html-renderer',
-        ),
+      onPress: () => toast(t('profile.stubs.terms')),
     },
     {
-      label: 'Выйти',
+      label: t('profile.menu.logOut'),
       icon: 'logOut',
       onPress: () => {
         props.navigation.navigate(AppRoutes.StackModals, {
           screen: ModalsRoutes.Dialog,
           params: {
-            title: 'Выйти из аккаунта',
-            text: 'Вы действительно хотите выйти из аккаунта?',
+            title: t('profile.logOutDialog.title'),
+            text: t('profile.logOutDialog.text'),
             confirmButtonProps: {
-              children: 'Да, выйти',
+              children: t('profile.logOutDialog.confirm'),
               onPress: async (navigation, modal) => {
                 await modal.close();
                 await logOut(store);
               },
             },
             declineButtonProps: {
-              children: 'Нет',
+              children: t('profile.logOutDialog.decline'),
               onPress(navigation, modal) {
                 modal.close();
               },
@@ -136,7 +131,7 @@ export const Profile: React.FC<
         containerStyle={styles.headerContainer}
         leftElement={null}
         paddingHorizontal={0}
-        title="Ваш профиль"
+        title={t('profile.title')}
         titleTextAlign="center"
       />
 

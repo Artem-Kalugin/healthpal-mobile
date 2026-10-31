@@ -80,7 +80,7 @@ export const apiBaseQuery: BaseQueryFn<FetchArgs, unknown, BEError> = async (
   api: BaseQueryApi,
   extraOptions: object,
 ) => {
-  const { url, method = 'GET', data, params, path } = args;
+  const { url, method = 'GET', data, params, path, meta } = args;
   !process.env.EXPO_PUBLIC_API_URL &&
     Logger.error('no API_URL available, make sure .env file inited');
 
@@ -113,6 +113,7 @@ export const apiBaseQuery: BaseQueryFn<FetchArgs, unknown, BEError> = async (
       data,
       params,
       path,
+      meta,
     },
     process.env.EXPO_PUBLIC_API_URL,
     `Bearer ${accessToken}`,

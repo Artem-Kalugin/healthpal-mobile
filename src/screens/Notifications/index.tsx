@@ -11,17 +11,22 @@ import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 import { headerShadow } from '#config';
 import { colors } from '#config/colors';
 
+import { useFormatters, useTranslation } from '#i18n';
+
 import { notifications } from './config';
 import { formatNotificationDate } from './utils';
 
 export const Notifications: React.FC<
   MainScreenProps<MainRoutes.Notifications>
 > = props => {
+  const { t } = useTranslation();
+  const { formatDate } = useFormatters();
+
   return (
     <View style={styles.container}>
       <HeaderWithThreeSections
         containerStyle={[styles.headerContainer, headerShadow]}
-        title="Уведомления"
+        title={t('notifications.title')}
         titleTextAlign="center"
       />
 
@@ -30,18 +35,22 @@ export const Notifications: React.FC<
         ListHeaderComponent={
           <View style={styles.listHeader}>
             <TextSmall textAlign="center">
-              Здесь отображаются тестовые нотификации
+              {t('notifications.mockHint')}
             </TextSmall>
           </View>
         }
-        renderItem={({ item }) => <NotificationItem item={item} />}
+        renderItem={({ item }) => (
+          <NotificationItem
+            item={{ ...item, title: t(item.title), text: t(item.text) }}
+          />
+        )}
         renderSectionFooter={() => <View style={styles.sectionFooterSpacer} />}
         renderSectionHeader={({ section }) => (
           <TextBase
             style={styles.sectionTitle}
             weight="400"
           >
-            {formatNotificationDate(section.title)}
+            {formatNotificationDate(section.title, formatDate)}
           </TextBase>
         )}
         sections={notifications}

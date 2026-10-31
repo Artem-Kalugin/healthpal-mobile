@@ -1,29 +1,31 @@
-import {
-  IsNotEmpty,
-  IsString,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { z } from 'zod';
 
-export class LoginDto {
-  @Matches(/^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/, {
-    message:
-      'Телефон должен быть в формате +7 (XXX) XXX-XX-XX (11 цифр после плюса)',
-  })
-  @IsNotEmpty({ message: 'Пожалуйста, введите номер телефона' })
-  phone: string;
+export type LoginLabels = {
+  phone: { required: string; format: string };
+  password: {
+    required: string;
+    minLength: string;
+    maxLength: string;
+    charset: string;
+  };
+};
 
-  @IsString({ message: 'Пароль должен быть строкой' })
-  @MinLength(8, { message: 'Пароль должен содержать минимум 8 символов' })
-  @MaxLength(50, { message: 'Пароль не должен превышать 50 символов' })
-  @Matches(
-    /^(?:(?=.*\p{Ll})(?=.*\p{Lu})|(?=.*\p{Ll})(?=.*\d)|(?=.*\p{Lu})(?=.*\d)).+$/u,
-    {
-      message:
-        'Пароль должен содержать как минимум два типа символов: строчные, прописные или цифры',
-    },
-  )
-  @IsNotEmpty({ message: 'Пожалуйста, введите пароль' })
-  password: string;
-}
+const PHONE_REGEX = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+const PASSWORD_REGEX =
+  /^(?:(?=.*\p{Ll})(?=.*\p{Lu})|(?=.*\p{Ll})(?=.*\d)|(?=.*\p{Lu})(?=.*\d)).+$/u;
+
+export const createLoginSchema = (labels: LoginLabels) =>
+  z.object({
+    phone: z
+      .string(labels.phone.required)
+      .min(1, labels.phone.required)
+      .regex(PHONE_REGEX, labels.phone.format),
+    password: z
+      .string(labels.password.required)
+      .min(1, labels.password.required)
+      .min(8, labels.password.minLength)
+      .max(50, labels.password.maxLength)
+      .regex(PASSWORD_REGEX, labels.password.charset),
+  });
+
+export type LoginDto = z.infer<ReturnType<typeof createLoginSchema>>;

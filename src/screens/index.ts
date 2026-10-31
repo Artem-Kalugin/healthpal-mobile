@@ -12,5 +12,6 @@ export { Profile } from './Profile';
 export { ProfileEditing } from './ProfileEditing';
 export { ScheduleAppointment } from './ScheduleAppointment';
 export { Search } from './Search';
+export { Settings } from './Settings';
 export { SignIn } from './SignIn';
 export { SignUp } from './SignUp';
