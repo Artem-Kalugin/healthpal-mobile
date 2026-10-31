@@ -1,10 +1,16 @@
-import type { Language, Region } from '#i18n/types';
+import type { PermissionStatus } from 'react-native-permissions';
 
-// `undefined` follows the device language
-export const RegionOptions: (Region | undefined)[] = [undefined, 'RU', 'EU'];
+import type { Language, Region, TranslationKey } from '#i18n/types';
 
-export const LanguageOptions: (Language | undefined)[] = [
-  undefined,
-  'en',
-  'ru',
-];
+// `auto` follows the device language
+export const RegionOptions: (Region | 'auto')[] = ['auto', 'RU', 'EU'];
+
+export const LanguageOptions: (Language | 'auto')[] = ['auto', 'en', 'ru'];
+
+export const LocationStatusLabels: Record<PermissionStatus, TranslationKey> = {
+  granted: 'settings.location.granted',
+  limited: 'settings.location.granted',
+  denied: 'settings.location.denied',
+  blocked: 'settings.location.blocked',
+  unavailable: 'settings.location.unavailable',
+};

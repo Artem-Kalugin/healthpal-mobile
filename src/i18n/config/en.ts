@@ -187,6 +187,16 @@ export const en = {
     title: 'Settings',
     region: 'Region',
     language: 'Language',
+    general: 'General',
+    permissions: 'Permissions',
+    version: 'Version',
+    location: {
+      label: 'Location',
+      granted: 'Allowed',
+      denied: 'Not allowed',
+      blocked: 'Blocked',
+      unavailable: 'Unavailable',
+    },
     confirm: 'Confirm',
   },
   home: {

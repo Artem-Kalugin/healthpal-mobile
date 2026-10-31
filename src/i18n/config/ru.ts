@@ -188,6 +188,16 @@ export const ru: CatalogShape<'one' | 'few' | 'many' | 'other'> = {
     title: 'Настройки',
     region: 'Регион',
     language: 'Язык',
+    general: 'Основные',
+    permissions: 'Разрешения',
+    version: 'Версия',
+    location: {
+      label: 'Геолокация',
+      granted: 'Разрешена',
+      denied: 'Не разрешена',
+      blocked: 'Заблокирована',
+      unavailable: 'Недоступна',
+    },
     confirm: 'Подтвердить',
   },
   home: {

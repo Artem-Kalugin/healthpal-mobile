@@ -19,16 +19,20 @@ import eye from '#assets/icons/eye.svg';
 import favoriteActive from '#assets/icons/favorite-active.svg';
 import favorite from '#assets/icons/favorite.svg';
 import gallery from '#assets/icons/gallery.svg';
+import globalLinear from '#assets/icons/global-linear.svg';
 import heart from '#assets/icons/heart.svg';
 import homeActive from '#assets/icons/home-active.svg';
 import home from '#assets/icons/home.svg';
 import hospitalHeart from '#assets/icons/hospital-heart.svg';
 import hospital from '#assets/icons/hospital.svg';
+import language from '#assets/icons/language.svg';
 import lockSlash from '#assets/icons/lock-slash.svg';
 import lock from '#assets/icons/lock.svg';
 import logOut from '#assets/icons/log-out.svg';
 import logo from '#assets/icons/logo.svg';
 import mapActive from '#assets/icons/map-active.svg';
+/* PLOP_INJECT_IMPORT */
+import mapWithPin from '#assets/icons/map-with-pin.svg';
 import map from '#assets/icons/map.svg';
 import medal from '#assets/icons/medal.svg';
 import messageEdit from '#assets/icons/message-edit.svg';
@@ -43,7 +47,6 @@ import search from '#assets/icons/search.svg';
 import sequritySafe from '#assets/icons/sequrity-safe.svg';
 import settings from '#assets/icons/settings.svg';
 import sms from '#assets/icons/sms.svg';
-/* PLOP_INJECT_IMPORT */
 import sort from '#assets/icons/sort.svg';
 import star from '#assets/icons/star.svg';
 import userEdit from '#assets/icons/user-edit.svg';
@@ -53,6 +56,9 @@ import { colors } from '#config/colors';
 
 export const IconFiles = {
   /* PLOP_INJECT_KEY */
+  mapWithPin: { component: mapWithPin, color: colors.main.midnightBlue },
+  language: { component: language, color: colors.main.midnightBlue },
+  globalLinear: { component: globalLinear, color: colors.main.midnightBlue },
   sort: { component: sort },
   hospitalHeart: { component: hospitalHeart },
   eye: { component: eye, color: colors.grayscale['400'] },

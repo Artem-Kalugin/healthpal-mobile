@@ -123,6 +123,10 @@ export class PermissionManager {
     return { allowed: false, originalStatus, requestStatus: result };
   }
 
+  static async openSettings(): Promise<void> {
+    await openSettings().catch(() => {});
+  }
+
   static async check(
     permission: RequestedPermission,
     config?: PermissionRequestConfig,
