@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import {
+  AFFINITY_CALCULATION_STRATEGY,
   MaskedTextInput,
   MaskedTextInputRef,
 } from 'react-native-advanced-input-mask';
@@ -29,6 +30,9 @@ export type ITextInputOutline = 'error' | 'success' | 'focused' | 'default';
 export type IMaskedInput = Omit<TextInputProps, 'onChange'> & {
   errors?: string[];
   mask: string;
+  affinityFormat: string[];
+  affinityCalculationStrategy: AFFINITY_CALCULATION_STRATEGY;
+  allowedKeys: string;
   onChange: (masked: string, unmasked: string) => void;
   size: 'default' | 'small';
   inputRef: RefObject<MaskedTextInputRef | null>;

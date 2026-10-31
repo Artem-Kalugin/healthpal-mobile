@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { isE164Phone } from './phone';
+
 export type LoginLabels = {
   phone: { required: string; format: string };
   password: {
@@ -10,7 +12,6 @@ export type LoginLabels = {
   };
 };
 
-const PHONE_REGEX = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
 const PASSWORD_REGEX =
   /^(?:(?=.*\p{Ll})(?=.*\p{Lu})|(?=.*\p{Ll})(?=.*\d)|(?=.*\p{Lu})(?=.*\d)).+$/u;
 
@@ -19,7 +20,7 @@ export const createLoginSchema = (labels: LoginLabels) =>
     phone: z
       .string(labels.phone.required)
       .min(1, labels.phone.required)
-      .regex(PHONE_REGEX, labels.phone.format),
+      .refine(isE164Phone, labels.phone.format),
     password: z
       .string(labels.password.required)
       .min(1, labels.password.required)

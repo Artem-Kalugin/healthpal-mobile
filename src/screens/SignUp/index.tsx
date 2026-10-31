@@ -62,7 +62,9 @@ export const SignUp: React.FC<
   const phoneInputRef = useRef<MaskedTextInputRef>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const { form, getFormInputProps } = useAppForm(createUserSchema);
+  const { form, getFormInputProps } = useAppForm(createUserSchema, {
+    phone: '+',
+  });
 
   const [register, registerMetadata] = useRegisterMutation();
 
@@ -159,10 +161,8 @@ export const SignUp: React.FC<
                   />
                 }
                 inputRef={phoneInputRef}
-                keyboardType="decimal-pad"
+                keyboardType="phone-pad"
                 label={t('signUp.phone.label')}
-                maxLength={18}
-                placeholder={t('signUp.phone.placeholder')}
                 type="phone"
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
                 {...getFormInputProps('phone')}

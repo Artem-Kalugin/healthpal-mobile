@@ -37,7 +37,9 @@ export const PasswordRecoveryPhoneInput: React.FC<
 
   const OTPTimerCtx = useTimer();
 
-  const { form, getFormInputProps } = useAppForm(requestOtpSchema);
+  const { form, getFormInputProps } = useAppForm(requestOtpSchema, {
+    phone: '+',
+  });
 
   const [verifyPhone, verifyPhoneMetadata] = useVerifyPhoneMutation();
 
@@ -112,12 +114,8 @@ export const PasswordRecoveryPhoneInput: React.FC<
                       size={20}
                     />
                   }
-                  keyboardType="decimal-pad"
+                  keyboardType="phone-pad"
                   label={t('passwordRecoveryPhoneInput.phone.label')}
-                  maxLength={18}
-                  placeholder={t(
-                    'passwordRecoveryPhoneInput.phone.placeholder',
-                  )}
                   type="phone"
                   onSubmitEditing={submitForm}
                   {...getFormInputProps('phone')}

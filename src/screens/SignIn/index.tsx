@@ -56,7 +56,7 @@ export const SignIn: React.FC<
   const passwordInputRef = useRef<TextInput>(null);
 
   const { form, getFormInputProps } = useAppForm(loginSchema, {
-    phone: '+7 (888) 888-88-88',
+    phone: '+',
     password: '123123aa',
   });
 
@@ -137,10 +137,8 @@ export const SignIn: React.FC<
                       size={20}
                     />
                   }
-                  keyboardType="decimal-pad"
+                  keyboardType="phone-pad"
                   label={t('signIn.phone.label')}
-                  maxLength={18}
-                  placeholder={t('signIn.phone.placeholder')}
                   type="phone"
                   onSubmitEditing={() => passwordInputRef.current?.focus()}
                   {...getFormInputProps('phone')}

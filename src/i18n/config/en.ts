@@ -40,8 +40,7 @@ export const en = {
     validation: {
       phone: {
         required: 'Please enter your phone number',
-        format:
-          'The phone number must be in the format +7 (XXX) XXX-XX-XX (11 digits after the plus)',
+        format: 'The phone number must start with + and contain 7 to 15 digits',
       },
       password: {
         required: 'Please enter your password',
@@ -74,8 +73,7 @@ export const en = {
     validation: {
       phone: {
         required: 'Please enter your phone number',
-        format:
-          'The phone number must be in the format +7 (XXX) XXX-XX-XX (11 digits after the plus)',
+        format: 'The phone number must start with + and contain 7 to 15 digits',
       },
       password: {
         required: 'Please enter your password',
@@ -111,8 +109,7 @@ export const en = {
     availableIn: 'Available in {{value}}',
     validation: {
       phone: {
-        format:
-          'The phone number must be in the format +7 (XXX) XXX-XX-XX (11 digits after the plus)',
+        format: 'The phone number must start with + and contain 7 to 15 digits',
       },
     },
   },
