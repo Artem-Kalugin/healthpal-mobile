@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { TextInput as RNTextInput } from 'react-native';
+import { TextInputInstance } from 'react-native';
 
 import { fireEvent, render } from '@testing-library/react-native';
 
@@ -11,7 +11,7 @@ describe('TextInput', () => {
   beforeAll(() => {
     jest.clearAllMocks();
   });
-  const inputRef = createRef<RNTextInput>();
+  const inputRef = createRef<TextInputInstance>();
 
   const renderComponent = (props = {}) =>
     render(

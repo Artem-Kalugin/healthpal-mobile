@@ -83,6 +83,7 @@ export const Home: React.FC<
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
     renewLocation().finally(() => setIsUserDecidedLocationUsage(true));
   }, []);
 

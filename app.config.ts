@@ -9,7 +9,6 @@ module.exports = ({ config }: { config: ExpoConfig }): ExpoConfig => ({
   },
   plugins: [
     ...(config.plugins || []),
-    './expo-config-plugins/withYandexMap.js',
     './expo-config-plugins/withIOSInitiallyHiddenStatusBar.js',
   ],
 });

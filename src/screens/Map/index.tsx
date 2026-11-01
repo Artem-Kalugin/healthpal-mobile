@@ -2,12 +2,13 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Animated, {
+  FadeOutDown,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import YaMap, { Point } from 'react-native-yamap';
+import { Point, Yamap, YamapRef } from 'react-native-yamap-plus';
 
 import { CompositeScreenProps } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
@@ -24,29 +25,30 @@ import { TabRoutes, TabScreenProps } from '#navigation/Main/Tab/types';
 import { MainRoutes, MainScreenProps } from '#navigation/Main/types';
 
 import { useDoctorCategoriesQuery } from '#api/Doctor';
-import { useLazyMedicalCentersQuery } from '#api/MedicalCenters';
+import { useMedicalCentersQuery } from '#api/MedicalCenters';
 
 import { shadow } from '#config';
 
-import { useTranslation } from '#i18n';
+import { getLanguage, useTranslation } from '#i18n';
 
 import { useErrorHandler } from '#hooks/useErrorHandler';
 
 import { reactSync } from '#utils';
 
+import { useSelector } from '#store';
+
 import { BEMedicalCenterResponseDto } from '#generated/__entities';
 
-import { CENTER_ON_MARKER_DISTANCE_THRESHOLD } from './config';
-import { getSortedMedicalCentersByDistance } from './utils';
-
-const initCoordinates = {
-  lat: 55.7558,
-  lon: 37.6173,
-};
-const initRegion = {
-  ...initCoordinates,
-  zoom: 10,
-};
+import { MapLanguageNotice } from './components/MapLanguageNotice';
+import {
+  CENTER_ON_MARKER_DISTANCE_THRESHOLD,
+  MARKER_ZOOM,
+  REGION_ZOOM,
+} from './config';
+import {
+  getMedicalCentersAveragePoint,
+  getSortedMedicalCentersByDistance,
+} from './utils';
 
 export const Map: React.FC<
   CompositeScreenProps<
@@ -55,25 +57,30 @@ export const Map: React.FC<
   >
 > = props => {
   const { t } = useTranslation();
+  const mapLanguage = useSelector(state => state.runtime.mapLanguage);
+  const [isMapLanguageNoticeClosed, setIsMapLanguageNoticeClosed] =
+    useState(false);
 
   const doctorCategories = useDoctorCategoriesQuery(null);
-  const yamapRef = useRef<YaMap>(null);
+  const yamapRef = useRef<YamapRef>(null);
   const showMedicalCentersProgress = useSharedValue(0);
-  const [triggerMedicalCentersQuery, meta] = useLazyMedicalCentersQuery();
-  const [medicalCentersSorted, setMedicalCentersSorted] = useState<
-    BEMedicalCenterResponseDto[]
-  >([]);
+  const { data: medicalCenters = [], ...meta } = useMedicalCentersQuery({
+    params: { shouldTake5Only: false },
+  });
+  const [cameraPoint, setCameraPoint] = useState<
+    { lat: number; lon: number } | undefined
+  >(undefined);
   const [itemToBlink, setItemToBlink] = useState<
     BEMedicalCenterResponseDto | undefined
   >(undefined);
 
-  const isInited = useRef(false);
-
-  const sortMedicalCenters = (lat: number, lon: number) => {
-    setMedicalCentersSorted(old =>
-      getSortedMedicalCentersByDistance(old, lat, lon),
-    );
-  };
+  const medicalCentersSorted = cameraPoint
+    ? getSortedMedicalCentersByDistance(
+        medicalCenters,
+        cameraPoint.lat,
+        cameraPoint.lon,
+      )
+    : medicalCenters;
 
   const getCameraPosition = () => {
     return new Promise<Point>((resolve, reject) => {
@@ -83,25 +90,9 @@ export const Map: React.FC<
     });
   };
 
-  const onInit = async () => {
-    if (isInited.current) {
-      return;
-    }
-
-    const response = await triggerMedicalCentersQuery({
-      params: { shouldTake5Only: false },
-    });
-
-    if (response.data) {
-      setMedicalCentersSorted(response.data);
-      isInited.current = true;
-      debounceSortAndShowMedicalCenters();
-    }
-  };
-
   const debounceSortAndShowMedicalCenters = useMemo(() => {
-    return debounce(async (point?: { lat: number; lon: number }) => {
-      point && sortMedicalCenters(point.lat, point.lon);
+    return debounce(async (point: { lat: number; lon: number }) => {
+      setCameraPoint(point);
       await reactSync();
       showMedicalCenters();
     }, 100);
@@ -112,7 +103,7 @@ export const Map: React.FC<
   };
 
   const hideMedicalCenters = async () => {
-    if (!isInited.current) {
+    if (!medicalCenters.length) {
       return;
     }
     showMedicalCentersProgress.value = withTiming(0);
@@ -120,14 +111,13 @@ export const Map: React.FC<
     debounceSortAndShowMedicalCenters(point);
   };
 
-  const centerMapOnPoint = (lat: number, lon: number) => {
+  const centerMapOnPoint = (lat: number, lon: number, zoom: number) => {
     yamapRef.current?.setCenter(
       {
         lon: lon,
         lat: lat,
-        zoom: 15,
       },
-      15,
+      zoom,
       0,
       0,
       0.5,
@@ -149,7 +139,7 @@ export const Map: React.FC<
     );
 
     if (distanceToMove > CENTER_ON_MARKER_DISTANCE_THRESHOLD) {
-      centerMapOnPoint(el.lat, el.lon);
+      centerMapOnPoint(el.lat, el.lon, MARKER_ZOOM);
     } else {
       highlightItem(el);
     }
@@ -169,21 +159,33 @@ export const Map: React.FC<
     opacity: interpolate(showMedicalCentersProgress.value, [0.0, 1], [0.01, 1]),
   }));
 
+  // the region is defined by the response: center the map on the average point of its medical centers
   useEffect(() => {
-    onInit();
-  }, []);
+    if (!medicalCenters.length) {
+      return;
+    }
+
+    const { lat, lon } = getMedicalCentersAveragePoint(medicalCenters);
+
+    centerMapOnPoint(lat, lon, REGION_ZOOM);
+    debounceSortAndShowMedicalCenters({ lat, lon });
+  }, [medicalCenters]);
 
   useErrorHandler(meta);
 
-  const Markers = useMemo(() => {
-    return medicalCentersSorted?.map(el => (
-      <MedicalCenterMarker
-        key={el.id}
-        item={el}
-        onPress={() => onMarkerPress(el)}
-      />
-    ));
-  }, [isInited.current]);
+  const Markers = medicalCenters.map(el => (
+    <MedicalCenterMarker
+      key={el.id}
+      item={el}
+      onPress={() => onMarkerPress(el)}
+    />
+  ));
+
+  // `mapLanguage` is set once the native map locale is applied; it can change only after a restart
+  const isMapLanguageNoticeVisible =
+    !isMapLanguageNoticeClosed &&
+    !!mapLanguage &&
+    mapLanguage !== getLanguage();
 
   return (
     <View style={styles.container}>
@@ -205,16 +207,25 @@ export const Map: React.FC<
             style={styles.searchBar}
           />
         </TouchableOpacity>
+        {isMapLanguageNoticeVisible && (
+          <Animated.View
+            exiting={FadeOutDown}
+            style={styles.mapLanguageNotice}
+          >
+            <MapLanguageNotice
+              onClose={() => setIsMapLanguageNoticeClosed(true)}
+            />
+          </Animated.View>
+        )}
       </View>
-      <YaMap
+      <Yamap
         ref={yamapRef}
         followUser={false}
-        initialRegion={initRegion}
         style={styles.map}
         onCameraPositionChange={hideMedicalCenters}
       >
         {Markers}
-      </YaMap>
+      </Yamap>
 
       <Animated.View style={[styles.clinicsAnchor, rMedicalCentersContainer]}>
         <FlashList
@@ -261,6 +272,9 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     paddingHorizontal: CONTAINER_HORIZONTAL_PADDING,
+  },
+  mapLanguageNotice: {
+    marginTop: 8,
   },
   map: {
     flex: 1,

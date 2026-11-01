@@ -4,6 +4,13 @@ import { changeLanguage } from '#i18n';
 
 changeLanguage('en');
 
+// Worklets jest resolver gives gesture-handler the web runtimes, where getUIRuntimeHolder throws.
+// Remove when fixed upstream: https://github.com/software-mansion/react-native-gesture-handler/issues/4613
+jest.mock(
+  'react-native-gesture-handler/lib/module/handlers/gestures/installUIRuntimeBindings',
+  () => ({ installUIRuntimeBindings: jest.fn() }),
+);
+
 //TODO: replace when https://github.com/mrousavy/react-native-mmkv/issues/945 fixed
 
 jest.mock('react-native-permissions', () => ({

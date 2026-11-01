@@ -1,7 +1,4 @@
-import YaMap from 'react-native-yamap';
-
 import { registerRootComponent } from 'expo';
-import Constants from 'expo-constants';
 import { setStatusBarHidden } from 'expo-status-bar';
 
 import '@formatjs/intl-locale/polyfill';
@@ -20,7 +17,6 @@ import { App } from './src/App';
 
 dayjs.extend(duration);
 
-YaMap.init(Constants.expoConfig?.extra?.apiKeys.yandexMapKit);
 setStatusBarHidden(true);
 
 enableFreeze(true);

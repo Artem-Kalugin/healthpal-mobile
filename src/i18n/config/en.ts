@@ -226,6 +226,7 @@ export const en = {
   },
   map: {
     searchPlaceholder: 'Search',
+    mapLanguageNotice: 'Map language will update after you restart the app',
   },
   doctorDetails: {
     title: 'Doctor information',

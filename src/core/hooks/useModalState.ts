@@ -22,6 +22,7 @@ export const useModalState = (
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: fix
     setState(isFocused);
   }, [isFocused]);
 

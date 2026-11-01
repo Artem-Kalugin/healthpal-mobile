@@ -1,11 +1,20 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { cleanup, render, waitFor } from '@testing-library/react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import {
+  render as baseRender,
+  cleanup,
+  waitFor,
+} from '@testing-library/react-native';
 
 import { Text } from '#ui-kit/Text';
 
 import { ISwiperRef, Swiper } from './index';
+
+const render = (ui: React.ReactElement) =>
+  baseRender(ui, { wrapper: GestureHandlerRootView });
 
 describe('Swiper', () => {
   const mockData = [

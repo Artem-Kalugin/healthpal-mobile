@@ -5,6 +5,7 @@ import {
   FocusEvent,
   StyleProp,
   StyleSheet,
+  TextInputInstance,
   TextInputProps,
   TouchableOpacity,
   View,
@@ -30,7 +31,7 @@ export type ITextInput = Omit<
   errors?: string[];
   size: 'default' | 'small';
   onChange: TextInputProps['onChangeText'];
-  inputRef: RefObject<_TextInput | null>;
+  inputRef: RefObject<TextInputInstance | null>;
   IconRight: ReactNode;
   IconLeft: ReactNode;
   outlineType: ITextInputOutline;

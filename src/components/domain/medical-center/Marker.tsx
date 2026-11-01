@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Marker } from 'react-native-yamap';
+import { Marker } from 'react-native-yamap-plus';
 
 import { Icon } from '#ui-kit';
 

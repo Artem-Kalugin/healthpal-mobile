@@ -50,6 +50,16 @@ export function createMockMMKV(): MMKV {
     getAllKeys: () => Array.from(storage.keys()),
     contains: key => storage.has(key),
     recrypt: () => {},
+    encrypt: () => {},
+    decrypt: () => {},
+    checkContentChanged: () => {},
+    importAllFrom: () => 0,
+    id: 'mock-mmkv',
+    isEncrypted: false,
+    byteSize: 0,
+    get length(): number {
+      return storage.size;
+    },
     get size(): number {
       return storage.size;
     },

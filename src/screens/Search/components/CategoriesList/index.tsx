@@ -66,7 +66,7 @@ export const CategoriesList: React.FC<ICategoriesList> = ({
       )}
       showsHorizontalScrollIndicator={false}
       style={styles.list}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.id || 'all'}
     />
   );
 };

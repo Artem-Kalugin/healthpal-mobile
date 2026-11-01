@@ -58,6 +58,7 @@ export const Onboarding: React.FC<RootScreenProps<AppRoutes>> = props => {
             <Animated.View
               key={activeSlideIndex}
               entering={
+                // eslint-disable-next-line react-hooks/refs -- TODO: fix
                 !isRenderedRef.current ? undefined : FadeInUp.delay(200)
               }
               exiting={FadeOutDown}

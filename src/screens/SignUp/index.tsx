@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import {
   Keyboard,
   StyleSheet,
-  TextInput,
+  TextInputInstance,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -58,12 +58,12 @@ export const SignUp: React.FC<
 
   const dispatch = useDispatch();
 
-  const surnameInputRef = useRef<TextInput>(null);
+  const surnameInputRef = useRef<TextInputInstance>(null);
   const phoneInputRef = useRef<MaskedTextInputRef>(null);
-  const passwordInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInputInstance>(null);
 
   const { form, getFormInputProps } = useAppForm(createUserSchema, {
-    phone: '+',
+    phone: '',
   });
 
   const [register, registerMetadata] = useRegisterMutation();
@@ -109,7 +109,6 @@ export const SignUp: React.FC<
 
   return (
     <KeyboardAwareScrollView
-      bottomOffset={120}
       contentContainerStyle={styles.keyboardAvoidingViewContentContainer}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
@@ -161,7 +160,7 @@ export const SignUp: React.FC<
                   />
                 }
                 inputRef={phoneInputRef}
-                keyboardType="phone-pad"
+                keyboardType="decimal-pad"
                 label={t('signUp.phone.label')}
                 type="phone"
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
@@ -183,7 +182,7 @@ export const SignUp: React.FC<
                 label={t('signUp.password.label')}
                 returnKeyType="done"
                 secureTextEntry={enableSecurePassword}
-                onSubmitEditing={submitForm}
+                onSubmitEditing={() => submitForm()}
                 {...getFormInputProps('password')}
               />
             </View>

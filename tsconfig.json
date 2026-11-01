@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "strictPropertyInitialization": false,
+    "types": ["jest"],
     "paths": {
       "#ui-kit": ["./src/ui-kit/index"],
       "#screens": ["./src/screens/index"],

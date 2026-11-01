@@ -125,6 +125,7 @@ export const Swiper = <T extends unknown>({
   const gesture = useMemo(
     () =>
       Gesture.Pan()
+        // eslint-disable-next-line react-hooks/refs -- TODO: fix
         .onStart(() => {
           runOnJS(interruptAutoplay)();
           startXGesture.value = translation.value;
