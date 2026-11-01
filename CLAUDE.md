@@ -16,6 +16,8 @@ Do not write or change code without my explicit approval. If you are not sure wh
 
 Exception: autofix (`eslint --fix`, prettier formatting) is always allowed, do not ask for explicit permission.
 
+Tests are not written without the owner's approval. Proposing test cases (as a list of scenarios) is fine; writing them is not, until approved.
+
 ## Simulator and builds
 
 Never interact with the simulator/emulator or run builds (`pnpm ios*`, `pnpm android*`, `expo run`, `xcodebuild`, `gradlew`, etc.) without my explicit confirmation.

@@ -4,6 +4,7 @@ import BootSplash from 'react-native-bootsplash';
 import { YamapInstance } from 'react-native-yamap-plus';
 
 import dayjs from 'dayjs';
+import Constants from 'expo-constants';
 import { useLocales } from 'expo-localization';
 
 import { TokenService } from '#services/Token';
@@ -11,7 +12,8 @@ import { TokenService } from '#services/Token';
 import { changeLanguage, resolveLanguage } from '#i18n';
 import type { Language } from '#i18n/types';
 
-import { useSelector } from '#store';
+import { useDispatch, useSelector } from '#store';
+import { RuntimeActions } from '#store/slices/runtime';
 
 import { useAppData } from './useAppData';
 
@@ -26,6 +28,7 @@ export const useAppLifecycle = () => {
   const { prefetchApp } = useAppData();
   const savedLanguage = useSelector(state => state.app.language);
   const locales = useLocales();
+  const dispatch = useDispatch();
 
   const applyLanguage = async () => {
     const language = resolveLanguage(
@@ -48,11 +51,21 @@ export const useAppLifecycle = () => {
     applyLanguage();
   }, [savedLanguage, locales]);
 
-  const applyMapLocale = async (language: Language) => {
+  // the locale must be set before MapKit is initialized, otherwise the map keeps the device one
+  const initMap = async (language: Language) => {
     try {
       await YamapInstance.setLocale(MapLocales[language]);
+      dispatch(RuntimeActions.setMapLanguage(language));
     } catch {
       // the map keeps the device locale; must not block the app start
+    }
+
+    try {
+      await YamapInstance.init(
+        Constants.expoConfig?.extra?.apiKeys.yandexMapKit,
+      );
+    } catch {
+      // must not block the app start
     }
   };
 
@@ -61,7 +74,7 @@ export const useAppLifecycle = () => {
       await TokenService.load();
       const language = await applyLanguage();
 
-      await applyMapLocale(language);
+      await initMap(language);
 
       BootSplash.hide({ fade: true });
       await prefetchApp();

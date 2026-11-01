@@ -338,6 +338,7 @@ export const ru: CatalogShape<'one' | 'few' | 'many' | 'other'> = {
   },
   map: {
     searchPlaceholder: 'Поиск',
+    mapLanguageNotice: 'Язык карты обновится после перезапуска приложения',
   },
   scheduleAppointment: {
     bookTitle: 'Запланировать прием',
